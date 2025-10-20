@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Program - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mentorship-form.html">Mentorship</a></li>
+                <li><a href="referral-signup.html" style="color: var(--warm-beige);">Referral Program</a></li>
+                <li><a href="login.html">Client Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="premium-container" style="padding: 3rem 0;">
+        <div class="premium-card">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--dark-brown);">💰 Referral Program</h1>
+                <p style="color: var(--muted-rose); font-size: 1.1rem;">Earn KES 300 for every person you refer</p>
+            </div>
+
+            <div class="payment-notice">
+                <h4 style="margin-bottom: 0.5rem;">🎯 Program Registration: KES 500</h4>
+                <p style="margin: 0;">
+                    One-time registration fee to join our referral program and start earning.
+                </p>
+            </div>
+
+            <form id="referralSignupForm">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" placeholder="+254 XXX XXX XXX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">How did you hear about us?</label>
+                        <select class="form-control" required>
+                            <option value="">Select an option</option>
+                            <option value="friend">Friend Referral</option>
+                            <option value="social">Social Media</option>
+                            <option value="search">Online Search</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                        <input type="checkbox" style="accent-color: var(--dark-brown); margin-top: 0.2rem;" required>
+                        <span style="color: var(--dark-brown); font-size: 0.9rem;">
+                            I agree to pay the KES 500 registration fee and understand I can earn KES 300 per referral. 
+                            All payments require verification through <strong>crowntradeacademy@gmail.com</strong>
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-premium" style="width: 100%; margin-top: 1.5rem;">
+                    💰 Join Referral Program - KES 500
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: var(--off-white); border-radius: 8px;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Interested in Professional Trading?</h4>
+                <p style="color: var(--muted-rose); margin-bottom: 1rem;">
+                    Consider our elite 1-on-1 mentorship program for comprehensive trading education.
+                </p>
+                <a href="mentorship-form.html" class="btn-secondary" style="text-decoration: none;">
+                    🎯 Learn About Mentorship
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Referral Program</h3>
+                <p>Earn KES 300 per referral</p>
+                <p>Email: crowntradeacademy@gmail.com</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="mentorship-form.html" style="color: var(--warm-beige); text-decoration: none;">Mentorship Program</a></p>
+                <p><a href="payment-instructions.html" style="color: var(--warm-beige); text-decoration: none;">Payment Info</a></p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('referralSignupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ Referral program application submitted!\n\nOur team will contact you within 24 hours with payment instructions.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

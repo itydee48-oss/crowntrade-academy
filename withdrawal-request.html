@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw Earnings - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Premium Header -->
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <span style="color: var(--warm-beige);">Withdraw Earnings</span>
+                <ul class="nav-links">
+                    <li><a href="client-dashboard.html">Dashboard</a></li>
+                    <li><a href="referral-dashboard.html">Referrals</a></li>
+                    <li><a href="withdrawal-request.html" style="color: var(--warm-beige);">Withdraw</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Withdrawal Hero -->
+    <section class="premium-container" style="padding: 2rem 0;">
+        <div class="premium-card" style="background: linear-gradient(135deg, #27AE60, #2ECC71); color: white;">
+            <div style="display: flex; justify-content: between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <div>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰 Withdraw Your Earnings</h1>
+                    <p style="font-size: 1.1rem; font-weight: 600;">Get your referral earnings delivered securely</p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 2rem; font-weight: 700;">KES 900</div>
+                    <div style="color: rgba(255,255,255,0.9);">Available for Withdrawal</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Withdrawal Process -->
+    <section class="premium-container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+            <!-- Left Column - Withdrawal Form -->
+            <div>
+                <!-- Withdrawal Form -->
+                <div class="premium-card">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💳 Request Withdrawal</h2>
+                    
+                    <form id="withdrawalForm">
+                        <div class="form-group">
+                            <label class="form-label">Withdrawal Amount (KES)</label>
+                            <input type="number" class="form-control" id="withdrawalAmount" 
+                                   placeholder="Enter amount" min="100" max="900" value="900" required>
+                            <small style="color: var(--muted-rose);">
+                                Available: KES 900 • Minimum: KES 100
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Payment Method</label>
+                            <select class="form-control" id="paymentMethod" required>
+                                <option value="">Select payment method</option>
+                                <option value="mpesa">MPESA</option>
+                                <option value="bank">Bank Transfer</option>
+                                <option value="crypto">Cryptocurrency</option>
+                            </select>
+                        </div>
+
+                        <!-- MPESA Details -->
+                        <div id="mpesaDetails" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">MPESA Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+254 XXX XXX XXX">
+                            </div>
+                        </div>
+
+                        <!-- Bank Details -->
+                        <div id="bankDetails" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Bank Name</label>
+                                <input type="text" class="form-control" placeholder="Enter bank name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Account Number</label>
+                                <input type="text" class="form-control" placeholder="Enter account number">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Account Name</label>
+                                <input type="text" class="form-control" placeholder="Enter account name">
+                            </div>
+                        </div>
+
+                        <!-- Crypto Details -->
+                        <div id="cryptoDetails" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Cryptocurrency Type</label>
+                                <select class="form-control">
+                                    <option value="bitcoin">Bitcoin (BTC)</option>
+                                    <option value="ethereum">Ethereum (ETH)</option>
+                                    <option value="usdt">USDT</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Wallet Address</label>
+                                <input type="text" class="form-control" placeholder="Enter your wallet address">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Withdrawal Reason (Optional)</label>
+                            <textarea class="form-control" id="withdrawalReason" 
+                                      placeholder="Any additional notes or reasons for this withdrawal" 
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                <input type="checkbox" style="accent-color: var(--dark-brown); margin-top: 0.2rem;" required>
+                                <span style="color: var(--dark-brown); font-size: 0.9rem;">
+                                    I confirm that my payment details are correct. I understand that withdrawals are processed within 24 hours and may require verification.
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-premium" style="width: 100%;">
+                            📤 Submit Withdrawal Request
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Processing Timeline -->
+                <div class="premium-card">
+                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">⏱️ Processing Timeline</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: var(--dark-brown); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-brown);">Request Submitted</div>
+                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Immediate confirmation</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: var(--muted-rose); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-brown);">Team Verification</div>
+                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Within 2-6 hours</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="background: var(--light-taupe); color: var(--dark-brown); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-brown);">Payment Processing</div>
+                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Within 24 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Info & History -->
+            <div>
+                <!-- Withdrawal Info -->
+                <div class="premium-card">
+                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">ℹ️ Withdrawal Information</h3>
+                    
+                    <div style="background: var(--off-white); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Minimum Withdrawal</h4>
+                        <p style="color: var(--muted-rose); margin: 0;">KES 100</p>
+                    </div>
+
+                    <div style="background: var(--off-white); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Processing Time</h4>
+                        <p style="color: var(--muted-rose); margin: 0;">24 hours maximum</p>
+                    </div>
+
+                    <div style="background: var(--off-white); padding: 1.5rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Contact Support</h4>
+                        <p style="color: var(--muted-rose); margin: 0;">
+                            Questions? Email:<br>
+                            <strong>crowntradeacademy@gmail.com</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Recent Withdrawals -->
+                <div class="premium-card">
+                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">📋 Recent Withdrawals</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-brown);">KES 300</div>
+                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Jan 10, 2024 • MPESA</div>
+                            </div>
+                            <span class="status-completed">Completed</span>
+                        </div>
+
+                        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-brown);">KES 300</div>
+                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Jan 5, 2024 • MPESA</div>
+                            </div>
+                            <span class="status-completed">Completed</span>
+                        </div>
+
+                        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark-brown);">KES 300</div>
+                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Dec 28, 2023 • MPESA</div>
+                            </div>
+                            <span class="status-completed">Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Badges -->
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem;">
+                    <span class="trust-badge">🔒 Secure Transactions</span>
+                    <span class="trust-badge">⏱️ 24H Processing</span>
+                    <span class="trust-badge">💳 Multiple Methods</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="premium-container">
+        <div class="premium-card" style="text-align: center; background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));">
+            <h2 style="margin-bottom: 1rem; color: var(--dark-brown);">Need Help With Withdrawals?</h2>
+            <p style="margin-bottom: 2rem; color: var(--dark-brown);">
+                Our support team is here to assist you with any withdrawal questions.
+            </p>
+            <a href="mailto:crowntradeacademy@gmail.com" class="btn-premium" style="text-decoration: none;">
+                📧 Contact Support
+            </a>
+        </div>
+    </section>
+
+    <!-- Premium Footer -->
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Withdrawal Services</h3>
+                <p>Fast & Secure Payments</p>
+                <p>Email: crowntradeacademy@gmail.com</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="client-dashboard.html" style="color: var(--warm-beige); text-decoration: none;">Dashboard</a></p>
+                <p><a href="referral-dashboard.html" style="color: var(--warm-beige); text-decoration: none;">Referral Program</a></p>
+                <p><a href="payment-instructions.html" style="color: var(--warm-beige); text-decoration: none;">Payment Info</a></p>
+            </div>
+            <div>
+                <h3>Support</h3>
+                <p>Withdrawal Assistance</p>
+                <p>Transaction Support</p>
+                <p>24/7 Email Help</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show/hide payment method details
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            // Hide all details first
+            document.getElementById('mpesaDetails').style.display = 'none';
+            document.getElementById('bankDetails').style.display = 'none';
+            document.getElementById('cryptoDetails').style.display = 'none';
+            
+            // Show selected method details
+            if (this.value === 'mpesa') {
+                document.getElementById('mpesaDetails').style.display = 'block';
+            } else if (this.value === 'bank') {
+                document.getElementById('bankDetails').style.display = 'block';
+            } else if (this.value === 'crypto') {
+                document.getElementById('cryptoDetails').style.display = 'block';
+            }
+        });
+
+        // Withdrawal form handling
+        document.getElementById('withdrawalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const amount = document.getElementById('withdrawalAmount').value;
+            const method = document.getElementById('paymentMethod').value;
+            
+            if (!method) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            if (amount < 100 || amount > 900) {
+                alert('Withdrawal amount must be between KES 100 and KES 900');
+                return;
+            }
+            
+            // Simulate successful submission
+            alert(`✅ Withdrawal request submitted for KES ${amount}!\n\nOur team will process it within 24 hours. You will receive a confirmation email.`);
+            
+            // Redirect back to dashboard
+            setTimeout(() => {
+                window.location.href = 'client-dashboard.html';
+            }, 2000);
+        });
+
+        // Amount validation
+        document.getElementById('withdrawalAmount').addEventListener('input', function() {
+            const amount = parseInt(this.value);
+            if (amount > 900) {
+                this.value = 900;
+                alert('Maximum withdrawal amount is KES 900');
+            }
+        });
+    </script>
+</body>
+</html>

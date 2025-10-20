@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Crown Trade Academy - Elite Trading Mentorship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Client Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="premium-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
+        <div class="premium-card" style="max-width: 500px; width: 100%;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--dark-brown);">Join The Elite</h1>
+                <p style="color: var(--muted-rose); font-size: 1.1rem;">Begin your transformative trading journey</p>
+            </div>
+
+            <!-- Registration Fee Notice -->
+            <div class="payment-notice" style="margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 0.5rem;">💰 Registration Fee: KES 500</h4>
+                <p style="margin: 0; font-size: 0.9rem;">
+                    One-time registration fee includes access to our referral program where you can earn KES 300 for every person you refer.
+                </p>
+            </div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" placeholder="+254 XXX XXX XXX" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Create Password</label>
+                    <input type="password" class="form-control" placeholder="Minimum 8 characters" required minlength="8">
+                    <small style="color: var(--muted-rose); font-size: 0.8rem;">Must be at least 8 characters long</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="Re-enter your password" required>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                        <input type="checkbox" style="accent-color: var(--dark-brown); margin-top: 0.2rem;" required>
+                        <span style="color: var(--dark-brown); font-size: 0.9rem;">
+                            I agree to pay the KES 500 registration fee and understand I can earn KES 300 per referral. 
+                            All payments require verification through <strong>crowntradeacademy@gmail.com</strong>
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-premium" style="width: 100%; margin-bottom: 1.5rem;">
+                    💎 Pay KES 500 & Join
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: var(--muted-rose;">
+                    Already have an account? 
+                    <a href="login.html" style="color: var(--dark-brown); font-weight: 600; text-decoration: none;">
+                        Sign In Here
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Crown Trade Academy</h3>
+                <p>KES 500 Registration • Earn KES 300/Referral</p>
+                <p>Email: crowntradeacademy@gmail.com</p>
+            </div>
+            <div>
+                <h3>Get Started</h3>
+                <p><a href="login.html" style="color: var(--warm-beige); text-decoration: none;">Client Login</a></p>
+                <p><a href="payment-instructions.html" style="color: var(--warm-beige); text-decoration: none;">Payment Info</a></p>
+            </div>
+            <div>
+                <h3>Support</h3>
+                <p>Verified Transactions</p>
+                <p>Secure Enrollment</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = this.querySelector('input[type="password"]').value;
+            const confirmPassword = this.querySelectorAll('input[type="password"]')[1].value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            window.location.href = 'payment-instructions.html';
+        });
+    </script>
+</body>
+</html>

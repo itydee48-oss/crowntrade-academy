@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Premium Header -->
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Client Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Admin Login Section -->
+    <section class="premium-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+        <div class="premium-card" style="max-width: 450px; width: 100%;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--dark-brown);">🔐 Admin Access</h1>
+                <p style="color: var(--muted-rose);">Team Management Portal</p>
+            </div>
+
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Team Role</label>
+                    <select class="form-control" id="role" required>
+                        <option value="">Select your role</option>
+                        <option value="admin">Administrator</option>
+                        <option value="mentor">Lead Mentor</option>
+                        <option value="support">Client Support</option>
+                        <option value="finance">Finance Manager</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-premium" style="width: 100%; margin-bottom: 1.5rem;">
+                    🔑 Access Admin Panel
+                </button>
+            </form>
+
+            <!-- Security Notice -->
+            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">🔒 Secure Access</h4>
+                <p style="color: var(--muted-rose); margin: 0; font-size: 0.9rem;">
+                    This area is restricted to Crown Trade Academy team members only. 
+                    All access attempts are logged for security purposes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer -->
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Admin System</h3>
+                <p>Team Management Portal</p>
+                <p>Email: crowntradeacademy@gmail.com</p>
+            </div>
+            <div>
+                <h3>Security</h3>
+                <p>Restricted Access</p>
+                <p>Team Members Only</p>
+                <p>Activity Logged</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Team credentials - CHANGE THESE PASSWORDS!
+        const teamCredentials = {
+            'admin': { password: 'Admin123!', role: 'admin', name: 'Administrator' },
+            'mentor': { password: 'Mentor123!', role: 'mentor', name: 'Lead Mentor' },
+            'support': { password: 'Support123!', role: 'support', name: 'Client Support' },
+            'finance': { password: 'Finance123!', role: 'finance', name: 'Finance Manager' }
+        };
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.toLowerCase();
+            const password = document.getElementById('password').value;
+            const selectedRole = document.getElementById('role').value;
+            
+            // Check credentials
+            if (teamCredentials[username] && 
+                teamCredentials[username].password === password && 
+                teamCredentials[username].role === selectedRole) {
+                
+                // Store login session
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminUser', username);
+                localStorage.setItem('adminRole', selectedRole);
+                localStorage.setItem('adminName', teamCredentials[username].name);
+                
+                // Redirect to admin dashboard
+                window.location.href = 'admin-dashboard.html';
+                
+            } else {
+                alert('❌ Access Denied: Invalid credentials or role mismatch');
+            }
+        });
+
+        // Redirect if already logged in
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            window.location.href = 'admin-dashboard.html';
+        }
+    </script>
+</body>
+</html>
