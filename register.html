@@ -4,318 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Crown Trade Academy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Premium Nude Color Palette */
-        :root {
-            --nude-dark: #8B7355;
-            --nude-medium: #C4A484;
-            --nude-light: #E8D5C4;
-            --nude-cream: #F5EDE3;
-            --nude-white: #FAF7F2;
-            --gold: #D4AF37;
-            --dark-text: #3A2D28;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--nude-white) 0%, var(--nude-cream) 100%);
-            color: var(--dark-text);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        /* Premium Header */
-        .premium-header {
-            background: var(--nude-dark);
-            color: var(--nude-white);
-            padding: 1.2rem 0;
-            box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .premium-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--nude-white);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            color: var(--nude-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--gold);
-        }
-        
-        /* Premium Container */
-        .premium-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Luxury Package Cards */
-        .package-card {
-            background: var(--nude-white);
-            border: 1px solid var(--nude-light);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        
-        .package-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--nude-dark), var(--nude-medium));
-        }
-        
-        .package-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(139, 115, 85, 0.15);
-            border-color: var(--nude-medium);
-        }
-        
-        .package-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .package-title {
-            color: var(--nude-dark);
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-        
-        .package-badge {
-            background: linear-gradient(135deg, var(--nude-dark), var(--nude-medium));
-            color: var(--nude-white);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .package-price {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--nude-dark);
-            margin: 2rem 0;
-            text-align: center;
-            font-family: 'Georgia', serif;
-        }
-        
-        .package-features {
-            list-style: none;
-            padding: 0;
-            margin: 2.5rem 0;
-        }
-        
-        .package-features li {
-            padding: 1rem 0;
-            color: var(--nude-dark);
-            border-bottom: 1px solid var(--nude-light);
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .package-features li:before {
-            content: "✓";
-            color: var(--gold);
-            font-weight: bold;
-            margin-right: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .package-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* Premium Form */
-        .registration-form {
-            background: var(--nude-white);
-            border: 1px solid var(--nude-light);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .registration-form::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--nude-dark), var(--nude-medium));
-        }
-        
-        .form-group {
-            margin-bottom: 2rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-            color: var(--nude-dark);
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 1.2rem;
-            border: 2px solid var(--nude-light);
-            border-radius: 12px;
-            background: var(--nude-cream);
-            color: var(--dark-text);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--nude-medium);
-            background: var(--nude-white);
-            box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1);
-        }
-        
-        /* Luxury Button */
-        .btn-luxury {
-            background: linear-gradient(135deg, var(--nude-dark) 0%, var(--nude-medium) 100%);
-            color: var(--nude-white);
-            border: none;
-            padding: 1.5rem 3rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-luxury:hover {
-            background: linear-gradient(135deg, var(--nude-medium) 0%, var(--nude-dark) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.3);
-        }
-        
-        /* Selected Package Display */
-        .selected-display {
-            background: linear-gradient(135deg, var(--nude-light), var(--nude-medium));
-            color: var(--dark-text);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            text-align: center;
-            border: 2px solid var(--gold);
-        }
-        
-        /* Trust Section */
-        .trust-section {
-            background: var(--nude-white);
-            border: 1px solid var(--nude-light);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 2rem 0;
-        }
-        
-        .trust-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--nude-cream);
-            color: var(--nude-dark);
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 1px solid var(--nude-light);
-            font-size: 0.9rem;
-            margin: 0.5rem;
-            font-weight: 500;
-        }
-        
-        /* Premium Footer */
-        .premium-footer {
-            background: var(--nude-dark);
-            color: var(--nude-white);
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        /* Text Styles */
-        .section-title {
-            font-size: 3rem;
-            text-align: center;
-            margin: 3rem 0 1rem;
-            color: var(--nude-dark);
-            font-weight: 300;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            color: var(--nude-medium);
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Premium Header -->
@@ -324,104 +13,156 @@
             <a href="index.html" class="logo">Crown Trade Academy</a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Client Login</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" style="color: var(--warm-beige);">Register</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- Registration Hero -->
+    <section class="premium-container" style="padding: 2rem 0;">
+        <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; text-align: center;">Join Crown Trade Academy</h1>
+            <p style="font-size: 1.1rem; font-weight: 600; text-align: center;">Choose your program and start your trading journey</p>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
     <section class="premium-container">
-        <h1 class="section-title">Select Your Program</h1>
-        <p class="section-subtitle">Choose your path to trading excellence</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            
+            <!-- Left Column - Registration Form -->
+            <div class="premium-card">
+                <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📝 Your Information</h2>
+                
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" required>
+                    </div>
 
-        <!-- Mentorship Program -->
-        <div class="package-card" onclick="selectPackage('mentorship')">
-            <div class="package-header">
-                <h2 class="package-title"><i class="fas fa-crown"></i> Elite Mentorship Program</h2>
-                <span class="package-badge">Most Popular</span>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                </form>
             </div>
-            
-            <div class="package-price">KES 50,000</div>
-            
-            <ul class="package-features">
-                <li>12-week comprehensive trading mentorship</li>
-                <li>One-on-one sessions with expert traders</li>
-                <li>Live market analysis and trading sessions</li>
-                <li>Professional risk management system</li>
-                <li>Weekly progress tracking and feedback</li>
-                <li>Lifetime access to course updates</li>
-            </ul>
-        </div>
 
-        <!-- Referral Program -->
-        <div class="package-card" onclick="selectPackage('referral')">
-            <div class="package-header">
-                <h2 class="package-title"><i class="fas fa-gem"></i> Referral Program</h2>
-                <span class="package-badge">Earn Money</span>
-            </div>
-            
-            <div class="package-price">KES 500</div>
-            
-            <ul class="package-features">
-                <li>Access to exclusive referral network</li>
-                <li>Earn KES 300 per successful referral</li>
-                <li>Real-time earnings dashboard</li>
-                <li>Quick withdrawal processing</li>
-                <li>Referral tracking and analytics</li>
-                <li>MPESA and bank transfers available</li>
-            </ul>
-        </div>
-
-        <!-- Selected Package Display -->
-        <div id="selectedDisplay" class="selected-display" style="display: none;">
-            <h3><i class="fas fa-check-circle"></i> Program Selected</h3>
-            <p id="selectedPackageText" style="font-size: 1.3rem; font-weight: 600; margin: 1rem 0;"></p>
-            <p style="color: var(--nude-dark);">Please complete your registration below</p>
-        </div>
-
-        <!-- Registration Form -->
-        <div id="registrationForm" class="registration-form" style="display: none;">
-            <h2 style="text-align: center; color: var(--nude-dark); margin-bottom: 2rem;">Complete Your Registration</h2>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div class="form-group">
-                    <label class="form-label">First Name</label>
-                    <input type="text" class="form-control" placeholder="Enter your first name">
+            <!-- Right Column - Package Selection -->
+            <div class="premium-card">
+                <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🎯 Choose Your Program</h2>
+                
+                <!-- Mentorship Program -->
+                <div style="border: 2px solid var(--warm-beige); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Mentorship Program</h3>
+                            <p style="color: var(--muted-rose); margin: 0;">Elite 1-on-1 trading mentorship</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark-brown);">KES 50,000</div>
+                            <div style="color: var(--muted-rose); font-size: 0.9rem;">One-time payment</div>
+                        </div>
+                    </div>
+                    
+                    <ul style="color: var(--muted-rose); margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                        <li>Personalized 1-on-1 training</li>
+                        <li>Advanced trading strategies</li>
+                        <li>Lifetime access to resources</li>
+                        <li>Priority support</li>
+                    </ul>
+                    
+                    <button class="btn-premium" onclick="selectPackage('mentorship-only')" style="width: 100%;">
+                        Select Mentorship Program
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Enter your last name">
+
+                <!-- Referral Program -->
+                <div style="border: 2px solid var(--light-taupe); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Referral Program</h3>
+                            <p style="color: var(--muted-rose); margin: 0;">Earn through referrals</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark-brown);">KES 500</div>
+                            <div style="color: var(--muted-rose); font-size: 0.9rem;">Registration fee</div>
+                        </div>
+                    </div>
+                    
+                    <ul style="color: var(--muted-rose); margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                        <li>Earn KES 300 per referral</li>
+                        <li>Withdraw earnings anytime</li>
+                        <li>No trading knowledge required</li>
+                        <li>Flexible working hours</li>
+                    </ul>
+                    
+                    <button class="btn-secondary" onclick="selectPackage('referral-only')" style="width: 100%;">
+                        Select Referral Program
+                    </button>
+                </div>
+
+                <!-- Combined Program -->
+                <div style="border: 2px solid var(--gold-accent); border-radius: 12px; padding: 1.5rem; background: linear-gradient(135deg, var(--off-white), var(--cream-white));">
+                    <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Combined Program</h3>
+                            <p style="color: var(--muted-rose); margin: 0;">Mentorship + Referral benefits</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark-brown);">KES 50,500</div>
+                            <div style="color: var(--muted-rose); font-size: 0.9rem;">Best value</div>
+                        </div>
+                    </div>
+                    
+                    <ul style="color: var(--muted-rose); margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                        <li>All mentorship benefits</li>
+                        <li>All referral program benefits</li>
+                        <li>Priority access to new features</li>
+                        <li>Dedicated account manager</li>
+                    </ul>
+                    
+                    <button class="btn-premium" onclick="selectPackage('combined')" style="width: 100%; background: linear-gradient(135deg, var(--gold-accent), #E5C158);">
+                        Select Combined Program
+                    </button>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="form-label">Email Address</label>
-                <input type="email" class="form-control" placeholder="your.email@example.com">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" placeholder="254712345678">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control" placeholder="Create a secure password">
-            </div>
-
-            <button class="btn-luxury" onclick="handleRegistration()">
-                <i class="fas fa-lock"></i> COMPLETE REGISTRATION
-            </button>
         </div>
+    </section>
 
-        <!-- Trust Section -->
-        <div class="trust-section">
-            <h3 style="text-align: center; color: var(--nude-dark); margin-bottom: 2rem;">Why Choose Crown Trade Academy?</h3>
-            <div style="text-align: center;">
-                <span class="trust-badge"><i class="fas fa-shield-alt"></i> Verified Mentors</span>
-                <span class="trust-badge"><i class="fas fa-lock"></i> Secure Payments</span>
-                <span class="trust-badge"><i class="fas fa-award"></i> Premium Quality</span>
-                <span class="trust-badge"><i class="fas fa-headset"></i> 24/7 Support</span>
+    <!-- Trust Section -->
+    <section class="premium-container">
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 2rem 0;">
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">🔒</div>
+                Secure Registration
+            </div>
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">💳</div>
+                Flexible Payment Options
+            </div>
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">⚡</div>
+                Instant Activation
+            </div>
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">📞</div>
+                24/7 Support
             </div>
         </div>
     </section>
@@ -430,49 +171,168 @@
     <footer class="premium-footer">
         <div class="footer-content">
             <div>
-                <h3>Crown Trade Academy</h3>
-                <p>Premium Trading Education</p>
+                <h3>Get Started</h3>
+                <p>Begin your trading journey today</p>
                 <p>Email: crowntradeacademy@gmail.com</p>
             </div>
             <div>
                 <h3>Programs</h3>
-                <p>Elite Mentorship</p>
-                <p>Referral Program</p>
+                <p><a href="#mentorship" style="color: var(--warm-beige); text-decoration: none;">Mentorship Program</a></p>
+                <p><a href="#referral" style="color: var(--warm-beige); text-decoration: none;">Referral Program</a></p>
+                <p><a href="#combined" style="color: var(--warm-beige); text-decoration: none;">Combined Program</a></p>
             </div>
             <div>
                 <h3>Support</h3>
-                <p>+254 712 345 678</p>
-                <p>24/7 Customer Care</p>
+                <p>Help Center</p>
+                <p>Contact Us</p>
+                <p>FAQ</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--nude-medium);">
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
             <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // Package selection handler
         function selectPackage(packageType) {
-            // Show selected display
-            const display = document.getElementById('selectedDisplay');
-            const packageText = document.getElementById('selectedPackageText');
-            const form = document.getElementById('registrationForm');
-            
-            display.style.display = 'block';
-            form.style.display = 'block';
-            
-            if (packageType === 'mentorship') {
-                packageText.textContent = 'Elite Mentorship Program - KES 50,000';
-            } else {
-                packageText.textContent = 'Referral Program - KES 500';
+            // Validate form first
+            if (!validateForm()) {
+                alert('Please fill in all required fields and ensure passwords match.');
+                return;
             }
+
+            const packageData = {
+                'mentorship-only': { name: 'Mentorship Program', amount: 50000 },
+                'referral-only': { name: 'Referral Program', amount: 500 },
+                'combined': { name: 'Combined Program', amount: 50500 }
+            };
+
+            const packageInfo = packageData[packageType];
             
-            // Scroll to form
-            form.scrollIntoView({ behavior: 'smooth' });
+            // Save user data temporarily
+            const userData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value,
+                package: packageType
+            };
+
+            localStorage.setItem('tempUserData', JSON.stringify(userData));
+            localStorage.setItem('selectedPackage', packageType);
+            localStorage.setItem('packageAmount', packageInfo.amount);
+            localStorage.setItem('packageName', packageInfo.name);
+
+            // Confirm and redirect to payment
+            if (confirm(`Confirm Selection:\n\n${packageInfo.name}\nAmount: KES ${packageInfo.amount.toLocaleString()}\n\nProceed to payment?`)) {
+                window.location.href = 'payment-verification.html';
+            }
         }
-        
-        function handleRegistration() {
-            alert('Registration completed! You will be contacted for payment verification.');
+
+        // Form validation
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Check required fields
+            if (!fullName || !email || !phone || !password || !confirmPassword) {
+                return false;
+            }
+
+            // Check password match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+
+            // Check password length
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return false;
+            }
+
+            // Check email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            return true;
         }
+
+        // Check if returning from payment
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentVerified = localStorage.getItem('paymentVerified');
+            const tempUserData = localStorage.getItem('tempUserData');
+
+            if (paymentVerified === 'true' && tempUserData) {
+                completeRegistration();
+            }
+        });
+
+        // Complete registration after successful payment
+        function completeRegistration() {
+            const tempUserData = JSON.parse(localStorage.getItem('tempUserData'));
+            const selectedPackage = localStorage.getItem('selectedPackage');
+
+            // Create user object
+            const user = {
+                id: 'user_' + Date.now(),
+                fullName: tempUserData.fullName,
+                email: tempUserData.email,
+                phone: tempUserData.phone,
+                password: tempUserData.password,
+                package: selectedPackage,
+                registrationDate: new Date().toISOString(),
+                paymentVerified: true,
+                paymentTimestamp: localStorage.getItem('paymentTimestamp'),
+                status: 'active',
+                joinDate: new Date().toLocaleDateString()
+            };
+
+            // Save to users list
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Set login session
+            localStorage.setItem('clientLoggedIn', 'true');
+            localStorage.setItem('clientEmail', user.email);
+            localStorage.setItem('clientPackage', user.package);
+            localStorage.setItem('clientName', user.fullName);
+
+            // Clean up temporary data
+            localStorage.removeItem('tempUserData');
+            localStorage.removeItem('selectedPackage');
+            localStorage.removeItem('packageAmount');
+            localStorage.removeItem('packageName');
+            localStorage.removeItem('paymentVerified');
+            localStorage.removeItem('paymentTimestamp');
+
+            // Redirect to dashboard
+            alert('🎉 Registration Complete!\n\nWelcome to Crown Trade Academy!');
+            window.location.href = 'client-dashboard.html';
+        }
+
+        // Enter key support for form
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                // Find which input is focused and suggest package selection
+                const focused = document.activeElement;
+                if (focused.id === 'confirmPassword') {
+                    // User finished form, suggest selecting a package
+                    document.querySelector('.btn-premium').scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+        });
     </script>
 </body>
 </html>
