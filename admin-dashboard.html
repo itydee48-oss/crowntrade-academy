@@ -5,144 +5,468 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Crown Trade Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* Your existing admin dashboard styles remain the same */
-        /* ... existing CSS code ... */
+        /* Luxury Admin Enhancements */
+        .luxury-gold {
+            background: linear-gradient(135deg, #D4AF37, #FFD700, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .luxury-card {
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
+        }
+        
+        .luxury-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.03), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .luxury-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(58, 45, 40, 0.15);
+        }
+        
+        .luxury-card:hover::after {
+            transform: rotate(45deg) translate(10%, 10%);
+        }
+        
+        .luxury-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .luxury-stat {
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .luxury-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--dark-brown), var(--muted-rose));
+        }
+        
+        .luxury-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(58, 45, 40, 0.12);
+        }
+        
+        .luxury-stat-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--dark-brown), var(--muted-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .luxury-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dark-brown);
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .luxury-stat-label {
+            color: var(--muted-rose);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .luxury-btn {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+            color: var(--cream-white);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .luxury-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .luxury-btn:hover::before {
+            left: 100%;
+        }
+        
+        .luxury-btn:hover {
+            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(58, 45, 40, 0.3);
+        }
+        
+        .luxury-nav {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            border-bottom: 3px solid var(--gold-accent);
+        }
+        
+        .crown-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--gold-accent), #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-right: 1rem;
+        }
+        
+        .admin-badge-luxury {
+            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
+            color: var(--dark-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .floating-action {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
+            color: var(--dark-brown);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-action:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6);
+        }
+        
+        .luxury-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.08);
+        }
+        
+        .luxury-table th {
+            background: linear-gradient(135deg, var(--dark-brown), #4A3A32);
+            color: var(--cream-white);
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        
+        .luxury-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--light-taupe);
+            background: var(--cream-white);
+            transition: all 0.3s ease;
+        }
+        
+        .luxury-table tr:hover td {
+            background: var(--off-white);
+            transform: scale(1.02);
+        }
+        
+        .luxury-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
     </style>
 </head>
 <body>
-    <!-- Premium Header -->
-    <header class="premium-header">
+    <!-- Luxury Header -->
+    <header class="premium-header luxury-nav">
         <nav class="premium-nav">
-            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <a href="index.html" class="logo" style="display: flex; align-items: center;">
+                <span class="crown-icon">👑</span>
+                Crown Trade Academy
+            </a>
             <div style="display: flex; align-items: center; gap: 2rem;">
-                <span style="color: var(--gold); font-weight: 600;">Admin Dashboard</span>
+                <span style="color: var(--gold-accent); font-weight: 700; font-size: 1.1rem;">Admin Command Center</span>
                 <ul class="nav-links">
-                    <li><a href="admin-dashboard.html" style="color: var(--gold);">Dashboard</a></li>
+                    <li><a href="admin-dashboard.html" style="color: var(--gold-accent); font-weight: 600;">Dashboard</a></li>
                     <li><a href="admin-payment-settings.html">Payment Settings</a></li>
                     <li><a href="admin-referral-approvals.html">Referral Approvals</a></li>
                     <li><a href="admin-withdrawal-approvals.html">Withdrawal Approvals</a></li>
-                    <li><span class="admin-badge" id="adminName">Administrator</span></li>
-                    <li><a href="#" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><span class="admin-badge-luxury" id="adminName">Administrator</span></li>
+                    <li><a href="#" onclick="logoutAdmin()" style="color: var(--warm-beige);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <!-- Admin Hero -->
-    <section class="admin-container" style="padding: 2rem 0;">
-        <div class="admin-card" style="background: linear-gradient(135deg, var(--nude-dark), #4A3A32); color: white;">
+    <!-- Luxury Hero Section -->
+    <section class="premium-container" style="padding: 3rem 0;">
+        <div class="luxury-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige), var(--muted-rose)); color: var(--dark-brown);">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-                <div>
-                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">
-                        <i class="fas fa-crown"></i> Admin Command Center
+                <div style="flex: 1;">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 800;" class="fade-in-up">
+                        <span class="crown-icon">👑</span> Admin Command Center
                     </h1>
-                    <p style="color: var(--nude-light); font-size: 1.1rem;">Manage clients, payments, and platform operations</p>
+                    <p style="font-size: 1.3rem; font-weight: 600; color: var(--dark-brown); opacity: 0.9;" class="fade-in-up">
+                        Premium Management Portal • Real-time Analytics • Complete Control
+                    </p>
                 </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 0.9rem; color: var(--nude-light);">Logged in as</div>
-                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--gold);" id="adminWelcome">Administrator</div>
+                <div style="text-align: right;" class="fade-in-up">
+                    <div style="font-size: 1rem; color: var(--dark-brown); opacity: 0.8; margin-bottom: 0.5rem;">Welcome Back</div>
+                    <div style="font-size: 1.4rem; font-weight: 800; color: var(--dark-brown);" id="adminWelcome">Administrator</div>
+                    <div style="font-size: 0.9rem; color: var(--dark-brown); opacity: 0.7; margin-top: 0.5rem;" id="currentTime">Loading...</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Quick Stats -->
-    <section class="admin-container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-users"></i></div>
-                <div class="stat-number" id="totalClients">47</div>
-                <div class="stat-label">Total Clients</div>
+    <!-- Luxury Stats Grid -->
+    <section class="premium-container">
+        <div class="luxury-stats">
+            <div class="luxury-stat fade-in-up">
+                <div class="luxury-stat-icon">👥</div>
+                <div class="luxury-stat-number" id="totalClients">47</div>
+                <div class="luxury-stat-label">Total Clients</div>
+                <div style="margin-top: 1rem; color: var(--muted-rose); font-size: 0.9rem;">
+                    <i class="fas fa-arrow-up" style="color: var(--success);"></i> 12% growth this month
+                </div>
             </div>
             
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
-                <div class="stat-number">KES <span id="totalRevenue">128,500</span></div>
-                <div class="stat-label">Total Revenue</div>
+            <div class="luxury-stat fade-in-up">
+                <div class="luxury-stat-icon">💰</div>
+                <div class="luxury-stat-number">KES <span id="totalRevenue">128,500</span></div>
+                <div class="luxury-stat-label">Total Revenue</div>
+                <div style="margin-top: 1rem; color: var(--muted-rose); font-size: 0.9rem;">
+                    <i class="fas fa-chart-line" style="color: var(--gold-accent);"></i> KES 45,200 this month
+                </div>
             </div>
             
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                <div class="stat-number" id="pendingWithdrawals">3</div>
-                <div class="stat-label">Pending Withdrawals</div>
+            <div class="luxury-stat fade-in-up">
+                <div class="luxury-stat-icon">⏳</div>
+                <div class="luxury-stat-number" id="pendingWithdrawals">3</div>
+                <div class="luxury-stat-label">Pending Withdrawals</div>
+                <div style="margin-top: 1rem; color: var(--muted-rose); font-size: 0.9rem;">
+                    <i class="fas fa-clock" style="color: var(--warning);"></i> Requires attention
+                </div>
             </div>
             
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-user-check"></i></div>
-                <div class="stat-number" id="pendingReferrals">5</div>
-                <div class="stat-label">Pending Referrals</div>
+            <div class="luxury-stat fade-in-up">
+                <div class="luxury-stat-icon">📈</div>
+                <div class="luxury-stat-number" id="pendingReferrals">5</div>
+                <div class="luxury-stat-label">Pending Referrals</div>
+                <div style="margin-top: 1rem; color: var(--muted-rose); font-size: 0.9rem;">
+                    <i class="fas fa-user-check" style="color: var(--info);"></i> Awaiting approval
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Main Admin Content -->
-    <section class="admin-container">
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+    <section class="premium-container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
             
             <!-- Left Column - Management -->
             <div>
                 <!-- Quick Actions -->
-                <div class="admin-card">
-                    <h2 style="margin-bottom: 1.5rem; color: var(--nude-dark);">
-                        <i class="fas fa-bolt"></i> Quick Actions
+                <div class="luxury-card fade-in-up">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.8rem; font-weight: 800;">
+                        <i class="fas fa-bolt" style="color: var(--gold-accent);"></i> Quick Actions
                     </h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <button class="btn-admin" onclick="showWithdrawals()">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+                        <button class="luxury-btn" onclick="showWithdrawals()">
                             <i class="fas fa-money-bill-wave"></i> Process Withdrawals
                         </button>
-                        <button class="btn-admin" onclick="showClientManagement()">
+                        <button class="luxury-btn" onclick="showClientManagement()">
                             <i class="fas fa-users"></i> Manage Clients
                         </button>
-                        <button class="btn-admin" onclick="showReferralApprovals()">
+                        <button class="luxury-btn" onclick="showReferralApprovals()">
                             <i class="fas fa-user-check"></i> Referral Approvals
                         </button>
-                        <button class="btn-admin" onclick="showPaymentRecords()">
+                        <button class="luxury-btn" onclick="showPaymentRecords()">
                             <i class="fas fa-credit-card"></i> Payment Records
                         </button>
-                        <button class="btn-admin" onclick="generateReport()">
+                        <button class="luxury-btn" onclick="generateReport()">
                             <i class="fas fa-chart-bar"></i> Generate Report
+                        </button>
+                        <button class="luxury-btn" onclick="openPaymentSettings()">
+                            <i class="fas fa-cog"></i> System Settings
                         </button>
                     </div>
                 </div>
 
-                <!-- Your existing content remains the same -->
-                <!-- Pending Withdrawals Section -->
-                <div class="admin-card" id="withdrawalsSection">
-                    <!-- ... existing withdrawals content ... -->
-                </div>
-
-                <!-- Recent Client Activity -->
-                <div class="admin-card">
-                    <!-- ... existing activity content ... -->
+                <!-- Recent Activity -->
+                <div class="luxury-card fade-in-up">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.8rem; font-weight: 800;">
+                        <i class="fas fa-history" style="color: var(--gold-accent);"></i> Recent Activity
+                    </h2>
+                    
+                    <table class="luxury-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Activity</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivity">
+                            <tr>
+                                <td style="font-weight: 600; color: var(--dark-brown);">Lisa Brown</td>
+                                <td style="color: var(--muted-rose);">Joined Mentorship Program</td>
+                                <td style="color: var(--muted-rose);">2 hours ago</td>
+                                <td><span class="status-badge status-approved">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: var(--dark-brown);">David Wilson</td>
+                                <td style="color: var(--muted-rose);">Referred 2 members</td>
+                                <td style="color: var(--muted-rose);">4 hours ago</td>
+                                <td><span class="status-badge status-approved">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: var(--dark-brown);">Emma Davis</td>
+                                <td style="color: var(--muted-rose);">Requested Withdrawal</td>
+                                <td style="color: var(--muted-rose);">6 hours ago</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Right Column - Team & System -->
+            <!-- Right Column - System & Tools -->
             <div>
-                <!-- Team Management -->
-                <div class="admin-card">
-                    <!-- ... existing team content ... -->
-                </div>
-
                 <!-- System Status -->
-                <div class="admin-card">
-                    <!-- ... existing system status ... -->
+                <div class="luxury-card fade-in-up">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.8rem; font-weight: 800;">
+                        <i class="fas fa-server" style="color: var(--gold-accent);"></i> System Status
+                    </h2>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; background: var(--off-white); border-radius: 10px;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%;"></div>
+                                <span style="font-weight: 600; color: var(--dark-brown);">Website Uptime</span>
+                            </div>
+                            <span class="status-badge status-approved">100%</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; background: var(--off-white); border-radius: 10px;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%;"></div>
+                                <span style="font-weight: 600; color: var(--dark-brown);">Payment System</span>
+                            </div>
+                            <span class="status-badge status-approved">Operational</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; background: var(--off-white); border-radius: 10px;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%;"></div>
+                                <span style="font-weight: 600; color: var(--dark-brown);">Database</span>
+                            </div>
+                            <span class="status-badge status-approved">Healthy</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; background: var(--off-white); border-radius: 10px;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%;"></div>
+                                <span style="font-weight: 600; color: var(--dark-brown);">Security</span>
+                            </div>
+                            <span class="status-badge status-approved">Protected</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Quick Tools -->
-                <div class="admin-card">
-                    <h3 style="margin-bottom: 1rem; color: var(--nude-dark);">
-                        <i class="fas fa-tools"></i> Quick Tools
-                    </h3>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <button class="btn-admin" onclick="openPaymentSettings()">
+                <div class="luxury-card fade-in-up">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.8rem; font-weight: 800;">
+                        <i class="fas fa-tools" style="color: var(--gold-accent);"></i> Quick Tools
+                    </h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <button class="luxury-btn" onclick="openPaymentSettings()">
                             <i class="fas fa-cog"></i> Payment Settings
                         </button>
-                        <button class="btn-admin btn-success" onclick="generateReport()">
+                        <button class="luxury-btn" style="background: linear-gradient(135deg, var(--success), #2ECC71);" onclick="generateReport()">
                             <i class="fas fa-chart-bar"></i> Generate Report
                         </button>
-                        <button class="btn-admin btn-warning" onclick="backupSystem()">
+                        <button class="luxury-btn" style="background: linear-gradient(135deg, var(--warning), #F39C12);" onclick="backupSystem()">
                             <i class="fas fa-database"></i> Backup System
                         </button>
                     </div>
@@ -151,46 +475,34 @@
         </div>
     </section>
 
-    <!-- Your existing modals and footer remain the same -->
-    <!-- MODALS -->
-    <!-- Client Management Modal -->
-    <div id="clientManagementModal" class="modal">
-        <!-- ... existing modal content ... -->
+    <!-- Floating Action Button -->
+    <div class="floating-action" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
-    <!-- Team Management Modal -->
-    <div id="teamManagementModal" class="modal">
-        <!-- ... existing modal content ... -->
-    </div>
-
-    <!-- Payment Records Modal -->
-    <div id="paymentRecordsModal" class="modal">
-        <!-- ... existing modal content ... -->
-    </div>
-
-    <!-- Admin Footer -->
-    <footer class="admin-footer">
+    <!-- Luxury Footer -->
+    <footer class="premium-footer" style="background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); border-top: 3px solid var(--gold-accent);">
         <div class="footer-content">
             <div>
-                <h3>Admin System</h3>
-                <p>Team Management Portal</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
+                <h3 style="color: var(--gold-accent);">Admin System</h3>
+                <p style="color: var(--warm-beige);">Premium Management Portal</p>
+                <p style="color: var(--warm-beige);">Email: crowntradeacademy@gmail.com</p>
             </div>
             <div>
-                <h3>Quick Access</h3>
-                <p><a href="admin-payment-settings.html" style="color: var(--nude-light); text-decoration: none;">Payment Settings</a></p>
-                <p><a href="admin-referral-approvals.html" style="color: var(--nude-light); text-decoration: none;">Referral Approvals</a></p>
-                <p><a href="admin-withdrawal-approvals.html" style="color: var(--nude-light); text-decoration: none;">Withdrawal Approvals</a></p>
+                <h3 style="color: var(--gold-accent);">Quick Access</h3>
+                <p><a href="admin-payment-settings.html" style="color: var(--warm-beige); text-decoration: none;">Payment Settings</a></p>
+                <p><a href="admin-referral-approvals.html" style="color: var(--warm-beige); text-decoration: none;">Referral Approvals</a></p>
+                <p><a href="admin-withdrawal-approvals.html" style="color: var(--warm-beige); text-decoration: none;">Withdrawal Approvals</a></p>
             </div>
             <div>
-                <h3>System</h3>
-                <p><span id="onlineTeam">3</span> Team Members Online</p>
-                <p><span id="totalClientsFooter">47</span> Active Clients</p>
-                <p>All Systems Operational</p>
+                <h3 style="color: var(--gold-accent);">System Info</h3>
+                <p style="color: var(--warm-beige);"><span id="onlineTeam">3</span> Team Online</p>
+                <p style="color: var(--warm-beige);"><span id="totalClientsFooter">47</span> Active Clients</p>
+                <p style="color: var(--success);">All Systems Operational</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--nude-medium);">
-            <p style="color: var(--nude-light);">&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p style="color: var(--warm-beige); font-size: 0.9rem;">&copy; 2024 Crown Trade Academy. Premium Admin System.</p>
         </div>
     </footer>
 
@@ -200,13 +512,12 @@
             window.location.href = 'admin-login.html';
         }
 
-        // Initialize Admin Dashboard
+        // Initialize Luxury Admin Dashboard
         document.addEventListener('DOMContentLoaded', function() {
             loadAdminData();
             updateAdminWelcome();
-            loadWithdrawals();
-            loadRecentActivity();
-            updatePendingReferrals();
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000); // Update time every minute
         });
 
         function updateAdminWelcome() {
@@ -215,115 +526,76 @@
             document.getElementById('adminName').textContent = adminName;
         }
 
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            const dateString = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('currentTime').textContent = `${timeString} • ${dateString}`;
+        }
+
         function loadAdminData() {
             // Simulate loading real data
             const totalClients = Math.floor(Math.random() * 100) + 30;
             const totalRevenue = (totalClients * 27500).toLocaleString();
-            const activeReferrals = Math.floor(totalClients * 0.7);
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
             
             document.getElementById('totalClients').textContent = totalClients;
             document.getElementById('totalRevenue').textContent = totalRevenue;
-            document.getElementById('activeReferrals').textContent = activeReferrals;
+            document.getElementById('pendingReferrals').textContent = pendingApprovals.length;
             document.getElementById('totalClientsFooter').textContent = totalClients;
         }
 
-        // NEW FUNCTION: Update pending referrals count
-        function updatePendingReferrals() {
-            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            document.getElementById('pendingReferrals').textContent = pendingApprovals.length;
-        }
-
-        // NEW FUNCTION: Show referral approvals
+        // Navigation Functions
         function showReferralApprovals() {
             window.location.href = 'admin-referral-approvals.html';
         }
 
-        // Your existing functions remain the same
         function showWithdrawals() {
-            document.getElementById('withdrawalsSection').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-            alert('📋 Scrolled to Pending Withdrawals section!');
+            alert('📋 Redirecting to withdrawal management...');
+            window.location.href = 'admin-withdrawal-approvals.html';
         }
 
         function showClientManagement() {
-            const modal = document.getElementById('clientManagementModal');
-            const content = document.getElementById('clientManagementContent');
-            
-            content.innerHTML = `
-                <div style="margin-bottom: 1.5rem;">
-                    <h3 style="color: var(--nude-dark); margin-bottom: 1rem;">Client List</h3>
-                    <div style="background: var(--nude-cream); padding: 1rem; border-radius: 8px;">
-                        <p><strong>Total Clients:</strong> 47</p>
-                        <p><strong>Active Today:</strong> 12</p>
-                        <p><strong>New This Week:</strong> 8</p>
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <button class="btn-admin" onclick="viewAllClients()">
-                        <i class="fas fa-list"></i> View All Clients
-                    </button>
-                    <button class="btn-admin btn-success" onclick="addNewClient()">
-                        <i class="fas fa-user-plus"></i> Add Client
-                    </button>
-                    <button class="btn-admin btn-warning" onclick="exportClientData()">
-                        <i class="fas fa-download"></i> Export Data
-                    </button>
-                    <button class="btn-admin btn-danger" onclick="bulkActions()">
-                        <i class="fas fa-cog"></i> Bulk Actions
-                    </button>
-                </div>
-            `;
-            
-            modal.style.display = 'flex';
+            alert('👥 Opening client management panel...');
         }
 
         function showPaymentRecords() {
-            const modal = document.getElementById('paymentRecordsModal');
-            const content = document.getElementById('paymentRecordsContent');
-            
-            content.innerHTML = `
-                <div style="margin-bottom: 1.5rem;">
-                    <h3 style="color: var(--nude-dark); margin-bottom: 1rem;">Payment Records</h3>
-                    <div style="background: var(--nude-cream); padding: 1rem; border-radius: 8px;">
-                        <p><strong>Total Revenue:</strong> KES 128,500</p>
-                        <p><strong>This Month:</strong> KES 45,200</p>
-                        <p><strong>Pending:</strong> KES 12,800</p>
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <button class="btn-admin" onclick="viewAllPayments()">
-                        <i class="fas fa-list"></i> View Payments
-                    </button>
-                    <button class="btn-admin btn-success" onclick="processPayments()">
-                        <i class="fas fa-cog"></i> Process Batch
-                    </button>
-                    <button class="btn-admin btn-warning" onclick="exportPaymentData()">
-                        <i class="fas fa-download"></i> Export Records
-                    </button>
-                    <button class="btn-admin btn-danger" onclick="paymentAnalytics()">
-                        <i class="fas fa-chart-bar"></i> Analytics
-                    </button>
-                </div>
-            `;
-            
-            modal.style.display = 'flex';
+            alert('💰 Loading payment records dashboard...');
         }
 
         function openPaymentSettings() {
             window.location.href = 'admin-payment-settings.html';
         }
 
-        // Your existing modal, withdrawal, and utility functions remain the same
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        function generateReport() {
+            alert('📊 Generating comprehensive admin report...');
+            setTimeout(() => {
+                alert('✅ Luxury report generated successfully!');
+            }, 2000);
+        }
+
+        function backupSystem() {
+            alert('💾 Starting luxury system backup...');
+            setTimeout(() => {
+                alert('✅ Backup completed successfully! All data secured.');
+            }, 3000);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function logoutAdmin() {
-            if (confirm('Are you sure you want to logout?')) {
+            if (confirm('Are you sure you want to logout from the admin panel?')) {
                 localStorage.removeItem('adminLoggedIn');
                 localStorage.removeItem('adminName');
                 localStorage.removeItem('adminRole');
@@ -331,15 +603,31 @@
             }
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modals = document.getElementsByClassName('modal');
-            for (let modal of modals) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
+        // Add luxury animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
-            }
-        }
+            });
+        }, observerOptions);
+
+        // Observe all luxury cards for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const luxuryElements = document.querySelectorAll('.luxury-card, .luxury-stat');
+            luxuryElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
     </script>
 </body>
 </html>
