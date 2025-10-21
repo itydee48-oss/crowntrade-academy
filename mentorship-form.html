@@ -266,11 +266,25 @@
 
     <script>
         // Form handling
-        document.getElementById('mentorshipForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('✅ Application submitted successfully!\n\nOur team will contact you within 24 hours to discuss your mentorship journey and provide payment instructions.');
-            this.reset();
-        });
+       document.getElementById('mentorshipForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = {
+        name: this.querySelector('input[type="text"]').value,
+        email: this.querySelector('input[type="email"]').value,
+        phone: this.querySelector('input[type="tel"]').value,
+        program: 'Mentorship Program',
+        amount: 50000
+    };
+    
+    // Store form data for payment page
+    localStorage.setItem('mentorshipApplication', JSON.stringify(formData));
+    
+    // Redirect to payment instructions
+    window.location.href = 'payment-instructions.html?program=mentorship';
+});
     </script>
 </body>
+
 </html>
