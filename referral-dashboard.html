@@ -3,191 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referral Program - Crown Trade Academy</title>
+    <title>Referral Dashboard - Crown Trade Academy</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Premium Header -->
     <header class="premium-header">
         <nav class="premium-nav">
             <a href="index.html" class="logo">Crown Trade Academy</a>
             <div style="display: flex; align-items: center; gap: 2rem;">
                 <span style="color: var(--warm-beige);">Referral Dashboard</span>
                 <ul class="nav-links">
-                    <li><a href="client-dashboard.html">Main Dashboard</a></li>
-                    <li><a href="referral-dashboard.html" style="color: var(--warm-beige);">Referrals</a></li>
-                    <li><a href="withdrawal-request.html">Withdraw</a></li>
-                    <li><a href="index.html">Logout</a></li>
+                    <li><a href="client-dashboard.html">My Dashboard</a></li>
+                    <li><a href="referral-dashboard.html" style="color: var(--warm-beige);">Referral Program</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
+    <!-- Dashboard Hero -->
     <section class="premium-container" style="padding: 2rem 0;">
         <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-            <div style="display: flex; justify-content: between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
                 <div>
-                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">💎 Referral Program</h1>
-                    <p style="font-size: 1.1rem; font-weight: 600;">Earn KES 300 for every friend who joins with your link!</p>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">👥 Referral Program</h1>
+                    <p style="font-size: 1.1rem; font-weight: 600;">Earn KES 300 for every friend you refer!</p>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 2rem; font-weight: 700;">KES 900</div>
-                    <div style="color: var(--dark-brown);">Total Earnings</div>
+                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Your Status</div>
+                    <div style="font-size: 1rem; font-weight: 700;" id="referralStatus">Active</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Referral Stats -->
     <section class="premium-container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-            <div class="premium-card" style="text-align: center;">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">👥</div>
-                <h3 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Total Referrals</h3>
-                <p style="font-size: 2rem; color: var(--dark-brown); font-weight: 700;">3</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number" id="totalEarnings">KES 0</div>
+                <div class="stat-label">Total Earnings</div>
             </div>
-
-            <div class="premium-card" style="text-align: center;">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">💰</div>
-                <h3 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Active Earnings</h3>
-                <p style="font-size: 2rem; color: var(--dark-brown); font-weight: 700;">3</p>
+            
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalReferrals">0</div>
+                <div class="stat-label">Total Referrals</div>
             </div>
-
-            <div class="premium-card" style="text-align: center;">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎯</div>
-                <h3 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Pending</h3>
-                <p style="font-size: 2rem; color: var(--dark-brown); font-weight: 700;">0</p>
+            
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number" id="successfulReferrals">0</div>
+                <div class="stat-label">Successful</div>
             </div>
-
-            <div class="premium-card" style="text-align: center;">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
-                <h3 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Conversion Rate</h3>
-                <p style="font-size: 2rem; color: var(--dark-brown); font-weight: 700;">100%</p>
+            
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-number" id="pendingEarnings">KES 0</div>
+                <div class="stat-label">Pending</div>
             </div>
         </div>
     </section>
 
+    <!-- Referral Link Section -->
     <section class="premium-container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-            <div>
-                <div class="premium-card">
-                    <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">Your Unique Referral Link</h2>
-                    
-                    <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                        <div style="font-size: 0.9rem; color: var(--muted-rose); margin-bottom: 0.5rem;">Copy and share this link:</div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <input type="text" id="referralLink" value="https://crowntradeacademy.com/ref?code=ELITE123" 
-                                   style="flex: 1; padding: 12px; border: 2px solid var(--light-taupe); border-radius: 8px; background: var(--cream-white);" readonly>
-                            <button onclick="copyReferralLink()" class="btn-premium">Copy</button>
-                        </div>
-                    </div>
-
-                    <div style="background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose)); padding: 1.5rem; border-radius: 12px;">
-                        <h4 style="margin-bottom: 1rem; color: var(--dark-brown);">🎯 How It Works:</h4>
-                        <ol style="color: var(--dark-brown); padding-left: 1.2rem;">
-                            <li style="margin-bottom: 0.5rem;">Share your unique link with friends</li>
-                            <li style="margin-bottom: 0.5rem;">They pay KES 500 registration fee</li>
-                            <li style="margin-bottom: 0.5rem;">They join Mentorship OR Referral Program</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>You automatically receive KES 300!</strong></li>
-                        </ol>
-                        
-                        <div style="background: rgba(58, 45, 40, 0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <strong>Conditions:</strong> Referred person must join either:<br>
-                            • Mentorship Program (KES 50,000)<br>
-                            • Referral Program (KES 500 registration)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="premium-card">
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">🚀 Share Everywhere</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
-                        <button class="btn-premium" style="padding: 1rem;" onclick="shareOnWhatsApp()">
-                            📱 WhatsApp
-                        </button>
-                        <button class="btn-secondary" style="padding: 1rem;" onclick="shareOnEmail()">
-                            📧 Email
-                        </button>
-                        <button class="btn-premium" style="padding: 1rem;" onclick="shareOnSocial()">
-                            💬 Social Media
-                        </button>
-                    </div>
+        <div class="premium-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🔗 Your Unique Referral Link</h2>
+            
+            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="referralLink" readonly 
+                           style="flex: 1; padding: 1rem; border: 2px solid var(--light-taupe); border-radius: 8px; background: white; font-size: 1rem;">
+                    <button class="btn-premium" onclick="copyReferralLink()" style="padding: 1rem 1.5rem;">
+                        📋 Copy Link
+                    </button>
                 </div>
             </div>
 
-            <div>
-                <div class="premium-card">
-                    <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💰 Earnings Summary</h2>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <span style="color: var(--muted-rose);">Available for Withdrawal:</span>
-                        <span style="font-size: 1.5rem; font-weight: 700; color: var(--dark-brown);">KES 900</span>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <span style="color: var(--muted-rose);">Pending Verification:</span>
-                        <span style="font-size: 1.2rem; font-weight: 600; color: #E67E22;">KES 0</span>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--muted-rose);">Total Earned:</span>
-                        <span style="font-size: 1.2rem; font-weight: 600; color: #27AE60;">KES 900</span>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <button class="btn-secondary" onclick="shareWhatsApp()">
+                    📱 WhatsApp
+                </button>
+                <button class="btn-secondary" onclick="shareFacebook()">
+                    📘 Facebook
+                </button>
+                <button class="btn-secondary" onclick="shareTwitter()">
+                    🐦 Twitter
+                </button>
+                <button class="btn-secondary" onclick="shareEmail()">
+                    📧 Email
+                </button>
+            </div>
+        </div>
+    </section>
 
-                    <div style="margin-top: 1.5rem;">
-                        <a href="withdrawal-request.html" class="btn-premium" style="text-decoration: none; display: block; text-align: center;">
-                            💳 Withdraw Earnings
-                        </a>
-                    </div>
+    <!-- How It Works -->
+    <section class="premium-container">
+        <div class="premium-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🎯 How It Works</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div style="text-align: center; padding: 1.5rem; background: var(--off-white); border-radius: 12px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">1</div>
+                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">Share Your Link</h3>
+                    <p style="color: var(--muted-rose);">Share your unique referral link with friends</p>
                 </div>
-
-                <div class="premium-card">
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">📋 Referral History</h3>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
-                            <div>
-                                <div style="font-weight: 600; color: var(--dark-brown);">Sarah M.</div>
-                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Joined Jan 15 • Mentorship Program</div>
-                            </div>
-                            <span style="color: #27AE60; font-weight: 600;">+KES 300</span>
-                        </div>
-
-                        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
-                            <div>
-                                <div style="font-weight: 600; color: var(--dark-brown);">Mike T.</div>
-                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Joined Jan 12 • Referral Program</div>
-                            </div>
-                            <span style="color: #27AE60; font-weight: 600;">+KES 300</span>
-                        </div>
-
-                        <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
-                            <div>
-                                <div style="font-weight: 600; color: var(--dark-brown);">Lisa R.</div>
-                                <div style="color: var(--muted-rose); font-size: 0.9rem;">Joined Jan 10 • Mentorship Program</div>
-                            </div>
-                            <span style="color: #27AE60; font-weight: 600;">+KES 300</span>
-                        </div>
-                    </div>
+                
+                <div style="text-align: center; padding: 1.5rem; background: var(--off-white); border-radius: 12px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">2</div>
+                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">They Register</h3>
+                    <p style="color: var(--muted-rose);">Friends register using your link</p>
+                </div>
+                
+                <div style="text-align: center; padding: 1.5rem; background: var(--off-white); border-radius: 12px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">3</div>
+                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">They Pay</h3>
+                    <p style="color: var(--muted-rose);">Friends complete KES 500 registration</p>
+                </div>
+                
+                <div style="text-align: center; padding: 1.5rem; background: var(--off-white); border-radius: 12px;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">4</div>
+                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">You Earn</h3>
+                    <p style="color: var(--muted-rose);">Get KES 300 for each successful referral</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Referral History -->
+    <section class="premium-container">
+        <div class="premium-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📊 Referral History</h2>
+            
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody id="referralHistory">
+                        <!-- Referral history will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <button class="btn-secondary" onclick="loadMoreHistory()">
+                    📄 Load More History
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Withdrawal Section -->
+    <section class="premium-container">
+        <div class="premium-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💳 Withdraw Earnings</h2>
+            
+            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: end;">
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Withdrawal Amount (KES)</label>
+                            <input type="number" id="withdrawalAmount" class="form-control" 
+                                   min="100" max="50000" placeholder="Min: KES 100">
+                            <small style="color: var(--muted-rose);">Available: <span id="availableBalance">KES 0</span></small>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">MPesa Number</label>
+                            <input type="tel" id="withdrawalPhone" class="form-control" 
+                                   placeholder="2547XXXXXXXX">
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-premium" onclick="requestWithdrawal()" style="width: 100%; margin-top: 1rem;">
+                    💰 Request Withdrawal
+                </button>
+            </div>
+            
+            <div style="text-align: center;">
+                <p style="color: var(--muted-rose);">
+                    ⏳ Withdrawals processed within 24-48 hours<br>
+                    📞 Contact support for urgent requests
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer -->
     <footer class="premium-footer">
         <div class="footer-content">
             <div>
-                <h3>Referral Program</h3>
-                <p>Earn KES 300 per referral</p>
+                <h3>Referral Support</h3>
                 <p>Email: crowntradeacademy@gmail.com</p>
+                <p>Phone: +254 700 000 000</p>
+                <p>WhatsApp: +254 700 000 000</p>
             </div>
             <div>
                 <h3>Quick Links</h3>
                 <p><a href="client-dashboard.html" style="color: var(--warm-beige); text-decoration: none;">Main Dashboard</a></p>
-                <p><a href="withdrawal-request.html" style="color: var(--warm-beige); text-decoration: none;">Withdraw Earnings</a></p>
+                <p><a href="#withdraw" style="color: var(--warm-beige); text-decoration: none;">Withdraw Earnings</a></p>
+                <p><a href="#history" style="color: var(--warm-beige); text-decoration: none;">Referral History</a></p>
             </div>
             <div>
-                <h3>Support</h3>
-                <p>Referral Questions?</p>
-                <p>Earnings Assistance</p>
+                <h3>Program Info</h3>
+                <p>KES 300 per referral</p>
+                <p>Min withdrawal: KES 100</p>
+                <p>24/7 processing</p>
             </div>
         </div>
         <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
@@ -196,26 +228,182 @@
     </footer>
 
     <script>
+        // Initialize referral dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadReferralData();
+            generateReferralLink();
+            checkReferralAccess();
+        });
+
+        // Check if user has referral access
+        function checkReferralAccess() {
+            const clientPackage = localStorage.getItem('clientPackage');
+            const referralApproved = localStorage.getItem('referralApproved');
+            
+            if (clientPackage !== 'referral-only' && clientPackage !== 'combined') {
+                if (referralApproved !== 'true') {
+                    alert('You need to join the referral program first!');
+                    window.location.href = 'register.html';
+                    return;
+                }
+            }
+        }
+
+        // Load referral data
+        function loadReferralData() {
+            const userEmail = localStorage.getItem('clientEmail');
+            const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
+            const userData = referralData[userEmail] || {
+                totalEarnings: 0,
+                totalReferrals: 0,
+                successfulReferrals: 0,
+                pendingEarnings: 0,
+                referralHistory: []
+            };
+
+            // Update stats
+            document.getElementById('totalEarnings').textContent = 'KES ' + userData.totalEarnings.toLocaleString();
+            document.getElementById('totalReferrals').textContent = userData.totalReferrals;
+            document.getElementById('successfulReferrals').textContent = userData.successfulReferrals;
+            document.getElementById('pendingEarnings').textContent = 'KES ' + userData.pendingEarnings.toLocaleString();
+            document.getElementById('availableBalance').textContent = 'KES ' + userData.totalEarnings.toLocaleString();
+
+            // Load referral history
+            loadReferralHistory(userData.referralHistory);
+        }
+
+        // Generate unique referral link
+        function generateReferralLink() {
+            const userEmail = localStorage.getItem('clientEmail');
+            const referralCode = btoa(userEmail).slice(0, 8).toUpperCase();
+            const referralLink = `https://crowntrade.com/register?ref=${referralCode}`;
+            
+            document.getElementById('referralLink').value = referralLink;
+            localStorage.setItem('referralCode', referralCode);
+        }
+
+        // Copy referral link
         function copyReferralLink() {
-            const linkInput = document.getElementById('referralLink');
-            linkInput.select();
+            const referralLink = document.getElementById('referralLink');
+            referralLink.select();
             document.execCommand('copy');
+            
             alert('✅ Referral link copied to clipboard!');
         }
 
-        function shareOnWhatsApp() {
-            const message = "Join me at Crown Trade Academy! Pay KES 500 registration and earn through referrals. Use my link: https://crowntradeacademy.com/ref?code=ELITE123";
+        // Share functions
+        function shareWhatsApp() {
+            const link = document.getElementById('referralLink').value;
+            const message = `Join Crown Trade Academy using my referral link: ${link}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        function shareOnEmail() {
-            const subject = "Join Crown Trade Academy - Earn KES 300 per referral";
-            const body = "Join with KES 500 registration and start earning KES 300 for every person you refer! Use my link: https://crowntradeacademy.com/ref?code=ELITE123";
-            window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        function shareFacebook() {
+            const link = document.getElementById('referralLink').value;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`, '_blank');
         }
 
-        function shareOnSocial() {
-            alert('🚀 Share your referral link on social media! Tell friends about the KES 300 earning opportunity!');
+        function shareTwitter() {
+            const link = document.getElementById('referralLink').value;
+            const message = "Join Crown Trade Academy - Amazing trading platform!";
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(link)}`, '_blank');
+        }
+
+        function shareEmail() {
+            const link = document.getElementById('referralLink').value;
+            const subject = "Join Crown Trade Academy with my referral";
+            const body = `Hey! Check out Crown Trade Academy. Use my referral link: ${link}`;
+            window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+        }
+
+        // Load referral history
+        function loadReferralHistory(history) {
+            const historyTable = document.getElementById('referralHistory');
+            historyTable.innerHTML = '';
+
+            if (history.length === 0) {
+                historyTable.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
+                            No referrals yet. Share your link to start earning!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            history.forEach(ref => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-weight: 600; color: var(--dark-brown);">${ref.name}</td>
+                    <td style="color: var(--muted-rose);">${ref.date}</td>
+                    <td>
+                        <span class="status-badge ${ref.status === 'completed' ? 'status-approved' : ref.status === 'pending' ? 'status-pending' : 'status-rejected'}">
+                            ${ref.status}
+                        </span>
+                    </td>
+                    <td style="font-weight: 700; color: var(--dark-brown);">${ref.earnings ? 'KES ' + ref.earnings : '-'}</td>
+                `;
+                historyTable.appendChild(row);
+            });
+        }
+
+        // Request withdrawal
+        function requestWithdrawal() {
+            const amount = parseInt(document.getElementById('withdrawalAmount').value);
+            const phone = document.getElementById('withdrawalPhone').value;
+            const available = parseInt(document.getElementById('availableBalance').textContent.replace('KES ', '').replace(/,/g, ''));
+
+            if (!amount || !phone) {
+                alert('Please enter amount and MPesa number.');
+                return;
+            }
+
+            if (amount < 100) {
+                alert('Minimum withdrawal amount is KES 100.');
+                return;
+            }
+
+            if (amount > available) {
+                alert('Insufficient balance for withdrawal.');
+                return;
+            }
+
+            if (confirm(`Request withdrawal of KES ${amount.toLocaleString()} to ${phone}?`)) {
+                // Save withdrawal request
+                const withdrawal = {
+                    id: 'wd_' + Date.now(),
+                    userEmail: localStorage.getItem('clientEmail'),
+                    amount: amount,
+                    phone: phone,
+                    date: new Date().toISOString(),
+                    status: 'pending'
+                };
+
+                const withdrawals = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
+                withdrawals.push(withdrawal);
+                localStorage.setItem('withdrawalRequests', JSON.stringify(withdrawals));
+
+                alert('✅ Withdrawal request submitted! Processing within 24-48 hours.');
+                
+                // Reset form
+                document.getElementById('withdrawalAmount').value = '';
+                document.getElementById('withdrawalPhone').value = '';
+            }
+        }
+
+        function loadMoreHistory() {
+            alert('Loading more referral history...');
+            // In real implementation, this would load paginated data
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('clientLoggedIn');
+                localStorage.removeItem('clientEmail');
+                localStorage.removeItem('clientPackage');
+                window.location.href = 'index.html';
+            }
         }
     </script>
 </body>
