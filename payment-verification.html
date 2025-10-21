@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Premium Header -->
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <span style="color: var(--warm-beige);">Complete Payment</span>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Payment Hero Section -->
+    <section class="premium-container" style="padding: 2rem 0;">
+        <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <div>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰 Complete Your Registration</h1>
+                    <p style="font-size: 1.1rem; font-weight: 600;">Follow the instructions below to complete your payment</p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Package Selected</div>
+                    <div style="font-size: 1rem; font-weight: 700;" id="packageDisplay">Mentorship Program</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Instructions -->
+    <section class="premium-container">
+        <div class="premium-card">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
+                <h2 style="color: var(--dark-brown); margin-bottom: 1rem;">Payment Pending</h2>
+                <p style="color: var(--muted-rose); font-size: 1.1rem;">Complete your payment to activate your account</p>
+            </div>
+
+            <!-- Dynamic Payment Instructions -->
+            <div id="paymentInstructions">
+                <!-- Payment instructions will be loaded here dynamically -->
+            </div>
+
+            <!-- Payment Amount -->
+            <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; text-align: center; margin: 2rem 0;">
+                <div style="font-size: 0.9rem; color: var(--muted-rose); margin-bottom: 0.5rem;">Total Amount to Pay</div>
+                <div style="font-size: 3rem; font-weight: 700; color: var(--dark-brown);" id="paymentAmount">KES 50,000</div>
+                <div style="color: var(--muted-rose); font-size: 0.9rem;" id="packageDescription">Mentorship Program - Full Access</div>
+            </div>
+
+            <!-- Verification Message -->
+            <div class="payment-notice">
+                <h3 style="margin-bottom: 1rem;">📧 Important Verification Notice</h3>
+                <p style="margin: 0; font-weight: 600;" id="verificationMessage">
+                    Kindly before payment contact us through our email crowntradeacademy@gmail.com for verification and payment instructions. 
+                    All transactions require verification for security purposes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Actions -->
+    <section class="premium-container">
+        <div class="premium-card">
+            <h3 style="margin-bottom: 1.5rem; color: var(--dark-brown); text-align: center;">✅ Confirm Your Payment</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <button class="btn-premium" onclick="checkPaymentStatus()" style="padding: 1.2rem;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">✅</div>
+                    <div>I've Made Payment</div>
+                    <div style="font-size: 0.8rem; opacity: 0.8;">Verify & Activate Account</div>
+                </button>
+                
+                <button class="btn-secondary" onclick="contactSupport()" style="padding: 1.2rem;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
+                    <div>Need Help?</div>
+                    <div style="font-size: 0.8rem; opacity: 0.8;">Contact Support</div>
+                </button>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="btn-secondary" onclick="goBackToPackage()" style="padding: 0.8rem 2rem;">
+                    ← Back to Package Selection
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Status -->
+    <section class="premium-container">
+        <div class="premium-card" id="paymentStatusSection" style="display: none;">
+            <div style="text-align: center;">
+                <div id="statusIcon" style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
+                <h3 id="statusTitle" style="color: var(--dark-brown); margin-bottom: 1rem;">Checking Payment Status</h3>
+                <p id="statusMessage" style="color: var(--muted-rose); margin-bottom: 2rem;">
+                    Please wait while we verify your payment...
+                </p>
+                <div id="statusProgress" style="background: var(--off-white); padding: 1rem; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Payment Verification</span>
+                        <span id="progressText">Checking...</span>
+                    </div>
+                    <div style="background: var(--light-taupe); height: 6px; border-radius: 3px; overflow: hidden;">
+                        <div id="progressBar" style="background: var(--warm-beige); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="premium-container">
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 2rem 0;">
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">🔒</div>
+                Secure Payment
+            </div>
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">⚡</div>
+                Instant Verification
+            </div>
+            <div class="trust-badge">
+                <div style="font-size: 1.2rem; margin-right: 0.5rem;">📞</div>
+                24/7 Support
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer -->
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Need Help?</h3>
+                <p>Email: crowntradeacademy@gmail.com</p>
+                <p>Phone: +254 700 000 000</p>
+                <p>WhatsApp: +254 700 000 000</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="index.html" style="color: var(--warm-beige); text-decoration: none;">Home</a></p>
+                <p><a href="register.html" style="color: var(--warm-beige); text-decoration: none;">Register</a></p>
+                <p><a href="login.html" style="color: var(--warm-beige); text-decoration: none;">Login</a></p>
+            </div>
+            <div>
+                <h3>Security</h3>
+                <p>SSL Encrypted</p>
+                <p>Verified Payments</p>
+                <p>Secure Processing</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize payment page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPaymentDetails();
+            setupPaymentInstructions();
+        });
+
+        // Load package and payment details
+        function loadPaymentDetails() {
+            const selectedPackage = localStorage.getItem('selectedPackage');
+            const packageAmount = localStorage.getItem('packageAmount');
+            
+            if (!selectedPackage || !packageAmount) {
+                alert('No package selected. Redirecting to registration...');
+                window.location.href = 'register.html';
+                return;
+            }
+
+            // Display package info
+            const packageNames = {
+                'mentorship-only': 'Mentorship Program',
+                'referral-only': 'Referral Program', 
+                'combined': 'Combined Program'
+            };
+
+            const packageDescriptions = {
+                'mentorship-only': 'Elite 1-on-1 Trading Mentorship',
+                'referral-only': 'Referral Program Registration',
+                'combined': 'Mentorship + Referral Program'
+            };
+
+            document.getElementById('packageDisplay').textContent = packageNames[selectedPackage] || selectedPackage;
+            document.getElementById('paymentAmount').textContent = 'KES ' + parseInt(packageAmount).toLocaleString();
+            document.getElementById('packageDescription').textContent = packageDescriptions[selectedPackage] || 'Full Platform Access';
+
+            // Generate unique payment reference
+            const paymentReference = generatePaymentReference();
+            localStorage.setItem('paymentReference', paymentReference);
+        }
+
+        // Setup dynamic payment instructions based on admin settings
+        function setupPaymentInstructions() {
+            const paymentSettings = getPaymentSettings();
+            const packageAmount = localStorage.getItem('packageAmount');
+            const paymentReference = localStorage.getItem('paymentReference');
+            
+            const instructionsContainer = document.getElementById('paymentInstructions');
+            let instructionsHTML = '';
+
+            switch(paymentSettings.activeMethod) {
+                case 'phone':
+                    instructionsHTML = `
+                        <div class="payment-method">
+                            <h3>📱 Pay via MPesa to Phone Number</h3>
+                            <div class="payment-details">
+                                <div class="detail-item">
+                                    <span>Send to:</span>
+                                    <strong>${paymentSettings.mpesaNumber}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Amount:</span>
+                                    <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Reference:</span>
+                                    <strong>${paymentReference}</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="instructions">
+                                <h4>Step-by-Step Instructions:</h4>
+                                <ol>
+                                    <li>Go to <strong>MPesa</strong> on your phone</li>
+                                    <li>Select <strong>"Send Money"</strong></li>
+                                    <li>Enter phone number: <strong>${paymentSettings.mpesaNumber}</strong></li>
+                                    <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
+                                    <li>Enter reference: <strong>${paymentReference}</strong></li>
+                                    <li>Enter your MPesa PIN</li>
+                                    <li>Wait for confirmation message</li>
+                                </ol>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'till':
+                    instructionsHTML = `
+                        <div class="payment-method">
+                            <h3>🏪 Pay via MPesa Till Number</h3>
+                            <div class="payment-details">
+                                <div class="detail-item">
+                                    <span>Till Number:</span>
+                                    <strong>${paymentSettings.tillNumber}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Amount:</span>
+                                    <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Reference:</span>
+                                    <strong>${paymentReference}</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="instructions">
+                                <h4>Step-by-Step Instructions:</h4>
+                                <ol>
+                                    <li>Go to <strong>MPesa</strong> on your phone</li>
+                                    <li>Select <strong>"Lipa Na MPesa"</strong></li>
+                                    <li>Select <strong>"Buy Goods & Services"</strong></li>
+                                    <li>Enter Till Number: <strong>${paymentSettings.tillNumber}</strong></li>
+                                    <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
+                                    <li>Enter reference: <strong>${paymentReference}</strong></li>
+                                    <li>Enter your MPesa PIN</li>
+                                    <li>Wait for confirmation message</li>
+                                </ol>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'paybill':
+                    instructionsHTML = `
+                        <div class="payment-method">
+                            <h3>🏦 Pay via MPesa PayBill</h3>
+                            <div class="payment-details">
+                                <div class="detail-item">
+                                    <span>PayBill Number:</span>
+                                    <strong>${paymentSettings.paybillNumber}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Account Number:</span>
+                                    <strong>${paymentReference}</strong>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Amount:</span>
+                                    <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="instructions">
+                                <h4>Step-by-Step Instructions:</h4>
+                                <ol>
+                                    <li>Go to <strong>MPesa</strong> on your phone</li>
+                                    <li>Select <strong>"Lipa Na MPesa"</strong></li>
+                                    <li>Select <strong>"PayBill"</strong></li>
+                                    <li>Enter Business No: <strong>${paymentSettings.paybillNumber}</strong></li>
+                                    <li>Enter Account No: <strong>${paymentReference}</strong></li>
+                                    <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
+                                    <li>Enter your MPesa PIN</li>
+                                    <li>Wait for confirmation message</li>
+                                </ol>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            instructionsContainer.innerHTML = instructionsHTML;
+
+            // Load verification message from settings
+            const savedSettings = localStorage.getItem('paymentSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                if (settings.instructions && settings.instructions.verificationMessage) {
+                    document.getElementById('verificationMessage').textContent = settings.instructions.verificationMessage;
+                }
+            }
+        }
+
+        // Get payment settings
+        function getPaymentSettings() {
+            const defaultSettings = {
+                mpesaNumber: '+254712345678',
+                tillNumber: '123456',
+                paybillNumber: '123456',
+                accountFormat: 'CTA{USER_ID}',
+                activeMethod: 'phone'
+            };
+            
+            const saved = localStorage.getItem('paymentSettings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                return settings.flexiblePayment || defaultSettings;
+            }
+            
+            return defaultSettings;
+        }
+
+        // Generate unique payment reference
+        function generatePaymentReference() {
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+            return `CTA${timestamp}${random}`;
+        }
+
+        // Check payment status
+        function checkPaymentStatus() {
+            const statusSection = document.getElementById('paymentStatusSection');
+            statusSection.style.display = 'block';
+            
+            // Scroll to status section
+            statusSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Simulate payment verification process
+            simulatePaymentVerification();
+        }
+
+        // Simulate payment verification
+        function simulatePaymentVerification() {
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const statusIcon = document.getElementById('statusIcon');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            const steps = [
+                { progress: 20, text: 'Checking payment...', icon: '🔍' },
+                { progress: 40, text: 'Verifying transaction...', icon: '💰' },
+                { progress: 60, text: 'Confirming with bank...', icon: '🏦' },
+                { progress: 80, text: 'Activating account...', icon: '⚡' },
+                { progress: 100, text: 'Payment Verified!', icon: '✅' }
+            ];
+            
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    progress = step.progress;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = step.text;
+                    statusIcon.textContent = step.icon;
+                    
+                    if (progress === 100) {
+                        statusTitle.textContent = 'Payment Verified Successfully!';
+                        statusMessage.textContent = 'Your account is being activated...';
+                        completeRegistration();
+                    }
+                }, (index + 1) * 2000);
+            });
+        }
+
+        // Complete registration after payment
+        function completeRegistration() {
+            setTimeout(() => {
+                // Store payment confirmation
+                localStorage.setItem('paymentVerified', 'true');
+                localStorage.setItem('paymentTimestamp', new Date().toISOString());
+                
+                // Redirect to success page or dashboard
+                alert('🎉 Payment verified successfully! Your account is now active.');
+                window.location.href = 'client-dashboard.html';
+            }, 3000);
+        }
+
+        // Contact support
+        function contactSupport() {
+            const email = 'crowntradeacademy@gmail.com';
+            const subject = 'Payment Assistance Required';
+            const body = `I need help with my payment. Payment Reference: ${localStorage.getItem('paymentReference')}`;
+            
+            window.open(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+        }
+
+        // Go back to package selection
+        function goBackToPackage() {
+            if (confirm('Are you sure you want to go back? Your current selection will be saved.')) {
+                window.location.href = 'register.html';
+            }
+        }
+
+        // Handle page refresh/back button
+        window.addEventListener('beforeunload', function(e) {
+            if (!localStorage.getItem('paymentVerified')) {
+                e.preventDefault();
+                e.returnValue = 'Your payment is in progress. Are you sure you want to leave?';
+            }
+        });
+    </script>
+</body>
+</html>
