@@ -14,7 +14,7 @@
             <div style="display: flex; align-items: center; gap: 2rem;">
                 <span style="color: var(--warm-beige);">Referral Dashboard</span>
                 <ul class="nav-links">
-                    <li><a href="client-dashboard.html">My Dashboard</a></li>
+                    <li><a href="client-dashboard.html">Main Dashboard</a></li>
                     <li><a href="referral-dashboard.html" style="color: var(--warm-beige);">Referral Program</a></li>
                     <li><a href="#" onclick="logout()">Logout</a></li>
                 </ul>
@@ -31,8 +31,8 @@
                     <p style="font-size: 1.1rem; font-weight: 600;">Earn KES 300 for every friend you refer!</p>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Your Status</div>
-                    <div style="font-size: 1rem; font-weight: 700;" id="referralStatus">Active</div>
+                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Member Since</div>
+                    <div style="font-size: 1rem; font-weight: 700;" id="memberSince">Loading...</div>
                 </div>
             </div>
         </div>
@@ -67,10 +67,10 @@
         </div>
     </section>
 
-    <!-- Referral Link Section -->
+    <!-- Referral Link & Sharing -->
     <section class="premium-container">
         <div class="premium-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🔗 Your Unique Referral Link</h2>
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🔗 Your Referral Link</h2>
             
             <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
                 <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
@@ -82,18 +82,23 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">📤 Share Your Link</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
                 <button class="btn-secondary" onclick="shareWhatsApp()">
-                    📱 WhatsApp
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
+                    WhatsApp
                 </button>
                 <button class="btn-secondary" onclick="shareFacebook()">
-                    📘 Facebook
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📘</div>
+                    Facebook
                 </button>
                 <button class="btn-secondary" onclick="shareTwitter()">
-                    🐦 Twitter
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🐦</div>
+                    Twitter
                 </button>
                 <button class="btn-secondary" onclick="shareEmail()">
-                    📧 Email
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📧</div>
+                    Email
                 </button>
             </div>
         </div>
@@ -181,7 +186,7 @@
                         <div class="form-group">
                             <label class="form-label">MPesa Number</label>
                             <input type="tel" id="withdrawalPhone" class="form-control" 
-                                   placeholder="2547XXXXXXXX">
+                                   placeholder="2547XXXXXXXX" value="2547">
                         </div>
                     </div>
                 </div>
@@ -196,6 +201,29 @@
                     ⏳ Withdrawals processed within 24-48 hours<br>
                     📞 Contact support for urgent requests
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Withdrawal History -->
+    <section class="premium-container">
+        <div class="premium-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💸 Withdrawal History</h2>
+            
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Transaction ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawalHistory">
+                        <!-- Withdrawal history will be loaded here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -230,22 +258,23 @@
     <script>
         // Initialize referral dashboard
         document.addEventListener('DOMContentLoaded', function() {
+            checkReferralAccess();
             loadReferralData();
             generateReferralLink();
-            checkReferralAccess();
+            loadWithdrawalHistory();
         });
 
         // Check if user has referral access
         function checkReferralAccess() {
             const clientPackage = localStorage.getItem('clientPackage');
-            const referralApproved = localStorage.getItem('referralApproved');
+            const userEmail = localStorage.getItem('clientEmail');
+            const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
+            const userReferralData = referralData[userEmail];
             
-            if (clientPackage !== 'referral-only' && clientPackage !== 'combined') {
-                if (referralApproved !== 'true') {
-                    alert('You need to join the referral program first!');
-                    window.location.href = 'register.html';
-                    return;
-                }
+            if ((clientPackage !== 'referral-only' && clientPackage !== 'combined') && !userReferralData) {
+                alert('You need to join the referral program first!');
+                window.location.href = 'client-dashboard.html';
+                return;
             }
         }
 
@@ -258,7 +287,8 @@
                 totalReferrals: 0,
                 successfulReferrals: 0,
                 pendingEarnings: 0,
-                referralHistory: []
+                referralHistory: [],
+                joinDate: new Date().toISOString()
             };
 
             // Update stats
@@ -267,6 +297,10 @@
             document.getElementById('successfulReferrals').textContent = userData.successfulReferrals;
             document.getElementById('pendingEarnings').textContent = 'KES ' + userData.pendingEarnings.toLocaleString();
             document.getElementById('availableBalance').textContent = 'KES ' + userData.totalEarnings.toLocaleString();
+
+            // Set member since date
+            const joinDate = new Date(userData.joinDate).toLocaleDateString();
+            document.getElementById('memberSince').textContent = joinDate;
 
             // Load referral history
             loadReferralHistory(userData.referralHistory);
@@ -294,7 +328,7 @@
         // Share functions
         function shareWhatsApp() {
             const link = document.getElementById('referralLink').value;
-            const message = `Join Crown Trade Academy using my referral link: ${link}`;
+            const message = `Join Crown Trade Academy using my referral link and earn amazing benefits! ${link}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
         }
 
@@ -305,14 +339,14 @@
 
         function shareTwitter() {
             const link = document.getElementById('referralLink').value;
-            const message = "Join Crown Trade Academy - Amazing trading platform!";
+            const message = "Join Crown Trade Academy - Amazing trading platform! Use my referral link:";
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(link)}`, '_blank');
         }
 
         function shareEmail() {
             const link = document.getElementById('referralLink').value;
             const subject = "Join Crown Trade Academy with my referral";
-            const body = `Hey! Check out Crown Trade Academy. Use my referral link: ${link}`;
+            const body = `Hey! Check out Crown Trade Academy - an amazing trading platform. Use my referral link to get started: ${link}`;
             window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
         }
 
@@ -352,7 +386,9 @@
         function requestWithdrawal() {
             const amount = parseInt(document.getElementById('withdrawalAmount').value);
             const phone = document.getElementById('withdrawalPhone').value;
-            const available = parseInt(document.getElementById('availableBalance').textContent.replace('KES ', '').replace(/,/g, ''));
+            const userEmail = localStorage.getItem('clientEmail');
+            const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
+            const userData = referralData[userEmail] || { totalEarnings: 0 };
 
             if (!amount || !phone) {
                 alert('Please enter amount and MPesa number.');
@@ -364,37 +400,83 @@
                 return;
             }
 
-            if (amount > available) {
+            if (amount > userData.totalEarnings) {
                 alert('Insufficient balance for withdrawal.');
                 return;
             }
 
             if (confirm(`Request withdrawal of KES ${amount.toLocaleString()} to ${phone}?`)) {
-                // Save withdrawal request
+                // Create withdrawal request
                 const withdrawal = {
                     id: 'wd_' + Date.now(),
-                    userEmail: localStorage.getItem('clientEmail'),
+                    userEmail: userEmail,
+                    userName: localStorage.getItem('clientName') || 'User',
                     amount: amount,
                     phone: phone,
                     date: new Date().toISOString(),
-                    status: 'pending'
+                    status: 'pending',
+                    transactionId: 'TXN' + Date.now()
                 };
 
+                // Save to withdrawal requests
                 const withdrawals = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
                 withdrawals.push(withdrawal);
                 localStorage.setItem('withdrawalRequests', JSON.stringify(withdrawals));
 
+                // Update user balance
+                userData.totalEarnings -= amount;
+                referralData[userEmail] = userData;
+                localStorage.setItem('referralData', JSON.stringify(referralData));
+
                 alert('✅ Withdrawal request submitted! Processing within 24-48 hours.');
                 
-                // Reset form
+                // Reset form and reload data
                 document.getElementById('withdrawalAmount').value = '';
-                document.getElementById('withdrawalPhone').value = '';
+                loadReferralData();
+                loadWithdrawalHistory();
             }
+        }
+
+        // Load withdrawal history
+        function loadWithdrawalHistory() {
+            const userEmail = localStorage.getItem('clientEmail');
+            const withdrawals = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
+            const userWithdrawals = withdrawals.filter(wd => wd.userEmail === userEmail);
+            const historyTable = document.getElementById('withdrawalHistory');
+
+            if (userWithdrawals.length === 0) {
+                historyTable.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
+                            No withdrawal history yet.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let historyHTML = '';
+            userWithdrawals.slice(-5).reverse().forEach(wd => {
+                const date = new Date(wd.date).toLocaleDateString();
+                historyHTML += `
+                    <tr>
+                        <td style="color: var(--muted-rose);">${date}</td>
+                        <td style="font-weight: 700; color: var(--dark-brown);">KES ${wd.amount.toLocaleString()}</td>
+                        <td>
+                            <span class="status-badge ${wd.status === 'completed' ? 'status-approved' : wd.status === 'pending' ? 'status-pending' : 'status-rejected'}">
+                                ${wd.status}
+                            </span>
+                        </td>
+                        <td style="color: var(--muted-rose); font-size: 0.9rem;">${wd.transactionId}</td>
+                    </tr>
+                `;
+            });
+
+            historyTable.innerHTML = historyHTML;
         }
 
         function loadMoreHistory() {
             alert('Loading more referral history...');
-            // In real implementation, this would load paginated data
         }
 
         function logout() {
