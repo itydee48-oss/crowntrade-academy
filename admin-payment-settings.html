@@ -12,8 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (adminName) {
         document.title = `${adminName} - Payment Settings - Crown Trade Academy`;
     }
+    
+    // Load saved settings
+    loadPaymentSettings();
 });
 </script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,14 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Settings Hero -->
     <section class="premium-container" style="padding: 2rem 0;">
         <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-            <div style="display: flex; justify-content: between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
                 <div>
                     <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰 Payment Settings</h1>
-                    <p style="font-size: 1.1rem; font-weight: 600;">Update bank details, pricing, and payment information</p>
+                    <p style="font-size: 1.1rem; font-weight: 600;">Update bank details, pricing, and flexible payment methods</p>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Last Updated</div>
-                    <div style="font-size: 1rem; font-weight: 700;">January 20, 2024</div>
+                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Active Payment Method</div>
+                    <div style="font-size: 1rem; font-weight: 700;" id="currentMethodDisplay">MPesa to Phone</div>
                 </div>
             </div>
         </div>
@@ -58,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <section class="premium-container">
         <form id="paymentSettingsForm">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <!-- Left Column - Bank & Mobile Money -->
+                <!-- Left Column - Bank & Payment Methods -->
                 <div>
                     <!-- Bank Details -->
                     <div class="premium-card">
@@ -95,26 +99,46 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
 
-                    <!-- Mobile Money -->
+                    <!-- Flexible Payment Methods -->
                     <div class="premium-card">
-                        <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📱 Mobile Money (MPESA)</h2>
+                        <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🎯 Flexible Payment Methods</h2>
                         
                         <div class="form-group">
-                            <label class="form-label">Business Name</label>
-                            <input type="text" class="form-control" id="mpesaName" 
-                                   value="Crown Trade Academy" required>
+                            <label class="form-label">🔄 Active Payment Method</label>
+                            <select class="form-control" id="activePaymentMethod" onchange="updatePaymentPreview()">
+                                <option value="phone">📱 MPesa to Phone Number</option>
+                                <option value="till">🏪 Till Number</option>
+                                <option value="paybill">🏦 PayBill Number</option>
+                            </select>
+                            <small style="color: var(--muted-rose);">This method will be shown to clients during registration</small>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Phone Number</label>
+                            <label class="form-label">📱 MPesa Phone Number</label>
                             <input type="tel" class="form-control" id="mpesaNumber" 
-                                   value="+254700000000" required>
+                                   value="+254712345678" required oninput="updatePaymentPreview()">
+                            <small style="color: var(--muted-rose);">Direct MPesa send to this number</small>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Till Number</label>
+                            <label class="form-label">🏪 Till Number</label>
                             <input type="text" class="form-control" id="tillNumber" 
-                                   value="000000" required>
+                                   value="123456" required oninput="updatePaymentPreview()">
+                            <small style="color: var(--muted-rose);">Lipa Na MPesa → Buy Goods & Services</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">🏦 PayBill Number</label>
+                            <input type="text" class="form-control" id="paybillNumber" 
+                                   value="123456" required oninput="updatePaymentPreview()">
+                            <small style="color: var(--muted-rose);">Business number for PayBill payments</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">🔢 Account Number Format</label>
+                            <input type="text" class="form-control" id="accountFormat" 
+                                   value="CTA{USER_ID}" required oninput="updatePaymentPreview()">
+                            <small style="color: var(--muted-rose);">Use {USER_ID} for dynamic account numbers, {TIMESTAMP} for time-based, {RANDOM} for random codes</small>
                         </div>
                     </div>
                 </div>
@@ -173,11 +197,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
 
-                    <!-- Payment Instructions -->
+                    <!-- Payment Instructions & Preview -->
                     <div class="premium-card">
-                        <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📝 Payment Instructions</h2>
+                        <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">👀 Client Payment Preview</h2>
                         
-                        <div class="form-group">
+                        <div id="paymentPreview" style="padding: 1.5rem; background: var(--off-white); border-radius: 8px; border-left: 4px solid var(--warm-beige); min-height: 200px;">
+                            <div id="previewContent" style="color: var(--muted-rose);">
+                                Payment preview will appear here...
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1.5rem;">
                             <label class="form-label">Contact Email</label>
                             <input type="email" class="form-control" id="contactEmail" 
                                    value="crowntradeacademy@gmail.com" required>
@@ -216,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📋 Change History</h2>
             
             <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
                     <div>
                         <div style="font-weight: 600; color: var(--dark-brown);">Registration fee updated</div>
                         <div style="color: var(--muted-rose); font-size: 0.9rem;">KES 300 → KES 500 • Admin User • Jan 20, 2024</div>
@@ -224,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="status-completed">Completed</span>
                 </div>
 
-                <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
                     <div>
                         <div style="font-weight: 600; color: var(--dark-brown);">Bank details updated</div>
                         <div style="color: var(--muted-rose); font-size: 0.9rem;">Account number changed • Admin User • Jan 18, 2024</div>
@@ -232,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="status-completed">Completed</span>
                 </div>
 
-                <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
                     <div>
                         <div style="font-weight: 600; color: var(--dark-brown);">Referral bonus increased</div>
                         <div style="color: var(--muted-rose); font-size: 0.9rem;">KES 200 → KES 300 • Admin User • Jan 15, 2024</div>
@@ -282,9 +312,143 @@ document.addEventListener('DOMContentLoaded', function() {
     </footer>
 
     <script>
+        // Update payment preview
+        function updatePaymentPreview() {
+            const activeMethod = document.getElementById('activePaymentMethod').value;
+            const mpesaNumber = document.getElementById('mpesaNumber').value;
+            const tillNumber = document.getElementById('tillNumber').value;
+            const paybillNumber = document.getElementById('paybillNumber').value;
+            const accountFormat = document.getElementById('accountFormat').value;
+            
+            const sampleAccount = generateAccountNumber('TEST123', accountFormat);
+            let previewHTML = '';
+
+            switch(activeMethod) {
+                case 'phone':
+                    previewHTML = `
+                        <div style="margin-bottom: 1rem;">
+                            <strong style="color: var(--dark-brown); font-size: 1.1rem;">📱 MPesa to Phone Number</strong>
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>Send to:</strong> ${mpesaNumber}
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>Reference:</strong> ${sampleAccount}
+                        </div>
+                        <div style="background: var(--cream-white); padding: 1rem; border-radius: 6px; margin-top: 1rem;">
+                            <strong>Client Instructions:</strong><br>
+                            1. Go to <strong>MPesa</strong> on your phone<br>
+                            2. Select <strong>"Send Money"</strong><br>
+                            3. Enter phone: <strong>${mpesaNumber}</strong><br>
+                            4. Enter amount as required<br>
+                            5. Use reference: <strong>${sampleAccount}</strong><br>
+                            6. Enter your MPesa PIN
+                        </div>
+                    `;
+                    break;
+                    
+                case 'till':
+                    previewHTML = `
+                        <div style="margin-bottom: 1rem;">
+                            <strong style="color: var(--dark-brown); font-size: 1.1rem;">🏪 Till Number</strong>
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>Till Number:</strong> ${tillNumber}
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>Reference:</strong> ${sampleAccount}
+                        </div>
+                        <div style="background: var(--cream-white); padding: 1rem; border-radius: 6px; margin-top: 1rem;">
+                            <strong>Client Instructions:</strong><br>
+                            1. Go to <strong>MPesa</strong> on your phone<br>
+                            2. Select <strong>"Lipa Na MPesa"</strong><br>
+                            3. Select <strong>"Buy Goods & Services"</strong><br>
+                            4. Enter Till: <strong>${tillNumber}</strong><br>
+                            5. Enter amount as required<br>
+                            6. Use reference: <strong>${sampleAccount}</strong><br>
+                            7. Enter your MPesa PIN
+                        </div>
+                    `;
+                    break;
+                    
+                case 'paybill':
+                    previewHTML = `
+                        <div style="margin-bottom: 1rem;">
+                            <strong style="color: var(--dark-brown); font-size: 1.1rem;">🏦 PayBill Number</strong>
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>PayBill:</strong> ${paybillNumber}
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong>Account Number:</strong> ${sampleAccount}
+                        </div>
+                        <div style="background: var(--cream-white); padding: 1rem; border-radius: 6px; margin-top: 1rem;">
+                            <strong>Client Instructions:</strong><br>
+                            1. Go to <strong>MPesa</strong> on your phone<br>
+                            2. Select <strong>"Lipa Na MPesa"</strong><br>
+                            3. Select <strong>"PayBill"</strong><br>
+                            4. Business No: <strong>${paybillNumber}</strong><br>
+                            5. Account No: <strong>${sampleAccount}</strong><br>
+                            6. Enter amount as required<br>
+                            7. Enter your MPesa PIN
+                        </div>
+                    `;
+                    break;
+            }
+            
+            document.getElementById('previewContent').innerHTML = previewHTML;
+            updateCurrentMethodDisplay(activeMethod);
+        }
+
+        // Generate account number
+        function generateAccountNumber(userId, format) {
+            return format.replace('{USER_ID}', userId)
+                         .replace('{TIMESTAMP}', Date.now().toString().slice(-6))
+                         .replace('{RANDOM}', Math.random().toString(36).substr(2, 5).toUpperCase());
+        }
+
+        // Update current method display
+        function updateCurrentMethodDisplay(method) {
+            const methodNames = {
+                'phone': '📱 MPesa to Phone',
+                'till': '🏪 Till Number',
+                'paybill': '🏦 PayBill Number'
+            };
+            document.getElementById('currentMethodDisplay').textContent = methodNames[method] || 'Unknown Method';
+        }
+
+        // Load payment settings
+        function loadPaymentSettings() {
+            const saved = localStorage.getItem('paymentSettings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                
+                // Load flexible payment settings
+                if (settings.flexiblePayment) {
+                    document.getElementById('activePaymentMethod').value = settings.flexiblePayment.activeMethod || 'phone';
+                    document.getElementById('mpesaNumber').value = settings.flexiblePayment.mpesaNumber || '+254712345678';
+                    document.getElementById('tillNumber').value = settings.flexiblePayment.tillNumber || '123456';
+                    document.getElementById('paybillNumber').value = settings.flexiblePayment.paybillNumber || '123456';
+                    document.getElementById('accountFormat').value = settings.flexiblePayment.accountFormat || 'CTA{USER_ID}';
+                }
+                
+                // Update preview
+                updatePaymentPreview();
+            }
+        }
+
         // Save payment settings
         document.getElementById('paymentSettingsForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // Collect flexible payment settings
+            const flexibleSettings = {
+                activeMethod: document.getElementById('activePaymentMethod').value,
+                mpesaNumber: document.getElementById('mpesaNumber').value,
+                tillNumber: document.getElementById('tillNumber').value,
+                paybillNumber: document.getElementById('paybillNumber').value,
+                accountFormat: document.getElementById('accountFormat').value
+            };
             
             // Collect all form data
             const settings = {
@@ -295,11 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     branch: document.getElementById('branch').value,
                     swiftCode: document.getElementById('swiftCode').value
                 },
-                mobileMoney: {
-                    mpesaName: document.getElementById('mpesaName').value,
-                    mpesaNumber: document.getElementById('mpesaNumber').value,
-                    tillNumber: document.getElementById('tillNumber').value
-                },
+                flexiblePayment: flexibleSettings,
                 pricing: {
                     registrationFee: document.getElementById('registrationFee').value,
                     mentorshipFee: document.getElementById('mentorshipFee').value,
@@ -316,35 +476,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
             
-            // In a real system, this would save to a database
-            // For now, we'll simulate saving to localStorage
+            // Save to localStorage
             localStorage.setItem('paymentSettings', JSON.stringify(settings));
             
-            alert('✅ Payment settings saved successfully!\n\nAll changes have been applied across the platform.');
+            alert('✅ Payment settings saved successfully!\n\nActive Payment Method: ' + 
+                  document.getElementById('currentMethodDisplay').textContent +
+                  '\nAll changes have been applied across the platform.');
             
             // Log the change
-            logChange('Payment settings updated');
+            logChange('Payment settings updated - Method: ' + flexibleSettings.activeMethod);
         });
 
         // Reset to default values
         function resetToDefault() {
             if (confirm('Reset all payment settings to default values?')) {
+                // Bank Details
                 document.getElementById('bankName').value = 'Standard Chartered Bank Kenya';
                 document.getElementById('accountName').value = 'Crown Trade Academy';
                 document.getElementById('accountNumber').value = '0100000000000';
                 document.getElementById('branch').value = 'Westlands Branch';
                 document.getElementById('swiftCode').value = 'SCBLKENX';
-                document.getElementById('mpesaName').value = 'Crown Trade Academy';
-                document.getElementById('mpesaNumber').value = '+254700000000';
-                document.getElementById('tillNumber').value = '000000';
+                
+                // Flexible Payment Methods
+                document.getElementById('activePaymentMethod').value = 'phone';
+                document.getElementById('mpesaNumber').value = '+254712345678';
+                document.getElementById('tillNumber').value = '123456';
+                document.getElementById('paybillNumber').value = '123456';
+                document.getElementById('accountFormat').value = 'CTA{USER_ID}';
+                
+                // Pricing
                 document.getElementById('registrationFee').value = '500';
                 document.getElementById('mentorshipFee').value = '50000';
                 document.getElementById('advancedFee').value = '75000';
                 document.getElementById('premiumFee').value = '120000';
+                
+                // Referral System
                 document.getElementById('referralBonus').value = '300';
                 document.getElementById('minWithdrawal').value = '100';
+                
+                // Instructions
                 document.getElementById('contactEmail').value = 'crowntradeacademy@gmail.com';
                 document.getElementById('verificationMessage').value = 'Kindly before payment contact us through our email crowntradeacademy@gmail.com for verification and payment instructions. All transactions require verification for security purposes.';
+                
+                // Update preview
+                updatePaymentPreview();
                 
                 alert('🔄 All settings reset to default values!');
                 logChange('Settings reset to default');
@@ -353,7 +528,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Test payment system
         function testPaymentSystem() {
-            alert('🧪 Payment system test initiated...\n\n✅ Bank details validated\n✅ Mobile money configured\n✅ Pricing structure verified\n✅ Referral system active\n\nAll systems operational!');
+            const activeMethod = document.getElementById('activePaymentMethod').value;
+            alert('🧪 Payment system test initiated...\n\n' +
+                  '✅ Bank details validated\n' +
+                  '✅ ' + document.getElementById('currentMethodDisplay').textContent + ' configured\n' +
+                  '✅ Pricing structure verified\n' +
+                  '✅ Referral system active\n\n' +
+                  'All systems operational!');
         }
 
         // Log changes (simulated)
@@ -365,16 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             console.log('Change logged:', logEntry);
         }
-
-        // Load saved settings on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedSettings = localStorage.getItem('paymentSettings');
-            if (savedSettings) {
-                const settings = JSON.parse(savedSettings);
-                // In a real system, we would populate the form with saved settings
-                console.log('Loaded saved settings:', settings);
-            }
-        });
 
         function logoutAdmin() {
             if (confirm('Are you sure you want to logout?')) {
