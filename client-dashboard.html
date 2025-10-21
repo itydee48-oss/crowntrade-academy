@@ -1,17 +1,236 @@
-<!-- In the Quick Stats section, update the Referral Earnings card: -->
-<div class="premium-card" style="text-align: center;">
-    <div style="font-size: 2.5rem; margin-bottom: 1rem;">💎</div>
-    <h3 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Referral Earnings</h3>
-    <p style="font-size: 2rem; color: var(--dark-brown); font-weight: 700;">KES 900</p>
-    <p style="color: var(--muted-rose);">Earn KES 300 per referral</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .package-mentorship { border-left: 4px solid #3498DB; }
+        .package-referral { border-left: 4px solid #9B59B6; }
+        .package-both { border-left: 4px solid #27AE60; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Client Header -->
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <span style="color: var(--warm-beige);" id="clientWelcome">Welcome!</span>
+                <ul class="nav-links">
+                    <li><a href="client-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
+                    <li><a href="#" onclick="logoutClient()">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-<!-- In Recent Activity, update the referral bonus: -->
-<div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
-    <div>
-        <div style="font-weight: 600; color: var(--dark-brown);">Referral Bonus Earned</div>
-        <div style="color: var(--muted-rose); font-size: 0.9rem;">January 15, 2024 • Sarah M joined</div>
-    </div>
-    <span style="color: #27AE60; font-weight: 600;">+KES 300</span>
+    <!-- Package-Based Dashboard -->
+    <section class="premium-container" style="padding: 2rem 0;">
+        <!-- Welcome Section -->
+        <div class="premium-card" style="background: linear-gradient(135deg, var(--dark-brown), #4A3A32); color: white;">
+            <h1>👋 Welcome Back, <span id="clientName">Client</span>!</h1>
+            <p style="color: var(--warm-beige);">Package: <span id="packageType">Loading...</span></p>
+        </div>
 
-</div>
+        <!-- Quick Stats - Dynamic based on package -->
+        <div id="quickStats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+            <!-- Stats will be loaded dynamically based on package -->
+        </div>
+
+        <!-- MENTORSHIP-ONLY PACKAGE -->
+        <div id="mentorshipPackage" class="hidden">
+            <div class="premium-card package-mentorship">
+                <h2>🎓 Mentorship Platform</h2>
+                <p>Access your exclusive trading mentorship content</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <!-- Course Progress -->
+                    <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px;">
+                        <h3>📊 Your Progress</h3>
+                        <div style="margin: 1rem 0;">
+                            <div style="display: flex; justify-content: between;">
+                                <span>Course Completion</span>
+                                <span>65%</span>
+                            </div>
+                            <div style="background: #E0E0E0; height: 8px; border-radius: 4px;">
+                                <div style="background: #3498DB; height: 100%; width: 65%;"></div>
+                            </div>
+                        </div>
+                        <button class="btn-premium" style="width: 100%;">Continue Learning</button>
+                    </div>
+
+                    <!-- Next Session -->
+                    <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px;">
+                        <h3>⏰ Next Session</h3>
+                        <p><strong>Tomorrow, 10:00 AM</strong></p>
+                        <p>Risk Management Strategies</p>
+                        <button class="btn-secondary" style="width: 100%; margin-top: 1rem;">Add to Calendar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REFERRAL-ONLY PACKAGE -->
+        <div id="referralPackage" class="hidden">
+            <div class="premium-card package-referral">
+                <h2>💎 Referral Program</h2>
+                <p>Earn money by referring friends to Crown Trade Academy</p>
+                
+                <!-- Referral Link -->
+                <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h3>🔗 Your Referral Link</h3>
+                    <div style="display: flex; gap: 0.5rem; margin: 1rem 0;">
+                        <input type="text" id="referralLink" value="https://crowntrade.com/ref/CLIENT123" 
+                               style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;" readonly>
+                        <button class="btn-premium" onclick="copyReferralLink()">Copy</button>
+                    </div>
+                    <p><strong>Earn KES 300 for every friend who joins!</strong></p>
+                </div>
+
+                <!-- Your code fragments integrated here -->
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">💎</div>
+                    <h3 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Referral Earnings</h3>
+                    <p style="font-size: 2rem; color: var(--dark-brown); font-weight: 700;">KES 900</p>
+                    <p style="color: var(--muted-rose);">Earn KES 300 per referral</p>
+                </div>
+
+                <!-- Withdrawal Section -->
+                <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem;">
+                    <h3>💰 Withdraw Earnings</h3>
+                    <p>Available: <strong>KES 900</strong></p>
+                    <button class="btn-premium" style="width: 100%; margin-top: 1rem;" onclick="requestWithdrawal()">
+                        Request Withdrawal
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMBINED PACKAGE (Both) -->
+        <div id="combinedPackage" class="hidden">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- Mentorship Side -->
+                <div class="premium-card package-mentorship">
+                    <h2>🎓 Mentorship</h2>
+                    <!-- Mentorship content same as above -->
+                </div>
+
+                <!-- Referral Side -->
+                <div class="premium-card package-referral">
+                    <h2>💎 Referral Program</h2>
+                    <!-- Referral content same as above -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="premium-card">
+            <h2>📈 Recent Activity</h2>
+            <!-- Your activity code fragment integrated -->
+            <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; background: var(--off-white); border-radius: 8px;">
+                <div>
+                    <div style="font-weight: 600; color: var(--dark-brown);">Referral Bonus Earned</div>
+                    <div style="color: var(--muted-rose); font-size: 0.9rem;">January 15, 2024 • Sarah M joined</div>
+                </div>
+                <span style="color: #27AE60; font-weight: 600;">+KES 300</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Check client package and show appropriate dashboard
+        function loadClientDashboard() {
+            const clientPackage = localStorage.getItem('clientPackage') || 'mentorship-only';
+            const clientName = localStorage.getItem('clientName') || 'Client';
+            
+            // Update welcome message
+            document.getElementById('clientName').textContent = clientName;
+            document.getElementById('clientWelcome').textContent = `Welcome, ${clientName}!`;
+            document.getElementById('packageType').textContent = getPackageName(clientPackage);
+            
+            // Hide all packages first
+            document.getElementById('mentorshipPackage').classList.add('hidden');
+            document.getElementById('referralPackage').classList.add('hidden');
+            document.getElementById('combinedPackage').classList.add('hidden');
+            
+            // Show the correct package
+            if (clientPackage === 'mentorship-only') {
+                document.getElementById('mentorshipPackage').classList.remove('hidden');
+                loadMentorshipStats();
+            } else if (clientPackage === 'referral-only') {
+                document.getElementById('referralPackage').classList.remove('hidden');
+                loadReferralStats();
+            } else if (clientPackage === 'combined') {
+                document.getElementById('combinedPackage').classList.remove('hidden');
+                loadCombinedStats();
+            }
+        }
+
+        function getPackageName(packageType) {
+            const packages = {
+                'mentorship-only': 'Mentorship Only',
+                'referral-only': 'Referral Program Only', 
+                'combined': 'Mentorship + Referral Program'
+            };
+            return packages[packageType] || 'Mentorship Only';
+        }
+
+        function loadMentorshipStats() {
+            document.getElementById('quickStats').innerHTML = `
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📚</div>
+                    <h3>Course Progress</h3>
+                    <p style="font-size: 2rem; font-weight: 700;">65%</p>
+                    <p>8/12 sessions</p>
+                </div>
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">⏰</div>
+                    <h3>Next Session</h3>
+                    <p style="font-size: 1.5rem; font-weight: 700;">Tomorrow</p>
+                    <p>10:00 AM</p>
+                </div>
+            `;
+        }
+
+        function loadReferralStats() {
+            document.getElementById('quickStats').innerHTML = `
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">💎</div>
+                    <h3>Referral Earnings</h3>
+                    <p style="font-size: 2rem; font-weight: 700;">KES 900</p>
+                    <p>From 3 referrals</p>
+                </div>
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">👥</div>
+                    <h3>Total Referrals</h3>
+                    <p style="font-size: 2rem; font-weight: 700;">3</p>
+                    <p>Active referrals</p>
+                </div>
+            `;
+        }
+
+        function copyReferralLink() {
+            const linkInput = document.getElementById('referralLink');
+            linkInput.select();
+            document.execCommand('copy');
+            alert('Referral link copied to clipboard!');
+        }
+
+        function requestWithdrawal() {
+            alert('Withdrawal request submitted! Minimum: KES 500');
+        }
+
+        function logoutClient() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Load dashboard when page loads
+        document.addEventListener('DOMContentLoaded', loadClientDashboard);
+    </script>
+</body>
+</html>
