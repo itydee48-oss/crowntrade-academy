@@ -4,7 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Login - Crown Trade Academy</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Premium Nude Color Palette */
+        :root {
+            --nude-dark: #8B7355;
+            --nude-medium: #C4A484;
+            --nude-light: #E8D5C4;
+            --nude-cream: #F5EDE3;
+            --nude-white: #FAF7F2;
+            --gold: #D4AF37;
+            --dark-text: #3A2D28;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--nude-white) 0%, var(--nude-cream) 100%);
+            color: var(--dark-text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Premium Header */
+        .premium-header {
+            background: var(--nude-dark);
+            color: var(--nude-white);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .premium-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--nude-white);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--nude-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        
+        /* Premium Container */
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Luxury Login Card */
+        .login-card {
+            background: var(--nude-white);
+            border: 1px solid var(--nude-light);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(139, 115, 85, 0.1);
+        }
+        
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--nude-dark), var(--nude-medium));
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--nude-dark);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid var(--nude-light);
+            border-radius: 12px;
+            background: var(--nude-cream);
+            color: var(--dark-text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--nude-medium);
+            background: var(--nude-white);
+            box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1);
+        }
+        
+        /* Luxury Button */
+        .btn-luxury {
+            background: linear-gradient(135deg, var(--nude-dark) 0%, var(--nude-medium) 100%);
+            color: var(--nude-white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-luxury:hover {
+            background: linear-gradient(135deg, var(--nude-medium) 0%, var(--nude-dark) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.3);
+        }
+        
+        /* Secondary Button */
+        .btn-secondary {
+            background: transparent;
+            color: var(--nude-dark);
+            border: 2px solid var(--nude-medium);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--nude-medium);
+            color: var(--nude-white);
+        }
+        
+        /* Trust Badges */
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--nude-cream);
+            color: var(--nude-dark);
+            padding: 10px 18px;
+            border-radius: 25px;
+            border: 1px solid var(--nude-light);
+            font-size: 0.9rem;
+            margin: 0.5rem;
+            font-weight: 500;
+        }
+        
+        /* Premium Footer */
+        .premium-footer {
+            background: var(--nude-dark);
+            color: var(--nude-white);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Text Styles */
+        .login-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--nude-dark);
+            font-weight: 300;
+        }
+        
+        .login-subtitle {
+            text-align: center;
+            color: var(--nude-medium);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* New Account Section */
+        .new-account {
+            background: var(--nude-cream);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid var(--nude-light);
+        }
+        
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-2 {
+            margin-top: 2rem;
+        }
+        
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Premium Header -->
@@ -13,56 +261,65 @@
             <a href="index.html" class="logo">Crown Trade Academy</a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="signup.html">Create Account</a></li>
+                <li><a href="register.html">Create Account</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Login Section -->
-    <section class="premium-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-        <div class="premium-card" style="max-width: 450px; width: 100%;">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--dark-brown);">Welcome Back</h1>
-                <p style="color: var(--muted-rose);">Access your elite trading dashboard</p>
+    <section class="premium-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0;">
+        <div class="login-card">
+            <div class="text-center mb-1">
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Access your elite trading dashboard</p>
             </div>
 
             <form id="loginForm">
                 <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" placeholder="your@email.com" required>
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input type="email" class="form-control" placeholder="your@email.com" required id="email">
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password" required>
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" class="form-control" placeholder="Enter your password" required id="password">
                 </div>
 
                 <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem;">
-                        <input type="checkbox" style="accent-color: var(--dark-brown);">
-                        <span style="color: var(--dark-brown);">Remember me</span>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" style="accent-color: var(--nude-dark);">
+                        <span style="color: var(--nude-dark); font-size: 0.9rem;">Remember me</span>
                     </label>
-                    <a href="#" style="color: var(--muted-rose); text-decoration: none;">Forgot Password?</a>
+                    <a href="#" style="color: var(--nude-medium); text-decoration: none; font-size: 0.9rem;">Forgot Password?</a>
                 </div>
 
-                <button type="submit" class="btn-premium" style="width: 100%; margin-bottom: 1.5rem;">
-                    🔐 Access Dashboard
+                <button type="submit" class="btn-luxury">
+                    <i class="fas fa-sign-in-alt"></i> ACCESS DASHBOARD
                 </button>
             </form>
 
-            <div style="text-align: center; padding: 1.5rem; background: var(--off-white); border-radius: 8px; margin: 2rem 0;">
-                <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">New to Crown Trade Academy?</h3>
-                <p style="margin-bottom: 1.5rem; color: var(--muted-rose);">Join our elite mentorship program today</p>
-                <a href="signup.html" class="btn-secondary" style="text-decoration: none; display: inline-block;">
-                    Create Account
+            <!-- New Account Section -->
+            <div class="new-account">
+                <h3 style="margin-bottom: 1rem; color: var(--nude-dark);">
+                    <i class="fas fa-crown"></i> New to Crown Trade Academy?
+                </h3>
+                <p style="margin-bottom: 1.5rem; color: var(--nude-medium);">
+                    Join our elite mentorship program and start your trading journey
+                </p>
+                <a href="register.html" class="btn-secondary">
+                    <i class="fas fa-user-plus"></i> CREATE ACCOUNT
                 </a>
             </div>
 
             <!-- Trust Badges -->
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem;">
-                <span class="trust-badge">🔒 Secure Login</span>
-                <span class="trust-badge">💼 Client Portal</span>
-                <span class="trust-badge">📈 Live Dashboard</span>
+            <div class="text-center mt-2">
+                <span class="trust-badge"><i class="fas fa-shield-alt"></i> Secure Login</span>
+                <span class="trust-badge"><i class="fas fa-chart-line"></i> Live Dashboard</span>
+                <span class="trust-badge"><i class="fas fa-user-tie"></i> Client Portal</span>
             </div>
         </div>
     </section>
@@ -72,12 +329,12 @@
         <div class="footer-content">
             <div>
                 <h3>Crown Trade Academy</h3>
-                <p>Elite Trading Mentorship</p>
+                <p>Premium Trading Education</p>
                 <p>Email: crowntradeacademy@gmail.com</p>
             </div>
             <div>
                 <h3>Support</h3>
-                <p><a href="mailto:crowntradeacademy@gmail.com" style="color: var(--warm-beige); text-decoration: none;">Email Support</a></p>
+                <p><a href="mailto:crowntradeacademy@gmail.com" style="color: var(--nude-light); text-decoration: none;">Email Support</a></p>
                 <p>Login Assistance</p>
                 <p>Account Help</p>
             </div>
@@ -88,25 +345,68 @@
                 <p>Privacy Protected</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--nude-medium);">
+            <p style="color: var(--nude-light);">&copy; 2024 Crown Trade Academy. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/auth.js"></script>
     <script>
-        // Login form handling
+        // Enhanced Login System
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const email = this.querySelector('input[type="email"]').value;
-            const password = this.querySelector('input[type="password"]').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             
             // Simple validation
-            if (email && password) {
-                // For now, just redirect to client dashboard
-                // In production, this would validate credentials
-                window.location.href = 'client-dashboard.html';
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHENTICATING...';
+            submitBtn.disabled = true;
+            
+            // Simulate authentication (replace with real auth)
+            setTimeout(() => {
+                // Check if user exists in localStorage (from registration)
+                const clientEmail = localStorage.getItem('clientEmail');
+                const clientPackage = localStorage.getItem('clientPackage');
+                
+                if (clientEmail === email) {
+                    // Store login state
+                    localStorage.setItem('clientLoggedIn', 'true');
+                    localStorage.setItem('clientEmail', email);
+                    
+                    // Redirect to appropriate dashboard
+                    alert('Login successful! Welcome back.');
+                    window.location.href = 'client-dashboard.html';
+                } else {
+                    // Demo login for testing
+                    if (email === 'demo@crowntrade.com' && password === 'demo123') {
+                        localStorage.setItem('clientLoggedIn', 'true');
+                        localStorage.setItem('clientEmail', 'demo@crowntrade.com');
+                        localStorage.setItem('clientName', 'Demo Client');
+                        localStorage.setItem('clientPackage', 'mentorship-only');
+                        alert('Demo login successful!');
+                        window.location.href = 'client-dashboard.html';
+                    } else {
+                        alert('Invalid credentials. Please try again.\n\nDemo: demo@crowntrade.com / demo123');
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                }
+            }, 1500);
+        });
+        
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('clientLoggedIn') === 'true') {
+                // Optional: Auto-redirect or show welcome message
+                console.log('Client is already logged in');
             }
         });
     </script>
