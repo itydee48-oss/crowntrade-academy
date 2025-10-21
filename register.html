@@ -335,4 +335,18 @@
         });
     </script>
 </body>
-</html>
+</html>// Add this to your existing register.html script:
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing code...
+    
+    // ADD THIS:
+    const redirectToReferral = localStorage.getItem('redirectToReferral');
+    if (redirectToReferral === 'true') {
+        setTimeout(() => {
+            selectPackage('referral-only');
+            localStorage.removeItem('redirectToReferral');
+        }, 1000);
+    }
+});
+
