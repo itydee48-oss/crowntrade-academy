@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Account - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="referral-register.html">Back</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="premium-container" style="padding: 2rem 0; min-height: 80vh;">
+        <div class="premium-card">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">💰</div>
+                <h1 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Activate Your Account</h1>
+                <p style="color: var(--muted-rose);">Pay KES 500 to start earning through referrals</p>
+            </div>
+
+            <!-- Payment Amount -->
+            <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 0.9rem; color: var(--muted-rose);">Registration Fee</div>
+                <div style="font-size: 3rem; font-weight: 700; color: var(--dark-brown);">KES 500</div>
+                <div style="color: var(--muted-rose);">One-time payment</div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="border: 2px solid var(--warm-beige); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📱</div>
+                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">MPesa to Phone</h3>
+                    <div style="text-align: left;">
+                        <p><strong>Send to:</strong> +254 700 000 000</p>
+                        <p><strong>Amount:</strong> KES 500</p>
+                        <p><strong>Reference:</strong> Your Name</p>
+                    </div>
+                </div>
+
+                <div style="border: 2px solid var(--light-taupe); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏪</div>
+                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">Till Number</h3>
+                    <div style="text-align: left;">
+                        <p><strong>Till Number:</strong> 123456</p>
+                        <p><strong>Amount:</strong> KES 500</p>
+                        <p><strong>Business:</strong> Crown Trade</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot Upload -->
+            <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="color: var(--dark-brown); margin-bottom: 1.5rem; text-align: center;">
+                    📸 Upload Payment Proof
+                </h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Select Payment Screenshot</label>
+                    <input type="file" id="paymentProof" accept="image/*" class="form-control" 
+                           style="padding: 1rem; border: 2px dashed var(--muted-rose);" required>
+                    <small style="color: var(--muted-rose);">Upload clear screenshot of MPesa confirmation message</small>
+                </div>
+
+                <div id="uploadPreview" style="margin-top: 1.5rem; text-align: center; display: none;">
+                    <img id="previewImage" style="max-width: 300px; max-height: 300px; border-radius: 8px; border: 2px solid var(--warm-beige);">
+                    <div style="margin-top: 1rem;">
+                        <button type="button" class="btn-secondary" onclick="removeScreenshot()">
+                            Remove Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit for Approval -->
+            <button id="submitBtn" class="btn-premium" style="width: 100%; padding: 1.2rem;" onclick="submitForApproval()">
+                ✅ Submit for Approval
+            </button>
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p style="color: var(--muted-rose); font-size: 0.9rem;">
+                    ⏳ Approval usually takes 1-24 hours. We'll email you once approved.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Need Help?</h3>
+                <p>Email: crowntradeacademy@gmail.com</p>
+                <p>WhatsApp: +254 700 000 000</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Handle file upload preview
+        document.getElementById('paymentProof').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('uploadPreview').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function removeScreenshot() {
+            document.getElementById('paymentProof').value = '';
+            document.getElementById('uploadPreview').style.display = 'none';
+        }
+
+        function submitForApproval() {
+            const paymentProof = document.getElementById('paymentProof').files[0];
+            
+            if (!paymentProof) {
+                alert('Please upload payment proof screenshot!');
+                return;
+            }
+
+            // Get user data
+            const userData = JSON.parse(localStorage.getItem('pendingReferralUser'));
+            if (!userData) {
+                alert('Session expired. Please restart registration.');
+                window.location.href = 'referral-register.html';
+                return;
+            }
+
+            // Create referral application
+            const application = {
+                id: 'ref_' + Date.now(),
+                userData: userData,
+                paymentProof: 'uploaded', // In real system, you'd upload to server
+                status: 'pending',
+                submissionDate: new Date().toISOString(),
+                amount: 500
+            };
+
+            // Save to pending applications
+            let pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
+            pendingApplications.push(application);
+            localStorage.setItem('pendingReferralApplications', JSON.stringify(pendingApplications));
+
+            // Clear temporary data
+            localStorage.removeItem('pendingReferralUser');
+
+            // Show success message
+            alert('✅ Application submitted successfully!\n\nWe will review your payment and activate your account within 24 hours. You will receive an email once approved.');
+            
+            // Redirect to pending page
+            window.location.href = 'referral-pending.html';
+        }
+    </script>
+</body>
+  </html>
