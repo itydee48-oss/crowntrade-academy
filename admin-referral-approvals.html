@@ -6,285 +6,6 @@
     <title>Referral Approvals - Crown Trade Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Luxury Styles for Approval Page */
-        :root {
-            --dark-brown: #3A2D28;
-            --muted-rose: #A48374;
-            --warm-beige: #CBAD8D;
-            --light-taupe: #D1C7BD;
-            --off-white: #EBE3DB;
-            --cream-white: #F1EDE6;
-            --gold-accent: #D4AF37;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-            color: var(--dark-brown);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        .premium-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .luxury-card {
-            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-            border: 1px solid var(--light-taupe);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 1.5rem 0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
-        }
-        
-        .luxury-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
-        }
-        
-        .premium-header {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 1.2rem 0;
-            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 3px solid var(--gold-accent);
-        }
-        
-        .premium-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--warm-beige);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--cream-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--gold-accent);
-        }
-        
-        .admin-badge-luxury {
-            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
-            color: var(--dark-brown);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        
-        .application-card {
-            background: var(--off-white);
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--light-taupe);
-            transition: all 0.3s ease;
-        }
-        
-        .application-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(58, 45, 40, 0.12);
-            border-color: var(--warm-beige);
-        }
-        
-        .luxury-btn {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-            color: var(--cream-white);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .luxury-btn:hover {
-            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.3);
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #27AE60, #2ECC71);
-        }
-        
-        .btn-success:hover {
-            background: linear-gradient(135deg, #2ECC71, #27AE60);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #E74C3C, #C0392B);
-        }
-        
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #C0392B, #E74C3C);
-        }
-        
-        .luxury-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.08);
-        }
-        
-        .luxury-table th {
-            background: linear-gradient(135deg, var(--dark-brown), #4A3A32);
-            color: var(--cream-white);
-            padding: 1.5rem;
-            text-align: left;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .luxury-table td {
-            padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid var(--light-taupe);
-            background: var(--cream-white);
-        }
-        
-        .luxury-table tr:hover td {
-            background: var(--off-white);
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background: var(--cream-white);
-            border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-        
-        .status-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .status-approved {
-            background: rgba(39, 174, 96, 0.1);
-            color: #27AE60;
-            border: 1px solid rgba(39, 174, 96, 0.3);
-        }
-        
-        .status-pending {
-            background: rgba(230, 126, 34, 0.1);
-            color: #E67E22;
-            border: 1px solid rgba(230, 126, 34, 0.3);
-        }
-        
-        .status-rejected {
-            background: rgba(231, 76, 60, 0.1);
-            color: #E74C3C;
-            border: 1px solid rgba(231, 76, 60, 0.3);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark-brown);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--light-taupe);
-            border-radius: 8px;
-            background: var(--off-white);
-            color: var(--dark-brown);
-            font-size: 1rem;
-            font-family: inherit;
-        }
-        
-        .premium-footer {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
-            border-top: 3px solid var(--gold-accent);
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-    </style>
 </head>
 <body>
     <!-- Luxury Header -->
@@ -299,7 +20,7 @@
                 <ul class="nav-links">
                     <li><a href="admin-dashboard.html">Dashboard</a></li>
                     <li><a href="admin-referral-approvals.html" style="color: var(--gold-accent);">Referral Approvals</a></li>
-                    <li><a href="admin-payment-settings.html">Payment Settings</a></li>
+                    <li><a href="admin-withdrawal-approvals.html">Withdrawal Approvals</a></li>
                     <li><span class="admin-badge-luxury" id="adminName">Administrator</span></li>
                     <li><a href="#" onclick="logoutAdmin()" style="color: var(--warm-beige);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
@@ -325,35 +46,6 @@
         </div>
     </section>
 
-    <!-- Quick Stats -->
-    <section class="premium-container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-            <div style="background: var(--off-white); padding: 2rem; border-radius: 16px; text-align: center; border: 2px solid var(--light-taupe);">
-                <div style="font-size: 2.5rem; color: var(--muted-rose); margin-bottom: 1rem;">⏳</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--dark-brown);" id="pendingApplications">0</div>
-                <div style="color: var(--muted-rose); font-weight: 600;">Pending Review</div>
-            </div>
-            
-            <div style="background: var(--off-white); padding: 2rem; border-radius: 16px; text-align: center; border: 2px solid var(--light-taupe);">
-                <div style="font-size: 2.5rem; color: #27AE60; margin-bottom: 1rem;">✅</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--dark-brown);" id="approvedToday">0</div>
-                <div style="color: var(--muted-rose); font-weight: 600;">Approved Today</div>
-            </div>
-            
-            <div style="background: var(--off-white); padding: 2rem; border-radius: 16px; text-align: center; border: 2px solid var(--light-taupe);">
-                <div style="font-size: 2.5rem; color: #E74C3C; margin-bottom: 1rem;">❌</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--dark-brown);" id="rejectedToday">0</div>
-                <div style="color: var(--muted-rose); font-weight: 600;">Rejected Today</div>
-            </div>
-            
-            <div style="background: var(--off-white); padding: 2rem; border-radius: 16px; text-align: center; border: 2px solid var(--light-taupe);">
-                <div style="font-size: 2.5rem; color: var(--gold-accent); margin-bottom: 1rem;">💰</div>
-                <div style="font-size: 1.5rem; font-weight: 700; color: var(--dark-brown);">KES <span id="totalRevenue">0</span></div>
-                <div style="color: var(--muted-rose); font-weight: 600;">Referral Revenue</div>
-            </div>
-        </div>
-    </section>
-
     <!-- Pending Applications -->
     <section class="premium-container">
         <div class="luxury-card">
@@ -362,7 +54,7 @@
                     <i class="fas fa-clock"></i> Pending Applications
                 </h2>
                 <div style="display: flex; gap: 1rem;">
-                    <button class="luxury-btn" onclick="exportApprovals()" style="background: linear-gradient(135deg, #3498DB, #2980B9);">
+                    <button class="luxury-btn" onclick="exportApprovals()">
                         <i class="fas fa-download"></i> Export Data
                     </button>
                     <button class="luxury-btn" onclick="refreshApplications()">
@@ -372,47 +64,7 @@
             </div>
             
             <div id="applicationsList">
-                <div style="text-align: center; padding: 4rem; color: var(--muted-rose);">
-                    <div style="font-size: 5rem; margin-bottom: 1rem;">📭</div>
-                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">No Pending Applications</h3>
-                    <p>All referral applications have been processed successfully.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Approval History -->
-    <section class="premium-container">
-        <div class="luxury-card">
-            <h2 style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.8rem;">
-                <i class="fas fa-history"></i> Approval History
-            </h2>
-            
-            <div style="overflow-x: auto;">
-                <table class="luxury-table">
-                    <thead>
-                        <tr>
-                            <th>Applicant</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Approved By</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="approvalHistory">
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: var(--muted-rose); padding: 3rem;">
-                                No approval history yet.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div style="text-align: center; margin-top: 2rem;">
-                <button class="luxury-btn" onclick="loadMoreHistory()" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
-                    <i class="fas fa-arrow-down"></i> Load More History
-                </button>
+                <!-- Applications will be loaded here -->
             </div>
         </div>
     </section>
@@ -425,7 +77,7 @@
             </h2>
             
             <div id="applicationDetails">
-                <!-- Application details will be loaded here -->
+                <!-- Application details loaded here -->
             </div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
@@ -443,88 +95,27 @@
         </div>
     </div>
 
-    <!-- Rejection Reason Modal -->
-    <div id="rejectionModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown); font-size: 1.8rem;">
-                <i class="fas fa-times"></i> Reject Application
-            </h2>
-            
-            <div class="form-group">
-                <label class="form-label">Rejection Reason</label>
-                <textarea class="form-control" id="rejectionReason" rows="4" placeholder="Please provide reason for rejection... This message will be sent to the applicant."></textarea>
-            </div>
-            
-            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                <button class="luxury-btn btn-danger" onclick="confirmRejection()" style="flex: 1;">
-                    <i class="fas fa-times"></i> Confirm Rejection
-                </button>
-                <button class="luxury-btn" onclick="closeModal('rejectionModal')" style="flex: 1; background: linear-gradient(135deg, #95A5A6, #7F8C8D);">
-                    <i class="fas fa-arrow-left"></i> Cancel
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Luxury Footer -->
-    <footer class="premium-footer">
-        <div class="footer-content">
-            <div>
-                <h3 style="color: var(--gold-accent);">Approval System</h3>
-                <p style="color: var(--warm-beige);">Referral Program Management</p>
-                <p style="color: var(--warm-beige);">Email: crowntradeacademy@gmail.com</p>
-            </div>
-            <div>
-                <h3 style="color: var(--gold-accent);">Quick Actions</h3>
-                <p><a href="#pending" style="color: var(--warm-beige); text-decoration: none;">Pending Applications</a></p>
-                <p><a href="#history" style="color: var(--warm-beige); text-decoration: none;">Approval History</a></p>
-                <p><a href="#" onclick="refreshApplications()" style="color: var(--warm-beige); text-decoration: none;">Refresh List</a></p>
-            </div>
-            <div>
-                <h3 style="color: var(--gold-accent);">System</h3>
-                <p style="color: var(--warm-beige);"><span id="totalProcessed">0</span> Applications Processed</p>
-                <p style="color: var(--warm-beige);"><span id="approvalRate">0%</span> Approval Rate</p>
-                <p style="color: #27AE60;">Auto-backup Enabled</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p style="color: var(--warm-beige);">&copy; 2024 Crown Trade Academy. Premium Admin System.</p>
-        </div>
-    </footer>
-
     <script>
-        // Admin authentication check
+        // Admin authentication
         if (localStorage.getItem('adminLoggedIn') !== 'true') {
             window.location.href = 'admin-login.html';
         }
 
         let currentApplicationId = null;
 
-        // Initialize approval system
         document.addEventListener('DOMContentLoaded', function() {
-            updateAdminWelcome();
             loadPendingApplications();
-            loadApprovalHistory();
-            updateStats();
         });
 
-        function updateAdminWelcome() {
-            const adminName = localStorage.getItem('adminName') || 'Administrator';
-            document.getElementById('adminName').textContent = adminName;
-        }
-
-        // Load pending applications
         function loadPendingApplications() {
-            const applications = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            const pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
             const applicationsList = document.getElementById('applicationsList');
-            
-            document.getElementById('pendingCount').textContent = applications.length;
-            document.getElementById('pendingApplications').textContent = applications.length;
+            document.getElementById('pendingCount').textContent = pendingApplications.length;
 
-            if (applications.length === 0) {
+            if (pendingApplications.length === 0) {
                 applicationsList.innerHTML = `
                     <div style="text-align: center; padding: 4rem; color: var(--muted-rose);">
-                        <div style="font-size: 5rem; margin-bottom: 1rem;">📭</div>
+                        <div style="font-size: 5rem; margin-bottom: 1rem;">🎉</div>
                         <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">No Pending Applications</h3>
                         <p>All referral applications have been processed successfully.</p>
                     </div>
@@ -532,270 +123,59 @@
                 return;
             }
 
-            let applicationsHTML = '';
-            
-            applications.forEach((app) => {
-                const submitDate = new Date(app.submittedAt).toLocaleDateString();
-                const submitTime = new Date(app.submittedAt).toLocaleTimeString();
-                
-                applicationsHTML += `
-                    <div class="application-card">
-                        <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1.5rem;">
-                            <div style="flex: 1;">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--dark-brown); font-size: 1.2rem;">
-                                        ${app.userName ? app.userName.charAt(0).toUpperCase() : 'U'}
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 800; color: var(--dark-brown); font-size: 1.3rem; margin-bottom: 0.3rem;">
-                                            ${app.userName || 'Unknown User'}
-                                        </div>
-                                        <div style="color: var(--muted-rose); font-size: 0.95rem;">
-                                            ${app.userEmail} • ${app.userPhone}
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-                                    <div>
-                                        <div style="font-size: 0.85rem; color: var(--muted-rose); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Payment Reference</div>
-                                        <div style="font-weight: 700; color: var(--dark-brown); font-size: 1.1rem;">${app.paymentReference}</div>
-                                    </div>
-                                    <div>
-                                        <div style="font-size: 0.85rem; color: var(--muted-rose); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Amount Paid</div>
-                                        <div style="font-weight: 700; color: var(--dark-brown); font-size: 1.1rem;">KES ${app.amount.toLocaleString()}</div>
-                                    </div>
-                                    <div>
-                                        <div style="font-size: 0.85rem; color: var(--muted-rose); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Submitted</div>
-                                        <div style="font-weight: 700; color: var(--dark-brown); font-size: 1.1rem;">${submitDate} ${submitTime}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-                                <button class="luxury-btn" onclick="reviewApplication('${app.id}')" style="background: linear-gradient(135deg, #3498DB, #2980B9);">
-                                    <i class="fas fa-eye"></i> Review
-                                </button>
-                                <button class="luxury-btn btn-success" onclick="quickApprove('${app.id}')">
-                                    <i class="fas fa-check"></i> Approve
-                                </button>
-                                <button class="luxury-btn btn-danger" onclick="quickReject('${app.id}')">
-                                    <i class="fas fa-times"></i> Reject
-                                </button>
-                            </div>
+            applicationsList.innerHTML = pendingApplications.map(app => `
+                <div class="application-card" onclick="viewApplication('${app.id}')">
+                    <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">${app.userData.fullName}</h3>
+                            <p style="color: var(--muted-rose); margin: 0;">${app.userData.email} • ${app.userData.phone}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark-brown);">KES 500</div>
+                            <div style="color: var(--muted-rose); font-size: 0.9rem;">${new Date(app.submissionDate).toLocaleDateString()}</div>
                         </div>
                     </div>
-                `;
-            });
-
-            applicationsList.innerHTML = applicationsHTML;
-        }
-
-        // Load approval history
-        function loadApprovalHistory() {
-            const history = JSON.parse(localStorage.getItem('approvalHistory') || '[]');
-            const historyTable = document.getElementById('approvalHistory');
-            
-            if (history.length === 0) {
-                return;
-            }
-
-            // Show latest 10 entries
-            const recentHistory = history.slice(-10).reverse();
-            
-            let historyHTML = '';
-            recentHistory.forEach(record => {
-                const actionDate = new Date(record.processedAt).toLocaleDateString();
-                
-                historyHTML += `
-                    <tr>
-                        <td style="font-weight: 700; color: var(--dark-brown);">
-                            ${record.userName}
-                        </td>
-                        <td style="color: var(--muted-rose);">${actionDate}</td>
-                        <td>
-                            <span class="status-badge ${record.status === 'approved' ? 'status-approved' : 'status-rejected'}">
-                                ${record.status}
-                            </span>
-                        </td>
-                        <td style="color: var(--muted-rose);">${record.processedBy || 'System'}</td>
-                        <td>
-                            <button class="luxury-btn" onclick="viewHistoryDetails('${record.id}')" style="padding: 8px 16px; background: linear-gradient(135deg, #9B59B6, #8E44AD);">
-                                <i class="fas fa-info-circle"></i> Details
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            historyTable.innerHTML = historyHTML;
-        }
-
-        // Update statistics
-        function updateStats() {
-            const pendingApps = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const history = JSON.parse(localStorage.getItem('approvalHistory') || '[]');
-            
-            const today = new Date().toDateString();
-            const approvedToday = history.filter(record => 
-                record.status === 'approved' && 
-                new Date(record.processedAt).toDateString() === today
-            ).length;
-            
-            const rejectedToday = history.filter(record => 
-                record.status === 'rejected' && 
-                new Date(record.processedAt).toDateString() === today
-            ).length;
-
-            const totalRevenue = history
-                .filter(record => record.status === 'approved')
-                .reduce((sum, record) => sum + (record.amount || 500), 0);
-
-            const totalProcessed = history.length;
-            const approvedCount = history.filter(record => record.status === 'approved').length;
-            const approvalRate = totalProcessed > 0 ? Math.round((approvedCount / totalProcessed) * 100) : 0;
-
-            document.getElementById('approvedToday').textContent = approvedToday;
-            document.getElementById('rejectedToday').textContent = rejectedToday;
-            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
-            document.getElementById('totalProcessed').textContent = totalProcessed;
-            document.getElementById('approvalRate').textContent = approvalRate + '%';
-        }
-
-        // Review application in modal
-        function reviewApplication(applicationId) {
-            const applications = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const application = applications.find(app => app.id === applicationId);
-            
-            if (!application) {
-                alert('Application not found!');
-                return;
-            }
-
-            currentApplicationId = applicationId;
-            
-            const submitDate = new Date(application.submittedAt).toLocaleString();
-            
-            document.getElementById('applicationDetails').innerHTML = `
-                <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem; font-size: 1.3rem;">Applicant Information</h3>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                        <div>
-                            <strong style="color: var(--dark-brown);">Full Name:</strong><br>
-                            <span style="color: var(--muted-rose);">${application.userName}</span>
-                        </div>
-                        <div>
-                            <strong style="color: var(--dark-brown);">Email:</strong><br>
-                            <span style="color: var(--muted-rose);">${application.userEmail}</span>
-                        </div>
-                        <div>
-                            <strong style="color: var(--dark-brown);">Phone:</strong><br>
-                            <span style="color: var(--muted-rose);">${application.userPhone}</span>
-                        </div>
-                        <div>
-                            <strong style="color: var(--dark-brown);">Submitted:</strong><br>
-                            <span style="color: var(--muted-rose);">${submitDate}</span>
-                        </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <span class="status-badge status-pending">Pending Review</span>
+                        <button class="luxury-btn btn-success" onclick="event.stopPropagation(); approveApplication('${app.id}')" style="padding: 0.5rem 1rem;">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button class="luxury-btn btn-danger" onclick="event.stopPropagation(); rejectApplication('${app.id}')" style="padding: 0.5rem 1rem;">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
                     </div>
                 </div>
-                
-                <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px;">
-                    <h3 style="color: var(--dark-brown); margin-bottom: 1rem; font-size: 1.3rem;">Payment Details</h3>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                        <div>
-                            <strong style="color: var(--dark-brown);">Payment Reference:</strong><br>
-                            <span style="color: var(--muted-rose);">${application.paymentReference}</span>
-                        </div>
-                        <div>
-                            <strong style="color: var(--dark-brown);">Amount Paid:</strong><br>
-                            <span style="color: var(--muted-rose);">KES ${application.amount.toLocaleString()}</span>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem;">
-                        <strong style="color: var(--dark-brown);">Screenshot Status:</strong><br>
-                        <span class="status-badge status-pending" style="margin-top: 0.5rem; display: inline-block;">Uploaded (Ready for Review)</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('approvalModal').style.display = 'flex';
+            `).join('');
         }
 
-        // Quick approve without modal
-        function quickApprove(applicationId) {
-            if (confirm('Approve this referral application? This will grant the user access to the referral program.')) {
-                approveApplication(applicationId);
-            }
-        }
-
-        // Quick reject without modal
-        function quickReject(applicationId) {
-            currentApplicationId = applicationId;
-            document.getElementById('rejectionModal').style.display = 'flex';
-        }
-
-        // Approve application
-        function approveApplication(applicationId = null) {
-            const appId = applicationId || currentApplicationId;
-            const applications = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const application = applications.find(app => app.id === appId);
+        function approveApplication(appId) {
+            const pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
+            const application = pendingApplications.find(app => app.id === appId);
             
-            if (!application) {
-                alert('Application not found!');
-                return;
-            }
+            if (!application) return;
 
-            // Remove from pending
-            const updatedApplications = applications.filter(app => app.id !== appId);
-            localStorage.setItem('pendingApprovals', JSON.stringify(updatedApplications));
+            // Create approved user
+            const approvedUser = {
+                id: 'user_' + Date.now(),
+                fullName: application.userData.fullName,
+                email: application.userData.email,
+                phone: application.userData.phone,
+                password: application.userData.password,
+                package: 'referral-only',
+                status: 'active',
+                registrationDate: new Date().toISOString(),
+                approvedDate: new Date().toISOString(),
+                approvedBy: localStorage.getItem('adminName') || 'Admin'
+            };
 
-            // Add to approval history
-            const history = JSON.parse(localStorage.getItem('approvalHistory') || '[]');
-            const adminName = localStorage.getItem('adminName') || 'Administrator';
-            
-            history.push({
-                ...application,
-                status: 'approved',
-                processedAt: new Date().toISOString(),
-                processedBy: adminName
-            });
-            
-            localStorage.setItem('approvalHistory', JSON.stringify(history));
-
-            // Activate user referral access
-            activateReferralAccess(application);
-
-            // Send notification to user
-            sendApprovalNotification(application.userEmail, application.userName);
-
-            // Close modal and refresh
-            closeModal('approvalModal');
-            loadPendingApplications();
-            loadApprovalHistory();
-            updateStats();
-            
-            alert('✅ Application approved! User notified and now has referral access.');
-        }
-
-        // Activate user referral access
-        function activateReferralAccess(application) {
-            // Update user's package to include referral access
+            // Save to users
             const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.email === application.userEmail);
-            
-            if (user) {
-                user.package = 'referral-only';
-                user.referralApproved = true;
-                user.referralApprovalDate = new Date().toISOString();
-                localStorage.setItem('users', JSON.stringify(users));
-            }
+            users.push(approvedUser);
+            localStorage.setItem('users', JSON.stringify(users));
 
-            // Create referral account data
+            // Initialize referral data
             const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
-            referralData[application.userEmail] = {
+            referralData[application.userData.email] = {
                 totalEarnings: 0,
                 totalReferrals: 0,
                 successfulReferrals: 0,
@@ -804,124 +184,37 @@
                 joinDate: new Date().toISOString()
             };
             localStorage.setItem('referralData', JSON.stringify(referralData));
-        }
-
-        // Send approval notification
-        function sendApprovalNotification(userEmail, userName) {
-            const notifications = JSON.parse(localStorage.getItem('userNotifications') || '{}');
-            const userNotifications = notifications[userEmail] || [];
-            
-            userNotifications.unshift({
-                id: 'notif_' + Date.now(),
-                type: 'referral_approved',
-                title: 'Referral Program Approved',
-                message: 'Your referral program application has been approved!',
-                timestamp: new Date().toISOString(),
-                read: false
-            });
-            
-            notifications[userEmail] = userNotifications;
-            localStorage.setItem('userNotifications', JSON.stringify(notifications));
-        }
-
-        // Reject application
-        function rejectApplication() {
-            document.getElementById('rejectionModal').style.display = 'flex';
-        }
-
-        // Confirm rejection with reason
-        function confirmRejection() {
-            const rejectionReason = document.getElementById('rejectionReason').value.trim();
-            
-            if (!rejectionReason) {
-                alert('Please provide a rejection reason.');
-                return;
-            }
-
-            const applications = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const application = applications.find(app => app.id === currentApplicationId);
-            
-            if (!application) {
-                alert('Application not found!');
-                return;
-            }
 
             // Remove from pending
-            const updatedApplications = applications.filter(app => app.id !== currentApplicationId);
-            localStorage.setItem('pendingApprovals', JSON.stringify(updatedApplications));
+            const updatedApplications = pendingApplications.filter(app => app.id !== appId);
+            localStorage.setItem('pendingReferralApplications', JSON.stringify(updatedApplications));
 
-            // Add to approval history
-            const history = JSON.parse(localStorage.getItem('approvalHistory') || '[]');
-            const adminName = localStorage.getItem('adminName') || 'Administrator';
-            
-            history.push({
-                ...application,
-                status: 'rejected',
-                processedAt: new Date().toISOString(),
-                processedBy: adminName,
-                rejectionReason: rejectionReason
-            });
-            
-            localStorage.setItem('approvalHistory', JSON.stringify(history));
-
-            // Close modal and refresh
-            closeModal('rejectionModal');
-            document.getElementById('rejectionReason').value = '';
+            alert(`✅ Application approved! ${application.userData.fullName} can now access their referral dashboard.`);
             loadPendingApplications();
-            loadApprovalHistory();
-            updateStats();
-            
-            alert('❌ Application rejected.');
         }
 
-        // Utility functions
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        function rejectApplication(appId) {
+            if (confirm('Are you sure you want to reject this application?')) {
+                const pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
+                const updatedApplications = pendingApplications.filter(app => app.id !== appId);
+                localStorage.setItem('pendingReferralApplications', JSON.stringify(updatedApplications));
+                
+                alert('❌ Application rejected and removed from the system.');
+                loadPendingApplications();
+            }
         }
 
         function refreshApplications() {
             loadPendingApplications();
-            loadApprovalHistory();
-            updateStats();
-            alert('🔄 Applications list refreshed!');
-        }
-
-        function exportApprovals() {
-            const history = JSON.parse(localStorage.getItem('approvalHistory') || '[]');
-            if (history.length === 0) {
-                alert('No data to export.');
-                return;
-            }
-            
-            alert('📊 Exporting approval data to CSV...');
-        }
-
-        function loadMoreHistory() {
-            alert('📄 Loading more approval history...');
-        }
-
-        function viewHistoryDetails(recordId) {
-            alert('🔍 Viewing approval details for record: ' + recordId);
+            alert('Applications list refreshed!');
         }
 
         function logoutAdmin() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('adminLoggedIn');
-                localStorage.removeItem('adminName');
-                localStorage.removeItem('adminRole');
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            const modals = document.getElementsByClassName('modal');
-            for (let modal of modals) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            }
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminRole');
+            localStorage.removeItem('adminName');
+            window.location.href = 'admin-login.html';
         }
     </script>
 </body>
-</html>
+                        </html>
