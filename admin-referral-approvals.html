@@ -8,6 +8,36 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Luxury Styles for Approval Page */
+        :root {
+            --dark-brown: #3A2D28;
+            --muted-rose: #A48374;
+            --warm-beige: #CBAD8D;
+            --light-taupe: #D1C7BD;
+            --off-white: #EBE3DB;
+            --cream-white: #F1EDE6;
+            --gold-accent: #D4AF37;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            color: var(--dark-brown);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
         .luxury-card {
             background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
             border: 1px solid var(--light-taupe);
@@ -17,7 +47,6 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .luxury-card::before {
@@ -28,6 +57,63 @@
             right: 0;
             height: 4px;
             background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
+        }
+        
+        .premium-header {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold-accent);
+        }
+        
+        .premium-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--warm-beige);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--cream-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold-accent);
+        }
+        
+        .admin-badge-luxury {
+            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
+            color: var(--dark-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
         
         .application-card {
@@ -134,15 +220,6 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
         
-        .admin-badge-luxury {
-            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
-            color: var(--dark-brown);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        
         .status-badge {
             padding: 8px 16px;
             border-radius: 20px;
@@ -168,14 +245,53 @@
             color: #E74C3C;
             border: 1px solid rgba(231, 76, 60, 0.3);
         }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light-taupe);
+            border-radius: 8px;
+            background: var(--off-white);
+            color: var(--dark-brown);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .premium-footer {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--gold-accent);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
     </style>
 </head>
 <body>
     <!-- Luxury Header -->
-    <header class="premium-header" style="background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); border-bottom: 3px solid var(--gold-accent);">
+    <header class="premium-header">
         <nav class="premium-nav">
-            <a href="index.html" class="logo" style="display: flex; align-items: center;">
-                <span style="font-size: 2rem; margin-right: 0.5rem;">👑</span>
+            <a href="index.html" class="logo">
+                <span>👑</span>
                 Crown Trade Academy
             </a>
             <div style="display: flex; align-items: center; gap: 2rem;">
@@ -256,7 +372,6 @@
             </div>
             
             <div id="applicationsList">
-                <!-- Applications will be loaded here -->
                 <div style="text-align: center; padding: 4rem; color: var(--muted-rose);">
                     <div style="font-size: 5rem; margin-bottom: 1rem;">📭</div>
                     <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">No Pending Applications</h3>
@@ -337,7 +452,7 @@
             
             <div class="form-group">
                 <label class="form-label">Rejection Reason</label>
-                <textarea class="form-control" id="rejectionReason" rows="4" placeholder="Please provide reason for rejection... This message will be sent to the applicant." style="padding: 1rem; border: 2px solid var(--light-taupe); border-radius: 8px; width: 100%; resize: vertical;"></textarea>
+                <textarea class="form-control" id="rejectionReason" rows="4" placeholder="Please provide reason for rejection... This message will be sent to the applicant."></textarea>
             </div>
             
             <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
@@ -352,7 +467,7 @@
     </div>
 
     <!-- Luxury Footer -->
-    <footer class="premium-footer" style="background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); border-top: 3px solid var(--gold-accent); margin-top: 4rem;">
+    <footer class="premium-footer">
         <div class="footer-content">
             <div>
                 <h3 style="color: var(--gold-accent);">Approval System</h3>
@@ -419,7 +534,7 @@
 
             let applicationsHTML = '';
             
-            applications.forEach((app, index) => {
+            applications.forEach((app) => {
                 const submitDate = new Date(app.submittedAt).toLocaleDateString();
                 const submitTime = new Date(app.submittedAt).toLocaleTimeString();
                 
@@ -482,13 +597,6 @@
             const historyTable = document.getElementById('approvalHistory');
             
             if (history.length === 0) {
-                historyTable.innerHTML = `
-                    <tr>
-                        <td colspan="5" style="text-align: center; color: var(--muted-rose); padding: 3rem;">
-                            No approval history yet.
-                        </td>
-                    </tr>
-                `;
                 return;
             }
 
@@ -609,9 +717,6 @@
                     <div style="margin-top: 1.5rem;">
                         <strong style="color: var(--dark-brown);">Screenshot Status:</strong><br>
                         <span class="status-badge status-pending" style="margin-top: 0.5rem; display: inline-block;">Uploaded (Ready for Review)</span>
-                        <small style="color: var(--muted-rose); display: block; margin-top: 0.5rem;">
-                            <i class="fas fa-info-circle"></i> Screenshot verification required before approval
-                        </small>
                     </div>
                 </div>
             `;
@@ -766,7 +871,7 @@
             loadApprovalHistory();
             updateStats();
             
-            alert('❌ Application rejected. User has been notified.');
+            alert('❌ Application rejected.');
         }
 
         // Utility functions
@@ -789,17 +894,14 @@
             }
             
             alert('📊 Exporting approval data to CSV...');
-            // In production, this would generate and download a CSV file
         }
 
         function loadMoreHistory() {
             alert('📄 Loading more approval history...');
-            // In production, this would load paginated data
         }
 
         function viewHistoryDetails(recordId) {
             alert('🔍 Viewing approval details for record: ' + recordId);
-            // In production, this would show detailed view
         }
 
         function logoutAdmin() {
