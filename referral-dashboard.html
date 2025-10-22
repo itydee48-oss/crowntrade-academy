@@ -4,7 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Referral Dashboard - Crown Trade Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--off-white);
+            border: 1px solid var(--light-taupe);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 115, 85, 0.1);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--nude-medium);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--muted-rose);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .referral-link-container {
+            background: var(--off-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--light-taupe);
+        }
+        
+        .referral-input {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .activity-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--light-taupe);
+            transition: background 0.3s ease;
+        }
+        
+        .activity-item:hover {
+            background: var(--off-white);
+        }
+        
+        .withdrawal-form {
+            background: var(--off-white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+    </style>
 </head>
 <body>
     <!-- Premium Header -->
@@ -12,10 +94,9 @@
         <nav class="premium-nav">
             <a href="index.html" class="logo">Crown Trade Academy</a>
             <div style="display: flex; align-items: center; gap: 2rem;">
-                <span style="color: var(--warm-beige);">Referral Dashboard</span>
+                <span style="color: var(--warm-beige); font-weight: 600;">Referral Dashboard</span>
                 <ul class="nav-links">
-                    <li><a href="client-dashboard.html">Main Dashboard</a></li>
-                    <li><a href="referral-dashboard.html" style="color: var(--warm-beige);">Referral Program</a></li>
+                    <li><a href="referral-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
                     <li><a href="#" onclick="logout()">Logout</a></li>
                 </ul>
             </div>
@@ -27,8 +108,8 @@
         <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
                 <div>
-                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">👥 Referral Program</h1>
-                    <p style="font-size: 1.1rem; font-weight: 600;">Earn KES 300 for every friend you refer!</p>
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">👥 Welcome to Your Referral Dashboard!</h1>
+                    <p style="font-size: 1.1rem; font-weight: 600;" id="welcomeMessage">Start earning through referrals</p>
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 0.9rem; color: var(--dark-brown);">Member Since</div>
@@ -38,7 +119,7 @@
         </div>
     </section>
 
-    <!-- Referral Stats -->
+    <!-- Quick Stats -->
     <section class="premium-container">
         <div class="stats-grid">
             <div class="stat-card">
@@ -72,34 +153,37 @@
         <div class="premium-card">
             <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">🔗 Your Referral Link</h2>
             
-            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <div class="referral-link-container">
+                <p style="color: var(--muted-rose); margin-bottom: 1rem;">
+                    Share this link and earn <strong style="color: var(--dark-brown);">KES 300</strong> for every friend who joins!
+                </p>
+                
+                <div class="referral-input">
                     <input type="text" id="referralLink" readonly 
                            style="flex: 1; padding: 1rem; border: 2px solid var(--light-taupe); border-radius: 8px; background: white; font-size: 1rem;">
                     <button class="btn-premium" onclick="copyReferralLink()" style="padding: 1rem 1.5rem;">
                         📋 Copy Link
                     </button>
                 </div>
-            </div>
-
-            <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">📤 Share Your Link</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                <button class="btn-secondary" onclick="shareWhatsApp()">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
-                    WhatsApp
-                </button>
-                <button class="btn-secondary" onclick="shareFacebook()">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📘</div>
-                    Facebook
-                </button>
-                <button class="btn-secondary" onclick="shareTwitter()">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🐦</div>
-                    Twitter
-                </button>
-                <button class="btn-secondary" onclick="shareEmail()">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📧</div>
-                    Email
-                </button>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                    <button class="btn-secondary" onclick="shareWhatsApp()">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
+                        WhatsApp
+                    </button>
+                    <button class="btn-secondary" onclick="shareFacebook()">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📘</div>
+                        Facebook
+                    </button>
+                    <button class="btn-secondary" onclick="shareTwitter()">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🐦</div>
+                        Twitter
+                    </button>
+                    <button class="btn-secondary" onclick="shareEmail()">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📧</div>
+                        Email
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -137,41 +221,12 @@
         </div>
     </section>
 
-    <!-- Referral History -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📊 Referral History</h2>
-            
-            <div class="admin-table-container">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Earnings</th>
-                        </tr>
-                    </thead>
-                    <tbody id="referralHistory">
-                        <!-- Referral history will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <button class="btn-secondary" onclick="loadMoreHistory()">
-                    📄 Load More History
-                </button>
-            </div>
-        </div>
-    </section>
-
     <!-- Withdrawal Section -->
     <section class="premium-container">
         <div class="premium-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💳 Withdraw Earnings</h2>
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💳 Withdraw Your Earnings</h2>
             
-            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+            <div class="withdrawal-form">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: end;">
                     <div>
                         <div class="form-group">
@@ -186,7 +241,7 @@
                         <div class="form-group">
                             <label class="form-label">MPesa Number</label>
                             <input type="tel" id="withdrawalPhone" class="form-control" 
-                                   placeholder="2547XXXXXXXX" value="2547">
+                                   placeholder="2547XXXXXXXX" value="2547" required>
                         </div>
                     </div>
                 </div>
@@ -196,8 +251,8 @@
                 </button>
             </div>
             
-            <div style="text-align: center;">
-                <p style="color: var(--muted-rose);">
+            <div style="text-align: center; margin-top: 1rem;">
+                <p style="color: var(--muted-rose); font-size: 0.9rem;">
                     ⏳ Withdrawals processed within 24-48 hours<br>
                     📞 Contact support for urgent requests
                 </p>
@@ -205,23 +260,27 @@
         </div>
     </section>
 
-    <!-- Withdrawal History -->
+    <!-- Referral History -->
     <section class="premium-container">
         <div class="premium-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💸 Withdrawal History</h2>
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📊 Your Referral History</h2>
             
-            <div class="admin-table-container">
-                <table class="admin-table">
+            <div style="overflow-x: auto;">
+                <table class="luxury-table">
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Date</th>
-                            <th>Amount</th>
                             <th>Status</th>
-                            <th>Transaction ID</th>
+                            <th>Earnings</th>
                         </tr>
                     </thead>
-                    <tbody id="withdrawalHistory">
-                        <!-- Withdrawal history will be loaded here -->
+                    <tbody id="referralHistory">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 3rem;">
+                                No referrals yet. Share your link to start earning!
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -235,11 +294,9 @@
                 <h3>Referral Support</h3>
                 <p>Email: crowntradeacademy@gmail.com</p>
                 <p>Phone: +254 700 000 000</p>
-                <p>WhatsApp: +254 700 000 000</p>
             </div>
             <div>
                 <h3>Quick Links</h3>
-                <p><a href="client-dashboard.html" style="color: var(--warm-beige); text-decoration: none;">Main Dashboard</a></p>
                 <p><a href="#withdraw" style="color: var(--warm-beige); text-decoration: none;">Withdraw Earnings</a></p>
                 <p><a href="#history" style="color: var(--warm-beige); text-decoration: none;">Referral History</a></p>
             </div>
@@ -247,7 +304,6 @@
                 <h3>Program Info</h3>
                 <p>KES 300 per referral</p>
                 <p>Min withdrawal: KES 100</p>
-                <p>24/7 processing</p>
             </div>
         </div>
         <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
@@ -256,33 +312,28 @@
     </footer>
 
     <script>
-        // Initialize referral dashboard
+        // Check if user is approved referral client
         document.addEventListener('DOMContentLoaded', function() {
-            checkReferralAccess();
-            loadReferralData();
-            generateReferralLink();
-            loadWithdrawalHistory();
-        });
-
-        // Check if user has referral access
-        function checkReferralAccess() {
+            const clientEmail = localStorage.getItem('clientEmail');
             const clientPackage = localStorage.getItem('clientPackage');
-            const userEmail = localStorage.getItem('clientEmail');
-            const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
-            const userReferralData = referralData[userEmail];
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const currentUser = users.find(u => u.email === clientEmail);
             
-            if ((clientPackage !== 'referral-only' && clientPackage !== 'combined') && !userReferralData) {
-                alert('You need to join the referral program first!');
-                window.location.href = 'client-dashboard.html';
+            if (!currentUser || (currentUser.package !== 'referral-only' && currentUser.package !== 'combined')) {
+                alert('Access denied. Please join our referral program first.');
+                window.location.href = 'referral-register.html';
                 return;
             }
-        }
 
-        // Load referral data
-        function loadReferralData() {
-            const userEmail = localStorage.getItem('clientEmail');
+            // Initialize dashboard
+            loadDashboardData();
+            generateReferralLink();
+        });
+
+        function loadDashboardData() {
+            const clientEmail = localStorage.getItem('clientEmail');
             const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
-            const userData = referralData[userEmail] || {
+            const userData = referralData[clientEmail] || {
                 totalEarnings: 0,
                 totalReferrals: 0,
                 successfulReferrals: 0,
@@ -292,36 +343,36 @@
             };
 
             // Update stats
-            document.getElementById('totalEarnings').textContent = 'KES ' + userData.totalEarnings.toLocaleString();
+            document.getElementById('totalEarnings').textContent = 'KES ' + userData.totalEarnings;
             document.getElementById('totalReferrals').textContent = userData.totalReferrals;
             document.getElementById('successfulReferrals').textContent = userData.successfulReferrals;
-            document.getElementById('pendingEarnings').textContent = 'KES ' + userData.pendingEarnings.toLocaleString();
-            document.getElementById('availableBalance').textContent = 'KES ' + userData.totalEarnings.toLocaleString();
+            document.getElementById('pendingEarnings').textContent = 'KES ' + userData.pendingEarnings;
+            document.getElementById('availableBalance').textContent = 'KES ' + userData.totalEarnings;
 
-            // Set member since date
+            // Set member since
             const joinDate = new Date(userData.joinDate).toLocaleDateString();
             document.getElementById('memberSince').textContent = joinDate;
+
+            // Set welcome message
+            document.getElementById('welcomeMessage').textContent = `Hello ${localStorage.getItem('clientName') || 'there'}, start earning today!`;
 
             // Load referral history
             loadReferralHistory(userData.referralHistory);
         }
 
-        // Generate unique referral link
         function generateReferralLink() {
-            const userEmail = localStorage.getItem('clientEmail');
-            const referralCode = btoa(userEmail).slice(0, 8).toUpperCase();
-            const referralLink = `https://crowntrade.com/register?ref=${referralCode}`;
+            const clientEmail = localStorage.getItem('clientEmail');
+            const referralCode = btoa(clientEmail).slice(0, 8).toUpperCase();
+            const referralLink = `https://crowntrade.com/referral-register.html?ref=${referralCode}`;
             
             document.getElementById('referralLink').value = referralLink;
-            localStorage.setItem('referralCode', referralCode);
+            localStorage.setItem('userReferralCode', referralCode);
         }
 
-        // Copy referral link
         function copyReferralLink() {
             const referralLink = document.getElementById('referralLink');
             referralLink.select();
             document.execCommand('copy');
-            
             alert('✅ Referral link copied to clipboard!');
         }
 
@@ -339,56 +390,23 @@
 
         function shareTwitter() {
             const link = document.getElementById('referralLink').value;
-            const message = "Join Crown Trade Academy - Amazing trading platform! Use my referral link:";
+            const message = "Join Crown Trade Academy - Amazing platform! Use my referral:";
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(link)}`, '_blank');
         }
 
         function shareEmail() {
             const link = document.getElementById('referralLink').value;
             const subject = "Join Crown Trade Academy with my referral";
-            const body = `Hey! Check out Crown Trade Academy - an amazing trading platform. Use my referral link to get started: ${link}`;
+            const body = `Hey! Check out Crown Trade Academy. Use my referral link: ${link}`;
             window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
         }
 
-        // Load referral history
-        function loadReferralHistory(history) {
-            const historyTable = document.getElementById('referralHistory');
-            historyTable.innerHTML = '';
-
-            if (history.length === 0) {
-                historyTable.innerHTML = `
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
-                            No referrals yet. Share your link to start earning!
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            history.forEach(ref => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td style="font-weight: 600; color: var(--dark-brown);">${ref.name}</td>
-                    <td style="color: var(--muted-rose);">${ref.date}</td>
-                    <td>
-                        <span class="status-badge ${ref.status === 'completed' ? 'status-approved' : ref.status === 'pending' ? 'status-pending' : 'status-rejected'}">
-                            ${ref.status}
-                        </span>
-                    </td>
-                    <td style="font-weight: 700; color: var(--dark-brown);">${ref.earnings ? 'KES ' + ref.earnings : '-'}</td>
-                `;
-                historyTable.appendChild(row);
-            });
-        }
-
-        // Request withdrawal
         function requestWithdrawal() {
             const amount = parseInt(document.getElementById('withdrawalAmount').value);
             const phone = document.getElementById('withdrawalPhone').value;
-            const userEmail = localStorage.getItem('clientEmail');
+            const clientEmail = localStorage.getItem('clientEmail');
             const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
-            const userData = referralData[userEmail] || { totalEarnings: 0 };
+            const userData = referralData[clientEmail] || { totalEarnings: 0 };
 
             if (!amount || !phone) {
                 alert('Please enter amount and MPesa number.');
@@ -405,88 +423,34 @@
                 return;
             }
 
-            if (confirm(`Request withdrawal of KES ${amount.toLocaleString()} to ${phone}?`)) {
+            if (confirm(`Request withdrawal of KES ${amount} to ${phone}?`)) {
                 // Create withdrawal request
                 const withdrawal = {
-                    id: 'wd_' + Date.now(),
-                    userEmail: userEmail,
+                    id: 'WD' + Date.now(),
+                    userEmail: clientEmail,
                     userName: localStorage.getItem('clientName') || 'User',
                     amount: amount,
                     phone: phone,
                     date: new Date().toISOString(),
-                    status: 'pending',
-                    transactionId: 'TXN' + Date.now()
+                    status: 'pending'
                 };
 
                 // Save to withdrawal requests
-                const withdrawals = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
-                withdrawals.push(withdrawal);
-                localStorage.setItem('withdrawalRequests', JSON.stringify(withdrawals));
+                let withdrawalRequests = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
+                withdrawalRequests.push(withdrawal);
+                localStorage.setItem('withdrawalRequests', JSON.stringify(withdrawalRequests));
 
                 // Update user balance
                 userData.totalEarnings -= amount;
-                referralData[userEmail] = userData;
+                referralData[clientEmail] = userData;
                 localStorage.setItem('referralData', JSON.stringify(referralData));
 
-                alert('✅ Withdrawal request submitted! Processing within 24-48 hours.');
-                
-                // Reset form and reload data
-                document.getElementById('withdrawalAmount').value = '';
-                loadReferralData();
-                loadWithdrawalHistory();
+                alert('✅ Withdrawal request submitted! We will process within 24-48 hours.');
+                loadDashboardData(); // Refresh data
             }
         }
 
-        // Load withdrawal history
-        function loadWithdrawalHistory() {
-            const userEmail = localStorage.getItem('clientEmail');
-            const withdrawals = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
-            const userWithdrawals = withdrawals.filter(wd => wd.userEmail === userEmail);
-            const historyTable = document.getElementById('withdrawalHistory');
-
-            if (userWithdrawals.length === 0) {
-                historyTable.innerHTML = `
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
-                            No withdrawal history yet.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            let historyHTML = '';
-            userWithdrawals.slice(-5).reverse().forEach(wd => {
-                const date = new Date(wd.date).toLocaleDateString();
-                historyHTML += `
-                    <tr>
-                        <td style="color: var(--muted-rose);">${date}</td>
-                        <td style="font-weight: 700; color: var(--dark-brown);">KES ${wd.amount.toLocaleString()}</td>
-                        <td>
-                            <span class="status-badge ${wd.status === 'completed' ? 'status-approved' : wd.status === 'pending' ? 'status-pending' : 'status-rejected'}">
-                                ${wd.status}
-                            </span>
-                        </td>
-                        <td style="color: var(--muted-rose); font-size: 0.9rem;">${wd.transactionId}</td>
-                    </tr>
-                `;
-            });
-
-            historyTable.innerHTML = historyHTML;
-        }
-
-        function loadMoreHistory() {
-            alert('Loading more referral history...');
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('clientLoggedIn');
-                localStorage.removeItem('clientEmail');
-                localStorage.removeItem('clientPackage');
-                window.location.href = 'index.html';
-            }
-        }
-    </script>
-</body>
-</html>
+        function loadReferralHistory(history) {
+            const historyTable = document.getElementById('referralHistory');
+            
+            if (hist
