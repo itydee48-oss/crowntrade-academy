@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Referral Program - Crown Trade Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .registration-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        .step {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--off-white);
+            flex: 1;
+            max-width: 150px;
+        }
+        .step.active {
+            background: var(--warm-beige);
+            color: var(--dark-brown);
+            font-weight: 600;
+        }
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--muted-rose);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+        }
+        .step.active .step-number {
+            background: var(--dark-brown);
+        }
+    </style>
+</head>
+<body>
+    <header class="premium-header">
+        <nav class="premium-nav">
+            <a href="index.html" class="logo">Crown Trade Academy</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Client Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="premium-container" style="padding: 2rem 0; min-height: 80vh;">
+        <!-- Registration Steps -->
+        <div class="registration-steps">
+            <div class="step active">
+                <div class="step-number">1</div>
+                <div>Create Account</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>Pay KES 500</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>Wait Approval</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div>Start Earning</div>
+            </div>
+        </div>
+
+        <div class="premium-card" style="max-width: 500px; margin: 0 auto;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Join Referral Program</h1>
+                <p style="color: var(--muted-rose);">Create your account to start earning</p>
+            </div>
+
+            <form id="referralRegisterForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="+254 XXX XXX XXX" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Create Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Minimum 6 characters" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password" required>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                        <input type="checkbox" style="accent-color: var(--dark-brown); margin-top: 0.2rem;" required>
+                        <span style="color: var(--dark-brown); font-size: 0.9rem;">
+                            I agree to pay KES 500 registration fee and understand I'll earn KES 300 per successful referral
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-premium" style="width: 100%;">
+                    Continue to Payment →
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p style="color: var(--muted-rose); font-size: 0.9rem;">
+                    Already have an account? <a href="referral-login.html" style="color: var(--warm-beige);">Login here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Referral Program</h3>
+                <p>Start earning today</p>
+                <p>Email: crowntradeacademy@gmail.com</p>
+            </div>
+            <div>
+                <h3>Earnings</h3>
+                <p>KES 300 per referral</p>
+                <p>Minimum withdrawal: KES 100</p>
+                <p>24/7 processing</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('referralRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+
+            // Save user data and redirect to payment
+            const userData = {
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                password: password,
+                type: 'referral',
+                status: 'pending_payment',
+                registrationDate: new Date().toISOString()
+            };
+
+            localStorage.setItem('pendingReferralUser', JSON.stringify(userData));
+            
+            // Redirect to payment page
+            window.location.href = 'referral-payment.html';
+        });
+    </script>
+</body>
+    </html>
