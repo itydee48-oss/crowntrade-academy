@@ -156,20 +156,22 @@
 
   <!-- === Firebase Real-time Status Check === -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, collection, query, where, onSnapshot, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, collection, query, where, onSnapshot, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
+    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
       authDomain: "crowntradeacademy-67be1.firebaseapp.com",
       projectId: "crowntradeacademy-67be1",
       storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
       messagingSenderId: "943453710285",
-      appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
-      measurementId: "G-E6Z4VS9S8N"
+      appId: "1:943453710285:web:7f122e722f03f3854d4684",
+      measurementId: "G-7XESVW5YWL"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -212,7 +214,7 @@
           approvedContent.style.display = 'block';
           // Auto-redirect to dashboard after 3 seconds
           setTimeout(() => {
-            window.location.href = 'user-dashboard.html';
+            window.location.href = 'referral-dashboard.html';
           }, 3000);
         } else if (status === 'rejected') {
           rejectedContent.style.display = 'block';
@@ -227,7 +229,7 @@
 
       // Setup dashboard button
       document.getElementById('goToDashboard').addEventListener('click', () => {
-        window.location.href = 'user-dashboard.html';
+        window.location.href = 'referral-dashboard.html';
       });
     });
 
