@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Join Referral Program - Crown Trade Academy</title>
 
-  <!-- === Your Luxury Nude Theme === -->
   <style>
     :root {
       --dark-brown: #3A2D28;
@@ -150,7 +149,7 @@
           </label>
         </div>
 
-        <button type="submit" class="btn-premium">Submit for Approval →</button>
+        <button type="submit" class="btn-premium" id="submitBtn">Submit for Approval →</button>
         <p class="meta-note">Already have an account? <a href="login.html" style="color:var(--warm-beige);">Login here</a></p>
       </form>
     </div>
@@ -171,7 +170,7 @@
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
     import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
 
-    // Your web app's Firebase configuration
+    // Your Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
       authDomain: "crowntradeacademy-67be1.firebaseapp.com",
@@ -192,6 +191,7 @@
     const proofInput = document.getElementById('proof');
     const uploadProgress = document.getElementById('uploadProgress');
     const uploadBar = document.getElementById('uploadBar');
+    const submitBtn = document.getElementById('submitBtn');
 
     const MAX_BYTES = 6 * 1024 * 1024;
 
@@ -207,6 +207,7 @@
       const agree = document.getElementById('agree').checked;
       const file = proofInput.files[0];
 
+      // Validation
       if (!fullName || !email || !phone || !password || !confirmPassword) {
         alert('Please fill out all required fields.');
         return;
@@ -241,14 +242,17 @@
         return;
       }
 
-      const submitBtn = form.querySelector('button[type="submit"]');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
 
       try {
+        // 1. Create user account
+        console.log('Creating user account...');
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid;
+        console.log('User created with UID:', uid);
 
+        // 2. Upload payment proof
         const filePath = `paymentProofs/${uid}/${Date.now()}_${file.name}`;
         const storageReference = storageRef(storage, filePath);
         const uploadTask = uploadBytesResumable(storageReference, file);
@@ -256,41 +260,72 @@
         uploadProgress.style.display = 'block';
         uploadBar.style.width = '0%';
 
+        // Wait for upload to complete
         await new Promise((resolve, reject) => {
-          uploadTask.on('state_changed', (snapshot) => {
-            const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            uploadBar.style.width = pct + '%';
-          }, (err) => {
-            reject(err);
-          }, async () => {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-            await addDoc(collection(db, 'referralApplications'), {
-              uid,
-              fullName,
-              email,
-              phone,
-              paymentProofUrl: downloadURL,
-              paymentProofPath: filePath,
-              status: 'pending',
-              paidConfirmation: true,
-              registeredAt: serverTimestamp(),
-              updatedAt: serverTimestamp()
-            });
-
-            localStorage.setItem('referralUid', uid);
-            localStorage.setItem('userEmail', email);
-
-            resolve();
-          });
+          uploadTask.on('state_changed', 
+            (snapshot) => {
+              // Progress
+              const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+              uploadBar.style.width = pct + '%';
+            }, 
+            (error) => {
+              // Error
+              reject(error);
+            }, 
+            async () => {
+              // Complete
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+              console.log('File uploaded to:', downloadURL);
+              resolve(downloadURL);
+            }
+          );
         });
 
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+        // 3. Save application to Firestore
+        console.log('Saving application to Firestore...');
+        await addDoc(collection(db, 'referralApplications'), {
+          uid: uid,
+          fullName: fullName,
+          email: email,
+          phone: phone,
+          paymentProofUrl: downloadURL,
+          paymentProofPath: filePath,
+          status: 'pending',
+          paidConfirmation: true,
+          registeredAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+
+        console.log('Application saved successfully!');
+
+        // Store user info for pending page
+        localStorage.setItem('referralUid', uid);
+        localStorage.setItem('userEmail', email);
+
+        // Success
         alert('✅ Registration submitted successfully! Awaiting admin approval.');
         window.location.href = 'referral-pending.html';
 
-      } catch (err) {
-        console.error('Submission error:', err);
-        alert('Error submitting registration: ' + (err.message || err));
+      } catch (error) {
+        console.error('Error during registration:', error);
+        
+        let errorMessage = 'Registration failed. Please try again.';
+        
+        if (error.code === 'auth/email-already-in-use') {
+          errorMessage = 'This email is already registered. Please use a different email or login.';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMessage = 'Invalid email address format.';
+        } else if (error.code === 'auth/weak-password') {
+          errorMessage = 'Password is too weak. Use at least 6 characters.';
+        } else if (error.code === 'auth/network-request-failed') {
+          errorMessage = 'Network error. Please check your internet connection.';
+        }
+        
+        alert('Error: ' + errorMessage);
+      } finally {
+        // Reset button state
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit for Approval →';
         uploadProgress.style.display = 'none';
