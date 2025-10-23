@@ -5,8 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Referral Dashboard - Crown Trade Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <style>
+        :root {
+            --dark-brown: #3A2D28;
+            --muted-rose: #A48374;
+            --warm-beige: #CBAD8D;
+            --light-taupe: #D1C7BD;
+            --off-white: #EBE3DB;
+            --cream-white: #F1EDE6;
+            --gold-accent: #D4AF37;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            color: var(--dark-brown);
+            line-height:1.6;
+            min-height:100vh;
+        }
+        .premium-header{
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding:1.2rem 0;
+            box-shadow:0 4px 20px rgba(58,45,40,0.1);
+            border-bottom:3px solid var(--gold-accent);
+        }
+        .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
+        .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
+        .nav-links{ display:flex; gap:2rem; list-style:none; align-items:center; }
+        .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
+        .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+        .premium-card{
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border:1px solid var(--light-taupe);
+            border-radius:20px;
+            padding:2.5rem;
+            margin:1.5rem 0;
+            position:relative;
+            overflow:hidden;
+            box-shadow:0 15px 40px rgba(58,45,40,0.08);
+        }
+        .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
+        .btn-premium{
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+            color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer;
+        }
+        .btn-secondary {
+            background: var(--off-white);
+            color: var(--dark-brown);
+            border: 2px solid var(--light-taupe);
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: var(--warm-beige);
+            border-color: var(--warm-beige);
+        }
+        .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
+        .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -31,7 +92,7 @@
         .stat-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--nude-medium);
+            color: var(--muted-rose);
         }
         
         .stat-number {
@@ -85,6 +146,47 @@
             padding: 2rem;
             border-radius: 12px;
             margin: 1.5rem 0;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: .5rem;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light-taupe);
+            border-radius: 8px;
+            background: white;
+            color: var(--dark-brown);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .luxury-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .luxury-table th,
+        .luxury-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-taupe);
+        }
+        
+        .luxury-table th {
+            background: var(--off-white);
+            color: var(--dark-brown);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -311,102 +413,186 @@
         </div>
     </footer>
 
-    <script>
-        // Check if user is approved referral client
-        document.addEventListener('DOMContentLoaded', function() {
-            const clientEmail = localStorage.getItem('clientEmail');
-            const clientPackage = localStorage.getItem('clientPackage');
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const currentUser = users.find(u => u.email === clientEmail);
-            
-            if (!currentUser || (currentUser.package !== 'referral-only' && currentUser.package !== 'combined')) {
-                alert('Access denied. Please join our referral program first.');
+    <!-- === Firebase Dashboard Integration === -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
+            authDomain: "crowntradeacademy-67be1.firebaseapp.com",
+            projectId: "crowntradeacademy-67be1",
+            storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
+            messagingSenderId: "943453710285",
+            appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
+            measurementId: "G-E6Z4VS9S8N"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Check if user is approved and logged in
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                // Not logged in, redirect to registration
                 window.location.href = 'referral-register.html';
                 return;
             }
 
-            // Initialize dashboard
-            loadDashboardData();
-            generateReferralLink();
+            // Check if user application is approved
+            const applicationQuery = query(
+                collection(db, 'referralApplications'),
+                where('uid', '==', user.uid),
+                where('status', '==', 'approved')
+            );
+            
+            const applicationSnapshot = await getDocs(applicationQuery);
+            if (applicationSnapshot.empty) {
+                // Not approved, redirect to pending page
+                window.location.href = 'referral-pending.html';
+                return;
+            }
+
+            // User is approved, load dashboard data
+            const applicationData = applicationSnapshot.docs[0].data();
+            loadDashboardData(user, applicationData);
+            setupRealTimeUpdates(user.uid);
         });
 
-        function loadDashboardData() {
-            const clientEmail = localStorage.getItem('clientEmail');
-            const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
-            const userData = referralData[clientEmail] || {
-                totalEarnings: 0,
-                totalReferrals: 0,
-                successfulReferrals: 0,
-                pendingEarnings: 0,
-                referralHistory: [],
-                joinDate: new Date().toISOString()
-            };
+        async function loadDashboardData(user, applicationData) {
+            // Set user information
+            document.getElementById('welcomeMessage').textContent = `Hello ${applicationData.fullName}, start earning today!`;
+            document.getElementById('memberSince').textContent = new Date().toLocaleDateString();
+            
+            // Generate referral link
+            const referralLink = `${window.location.origin}/referral-register.html?ref=${user.uid}`;
+            document.getElementById('referralLink').value = referralLink;
 
-            // Update stats
-            document.getElementById('totalEarnings').textContent = 'KES ' + userData.totalEarnings;
-            document.getElementById('totalReferrals').textContent = userData.totalReferrals;
-            document.getElementById('successfulReferrals').textContent = userData.successfulReferrals;
-            document.getElementById('pendingEarnings').textContent = 'KES ' + userData.pendingEarnings;
-            document.getElementById('availableBalance').textContent = 'KES ' + userData.totalEarnings;
+            // Load user stats
+            await loadUserStats(user.uid);
+        }
 
-            // Set member since
-            const joinDate = new Date(userData.joinDate).toLocaleDateString();
-            document.getElementById('memberSince').textContent = joinDate;
+        async function loadUserStats(uid) {
+            // Load referral stats from Firestore
+            const referralsQuery = query(
+                collection(db, 'referrals'),
+                where('referrerId', '==', uid)
+            );
+            
+            const referralsSnapshot = await getDocs(referralsQuery);
+            const referrals = referralsSnapshot.docs.map(doc => doc.data());
+            
+            const totalReferrals = referrals.length;
+            const successfulReferrals = referrals.filter(ref => ref.status === 'completed').length;
+            const totalEarnings = successfulReferrals * 300;
+            const pendingReferrals = referrals.filter(ref => ref.status === 'pending').length;
 
-            // Set welcome message
-            document.getElementById('welcomeMessage').textContent = `Hello ${localStorage.getItem('clientName') || 'there'}, start earning today!`;
+            // Update dashboard stats
+            document.getElementById('totalEarnings').textContent = `KES ${totalEarnings}`;
+            document.getElementById('totalReferrals').textContent = totalReferrals;
+            document.getElementById('successfulReferrals').textContent = successfulReferrals;
+            document.getElementById('pendingEarnings').textContent = `KES ${pendingReferrals * 300}`;
+            document.getElementById('availableBalance').textContent = `KES ${totalEarnings}`;
 
             // Load referral history
-            loadReferralHistory(userData.referralHistory);
+            loadReferralHistory(referrals);
         }
 
-        function generateReferralLink() {
-            const clientEmail = localStorage.getItem('clientEmail');
-            const referralCode = btoa(clientEmail).slice(0, 8).toUpperCase();
-            const referralLink = `https://crowntrade.com/referral-register.html?ref=${referralCode}`;
+        function loadReferralHistory(referrals) {
+            const historyTable = document.getElementById('referralHistory');
             
-            document.getElementById('referralLink').value = referralLink;
-            localStorage.setItem('userReferralCode', referralCode);
+            if (referrals.length === 0) {
+                historyTable.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 3rem;">
+                            No referrals yet. Share your link to start earning!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            historyTable.innerHTML = referrals.map(referral => `
+                <tr>
+                    <td>${referral.referredName || 'New Referral'}</td>
+                    <td>${new Date(referral.createdAt?.toDate()).toLocaleDateString()}</td>
+                    <td>
+                        <span style="
+                            padding: 0.3rem 0.8rem;
+                            border-radius: 20px;
+                            font-size: 0.8rem;
+                            font-weight: 600;
+                            background: ${referral.status === 'completed' ? '#28a745' : 
+                                        referral.status === 'pending' ? '#ffc107' : '#dc3545'};
+                            color: ${referral.status === 'pending' ? 'var(--dark-brown)' : 'white'};
+                        ">
+                            ${referral.status}
+                        </span>
+                    </td>
+                    <td>${referral.status === 'completed' ? 'KES 300' : 'KES 0'}</td>
+                </tr>
+            `).join('');
         }
 
-        function copyReferralLink() {
+        function setupRealTimeUpdates(uid) {
+            // Real-time listener for new referrals
+            const referralsQuery = query(
+                collection(db, 'referrals'),
+                where('referrerId', '==', uid)
+            );
+
+            onSnapshot(referralsQuery, (snapshot) => {
+                const referrals = snapshot.docs.map(doc => doc.data());
+                loadUserStats(uid); // Refresh stats
+            });
+        }
+
+        // Logout function
+        window.logout = async function() {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        };
+
+        // Copy referral link function
+        window.copyReferralLink = function() {
             const referralLink = document.getElementById('referralLink');
             referralLink.select();
             document.execCommand('copy');
             alert('✅ Referral link copied to clipboard!');
-        }
+        };
 
         // Share functions
-        function shareWhatsApp() {
+        window.shareWhatsApp = function() {
             const link = document.getElementById('referralLink').value;
             const message = `Join Crown Trade Academy using my referral link and earn amazing benefits! ${link}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-        }
+        };
 
-        function shareFacebook() {
+        window.shareFacebook = function() {
             const link = document.getElementById('referralLink').value;
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`, '_blank');
-        }
+        };
 
-        function shareTwitter() {
+        window.shareTwitter = function() {
             const link = document.getElementById('referralLink').value;
             const message = "Join Crown Trade Academy - Amazing platform! Use my referral:";
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(link)}`, '_blank');
-        }
+        };
 
-        function shareEmail() {
+        window.shareEmail = function() {
             const link = document.getElementById('referralLink').value;
             const subject = "Join Crown Trade Academy with my referral";
             const body = `Hey! Check out Crown Trade Academy. Use my referral link: ${link}`;
             window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
-        }
+        };
 
-        function requestWithdrawal() {
+        // Withdrawal function
+        window.requestWithdrawal = async function() {
             const amount = parseInt(document.getElementById('withdrawalAmount').value);
             const phone = document.getElementById('withdrawalPhone').value;
-            const clientEmail = localStorage.getItem('clientEmail');
-            const referralData = JSON.parse(localStorage.getItem('referralData') || '{}');
-            const userData = referralData[clientEmail] || { totalEarnings: 0 };
+            const user = auth.currentUser;
 
             if (!amount || !phone) {
                 alert('Please enter amount and MPesa number.');
@@ -418,39 +604,49 @@
                 return;
             }
 
-            if (amount > userData.totalEarnings) {
+            // Get current balance
+            const referralsQuery = query(
+                collection(db, 'referrals'),
+                where('referrerId', '==', user.uid),
+                where('status', '==', 'completed')
+            );
+            
+            const referralsSnapshot = await getDocs(referralsQuery);
+            const totalEarnings = referralsSnapshot.size * 300;
+
+            if (amount > totalEarnings) {
                 alert('Insufficient balance for withdrawal.');
                 return;
             }
 
             if (confirm(`Request withdrawal of KES ${amount} to ${phone}?`)) {
-                // Create withdrawal request
-                const withdrawal = {
-                    id: 'WD' + Date.now(),
-                    userEmail: clientEmail,
-                    userName: localStorage.getItem('clientName') || 'User',
+                // Create withdrawal request in Firestore
+                const withdrawalData = {
+                    userId: user.uid,
+                    userEmail: user.email,
                     amount: amount,
                     phone: phone,
-                    date: new Date().toISOString(),
-                    status: 'pending'
+                    status: 'pending',
+                    requestedAt: new Date(),
+                    processedAt: null
                 };
 
-                // Save to withdrawal requests
-                let withdrawalRequests = JSON.parse(localStorage.getItem('withdrawalRequests') || '[]');
-                withdrawalRequests.push(withdrawal);
-                localStorage.setItem('withdrawalRequests', JSON.stringify(withdrawalRequests));
-
-                // Update user balance
-                userData.totalEarnings -= amount;
-                referralData[clientEmail] = userData;
-                localStorage.setItem('referralData', JSON.stringify(referralData));
-
-                alert('✅ Withdrawal request submitted! We will process within 24-48 hours.');
-                loadDashboardData(); // Refresh data
+                try {
+                    // Add to Firestore
+                    await addDoc(collection(db, 'withdrawalRequests'), withdrawalData);
+                    alert('✅ Withdrawal request submitted! We will process within 24-48 hours.');
+                    
+                    // Clear form
+                    document.getElementById('withdrawalAmount').value = '';
+                    document.getElementById('withdrawalPhone').value = '2547';
+                    
+                    // Refresh dashboard
+                    loadUserStats(user.uid);
+                } catch (error) {
+                    alert('Error submitting withdrawal request: ' + error.message);
+                }
             }
-        }
-
-        function loadReferralHistory(history) {
-            const historyTable = document.getElementById('referralHistory');
-            
-            if (hist
+        };
+    </script>
+</body>
+</html>
