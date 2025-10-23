@@ -344,6 +344,39 @@
             text-align: center;
             margin-bottom: 1rem;
         }
+
+        /* 🚀 ADD REAL-TIME NOTIFICATION STYLES */
+        .live-alert {
+            background: linear-gradient(135deg, #E74C3C, #C0392B);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            animation: pulse 2s infinite;
+            display: none;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .new-registration-badge {
+            background: linear-gradient(135deg, #E67E22, #D35400);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
     </style>
 </head>
 <body>
@@ -367,10 +400,20 @@
         </nav>
     </header>
 
+    <!-- 🚀 REAL-TIME ALERT SECTION -->
+    <section class="premium-container">
+        <div class="live-alert" id="liveAlert">
+            <strong>🚨 LIVE ALERT:</strong> <span id="alertMessage">New registration detected!</span>
+            <button class="luxury-btn" onclick="checkPendingApprovals()" style="margin-left: 1rem; padding: 5px 10px; font-size: 0.8rem;">
+                View Now
+            </button>
+        </div>
+    </section>
+
     <!-- Demo Notice -->
     <section class="premium-container">
         <div class="demo-notice">
-            <strong>🏢 LIVE PRODUCTION MODE</strong> - Admin panel showing real demo data
+            <strong>🏢 LIVE PRODUCTION MODE</strong> - <span id="realTimeStatus">Monitoring registrations in real-time</span>
         </div>
     </section>
 
@@ -389,6 +432,9 @@
                 <div style="text-align: right;">
                     <div style="font-size: 1rem; color: var(--dark-brown); opacity: 0.8;">Super Admin</div>
                     <div style="font-size: 1.3rem; font-weight: 800; color: var(--dark-brown);" id="adminWelcome">Administrator</div>
+                    <div style="font-size: 0.9rem; color: var(--dark-brown); opacity: 0.7; margin-top: 0.5rem;">
+                        <span id="lastUpdate">Last update: Just now</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -401,20 +447,22 @@
                 <div class="action-icon">👥</div>
                 <h3>Referral Approvals</h3>
                 <p>Review new applications</p>
-                <span class="pending-badge" id="pendingReferralsCount">5</span>
+                <span class="pending-badge" id="pendingReferralsCount">0</span>
+                <span class="new-registration-badge" id="newRegistrationsBadge" style="display: none;">NEW!</span>
             </div>
             
             <div class="action-card" onclick="showWithdrawalApprovals()">
                 <div class="action-icon">💸</div>
                 <h3>Withdrawal Requests</h3>
                 <p>Process payments</p>
-                <span class="pending-badge" id="pendingWithdrawalsCount">3</span>
+                <span class="pending-badge" id="pendingWithdrawalsCount">0</span>
             </div>
             
             <div class="action-card" onclick="showClientManagement()">
                 <div class="action-icon">📊</div>
                 <h3>Client Management</h3>
                 <p>View all clients</p>
+                <span class="pending-badge" id="totalClientsCount">0</span>
             </div>
             
             <div class="action-card" onclick="showPaymentSettings()">
@@ -430,25 +478,25 @@
         <div class="luxury-stats">
             <div class="luxury-stat fade-in-up" onclick="showReferralApprovals()">
                 <div class="luxury-stat-icon">👥</div>
-                <div class="luxury-stat-number" id="totalClients">47</div>
+                <div class="luxury-stat-number" id="totalClients">0</div>
                 <div class="luxury-stat-label">Total Clients</div>
             </div>
             
             <div class="luxury-stat fade-in-up">
                 <div class="luxury-stat-icon">💰</div>
-                <div class="luxury-stat-number">KES <span id="totalRevenue">128,500</span></div>
+                <div class="luxury-stat-number">KES <span id="totalRevenue">0</span></div>
                 <div class="luxury-stat-label">Total Revenue</div>
             </div>
             
             <div class="luxury-stat fade-in-up" onclick="showWithdrawalApprovals()">
                 <div class="luxury-stat-icon">⏳</div>
-                <div class="luxury-stat-number" id="pendingWithdrawals">3</div>
+                <div class="luxury-stat-number" id="pendingWithdrawals">0</div>
                 <div class="luxury-stat-label">Pending Withdrawals</div>
             </div>
             
             <div class="luxury-stat fade-in-up" onclick="showReferralApprovals()">
                 <div class="luxury-stat-icon">📈</div>
-                <div class="luxury-stat-number" id="pendingReferrals">5</div>
+                <div class="luxury-stat-number" id="pendingReferrals">0</div>
                 <div class="luxury-stat-label">Pending Referrals</div>
             </div>
         </div>
@@ -471,30 +519,7 @@
                     </tr>
                 </thead>
                 <tbody id="recentActivity">
-                    <tr>
-                        <td style="font-weight: 600; color: var(--dark-brown);">Lisa Brown</td>
-                        <td style="color: var(--muted-rose);">Joined Mentorship Program</td>
-                        <td style="color: var(--muted-rose);">2 hours ago</td>
-                        <td><span class="status-badge status-approved">Completed</span></td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600; color: var(--dark-brown);">David Wilson</td>
-                        <td style="color: var(--muted-rose);">Referred 2 members</td>
-                        <td style="color: var(--muted-rose);">4 hours ago</td>
-                        <td><span class="status-badge status-approved">Success</span></td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600; color: var(--dark-brown);">Emma Davis</td>
-                        <td style="color: var(--muted-rose);">Requested Withdrawal</td>
-                        <td style="color: var(--muted-rose);">6 hours ago</td>
-                        <td><span class="status-badge status-pending">Pending</span></td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600; color: var(--dark-brown);">John Kamau</td>
-                        <td style="color: var(--muted-rose);">Applied for Referral Program</td>
-                        <td style="color: var(--muted-rose);">1 day ago</td>
-                        <td><span class="status-badge status-pending">Pending</span></td>
-                    </tr>
+                    <!-- 🚀 DYNAMIC CONTENT WILL BE INSERTED HERE -->
                 </tbody>
             </table>
         </div>
@@ -532,25 +557,162 @@
             window.location.href = 'admin-login.html';
         }
 
-        // Initialize dashboard with REAL demo data
+        // 🚀 REAL-TIME MONITORING SYSTEM
+        let monitoringInterval;
+
         document.addEventListener('DOMContentLoaded', function() {
             const adminName = localStorage.getItem('adminName') || 'Administrator';
             document.getElementById('adminName').textContent = adminName;
             document.getElementById('adminWelcome').textContent = adminName;
             
-            // Initialize with demo data for production
-            initializeDemoData();
+            // Initialize REAL data, not demo
+            initializeRealTimeData();
+            
+            // Start real-time monitoring
+            startRealTimeMonitoring();
         });
 
-        // Initialize demo data that works for ALL users
-        function initializeDemoData() {
-            // Set fixed demo data that works for everyone
-            document.getElementById('pendingReferralsCount').textContent = '5';
-            document.getElementById('pendingWithdrawalsCount').textContent = '3';
-            document.getElementById('totalClients').textContent = '47';
-            document.getElementById('totalRevenue').textContent = '128,500';
-            document.getElementById('pendingWithdrawals').textContent = '3';
-            document.getElementById('pendingReferrals').textContent = '5';
+        // 🚀 REAL-TIME DATA INITIALIZATION
+        function initializeRealTimeData() {
+            updateDashboardStats();
+            updateRecentActivity();
+            checkForNewRegistrations();
+        }
+
+        // 🚀 START REAL-TIME MONITORING
+        function startRealTimeMonitoring() {
+            // Check for new activity every 3 seconds
+            monitoringInterval = setInterval(() => {
+                updateDashboardStats();
+                checkForNewRegistrations();
+                updateLastUpdateTime();
+            }, 3000);
+        }
+
+        // 🚀 UPDATE DASHBOARD STATS WITH REAL DATA
+        function updateDashboardStats() {
+            // Get pending approvals
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+            const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Calculate real stats
+            const pendingReferrals = pendingApprovals.filter(approval => 
+                approval.status === 'pending_payment' || approval.status === 'pending_approval'
+            ).length;
+            
+            const totalClients = approvedUsers.length;
+            const totalRevenue = approvedUsers.reduce((sum, user) => sum + (user.amount || 0), 0);
+            
+            // Update UI with REAL data
+            document.getElementById('pendingReferralsCount').textContent = pendingReferrals;
+            document.getElementById('pendingReferrals').textContent = pendingReferrals;
+            document.getElementById('totalClients').textContent = totalClients;
+            document.getElementById('totalClientsCount').textContent = totalClients;
+            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
+            
+            // Update demo notice with real status
+            document.getElementById('realTimeStatus').textContent = 
+                `Monitoring ${pendingReferrals} pending approvals in real-time`;
+        }
+
+        // 🚀 CHECK FOR NEW REGISTRATIONS INSTANTLY
+        function checkForNewRegistrations() {
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            const newRegistrations = pendingApprovals.filter(approval => 
+                approval.status === 'pending_payment'
+            );
+            
+            if (newRegistrations.length > 0) {
+                // Show alert for new registrations
+                const latestRegistration = newRegistrations[newRegistrations.length - 1];
+                showLiveAlert(`New registration from ${latestRegistration.fullName}`);
+                
+                // Show new registrations badge
+                document.getElementById('newRegistrationsBadge').style.display = 'inline-block';
+            } else {
+                // Hide alert if no new registrations
+                document.getElementById('liveAlert').style.display = 'none';
+                document.getElementById('newRegistrationsBadge').style.display = 'none';
+            }
+        }
+
+        // 🚀 SHOW LIVE ALERT FOR NEW ACTIVITY
+        function showLiveAlert(message) {
+            const alertElement = document.getElementById('liveAlert');
+            const alertMessage = document.getElementById('alertMessage');
+            
+            alertMessage.textContent = message;
+            alertElement.style.display = 'block';
+        }
+
+        // 🚀 UPDATE RECENT ACTIVITY WITH REAL DATA
+        function updateRecentActivity() {
+            const activityTable = document.getElementById('recentActivity');
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+            
+            // Clear existing rows
+            activityTable.innerHTML = '';
+            
+            // Combine and sort activities by timestamp
+            const allActivities = [
+                ...pendingApprovals.map(approval => ({
+                    type: 'pending',
+                    name: approval.fullName,
+                    activity: `Applied for ${approval.package}`,
+                    time: approval.timestamp,
+                    status: 'pending'
+                })),
+                ...approvedUsers.map(user => ({
+                    type: 'approved',
+                    name: user.fullName,
+                    activity: `Joined ${user.packageName}`,
+                    time: user.approvalTimestamp || user.registrationDate,
+                    status: 'approved'
+                }))
+            ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
+            
+            // Add activities to table
+            allActivities.forEach(activity => {
+                const row = document.createElement('tr');
+                
+                const timeAgo = getTimeAgo(activity.time);
+                
+                row.innerHTML = `
+                    <td style="font-weight: 600; color: var(--dark-brown);">${activity.name}</td>
+                    <td style="color: var(--muted-rose);">${activity.activity}</td>
+                    <td style="color: var(--muted-rose);">${timeAgo}</td>
+                    <td><span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">${activity.status === 'approved' ? 'Completed' : 'Pending'}</span></td>
+                `;
+                
+                activityTable.appendChild(row);
+            });
+        }
+
+        // 🚀 GET TIME AGO FOR DISPLAY
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diffMs = now - time;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            if (diffHours < 24) return `${diffHours} hours ago`;
+            return `${diffDays} days ago`;
+        }
+
+        // 🚀 UPDATE LAST UPDATE TIME
+        function updateLastUpdateTime() {
+            document.getElementById('lastUpdate').textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+        }
+
+        // 🚀 CHECK PENDING APPROVALS
+        function checkPendingApprovals() {
+            showReferralApprovals();
         }
 
         // Navigation functions
@@ -563,7 +725,8 @@
         }
 
         function showClientManagement() {
-            alert('Client Management - Showing 47 active clients\n• 32 Referral Program\n• 15 Mentorship Program');
+            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+            alert(`Client Management - Showing ${approvedUsers.length} active clients`);
         }
 
         function showPaymentSettings() {
@@ -571,11 +734,17 @@
         }
 
         function logoutAdmin() {
+            clearInterval(monitoringInterval);
             localStorage.removeItem('adminLoggedIn');
             localStorage.removeItem('adminRole');
             localStorage.removeItem('adminName');
             window.location.href = 'admin-login.html';
         }
+
+        // Clean up interval when page unloads
+        window.addEventListener('beforeunload', function() {
+            clearInterval(monitoringInterval);
+        });
     </script>
 </body>
 </html>
