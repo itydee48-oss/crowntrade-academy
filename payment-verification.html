@@ -343,6 +343,14 @@
             cursor: pointer;
             font-size: 0.8rem;
         }
+
+        /* 🚀 COUNTDOWN STYLES */
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--success);
+            margin: 1rem 0;
+        }
     </style>
 </head>
 <body>
@@ -491,6 +499,9 @@
                 <button class="luxury-btn" onclick="checkApprovalStatus()" id="checkStatusBtn">
                     <i class="fas fa-sync-alt"></i> Check Approval Status
                 </button>
+                <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--muted-rose;">
+                    Last checked: <span id="lastChecked">Never</span>
+                </div>
             </div>
         </div>
         
@@ -498,6 +509,7 @@
             <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
             <h3>Approval Complete! 🎉</h3>
             <p>Your account has been approved! Redirecting to your dashboard...</p>
+            <div class="countdown" id="countdown">3</div>
             <div class="loading-spinner" style="border-top-color: var(--success);"></div>
         </div>
     </section>
@@ -551,6 +563,7 @@
         // 🚀 GLOBAL VARIABLES
         let uploadedFiles = [];
         let approvalCheckInterval;
+        let userEmail = '';
 
         // 🚀 INITIALIZE PAGE
         document.addEventListener('DOMContentLoaded', function() {
@@ -563,6 +576,8 @@
         function loadOrderSummary() {
             const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
             const selectedPackage = localStorage.getItem('selectedPackage');
+            
+            userEmail = pendingUserData.email; // Store email for approval checking
             
             const packageData = {
                 'mentorship-only': { name: 'Mentorship Program', amount: 50000 },
@@ -716,71 +731,128 @@
             const transactionId = document.getElementById('transactionId').value;
             const additionalNotes = document.getElementById('additionalNotes').value;
             
-            // Update pending approval status
+            // 🚀 CRITICAL: Create proper pending approval entry
             const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const userApprovalIndex = pendingApprovals.findIndex(approval => approval.email === pendingUserData.email);
             
-            if (userApprovalIndex !== -1) {
-                pendingApprovals[userApprovalIndex].status = 'pending_approval';
-                pendingApprovals[userApprovalIndex].transactionId = transactionId;
-                pendingApprovals[userApprovalIndex].additionalNotes = additionalNotes;
-                pendingApprovals[userApprovalIndex].paymentTimestamp = new Date().toISOString();
-                pendingApprovals[userApprovalIndex].hasScreenshot = uploadedFiles.length > 0;
-                
-                localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
-                
-                // Show pending status
-                document.getElementById('checkingStatus').style.display = 'none';
-                document.getElementById('pendingStatus').style.display = 'block';
-                
-                // Disable submit button
-                document.getElementById('submitBtn').disabled = true;
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
-                
-                // Start checking for approval
-                startApprovalChecking();
-                
-                alert('✅ Payment submitted successfully! Admins have been notified and will review your payment shortly.');
-            } else {
-                alert('Error: User data not found. Please restart the registration process.');
+            // Remove any existing entry for this user
+            const existingIndex = pendingApprovals.findIndex(approval => approval.email === pendingUserData.email);
+            if (existingIndex !== -1) {
+                pendingApprovals.splice(existingIndex, 1);
             }
+            
+            // Create new approval entry
+            const newApproval = {
+                id: 'approval_' + Date.now(),
+                fullName: pendingUserData.fullName,
+                email: pendingUserData.email,
+                phone: pendingUserData.phone,
+                package: pendingUserData.package,
+                packageName: getPackageName(pendingUserData.package),
+                amount: getPackageAmount(pendingUserData.package),
+                status: 'pending_approval',
+                transactionId: transactionId,
+                additionalNotes: additionalNotes,
+                hasScreenshot: uploadedFiles.length > 0,
+                timestamp: new Date().toISOString(),
+                paymentTimestamp: new Date().toLocaleString()
+            };
+            
+            pendingApprovals.push(newApproval);
+            localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
+            
+            console.log('✅ Payment submitted for approval:', newApproval);
+            
+            // Show pending status
+            document.getElementById('checkingStatus').style.display = 'none';
+            document.getElementById('pendingStatus').style.display = 'block';
+            
+            // Disable submit button
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
+            
+            // Start checking for approval
+            startApprovalChecking();
+            
+            alert('✅ Payment submitted successfully! Admins have been notified and will review your payment shortly.');
+        }
+
+        // 🚀 GET PACKAGE NAME
+        function getPackageName(packageType) {
+            const packages = {
+                'mentorship-only': 'Mentorship Program',
+                'referral-only': 'Referral Program', 
+                'combined': 'Combined Program'
+            };
+            return packages[packageType] || 'Unknown Program';
+        }
+
+        // 🚀 GET PACKAGE AMOUNT
+        function getPackageAmount(packageType) {
+            const amounts = {
+                'mentorship-only': 50000,
+                'referral-only': 500,
+                'combined': 50500
+            };
+            return amounts[packageType] || 0;
         }
 
         // 🚀 CHECK IF USER IS ALREADY APPROVED
         function checkIfAlreadyApproved() {
             const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
+            
+            if (!pendingUserData.email) {
+                console.error('No user data found');
+                return;
+            }
+            
+            // Show checking status
+            document.getElementById('checkingStatus').style.display = 'block';
+            
+            // Check immediately if already approved
+            checkApprovalStatusImmediate();
+        }
+
+        // 🚀 CHECK APPROVAL STATUS IMMEDIATE
+        function checkApprovalStatusImmediate() {
+            const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
             const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+            
+            console.log('🔍 Checking approval for:', pendingUserData.email);
+            console.log('📋 Approved users:', approvedUsers);
             
             const isApproved = approvedUsers.find(user => user.email === pendingUserData.email);
             
             if (isApproved) {
                 // User already approved - redirect to dashboard
+                console.log('✅ User is approved, redirecting...');
                 completeUserApproval(isApproved);
             } else {
-                // Show checking status
-                document.getElementById('checkingStatus').style.display = 'block';
-                
                 // Check if user already submitted payment
                 const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
                 const userApproval = pendingApprovals.find(approval => approval.email === pendingUserData.email);
                 
                 if (userApproval && userApproval.status === 'pending_approval') {
                     // User already submitted payment
+                    console.log('📝 User has pending approval');
                     document.getElementById('checkingStatus').style.display = 'none';
                     document.getElementById('pendingStatus').style.display = 'block';
                     document.getElementById('submitBtn').disabled = true;
                     document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
                     startApprovalChecking();
+                } else {
+                    // User needs to submit payment
+                    console.log('💳 User needs to submit payment');
+                    document.getElementById('checkingStatus').style.display = 'none';
                 }
             }
         }
 
         // 🚀 START CHECKING FOR APPROVAL
         function startApprovalChecking() {
-            // Check every 5 seconds for approval
+            // Check every 3 seconds for approval (FASTER!)
             approvalCheckInterval = setInterval(() => {
                 checkApprovalStatus();
-            }, 5000);
+            }, 3000);
         }
 
         // 🚀 CHECK APPROVAL STATUS
@@ -788,25 +860,33 @@
             const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
             const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
             
+            console.log('🔄 Checking approval status for:', pendingUserData.email);
+            
             const isApproved = approvedUsers.find(user => user.email === pendingUserData.email);
             
             if (isApproved) {
                 // User approved!
+                console.log('🎉 User approved! Redirecting...');
                 clearInterval(approvalCheckInterval);
                 completeUserApproval(isApproved);
             } else {
                 // Still pending - update status button
                 const checkStatusBtn = document.getElementById('checkStatusBtn');
-                checkStatusBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Checking... (${new Date().toLocaleTimeString()})`;
+                const lastChecked = document.getElementById('lastChecked');
+                
+                checkStatusBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Checking...`;
+                lastChecked.textContent = new Date().toLocaleTimeString();
                 
                 setTimeout(() => {
                     checkStatusBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Check Approval Status`;
-                }, 2000);
+                }, 1000);
             }
         }
 
         // 🚀 COMPLETE USER APPROVAL
         function completeUserApproval(userData) {
+            console.log('🚀 Starting approval completion...');
+            
             document.getElementById('pendingStatus').style.display = 'none';
             document.getElementById('approvedStatus').style.display = 'block';
             
@@ -816,21 +896,45 @@
                 step.classList.add('completed');
             });
             
-            // Set user session
+            // 🚀 CRITICAL: Set user session properly
             localStorage.setItem('clientLoggedIn', 'true');
             localStorage.setItem('clientEmail', userData.email);
             localStorage.setItem('clientName', userData.fullName);
             localStorage.setItem('clientPackage', userData.package);
+            localStorage.setItem('clientJoinDate', new Date().toLocaleDateString());
             
-            // Clean up temporary data
+            console.log('✅ User session set:', {
+                email: userData.email,
+                name: userData.fullName,
+                package: userData.package
+            });
+            
+            // 🚀 Clean up temporary data
             localStorage.removeItem('pendingUserData');
             localStorage.removeItem('selectedPackage');
             localStorage.removeItem('accountNumber');
             
-            // Redirect to dashboard after 3 seconds
-            setTimeout(() => {
-                window.location.href = 'client-dashboard.html';
-            }, 3000);
+            // Remove from pending approvals
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            const updatedApprovals = pendingApprovals.filter(approval => approval.email !== userData.email);
+            localStorage.setItem('pendingApprovals', JSON.stringify(updatedApprovals));
+            
+            console.log('🧹 Cleaned up temporary data');
+            
+            // 🚀 Countdown and redirect
+            let countdown = 3;
+            const countdownElement = document.getElementById('countdown');
+            
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    console.log('🔄 Redirecting to dashboard...');
+                    window.location.href = 'client-dashboard.html';
+                }
+            }, 1000);
         }
 
         // 🚀 CLEAN UP ON PAGE UNLOAD
