@@ -590,4 +590,59 @@
             if (activities.length === 0) {
                 activityTable.innerHTML = `
                     <tr>
-                        <td colspan="4" style="text-align: center; color
+                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
+                            No recent activity
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            activityTable.innerHTML = activities.map(activity => `
+                <tr>
+                    <td style="font-weight: 600; color: var(--dark-brown);">${activity.name}</td>
+                    <td style="color: var(--muted-rose);">${activity.activity}</td>
+                    <td style="color: var(--muted-rose);">${new Date(activity.time).toLocaleDateString()}</td>
+                    <td>
+                        <span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">
+                            ${activity.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function startAutoRefresh() {
+            // Refresh every 10 seconds
+            setInterval(function() {
+                loadDashboardData();
+                console.log('Dashboard auto-refreshed at: ' + new Date().toLocaleTimeString());
+            }, 10000);
+        }
+
+        // Navigation functions
+        function showReferralApprovals() {
+            window.location.href = 'admin-referral-approvals.html';
+        }
+
+        function showWithdrawalApprovals() {
+            window.location.href = 'admin-withdrawal-approvals.html';
+        }
+
+        function showClientManagement() {
+            alert('Client Management feature coming soon!');
+        }
+
+        function showPaymentSettings() {
+            window.location.href = 'admin-payment-settings.html';
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminRole');
+            localStorage.removeItem('adminName');
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+</body>
+</html>
