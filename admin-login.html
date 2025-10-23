@@ -1,128 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Crown Trade Academy</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Login - Crown Trade Academy</title>
+
+  <!-- === Your Luxury Nude Theme === -->
+  <style>
+    :root {
+      --dark-brown: #3A2D28;
+      --muted-rose: #A48374;
+      --warm-beige: #CBAD8D;
+      --light-taupe: #D1C7BD;
+      --off-white: #EBE3DB;
+      --cream-white: #F1EDE6;
+      --gold-accent: #D4AF37;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+      color: var(--dark-brown);
+      line-height:1.6;
+      min-height:100vh;
+    }
+    .premium-header{
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+      color: var(--cream-white);
+      padding:1.2rem 0;
+      box-shadow:0 4px 20px rgba(58,45,40,0.1);
+      border-bottom:3px solid var(--gold-accent);
+    }
+    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
+    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
+    .nav-links{ display:flex; gap:2rem; list-style:none; }
+    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
+    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+    .premium-card{
+      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+      border:1px solid var(--light-taupe);
+      border-radius:20px;
+      padding:2.5rem;
+      margin:1.5rem 0;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(58,45,40,0.08);
+    }
+    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
+    .form-group{ margin-bottom:1.25rem; }
+    .form-label{ display:block; margin-bottom:.5rem; font-weight:600; color:var(--dark-brown); }
+    .form-control{ width:100%; padding:1rem; border:2px solid var(--light-taupe); border-radius:8px; background:var(--off-white); color:var(--dark-brown); font-size:1rem; font-family:inherit; }
+    .btn-premium{
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer; width:100%;
+    }
+    .meta-note{ color:var(--muted-rose); font-size:0.9rem; text-align:center; margin-top:1rem; }
+    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
+    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+  </style>
 </head>
 <body>
-    <!-- Premium Header -->
-    <header class="premium-header">
-        <nav class="premium-nav">
-            <a href="index.html" class="logo">Crown Trade Academy</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Client Login</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header class="premium-header">
+    <nav class="premium-nav">
+      <a href="index.html" class="logo">Crown Trade Academy</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="referral-register.html">Referral Program</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Admin Login Section -->
-    <section class="premium-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-        <div class="premium-card" style="max-width: 450px; width: 100%;">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--dark-brown);">🔐 Admin Access</h1>
-                <p style="color: var(--muted-rose);">Team Management Portal</p>
-            </div>
+  <section class="premium-container" style="padding:2rem 0; min-height:80vh;">
+    <div class="premium-card" style="max-width:500px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:1.6rem;">
+        <h1 style="color:var(--dark-brown);margin-bottom:.4rem;">Admin Login</h1>
+        <p style="color:var(--muted-rose);">Access the admin dashboard</p>
+      </div>
 
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Team Role</label>
-                    <select class="form-control" id="role" required>
-                        <option value="">Select your role</option>
-                        <option value="admin">Administrator</option>
-                        <option value="mentor">Lead Mentor</option>
-                        <option value="support">Client Support</option>
-                        <option value="finance">Finance Manager</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn-premium" style="width: 100%; margin-bottom: 1.5rem;">
-                    🔑 Access Admin Panel
-                </button>
-            </form>
-
-            <!-- Security Notice -->
-            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
-                <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">🔒 Secure Access</h4>
-                <p style="color: var(--muted-rose); margin: 0; font-size: 0.9rem;">
-                    This area is restricted to Crown Trade Academy team members only. 
-                    All access attempts are logged for security purposes.
-                </p>
-            </div>
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label class="form-label" for="adminEmail">Email Address</label>
+          <input id="adminEmail" class="form-control" type="email" required placeholder="admin@example.com">
         </div>
-    </section>
 
-    <!-- Premium Footer -->
-    <footer class="premium-footer">
-        <div class="footer-content">
-            <div>
-                <h3>Admin System</h3>
-                <p>Team Management Portal</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
-            </div>
-            <div>
-                <h3>Security</h3>
-                <p>Restricted Access</p>
-                <p>Team Members Only</p>
-                <p>Activity Logged</p>
-            </div>
+        <div class="form-group">
+          <label class="form-label" for="adminPassword">Password</label>
+          <input id="adminPassword" class="form-control" type="password" required placeholder="Enter your password">
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <script>
-        // Team credentials - CHANGE THESE PASSWORDS!
-        const teamCredentials = {
-            'admin': { password: 'Admin123!', role: 'admin', name: 'Administrator' },
-            'mentor': { password: 'Mentor123!', role: 'mentor', name: 'Lead Mentor' },
-            'support': { password: 'Support123!', role: 'support', name: 'Client Support' },
-            'finance': { password: 'Finance123!', role: 'finance', name: 'Finance Manager' }
-        };
+        <button type="submit" class="btn-premium">Login to Dashboard</button>
+        <p class="meta-note">For authorized administrators only</p>
+      </form>
+    </div>
+  </section>
 
-        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value.toLowerCase();
-            const password = document.getElementById('password').value;
-            const selectedRole = document.getElementById('role').value;
-            
-            // Check credentials
-            if (teamCredentials[username] && 
-                teamCredentials[username].password === password && 
-                teamCredentials[username].role === selectedRole) {
-                
-                // Store login session
-                localStorage.setItem('adminLoggedIn', 'true');
-                localStorage.setItem('adminUser', username);
-                localStorage.setItem('adminRole', selectedRole);
-                localStorage.setItem('adminName', teamCredentials[username].name);
-                
-                // Redirect to admin dashboard
-                window.location.href = 'admin-dashboard.html';
-                
-            } else {
-                alert('❌ Access Denied: Invalid credentials or role mismatch');
-            }
-        });
+  <footer class="premium-footer">
+    <div class="footer-content">
+      <div><h3>Crown Trade Academy</h3><p>Admin Portal</p><p>Email: crowntradeacademy@gmail.com</p></div>
+      <div><h3>Security</h3><p>Restricted Access</p><p>Authorized Personnel Only</p></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
+  </footer>
 
-        // Redirect if already logged in
-        if (localStorage.getItem('adminLoggedIn') === 'true') {
-            window.location.href = 'admin-dashboard.html';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
+      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
+      projectId: "crowntradeacademy-67be1",
+      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
+      messagingSenderId: "943453710285",
+      appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
+      measurementId: "G-E6Z4VS9S8N"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in...';
+
+      try {
+        // Sign in with Firebase Auth
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Check if user is admin in Firestore
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        
+        if (userDoc.exists() && userDoc.data().role === 'admin') {
+          // Store admin session
+          localStorage.setItem('adminUser', JSON.stringify({
+            uid: user.uid,
+            email: user.email,
+            role: 'admin'
+          }));
+          
+          window.location.href = 'admin-dashboard.html';
+        } else {
+          throw new Error('Access denied. Admin privileges required.');
         }
-    </script>
+
+      } catch (error) {
+        alert('Login failed: ' + error.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Login to Dashboard';
+      }
+    });
+  </script>
 </body>
 </html>
