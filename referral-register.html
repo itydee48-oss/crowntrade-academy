@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Join Referral Program - Crown Trade Academy</title>
 
-  <!-- === Styles: your luxury nude theme (unchanged) === -->
+  <!-- === Your Luxury Nude Theme (unchanged) === -->
   <style>
     :root {
       --dark-brown: #3A2D28;
@@ -120,26 +120,37 @@
           <input id="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
         </div>
 
+        <!-- === Payment Proof Section === -->
         <div class="form-group">
-          <label class="form-label" for="proof">Upload Payment Proof (screenshot / PDF)</label>
-          <input id="proof" class="form-control" type="file" accept="image/*,application/pdf" required>
-          <div class="file-hint small">Max 6 MB. JPG, PNG or PDF.</div>
+          <label class="form-label" for="proof">Upload Payment Proof (MPesa Screenshot)</label>
+          <input id="proof" class="form-control" type="file" accept="image/*" required>
+          <div class="file-hint small">Max 6 MB. JPG or PNG screenshot of MPesa payment.</div>
 
           <div class="upload-progress" id="uploadProgress">
             <i id="uploadBar"></i>
           </div>
         </div>
 
-        <div class="form-group" style="margin-top:1rem;">
+        <!-- I Have Paid Confirmation -->
+        <div class="form-group">
           <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <input id="paidConfirmation" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
             <span style="color:var(--dark-brown); font-size:.95rem;">
-              I agree to pay KES 500 registration fee and understand I'll earn KES 300 per successful referral
+              ✅ I confirm I have paid KES 500 registration fee via MPesa
             </span>
           </label>
         </div>
 
-        <button type="submit" class="btn-premium">Continue & Submit →</button>
+        <div class="form-group" style="margin-top:1rem;">
+          <label style="display:flex; gap:.6rem; align-items:flex-start;">
+            <input id="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <span style="color:var(--dark-brown); font-size:.95rem;">
+              I agree to the terms and understand I'll earn KES 300 per successful referral
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-premium">Submit for Approval →</button>
         <p class="meta-note">Already have an account? <a href="login.html" style="color:var(--warm-beige);">Login here</a></p>
       </form>
     </div>
@@ -153,17 +164,13 @@
     <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
   </footer>
 
-  <!-- ===========================
-       Firebase + Form Logic
-       =========================== -->
+  <!-- === Firebase + Form Logic === -->
   <script type="module">
-    // --- Firebase SDK imports (CDN modular v11)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
     import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
-    // --- Paste your firebase config here (you shared it previously) ---
     const firebaseConfig = {
       apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
       authDomain: "crowntradeacademy-67be1.firebaseapp.com",
@@ -174,34 +181,30 @@
       measurementId: "G-E6Z4VS9S8N"
     };
 
-    // Initialize Firebase services
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const storage = getStorage(app);
 
-    // DOM
     const form = document.getElementById('referralRegisterForm');
     const proofInput = document.getElementById('proof');
     const uploadProgress = document.getElementById('uploadProgress');
     const uploadBar = document.getElementById('uploadBar');
 
-    // File limits
-    const MAX_BYTES = 6 * 1024 * 1024; // 6 MB
+    const MAX_BYTES = 6 * 1024 * 1024;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Gather fields
       const fullName = document.getElementById('fullName').value.trim();
       const email = document.getElementById('email').value.trim().toLowerCase();
       const phone = document.getElementById('phone').value.trim();
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
+      const paidConfirmation = document.getElementById('paidConfirmation').checked;
       const agree = document.getElementById('agree').checked;
       const file = proofInput.files[0];
 
-      // Basic client-side validation
       if (!fullName || !email || !phone || !password || !confirmPassword) {
         alert('Please fill out all required fields.');
         return;
@@ -214,45 +217,43 @@
         alert('Password must be at least 6 characters.');
         return;
       }
+      if (!paidConfirmation) {
+        alert('Please confirm that you have paid KES 500.');
+        return;
+      }
       if (!agree) {
         alert('You must agree to the terms to continue.');
         return;
       }
       if (!file) {
-        alert('Please upload payment proof (screenshot or PDF).');
+        alert('Please upload MPesa payment screenshot.');
         return;
       }
       if (file.size > MAX_BYTES) {
         alert('File too large. Max size is 6 MB.');
         return;
       }
-      // Validate file type (image or PDF)
-      const allowed = ['image/jpeg','image/png','image/jpg','application/pdf'];
+      const allowed = ['image/jpeg','image/png','image/jpg'];
       if (!allowed.includes(file.type)) {
-        alert('Unsupported file type. Use JPG, PNG or PDF.');
+        alert('Please upload JPG or PNG image only.');
         return;
       }
 
-      // Disable submit while processing
       const submitBtn = form.querySelector('button[type="submit"]');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
 
       try {
-        // 1) Create Firebase Auth user (so they can login later)
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid;
 
-        // 2) Upload file to Firebase Storage
-        const filePath = `referralUploads/${uid}/${Date.now()}_${file.name}`;
+        const filePath = `paymentProofs/${uid}/${Date.now()}_${file.name}`;
         const storageReference = storageRef(storage, filePath);
         const uploadTask = uploadBytesResumable(storageReference, file);
 
-        // show progress UI
         uploadProgress.style.display = 'block';
         uploadBar.style.width = '0%';
 
-        // Wait for upload to finish with progress handler
         await new Promise((resolve, reject) => {
           uploadTask.on('state_changed', (snapshot) => {
             const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -260,39 +261,36 @@
           }, (err) => {
             reject(err);
           }, async () => {
-            // On complete
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-            // 3) Save referral record to Firestore
-            const docRef = await addDoc(collection(db, 'referralApplications'), {
+            await addDoc(collection(db, 'referralApplications'), {
               uid,
               fullName,
               email,
               phone,
-              proofUrl: downloadURL,
-              proofPath: filePath,
-              status: 'pending_approval',
+              paymentProofUrl: downloadURL,
+              paymentProofPath: filePath,
+              status: 'pending',
+              paidConfirmation: true,
               registeredAt: serverTimestamp(),
               updatedAt: serverTimestamp()
             });
 
-            // store uid & application id locally so pending page can poll
             localStorage.setItem('referralUid', uid);
-            localStorage.setItem('referralAppId', docRef.id);
+            localStorage.setItem('userEmail', email);
 
             resolve();
           });
         });
 
-        // Success UI and redirect to pending page
-        alert('✅ Registration submitted. Please complete payment if required. You will be notified after approval.');
+        alert('✅ Registration submitted successfully! Awaiting admin approval.');
         window.location.href = 'referral-pending.html';
 
       } catch (err) {
         console.error('Submission error:', err);
         alert('Error submitting registration: ' + (err.message || err));
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Continue & Submit →';
+        submitBtn.textContent = 'Submit for Approval →';
         uploadProgress.style.display = 'none';
         uploadBar.style.width = '0%';
       }
