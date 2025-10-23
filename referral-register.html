@@ -340,24 +340,39 @@
                 return;
             }
 
+            // Create unique application ID
+            const applicationId = 'ref_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
             // Save user data and redirect to payment
             const userData = {
+                id: applicationId,
                 fullName: fullName,
                 email: email,
                 phone: phone,
                 password: password,
                 type: 'referral',
                 status: 'pending_payment',
-                registrationDate: new Date().toISOString()
+                registrationDate: new Date().toISOString(),
+                submissionDate: new Date().toISOString()
             };
 
+            // Save to pending applications immediately
+            let pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
+            pendingApplications.push({
+                id: applicationId,
+                userData: userData,
+                status: 'pending',
+                submissionDate: new Date().toISOString(),
+                amount: 500
+            });
+            
+            localStorage.setItem('pendingReferralApplications', JSON.stringify(pendingApplications));
             localStorage.setItem('pendingReferralUser', JSON.stringify(userData));
             
-            // Redirect to payment page
+            // Show success message and redirect
+            alert('✅ Registration successful! Redirecting to payment...');
             window.location.href = 'referral-payment.html';
         });
     </script>
 </body>
-    </html>
-
-
+</html>
