@@ -58,6 +58,26 @@
     .meta-note{ color:var(--muted-rose); font-size:0.9rem; text-align:center; margin-top:1rem; }
     .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
     .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+    
+    .admin-credentials {
+      background: var(--off-white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 2px solid var(--light-taupe);
+    }
+    
+    .credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--light-taupe);
+    }
+    
+    .credential-item:last-child {
+      border-bottom: none;
+    }
   </style>
 </head>
 <body>
@@ -78,15 +98,28 @@
         <p style="color:var(--muted-rose);">Access the admin dashboard</p>
       </div>
 
+      <!-- Admin Credentials Info -->
+      <div class="admin-credentials">
+        <h3 style="color:var(--dark-brown); margin-bottom:1rem;">📋 Admin Credentials</h3>
+        <div class="credential-item">
+          <span style="color:var(--muted-rose);">Username:</span>
+          <span style="color:var(--dark-brown); font-weight:600;">admin</span>
+        </div>
+        <div class="credential-item">
+          <span style="color:var(--muted-rose);">Password:</span>
+          <span style="color:var(--dark-brown); font-weight:600;">admin123</span>
+        </div>
+      </div>
+
       <form id="adminLoginForm">
         <div class="form-group">
-          <label class="form-label" for="adminEmail">Email Address</label>
-          <input id="adminEmail" class="form-control" type="email" required placeholder="admin@example.com">
+          <label class="form-label" for="adminUsername">Username</label>
+          <input id="adminUsername" class="form-control" type="text" required placeholder="Enter admin username">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="adminPassword">Password</label>
-          <input id="adminPassword" class="form-control" type="password" required placeholder="Enter your password">
+          <input id="adminPassword" class="form-control" type="password" required placeholder="Enter admin password">
         </div>
 
         <button type="submit" class="btn-premium">Login to Dashboard</button>
@@ -103,61 +136,44 @@
     <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
   </footer>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
-      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
-      projectId: "crowntradeacademy-67be1",
-      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
-      messagingSenderId: "943453710285",
-      appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
-      measurementId: "G-E6Z4VS9S8N"
+  <script>
+    // Hardcoded admin credentials
+    const ADMIN_CREDENTIALS = {
+      username: "admin",
+      password: "admin123"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
-      const email = document.getElementById('adminEmail').value;
+      const username = document.getElementById('adminUsername').value;
       const password = document.getElementById('adminPassword').value;
       const submitBtn = e.target.querySelector('button[type="submit"]');
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Signing in...';
 
-      try {
-        // Sign in with Firebase Auth
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Check if user is admin in Firestore
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        
-        if (userDoc.exists() && userDoc.data().role === 'admin') {
+      // Simulate login process
+      setTimeout(() => {
+        if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
           // Store admin session
-          localStorage.setItem('adminUser', JSON.stringify({
-            uid: user.uid,
-            email: user.email,
-            role: 'admin'
-          }));
+          localStorage.setItem('adminLoggedIn', 'true');
+          localStorage.setItem('adminUsername', username);
           
+          // Redirect to admin dashboard
           window.location.href = 'admin-dashboard.html';
         } else {
-          throw new Error('Access denied. Admin privileges required.');
+          alert('❌ Invalid username or password. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Login to Dashboard';
         }
+      }, 1000);
+    });
 
-      } catch (error) {
-        alert('Login failed: ' + error.message);
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Login to Dashboard';
-      }
+    // Auto-fill credentials for testing (remove in production)
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('adminUsername').value = 'admin';
+      document.getElementById('adminPassword').value = 'admin123';
     });
   </script>
 </body>
