@@ -5,49 +5,297 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Crown Trade Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Role-based access styles */
-        .role-section {
-            display: none;
+        /* Premium Nude Color Palette */
+        :root {
+            --dark-brown: #3A2D28;
+            --muted-rose: #A48374;
+            --warm-beige: #CBAD8D;
+            --light-taupe: #D1C7BD;
+            --off-white: #EBE3DB;
+            --cream-white: #F1EDE6;
+            --gold-accent: #D4AF37;
+            --success: #27AE60;
+            --warning: #E67E22;
+            --danger: #E74C3C;
+            --info: #3498DB;
         }
         
-        .role-admin .admin-section,
-        .role-finance .finance-section, 
-        .role-support .support-section,
-        .role-mentor .mentor-section {
-            display: block;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        .quick-actions-grid {
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            color: var(--dark-brown);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .premium-header {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold-accent);
+        }
+        
+        .premium-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--warm-beige);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--cream-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold-accent);
+        }
+        
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .luxury-card {
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
+        }
+        
+        .luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
+        }
+        
+        .luxury-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .luxury-stat {
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .luxury-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--dark-brown), var(--muted-rose));
+        }
+        
+        .luxury-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(58, 45, 40, 0.12);
+        }
+        
+        .luxury-stat-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--dark-brown), var(--muted-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .luxury-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dark-brown);
+            margin-bottom: 0.5rem;
+        }
+        
+        .luxury-stat-label {
+            color: var(--muted-rose);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .luxury-btn {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+            color: var(--cream-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .luxury-btn:hover {
+            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #2ECC71);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #2ECC71, var(--success));
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #C0392B);
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #C0392B, var(--danger));
+        }
+        
+        .luxury-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.08);
+        }
+        
+        .luxury-table th {
+            background: linear-gradient(135deg, var(--dark-brown), #4A3A32);
+            color: var(--cream-white);
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        
+        .luxury-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--light-taupe);
+            background: var(--cream-white);
+            transition: all 0.3s ease;
+        }
+        
+        .luxury-table tr:hover td {
+            background: var(--off-white);
+        }
+        
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-approved {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+        
+        .status-pending {
+            background: rgba(230, 126, 34, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .admin-badge-luxury {
+            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
+            color: var(--dark-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .quick-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
-
+        
         .action-card {
             background: var(--off-white);
-            padding: 1.5rem;
-            border-radius: 12px;
+            padding: 2rem;
+            border-radius: 15px;
             text-align: center;
-            border: 1px solid var(--light-taupe);
+            border: 2px solid var(--light-taupe);
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
+        
         .action-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(58, 45, 40, 0.1);
+            border-color: var(--warm-beige);
         }
-
+        
         .action-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: var(--muted-rose);
         }
-
+        
         .pending-badge {
-            background: #E67E22;
+            background: var(--warning);
             color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
@@ -55,21 +303,52 @@
             font-weight: 600;
             margin-left: 0.5rem;
         }
+        
+        .premium-footer {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--gold-accent);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
     </style>
 </head>
-<body class="role-admin">
+<body>
     <!-- Luxury Header -->
-    <header class="premium-header luxury-nav">
+    <header class="premium-header">
         <nav class="premium-nav">
-            <a href="index.html" class="logo" style="display: flex; align-items: center;">
-                <span class="crown-icon">👑</span>
+            <a href="index.html" class="logo">
+                <span>👑</span>
                 Crown Trade Academy
             </a>
             <div style="display: flex; align-items: center; gap: 2rem;">
-                <span style="color: var(--gold-accent); font-weight: 700; font-size: 1.1rem;" id="roleDisplay">Admin Command Center</span>
+                <span style="color: var(--gold-accent); font-weight: 600;">Admin Command Center</span>
                 <ul class="nav-links">
                     <li><a href="admin-dashboard.html" style="color: var(--gold-accent); font-weight: 600;">Dashboard</a></li>
-                    <li><a href="admin-payment-settings.html">Payment Settings</a></li>
                     <li><a href="admin-referral-approvals.html">Referral Approvals</a></li>
                     <li><a href="admin-withdrawal-approvals.html">Withdrawal Approvals</a></li>
                     <li><span class="admin-badge-luxury" id="adminName">Administrator</span></li>
@@ -79,135 +358,61 @@
         </nav>
     </header>
 
-    <!-- Role-Based Dashboard Content -->
+    <!-- Luxury Hero -->
     <section class="premium-container" style="padding: 2rem 0;">
-        
-        <!-- ADMIN ROLE CONTENT -->
-        <div class="role-section admin-section">
-            <div class="luxury-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-                    <div style="flex: 1;">
-                        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800;">
-                            <span class="crown-icon">👑</span> Admin Command Center
-                        </h1>
-                        <p style="font-size: 1.2rem; font-weight: 600; color: var(--dark-brown); opacity: 0.9;">
-                            Full System Control • Real-time Analytics • Complete Oversight
-                        </p>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 1rem; color: var(--dark-brown); opacity: 0.8;">Super Admin</div>
-                        <div style="font-size: 1.3rem; font-weight: 800; color: var(--dark-brown);" id="adminWelcome">Administrator</div>
-                    </div>
+        <div class="luxury-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <div style="flex: 1;">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800;">
+                        <span>👑</span> Admin Command Center
+                    </h1>
+                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--dark-brown); opacity: 0.9;">
+                        Full System Control • Real-time Analytics • Complete Oversight
+                    </p>
                 </div>
-            </div>
-
-            <!-- Quick Actions - ADMIN -->
-            <div class="quick-actions-grid">
-                <div class="action-card" onclick="showReferralApprovals()">
-                    <div class="action-icon">👥</div>
-                    <h4>Referral Approvals</h4>
-                    <p>Review new applications</p>
-                    <span class="pending-badge" id="pendingReferralsCount">0</span>
-                </div>
-                
-                <div class="action-card" onclick="showWithdrawalApprovals()">
-                    <div class="action-icon">💸</div>
-                    <h4>Withdrawal Requests</h4>
-                    <p>Process payments</p>
-                    <span class="pending-badge" id="pendingWithdrawalsCount">0</span>
-                </div>
-                
-                <div class="action-card" onclick="showClientManagement()">
-                    <div class="action-icon">📊</div>
-                    <h4>Client Management</h4>
-                    <p>View all clients</p>
-                </div>
-                
-                <div class="action-card" onclick="openPaymentSettings()">
-                    <div class="action-icon">⚙️</div>
-                    <h4>System Settings</h4>
-                    <p>Configure payments</p>
-                </div>
-                
-                <div class="action-card" onclick="generateReports()">
-                    <div class="action-icon">📈</div>
-                    <h4>Generate Reports</h4>
-                    <p>Financial analytics</p>
-                </div>
-                
-                <div class="action-card" onclick="manageTeam()">
-                    <div class="action-icon">👨‍💼</div>
-                    <h4>Team Management</h4>
-                    <p>Staff accounts</p>
+                <div style="text-align: right;">
+                    <div style="font-size: 1rem; color: var(--dark-brown); opacity: 0.8;">Super Admin</div>
+                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--dark-brown);" id="adminWelcome">Administrator</div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- FINANCE ROLE CONTENT -->
-        <div class="role-section finance-section">
-            <div class="luxury-card" style="background: linear-gradient(135deg, #27AE60, #2ECC71); color: white;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
-                    <i class="fas fa-chart-line"></i> Finance Dashboard
-                </h1>
-                <p style="font-size: 1.2rem;">Payment Processing • Financial Reports • Revenue Tracking</p>
+    <!-- Quick Actions -->
+    <section class="premium-container">
+        <div class="quick-actions">
+            <div class="action-card" onclick="showReferralApprovals()">
+                <div class="action-icon">👥</div>
+                <h3>Referral Approvals</h3>
+                <p>Review new applications</p>
+                <span class="pending-badge" id="pendingReferralsCount">0</span>
             </div>
-
-            <!-- Quick Actions - FINANCE -->
-            <div class="quick-actions-grid">
-                <div class="action-card" onclick="processWithdrawals()">
-                    <div class="action-icon">💳</div>
-                    <h4>Process Withdrawals</h4>
-                    <p>Send payments to clients</p>
-                </div>
-                
-                <div class="action-card" onclick="viewRevenue()">
-                    <div class="action-icon">💰</div>
-                    <h4>Revenue Report</h4>
-                    <p>Income analytics</p>
-                </div>
-                
-                <div class="action-card" onclick="paymentRecords()">
-                    <div class="action-icon">📋</div>
-                    <h4>Payment Records</h4>
-                    <p>All transactions</p>
-                </div>
+            
+            <div class="action-card" onclick="showWithdrawalApprovals()">
+                <div class="action-icon">💸</div>
+                <h3>Withdrawal Requests</h3>
+                <p>Process payments</p>
+                <span class="pending-badge" id="pendingWithdrawalsCount">0</span>
             </div>
-        </div>
-
-        <!-- SUPPORT ROLE CONTENT -->
-        <div class="role-section support-section">
-            <div class="luxury-card" style="background: linear-gradient(135deg, #3498DB, #2980B9); color: white;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
-                    <i class="fas fa-headset"></i> Support Dashboard
-                </h1>
-                <p style="font-size: 1.2rem;">Client Support • Issue Resolution • Account Management</p>
+            
+            <div class="action-card" onclick="showClientManagement()">
+                <div class="action-icon">📊</div>
+                <h3>Client Management</h3>
+                <p>View all clients</p>
             </div>
-
-            <!-- Quick Actions - SUPPORT -->
-            <div class="quick-actions-grid">
-                <div class="action-card" onclick="viewClientIssues()">
-                    <div class="action-icon">🎫</div>
-                    <h4>Support Tickets</h4>
-                    <p>Client issues</p>
-                </div>
-                
-                <div class="action-card" onclick="manageAccounts()">
-                    <div class="action-icon">👥</div>
-                    <h4>Client Accounts</h4>
-                    <p>Manage users</p>
-                </div>
-                
-                <div class="action-card" onclick="approveReferrals()">
-                    <div class="action-icon">✅</div>
-                    <h4>Approve Referrals</h4>
-                    <p>Review applications</p>
-                </div>
+            
+            <div class="action-card" onclick="showPaymentSettings()">
+                <div class="action-icon">⚙️</div>
+                <h3>System Settings</h3>
+                <p>Configure payments</p>
             </div>
         </div>
+    </section>
 
-        <!-- Luxury Stats Grid -->
+    <!-- Luxury Stats Grid -->
+    <section class="premium-container">
         <div class="luxury-stats">
-            <div class="luxury-stat fade-in-up">
+            <div class="luxury-stat fade-in-up" onclick="showReferralApprovals()">
                 <div class="luxury-stat-icon">👥</div>
                 <div class="luxury-stat-number" id="totalClients">0</div>
                 <div class="luxury-stat-label">Total Clients</div>
@@ -219,13 +424,13 @@
                 <div class="luxury-stat-label">Total Revenue</div>
             </div>
             
-            <div class="luxury-stat fade-in-up">
+            <div class="luxury-stat fade-in-up" onclick="showWithdrawalApprovals()">
                 <div class="luxury-stat-icon">⏳</div>
                 <div class="luxury-stat-number" id="pendingWithdrawals">0</div>
                 <div class="luxury-stat-label">Pending Withdrawals</div>
             </div>
             
-            <div class="luxury-stat fade-in-up">
+            <div class="luxury-stat fade-in-up" onclick="showReferralApprovals()">
                 <div class="luxury-stat-icon">📈</div>
                 <div class="luxury-stat-number" id="pendingReferrals">0</div>
                 <div class="luxury-stat-label">Pending Referrals</div>
@@ -250,11 +455,41 @@
                     </tr>
                 </thead>
                 <tbody id="recentActivity">
-                    <!-- Activity will be loaded here -->
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
+                            No recent activity
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </section>
+
+    <!-- Premium Footer -->
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div>
+                <h3>Admin System</h3>
+                <p>Team Management Portal</p>
+                <p>Email: crowntradeacademy@gmail.com</p>
+            </div>
+            <div>
+                <h3>Quick Access</h3>
+                <p><a href="admin-referral-approvals.html" style="color: var(--warm-beige); text-decoration: none;">Referral Approvals</a></p>
+                <p><a href="admin-withdrawal-approvals.html" style="color: var(--warm-beige); text-decoration: none;">Withdrawal Approvals</a></p>
+                <p><a href="admin-payment-settings.html" style="color: var(--warm-beige); text-decoration: none;">Payment Settings</a></p>
+            </div>
+            <div>
+                <h3>System</h3>
+                <p>Settings Protected</p>
+                <p>Change History Logged</p>
+                <p>Auto-Backup Enabled</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         // Admin authentication check
@@ -262,28 +497,12 @@
             window.location.href = 'admin-login.html';
         }
 
-        // Set user role and display
+        // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            const adminRole = localStorage.getItem('adminRole') || 'admin';
             const adminName = localStorage.getItem('adminName') || 'Administrator';
-            
-            // Set body class for role-based styling
-            document.body.className = 'role-' + adminRole;
-            
-            // Update display
             document.getElementById('adminName').textContent = adminName;
             document.getElementById('adminWelcome').textContent = adminName;
             
-            // Update role display
-            const roleDisplays = {
-                'admin': 'Admin Command Center',
-                'finance': 'Finance Dashboard', 
-                'support': 'Support Center',
-                'mentor': 'Mentor Portal'
-            };
-            document.getElementById('roleDisplay').textContent = roleDisplays[adminRole] || 'Admin Panel';
-
-            // Load dashboard data
             loadDashboardData();
         });
 
@@ -303,8 +522,9 @@
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             document.getElementById('totalClients').textContent = users.length;
 
-            // Calculate revenue (simplified)
-            const revenue = users.length * 500; // Base calculation
+            // Calculate revenue (KES 500 per referral registration)
+            const referralUsers = users.filter(u => u.package === 'referral-only' || u.package === 'combined');
+            const revenue = referralUsers.length * 500;
             document.getElementById('totalRevenue').textContent = revenue.toLocaleString();
 
             // Load recent activity
@@ -314,8 +534,39 @@
         function loadRecentActivity() {
             const activityTable = document.getElementById('recentActivity');
             const pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
             
-            if (pendingApplications.length === 0) {
+            // Combine recent activities
+            let activities = [];
+            
+            // Add pending applications
+            pendingApplications.forEach(app => {
+                activities.push({
+                    type: 'application',
+                    name: app.userData.fullName,
+                    activity: 'Applied for Referral Program',
+                    time: app.submissionDate,
+                    status: 'pending'
+                });
+            });
+            
+            // Add recent approved users (last 5)
+            const recentUsers = users.slice(-5).reverse();
+            recentUsers.forEach(user => {
+                activities.push({
+                    type: 'user',
+                    name: user.fullName,
+                    activity: 'Account Activated',
+                    time: user.registrationDate,
+                    status: 'approved'
+                });
+            });
+            
+            // Sort by time and take latest 5
+            activities.sort((a, b) => new Date(b.time) - new Date(a.time));
+            activities = activities.slice(0, 5);
+
+            if (activities.length === 0) {
                 activityTable.innerHTML = `
                     <tr>
                         <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
@@ -326,14 +577,16 @@
                 return;
             }
 
-            // Show latest 5 applications
-            const recentApps = pendingApplications.slice(-5).reverse();
-            activityTable.innerHTML = recentApps.map(app => `
+            activityTable.innerHTML = activities.map(activity => `
                 <tr>
-                    <td style="font-weight: 600; color: var(--dark-brown);">${app.userData.fullName}</td>
-                    <td style="color: var(--muted-rose);">Applied for Referral Program</td>
-                    <td style="color: var(--muted-rose);">${new Date(app.submissionDate).toLocaleDateString()}</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td style="font-weight: 600; color: var(--dark-brown);">${activity.name}</td>
+                    <td style="color: var(--muted-rose);">${activity.activity}</td>
+                    <td style="color: var(--muted-rose);">${new Date(activity.time).toLocaleDateString()}</td>
+                    <td>
+                        <span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">
+                            ${activity.status}
+                        </span>
+                    </td>
                 </tr>
             `).join('');
         }
@@ -347,12 +600,23 @@
             window.location.href = 'admin-withdrawal-approvals.html';
         }
 
+        function showClientManagement() {
+            alert('Client Management feature coming soon!');
+        }
+
+        function showPaymentSettings() {
+            window.location.href = 'admin-payment-settings.html';
+        }
+
         function logoutAdmin() {
             localStorage.removeItem('adminLoggedIn');
             localStorage.removeItem('adminRole');
             localStorage.removeItem('adminName');
             window.location.href = 'admin-login.html';
         }
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadDashboardData, 30000);
     </script>
 </body>
 </html>
