@@ -3,30 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Payment - Crown Trade Academy</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Payment Verification - Crown Trade Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .screenshot-section {
-            background: var(--off-white);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px dashed var(--muted-rose);
-            margin: 2rem 0;
-            text-align: center;
+        /* [KEEP ALL YOUR LUXURY STYLES] */
+        :root {
+            --dark-brown: #3A2D28;
+            --muted-rose: #A48374;
+            --warm-beige: #CBAD8D;
+            --light-taupe: #D1C7BD;
+            --off-white: #EBE3DB;
+            --cream-white: #F1EDE6;
+            --gold-accent: #D4AF37;
+            --success: #27AE60;
+            --warning: #E67E22;
+            --danger: #E74C3C;
+            --info: #3498DB;
         }
         
-        .upload-area {
-            border: 2px dashed var(--warm-beige);
-            border-radius: 8px;
-            padding: 3rem 2rem;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            color: var(--dark-brown);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .premium-header {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold-accent);
+        }
+        
+        .premium-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--warm-beige);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--cream-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold-accent);
+        }
+        
+        .premium-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .luxury-card {
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
+        }
+        
+        .luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
+        }
+        
+        .luxury-btn {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+            color: var(--cream-white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .luxury-btn:hover {
+            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #2ECC71);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #2ECC71, var(--success));
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--light-taupe);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--off-white);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--warm-beige);
+            box-shadow: 0 0 0 3px rgba(203, 173, 141, 0.1);
+        }
+        
+        .file-upload-area {
+            border: 2px dashed var(--muted-rose);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: var(--off-white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--warm-beige);
             background: var(--cream-white);
         }
         
-        .upload-area:hover {
+        .file-upload-area.dragover {
             border-color: var(--gold-accent);
-            background: var(--off-white);
+            background: rgba(212, 175, 55, 0.1);
         }
         
         .upload-icon {
@@ -35,20 +190,158 @@
             margin-bottom: 1rem;
         }
         
-        #previewImage {
-            max-width: 300px;
-            max-height: 300px;
-            border-radius: 8px;
-            border: 2px solid var(--warm-beige);
+        .premium-footer {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--gold-accent);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* 🚀 STATUS TRACKER STYLES */
+        .status-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .status-tracker::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: var(--light-taupe);
+            z-index: 1;
+        }
+        
+        .status-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .status-step.active .step-icon {
+            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
+            color: var(--dark-brown);
+            border: 3px solid var(--gold-accent);
+        }
+        
+        .status-step.completed .step-icon {
+            background: linear-gradient(135deg, var(--success), #2ECC71);
+            color: white;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light-taupe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--muted-rose);
+        }
+        
+        .status-step.active .step-label {
+            color: var(--dark-brown);
+        }
+        
+        /* 🚀 APPROVAL STATUS STYLES */
+        .approval-status {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .status-pending {
+            background: rgba(230, 126, 34, 0.1);
+            border: 2px solid rgba(230, 126, 34, 0.3);
+            color: var(--warning);
+        }
+        
+        .status-approved {
+            background: rgba(39, 174, 96, 0.1);
+            border: 2px solid rgba(39, 174, 96, 0.3);
+            color: var(--success);
+        }
+        
+        .status-checking {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            color: var(--info);
+        }
+        
+        .loading-spinner {
+            border: 3px solid var(--light-taupe);
+            border-top: 3px solid var(--gold-accent);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .upload-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
             margin: 1rem 0;
         }
         
-        .referral-benefits {
-            background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));
-            color: var(--dark-brown);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+        .preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--light-taupe);
+        }
+        
+        .preview-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -56,186 +349,171 @@
     <!-- Premium Header -->
     <header class="premium-header">
         <nav class="premium-nav">
-            <a href="index.html" class="logo">Crown Trade Academy</a>
-            <div style="display: flex; align-items: center; gap: 2rem;">
-                <span style="color: var(--warm-beige);">Complete Payment</span>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="register.html">Register</a></li>
-                    <li><a href="login.html">Login</a></li>
-                </ul>
-            </div>
+            <a href="index.html" class="logo">
+                <span>👑</span>
+                Crown Trade Academy
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
         </nav>
     </header>
 
-    <!-- Payment Hero Section -->
-    <section class="premium-container" style="padding: 2rem 0;">
-        <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-                <div>
-                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰 Complete Your Registration</h1>
-                    <p style="font-size: 1.1rem; font-weight: 600;" id="heroDescription">Follow the instructions below to complete your payment</p>
-                </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 0.9rem; color: var(--dark-brown);">Package Selected</div>
-                    <div style="font-size: 1rem; font-weight: 700;" id="packageDisplay">Loading...</div>
-                </div>
+    <!-- Status Tracker -->
+    <section class="premium-container">
+        <div class="status-tracker">
+            <div class="status-step completed">
+                <div class="step-icon">1</div>
+                <div class="step-label">Register</div>
+            </div>
+            <div class="status-step active">
+                <div class="step-icon">2</div>
+                <div class="step-label">Payment</div>
+            </div>
+            <div class="status-step">
+                <div class="step-icon">3</div>
+                <div class="step-label">Approval</div>
+            </div>
+            <div class="status-step">
+                <div class="step-icon">4</div>
+                <div class="step-label">Dashboard</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Verification Hero -->
+    <section class="premium-container" style="padding: 1rem 0;">
+        <div class="luxury-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
+            <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem; text-align: center;">Payment Verification</h1>
+            <p style="font-size: 1.1rem; font-weight: 600; text-align: center;">Upload your payment screenshot for approval</p>
+        </div>
+    </section>
+
+    <!-- Order Summary -->
+    <section class="premium-container">
+        <div class="luxury-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📦 Order Summary</h2>
+            <div id="orderSummary">
+                <!-- Dynamic content will be inserted here -->
             </div>
         </div>
     </section>
 
     <!-- Payment Instructions -->
     <section class="premium-container">
-        <div class="premium-card">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
-                <h2 style="color: var(--dark-brown); margin-bottom: 1rem;" id="paymentTitle">Payment Pending</h2>
-                <p style="color: var(--muted-rose); font-size: 1.1rem;" id="paymentDescription">Complete your payment to activate your account</p>
-            </div>
-
-            <!-- Dynamic Payment Instructions -->
-            <div id="paymentInstructions">
-                <!-- Payment instructions will be loaded here dynamically -->
-            </div>
-
-            <!-- Payment Amount -->
-            <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; text-align: center; margin: 2rem 0;">
-                <div style="font-size: 0.9rem; color: var(--muted-rose); margin-bottom: 0.5rem;">Total Amount to Pay</div>
-                <div style="font-size: 3rem; font-weight: 700; color: var(--dark-brown);" id="paymentAmount">KES 0</div>
-                <div style="color: var(--muted-rose); font-size: 0.9rem;" id="packageDescription">Package Description</div>
-            </div>
-
-            <!-- Screenshot Upload Section (For Referral Program) -->
-            <div id="screenshotSection" class="screenshot-section" style="display: none;">
-                <h3 style="color: var(--dark-brown); margin-bottom: 1.5rem;">
-                    📸 Upload Payment Proof (Required for Referral Program)
-                </h3>
-                
-                <div class="upload-area" onclick="document.getElementById('screenshotUpload').click()">
-                    <div class="upload-icon">📎</div>
-                    <h4 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Upload MPesa Confirmation Screenshot</h4>
-                    <p style="color: var(--muted-rose); margin-bottom: 1rem;">
-                        Click here to upload screenshot of your MPesa confirmation message
-                    </p>
-                    <small style="color: var(--muted-rose);">Accepted: JPG, PNG, GIF • Max: 5MB</small>
-                </div>
-
-                <input type="file" id="screenshotUpload" accept="image/*" style="display: none;" onchange="previewImage(this)">
-
-                <div id="uploadPreview" style="margin-top: 1.5rem; text-align: center; display: none;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem; color: var(--success);">✅</div>
-                    <img id="previewImage" alt="Preview">
-                    <div style="margin-top: 1rem;">
-                        <button class="btn-secondary" onclick="removeScreenshot()" style="padding: 0.5rem 1rem;">
-                            🗑️ Remove Image
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Referral Benefits (For Referral Program) -->
-            <div id="referralBenefits" class="referral-benefits" style="display: none;">
-                <h3 style="margin-bottom: 1.5rem; text-align: center;">💰 Referral Program Benefits</h3>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💵</div>
-                        <div style="font-weight: 700; margin-bottom: 0.5rem;">KES 300 per Referral</div>
-                        <div style="font-size: 0.9rem;">Earn for every successful referral</div>
-                    </div>
-                    
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏰</div>
-                        <div style="font-weight: 700; margin-bottom: 0.5rem;">24/7 Withdrawals</div>
-                        <div style="font-size: 0.9rem;">Withdraw anytime (Min: KES 100)</div>
-                    </div>
-                    
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
-                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Real-time Tracking</div>
-                        <div style="font-size: 0.9rem;">Monitor your referrals live</div>
-                    </div>
-                    
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎁</div>
-                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Weekly Bonuses</div>
-                        <div style="font-size: 0.9rem;">Extra rewards for top performers</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Verification Message -->
-            <div class="payment-notice">
-                <h3 style="margin-bottom: 1rem;">📧 Important Verification Notice</h3>
-                <p style="margin: 0; font-weight: 600;" id="verificationMessage">
-                    Kindly before payment contact us through our email crowntradeacademy@gmail.com for verification and payment instructions. 
-                    All transactions require verification for security purposes.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Payment Actions -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h3 style="margin-bottom: 1.5rem; color: var(--dark-brown); text-align: center;">✅ Confirm Your Payment</h3>
+        <div class="luxury-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💳 Payment Instructions</h2>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
-                <button class="btn-premium" onclick="submitPayment()" style="padding: 1.2rem;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">✅</div>
-                    <div id="submitButtonText">I've Made Payment</div>
-                    <div style="font-size: 0.8rem; opacity: 0.8;" id="submitButtonSubtext">Verify & Activate Account</div>
-                </button>
+            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">Send Payment to:</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <strong>M-Pesa Paybill:</strong>
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--dark-brown);">247247</div>
+                    </div>
+                    <div>
+                        <strong>Account Number:</strong>
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--dark-brown);" id="accountNumber">CTA2024</div>
+                    </div>
+                </div>
                 
-                <button class="btn-secondary" onclick="contactSupport()" style="padding: 1.2rem;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
-                    <div>Need Help?</div>
-                    <div style="font-size: 0.8rem; opacity: 0.8;">Contact Support</div>
-                </button>
-            </div>
-
-            <div style="text-align: center;">
-                <button class="btn-secondary" onclick="goBackToPackage()" style="padding: 0.8rem 2rem;">
-                    ← Back to Package Selection
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Payment Status -->
-    <section class="premium-container">
-        <div class="premium-card" id="paymentStatusSection" style="display: none;">
-            <div style="text-align: center;">
-                <div id="statusIcon" style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
-                <h3 id="statusTitle" style="color: var(--dark-brown); margin-bottom: 1rem;">Processing...</h3>
-                <p id="statusMessage" style="color: var(--muted-rose); margin-bottom: 2rem;">
-                    Please wait while we process your request...
-                </p>
-                <div id="statusProgress" style="background: var(--off-white); padding: 1rem; border-radius: 8px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>Processing</span>
-                        <span id="progressText">Starting...</span>
-                    </div>
-                    <div style="background: var(--light-taupe); height: 6px; border-radius: 3px; overflow: hidden;">
-                        <div id="progressBar" style="background: var(--warm-beige); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
-                    </div>
+                <div style="margin-top: 1rem; padding: 1rem; background: rgba(212, 175, 55, 0.1); border-radius: 8px;">
+                    <strong>📝 Important:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Use your full name as reference</li>
+                        <li>Take screenshot of confirmation message</li>
+                        <li>Upload clear, readable screenshot</li>
+                        <li>Approval within 2-24 hours</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Trust Badges -->
+    <!-- Upload Section -->
+    <section class="premium-container">
+        <div class="luxury-card">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📤 Upload Payment Proof</h2>
+            
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label class="form-label">Transaction ID (Optional)</label>
+                    <input type="text" class="form-control" id="transactionId" placeholder="Enter M-Pesa transaction ID if available">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Payment Screenshot</label>
+                    <div class="file-upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Drop your screenshot here or click to browse</h3>
+                        <p style="color: var(--muted-rose); font-size: 0.9rem;">
+                            Supported formats: JPG, PNG, PDF (Max: 5MB)
+                        </p>
+                        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+                    </div>
+                    
+                    <div class="upload-preview" id="uploadPreview">
+                        <!-- Preview images will be added here -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Additional Notes (Optional)</label>
+                    <textarea class="form-control" id="additionalNotes" rows="3" placeholder="Any additional information about your payment..."></textarea>
+                </div>
+                
+                <button type="button" class="luxury-btn btn-success" style="width: 100%; padding: 15px;" onclick="submitPayment()" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Submit for Approval
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Approval Status -->
+    <section class="premium-container">
+        <div class="approval-status status-checking" id="checkingStatus">
+            <div class="loading-spinner"></div>
+            <h3>Checking Approval Status...</h3>
+            <p>Please wait while we check if you're already approved</p>
+        </div>
+        
+        <div class="approval-status status-pending" id="pendingStatus">
+            <i class="fas fa-clock" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h3>Awaiting Admin Approval</h3>
+            <p>Your payment has been submitted successfully! Admins will review your payment and approve your account.</p>
+            <p><strong>Estimated time:</strong> 2-24 hours</p>
+            
+            <div style="margin-top: 1rem;">
+                <button class="luxury-btn" onclick="checkApprovalStatus()" id="checkStatusBtn">
+                    <i class="fas fa-sync-alt"></i> Check Approval Status
+                </button>
+            </div>
+        </div>
+        
+        <div class="approval-status status-approved" id="approvedStatus">
+            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <h3>Approval Complete! 🎉</h3>
+            <p>Your account has been approved! Redirecting to your dashboard...</p>
+            <div class="loading-spinner" style="border-top-color: var(--success);"></div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
     <section class="premium-container">
         <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 2rem 0;">
-            <div class="trust-badge">
+            <div style="display: flex; align-items: center; background: var(--off-white); padding: 1rem 1.5rem; border-radius: 10px;">
                 <div style="font-size: 1.2rem; margin-right: 0.5rem;">🔒</div>
                 Secure Payment
             </div>
-            <div class="trust-badge">
+            <div style="display: flex; align-items: center; background: var(--off-white); padding: 1rem 1.5rem; border-radius: 10px;">
                 <div style="font-size: 1.2rem; margin-right: 0.5rem;">⚡</div>
-                Instant Verification
+                Fast Approval
             </div>
-            <div class="trust-badge">
+            <div style="display: flex; align-items: center; background: var(--off-white); padding: 1rem 1.5rem; border-radius: 10px;">
                 <div style="font-size: 1.2rem; margin-right: 0.5rem;">📞</div>
                 24/7 Support
             </div>
@@ -247,9 +525,9 @@
         <div class="footer-content">
             <div>
                 <h3>Need Help?</h3>
+                <p>Contact our support team</p>
                 <p>Email: crowntradeacademy@gmail.com</p>
-                <p>Phone: +254 700 000 000</p>
-                <p>WhatsApp: +254 700 000 000</p>
+                <p>Phone: +254 7XX XXX XXX</p>
             </div>
             <div>
                 <h3>Quick Links</h3>
@@ -258,10 +536,10 @@
                 <p><a href="login.html" style="color: var(--warm-beige); text-decoration: none;">Login</a></p>
             </div>
             <div>
-                <h3>Security</h3>
-                <p>SSL Encrypted</p>
-                <p>Verified Payments</p>
-                <p>Secure Processing</p>
+                <h3>Support</h3>
+                <p>Payment Issues</p>
+                <p>Account Verification</p>
+                <p>Technical Support</p>
             </div>
         </div>
         <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
@@ -270,466 +548,295 @@
     </footer>
 
     <script>
-        // Initialize payment page
+        // 🚀 GLOBAL VARIABLES
+        let uploadedFiles = [];
+        let approvalCheckInterval;
+
+        // 🚀 INITIALIZE PAGE
         document.addEventListener('DOMContentLoaded', function() {
-            loadPaymentDetails();
-            setupPaymentInstructions();
-            checkReferralProgram();
+            loadOrderSummary();
+            initializeFileUpload();
+            checkIfAlreadyApproved();
         });
 
-        // Check if this is for referral program
-        function checkReferralProgram() {
+        // 🚀 LOAD ORDER SUMMARY
+        function loadOrderSummary() {
+            const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
             const selectedPackage = localStorage.getItem('selectedPackage');
             
-            if (selectedPackage === 'referral-only') {
-                // Show screenshot section for referral program
-                document.getElementById('screenshotSection').style.display = 'block';
-                document.getElementById('referralBenefits').style.display = 'block';
-                document.getElementById('submitButtonText').textContent = 'Submit for Approval';
-                document.getElementById('submitButtonSubtext').textContent = 'Upload screenshot & wait for approval';
-                document.getElementById('paymentTitle').textContent = 'Referral Program Application';
-                document.getElementById('paymentDescription').textContent = 'Complete payment and upload proof for approval';
-                document.getElementById('heroDescription').textContent = 'Join our referral program and start earning';
-                
-                // Update verification message for referral
-                document.getElementById('verificationMessage').textContent = 
-                    'After payment, upload your MPesa confirmation screenshot. Your referral account will be activated after admin approval (usually within 24 hours).';
-            }
-        }
-
-        // Load package and payment details
-        function loadPaymentDetails() {
-            const selectedPackage = localStorage.getItem('selectedPackage');
-            const packageAmount = localStorage.getItem('packageAmount');
-            
-            if (!selectedPackage || !packageAmount) {
-                alert('No package selected. Redirecting to registration...');
-                window.location.href = 'register.html';
-                return;
-            }
-
-            // Display package info
-            const packageNames = {
-                'mentorship-only': 'Mentorship Program',
-                'referral-only': 'Referral Program', 
-                'combined': 'Combined Program'
-            };
-
-            const packageDescriptions = {
-                'mentorship-only': 'Elite 1-on-1 Trading Mentorship',
-                'referral-only': 'Referral Program Registration - Requires Approval',
-                'combined': 'Mentorship + Referral Program'
-            };
-
-            document.getElementById('packageDisplay').textContent = packageNames[selectedPackage] || selectedPackage;
-            document.getElementById('paymentAmount').textContent = 'KES ' + parseInt(packageAmount).toLocaleString();
-            document.getElementById('packageDescription').textContent = packageDescriptions[selectedPackage] || 'Full Platform Access';
-
-            // Generate unique payment reference
-            const paymentReference = generatePaymentReference();
-            localStorage.setItem('paymentReference', paymentReference);
-        }
-
-        // Setup dynamic payment instructions based on admin settings
-        function setupPaymentInstructions() {
-            const paymentSettings = getPaymentSettings();
-            const packageAmount = localStorage.getItem('packageAmount');
-            const paymentReference = localStorage.getItem('paymentReference');
-            
-            const instructionsContainer = document.getElementById('paymentInstructions');
-            let instructionsHTML = '';
-
-            switch(paymentSettings.activeMethod) {
-                case 'phone':
-                    instructionsHTML = `
-                        <div class="payment-method">
-                            <h3>📱 Pay via MPesa to Phone Number</h3>
-                            <div class="payment-details">
-                                <div class="detail-item">
-                                    <span>Send to:</span>
-                                    <strong>${paymentSettings.mpesaNumber}</strong>
-                                </div>
-                                <div class="detail-item">
-                                    <span>Amount:</span>
-                                    <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong>
-                                </div>
-                                <div class="detail-item">
-                                    <span>Reference:</span>
-                                    <strong>${paymentReference}</strong>
-                                </div>
-                            </div>
-                            
-                            <div class="instructions">
-                                <h4>Step-by-Step Instructions:</h4>
-                                <ol>
-                                    <li>Go to <strong>MPesa</strong> on your phone</li>
-                                    <li>Select <strong>"Send Money"</strong></li>
-                                    <li>Enter phone number: <strong>${paymentSettings.mpesaNumber}</strong></li>
-                                    <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
-                                    <li>Enter reference: <strong>${paymentReference}</strong></li>
-                                    <li>Enter your MPesa PIN</li>
-                                    <li>Wait for confirmation message</li>
-                                    <li id="screenshotStep"><strong>Take screenshot</strong> of the confirmation message</li>
-                                </ol>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'till':
-                    instructionsHTML = `
-                        <div class="payment-method">
-                            <h3>🏪 Pay via MPesa Till Number</h3>
-                            <div class="payment-details">
-                                <div class="detail-item">
-                                    <span>Till Number:</span>
-                                    <strong>${paymentSettings.tillNumber}</strong>
-                                </div>
-                                <div class="detail-item">
-                                    <span>Amount:</span>
-                                    <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong>
-                                </div>
-                                <div class="detail-item">
-                                    <span>Reference:</span>
-                                    <strong>${paymentReference}</strong>
-                                </div>
-                            </div>
-                            
-                            <div class="instructions">
-                                <h4>Step-by-Step Instructions:</h4>
-                                <ol>
-                                    <li>Go to <strong>MPesa</strong> on your phone</li>
-                                    <li>Select <strong>"Lipa Na MPesa"</strong></li>
-                                    <li>Select <strong>"Buy Goods & Services"</strong></li>
-                                    <li>Enter Till Number: <strong>${paymentSettings.tillNumber}</strong></li>
-                                    <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
-                                    <li>Enter reference: <strong>${paymentReference}</strong></li>
-                                    <li>Enter your MPesa PIN</li>
-                                    <li>Wait for confirmation message</li>
-                                    <li id="screenshotStep"><strong>Take screenshot</strong> of the confirmation message</li>
-                                </ol>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'paybill':
-                    instructionsHTML = `
-                        <div class="payment-method">
-                            <h3>🏦 Pay via MPesa PayBill</h3>
-                            <div class="payment-details">
-                                <div class="detail-item">
-                                    <span>PayBill Number:</span>
-                                    <strong>${paymentSettings.paybillNumber}</strong>
-                                </div>
-                                <div class="detail-item">
-                                    <span>Account Number:</span>
-                                    <strong>${paymentReference}</strong>
-                                </div>
-                                <div class="detail-item">
-                                    <span>Amount:</span>
-                                    <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong>
-                                </div>
-                            </div>
-                            
-                            <div class="instructions">
-                                <h4>Step-by-Step Instructions:</h4>
-                                <ol>
-                                    <li>Go to <strong>MPesa</strong> on your phone</li>
-                                    <li>Select <strong>"Lipa Na MPesa"</strong></li>
-                                    <li>Select <strong>"PayBill"</strong></li>
-                                    <li>Enter Business No: <strong>${paymentSettings.paybillNumber}</strong></li>
-                                    <li>Enter Account No: <strong>${paymentReference}</strong></li>
-                                    <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
-                                    <li>Enter your MPesa PIN</li>
-                                    <li>Wait for confirmation message</li>
-                                    <li id="screenshotStep"><strong>Take screenshot</strong> of the confirmation message</li>
-                                </ol>
-                            </div>
-                        </div>
-                    `;
-                    break;
-            }
-
-            instructionsContainer.innerHTML = instructionsHTML;
-
-            // Hide screenshot step for non-referral programs
-            const selectedPackage = localStorage.getItem('selectedPackage');
-            if (selectedPackage !== 'referral-only') {
-                const screenshotStep = document.getElementById('screenshotStep');
-                if (screenshotStep) screenshotStep.style.display = 'none';
-            }
-        }
-
-        // Get payment settings
-        function getPaymentSettings() {
-            const defaultSettings = {
-                mpesaNumber: '+254712345678',
-                tillNumber: '123456',
-                paybillNumber: '123456',
-                accountFormat: 'CTA{USER_ID}',
-                activeMethod: 'phone'
+            const packageData = {
+                'mentorship-only': { name: 'Mentorship Program', amount: 50000 },
+                'referral-only': { name: 'Referral Program', amount: 500 },
+                'combined': { name: 'Combined Program', amount: 50500 }
             };
             
-            const saved = localStorage.getItem('paymentSettings');
-            if (saved) {
-                const settings = JSON.parse(saved);
-                return settings.flexiblePayment || defaultSettings;
-            }
+            const packageInfo = packageData[selectedPackage] || { name: 'Unknown Program', amount: 0 };
             
-            return defaultSettings;
+            document.getElementById('orderSummary').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <strong>Program:</strong>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark-brown);">${packageInfo.name}</div>
+                    </div>
+                    <div>
+                        <strong>Amount:</strong>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark-brown);">KES ${packageInfo.amount.toLocaleString()}</div>
+                    </div>
+                </div>
+                <div style="background: var(--off-white); padding: 1rem; border-radius: 8px;">
+                    <strong>Customer:</strong> ${pendingUserData.fullName || 'N/A'}<br>
+                    <strong>Email:</strong> ${pendingUserData.email || 'N/A'}<br>
+                    <strong>Phone:</strong> ${pendingUserData.phone || 'N/A'}
+                </div>
+            `;
+            
+            // Generate unique account number
+            const accountNumber = 'CTA' + Date.now().toString().slice(-6);
+            document.getElementById('accountNumber').textContent = accountNumber;
+            localStorage.setItem('accountNumber', accountNumber);
         }
 
-        // Generate unique payment reference
-        function generatePaymentReference() {
-            const timestamp = Date.now().toString().slice(-6);
-            const random = Math.random().toString(36).substr(2, 5).toUpperCase();
-            return `CTA${timestamp}${random}`;
+        // 🚀 INITIALIZE FILE UPLOAD
+        function initializeFileUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
         }
 
-        // Preview uploaded image
-        function previewImage(input) {
+        // 🚀 HANDLE UPLOADED FILES
+        function handleFiles(files) {
             const preview = document.getElementById('uploadPreview');
-            const image = document.getElementById('previewImage');
             
-            if (input.files && input.files[0]) {
+            for (let file of files) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size too large. Maximum size is 5MB.');
+                    continue;
+                }
+                
+                if (!file.type.match('image.*') && file.type !== 'application/pdf') {
+                    alert('Please upload only images or PDF files.');
+                    continue;
+                }
+                
+                uploadedFiles.push(file);
+                
                 const reader = new FileReader();
-                
                 reader.onload = function(e) {
-                    image.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        // Remove screenshot
-        function removeScreenshot() {
-            document.getElementById('screenshotUpload').value = '';
-            document.getElementById('uploadPreview').style.display = 'none';
-        }
-
-        // Submit payment for verification
-        function submitPayment() {
-            const selectedPackage = localStorage.getItem('selectedPackage');
-            const screenshotUpload = document.getElementById('screenshotUpload');
-            
-            // For referral program, check if screenshot is uploaded
-            if (selectedPackage === 'referral-only') {
-                if (!screenshotUpload.files[0]) {
-                    alert('Please upload your MPesa confirmation screenshot for referral program approval.');
-                    return;
-                }
-                
-                // Submit for admin approval
-                submitForApproval();
-            } else {
-                // For other programs, proceed with automatic verification
-                processPayment();
-            }
-        }
-
-        // Submit for admin approval (Referral Program)
-        function submitForApproval() {
-            const statusSection = document.getElementById('paymentStatusSection');
-            statusSection.style.display = 'block';
-            
-            // Scroll to status section
-            statusSection.scrollIntoView({ behavior: 'smooth' });
-            
-            // Simulate submission process
-            simulateApprovalProcess();
-        }
-
-        // Process payment (Non-referral programs)
-        function processPayment() {
-            const statusSection = document.getElementById('paymentStatusSection');
-            statusSection.style.display = 'block';
-            statusSection.scrollIntoView({ behavior: 'smooth' });
-            simulatePaymentVerification();
-        }
-
-        // Simulate approval process for referral program
-        function simulateApprovalProcess() {
-            let progress = 0;
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            const statusIcon = document.getElementById('statusIcon');
-            const statusTitle = document.getElementById('statusTitle');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            const steps = [
-                { progress: 20, text: 'Uploading screenshot...', icon: '📎' },
-                { progress: 40, text: 'Submitting for approval...', icon: '⏳' },
-                { progress: 60, text: 'Waiting for admin review...', icon: '👨‍💼' },
-                { progress: 80, text: 'Processing application...', icon: '⚡' },
-                { progress: 100, text: 'Submitted for Approval!', icon: '✅' }
-            ];
-            
-            steps.forEach((step, index) => {
-                setTimeout(() => {
-                    progress = step.progress;
-                    progressBar.style.width = progress + '%';
-                    progressText.textContent = step.text;
-                    statusIcon.textContent = step.icon;
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
                     
-                    if (progress === 100) {
-                        statusTitle.textContent = 'Submitted for Approval!';
-                        statusMessage.textContent = 'Your referral program application has been submitted. You will be notified via email once approved (usually within 24 hours).';
-                        completeReferralSubmission();
+                    if (file.type.match('image.*')) {
+                        previewItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button type="button" class="remove-btn" onclick="removeFile(${uploadedFiles.length - 1})">×</button>
+                        `;
+                    } else {
+                        previewItem.innerHTML = `
+                            <div style="background: var(--light-taupe); height: 120px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-file-pdf" style="font-size: 2rem; color: var(--muted-rose);"></i>
+                            </div>
+                            <button type="button" class="remove-btn" onclick="removeFile(${uploadedFiles.length - 1})">×</button>
+                        `;
                     }
-                }, (index + 1) * 1500);
-            });
-        }
-
-        // Simulate payment verification for non-referral programs
-        function simulatePaymentVerification() {
-            let progress = 0;
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            const statusIcon = document.getElementById('statusIcon');
-            const statusTitle = document.getElementById('statusTitle');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            const steps = [
-                { progress: 20, text: 'Checking payment...', icon: '🔍' },
-                { progress: 40, text: 'Verifying transaction...', icon: '💰' },
-                { progress: 60, text: 'Confirming with bank...', icon: '🏦' },
-                { progress: 80, text: 'Activating account...', icon: '⚡' },
-                { progress: 100, text: 'Payment Verified!', icon: '✅' }
-            ];
-            
-            steps.forEach((step, index) => {
-                setTimeout(() => {
-                    progress = step.progress;
-                    progressBar.style.width = progress + '%';
-                    progressText.textContent = step.text;
-                    statusIcon.textContent = step.icon;
                     
-                    if (progress === 100) {
-                        statusTitle.textContent = 'Payment Verified Successfully!';
-                        statusMessage.textContent = 'Your account is being activated...';
-                        completeRegistration();
-                    }
-                }, (index + 1) * 2000);
-            });
-        }
-
-        // Complete referral submission
-        function completeReferralSubmission() {
-            setTimeout(() => {
-                // Save referral application data
-                const userData = JSON.parse(localStorage.getItem('tempUserData') || '{}');
-                const application = {
-                    id: 'app_' + Date.now(),
-                    userEmail: userData.email,
-                    userPhone: userData.phone,
-                    userName: userData.fullName,
-                    package: 'referral-only',
-                    paymentReference: localStorage.getItem('paymentReference'),
-                    amount: 500,
-                    submittedAt: new Date().toISOString(),
-                    status: 'pending',
-                    type: 'referral_approval'
+                    preview.appendChild(previewItem);
                 };
                 
-                // Save to pending approvals
-                const approvals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-                approvals.push(application);
-                localStorage.setItem('pendingApprovals', JSON.stringify(approvals));
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 🚀 REMOVE UPLOADED FILE
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            updateFilePreview();
+        }
+
+        // 🚀 UPDATE FILE PREVIEW
+        function updateFilePreview() {
+            const preview = document.getElementById('uploadPreview');
+            preview.innerHTML = '';
+            
+            uploadedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    
+                    if (file.type.match('image.*')) {
+                        previewItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button type="button" class="remove-btn" onclick="removeFile(${index})">×</button>
+                        `;
+                    } else {
+                        previewItem.innerHTML = `
+                            <div style="background: var(--light-taupe); height: 120px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-file-pdf" style="font-size: 2rem; color: var(--muted-rose);"></i>
+                            </div>
+                            <button type="button" class="remove-btn" onclick="removeFile(${index})">×</button>
+                        `;
+                    }
+                    
+                    preview.appendChild(previewItem);
+                };
                 
-                // Clean up and redirect
-                localStorage.removeItem('tempUserData');
-                localStorage.removeItem('selectedPackage');
-                localStorage.removeItem('packageAmount');
-                localStorage.removeItem('paymentReference');
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 🚀 SUBMIT PAYMENT FOR APPROVAL
+        function submitPayment() {
+            if (uploadedFiles.length === 0) {
+                alert('Please upload at least one payment screenshot.');
+                return;
+            }
+            
+            const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
+            const transactionId = document.getElementById('transactionId').value;
+            const additionalNotes = document.getElementById('additionalNotes').value;
+            
+            // Update pending approval status
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            const userApprovalIndex = pendingApprovals.findIndex(approval => approval.email === pendingUserData.email);
+            
+            if (userApprovalIndex !== -1) {
+                pendingApprovals[userApprovalIndex].status = 'pending_approval';
+                pendingApprovals[userApprovalIndex].transactionId = transactionId;
+                pendingApprovals[userApprovalIndex].additionalNotes = additionalNotes;
+                pendingApprovals[userApprovalIndex].paymentTimestamp = new Date().toISOString();
+                pendingApprovals[userApprovalIndex].hasScreenshot = uploadedFiles.length > 0;
                 
-                alert('✅ Application Submitted!\n\nYour referral program application has been sent for approval. You will receive an email notification once approved (usually within 24 hours).');
-                window.location.href = 'login.html';
+                localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
+                
+                // Show pending status
+                document.getElementById('checkingStatus').style.display = 'none';
+                document.getElementById('pendingStatus').style.display = 'block';
+                
+                // Disable submit button
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
+                
+                // Start checking for approval
+                startApprovalChecking();
+                
+                alert('✅ Payment submitted successfully! Admins have been notified and will review your payment shortly.');
+            } else {
+                alert('Error: User data not found. Please restart the registration process.');
+            }
+        }
+
+        // 🚀 CHECK IF USER IS ALREADY APPROVED
+        function checkIfAlreadyApproved() {
+            const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
+            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+            
+            const isApproved = approvedUsers.find(user => user.email === pendingUserData.email);
+            
+            if (isApproved) {
+                // User already approved - redirect to dashboard
+                completeUserApproval(isApproved);
+            } else {
+                // Show checking status
+                document.getElementById('checkingStatus').style.display = 'block';
+                
+                // Check if user already submitted payment
+                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+                const userApproval = pendingApprovals.find(approval => approval.email === pendingUserData.email);
+                
+                if (userApproval && userApproval.status === 'pending_approval') {
+                    // User already submitted payment
+                    document.getElementById('checkingStatus').style.display = 'none';
+                    document.getElementById('pendingStatus').style.display = 'block';
+                    document.getElementById('submitBtn').disabled = true;
+                    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
+                    startApprovalChecking();
+                }
+            }
+        }
+
+        // 🚀 START CHECKING FOR APPROVAL
+        function startApprovalChecking() {
+            // Check every 5 seconds for approval
+            approvalCheckInterval = setInterval(() => {
+                checkApprovalStatus();
+            }, 5000);
+        }
+
+        // 🚀 CHECK APPROVAL STATUS
+        function checkApprovalStatus() {
+            const pendingUserData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
+            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+            
+            const isApproved = approvedUsers.find(user => user.email === pendingUserData.email);
+            
+            if (isApproved) {
+                // User approved!
+                clearInterval(approvalCheckInterval);
+                completeUserApproval(isApproved);
+            } else {
+                // Still pending - update status button
+                const checkStatusBtn = document.getElementById('checkStatusBtn');
+                checkStatusBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Checking... (${new Date().toLocaleTimeString()})`;
+                
+                setTimeout(() => {
+                    checkStatusBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Check Approval Status`;
+                }, 2000);
+            }
+        }
+
+        // 🚀 COMPLETE USER APPROVAL
+        function completeUserApproval(userData) {
+            document.getElementById('pendingStatus').style.display = 'none';
+            document.getElementById('approvedStatus').style.display = 'block';
+            
+            // Update status tracker
+            document.querySelectorAll('.status-step').forEach(step => {
+                step.classList.remove('active');
+                step.classList.add('completed');
+            });
+            
+            // Set user session
+            localStorage.setItem('clientLoggedIn', 'true');
+            localStorage.setItem('clientEmail', userData.email);
+            localStorage.setItem('clientName', userData.fullName);
+            localStorage.setItem('clientPackage', userData.package);
+            
+            // Clean up temporary data
+            localStorage.removeItem('pendingUserData');
+            localStorage.removeItem('selectedPackage');
+            localStorage.removeItem('accountNumber');
+            
+            // Redirect to dashboard after 3 seconds
+            setTimeout(() => {
+                window.location.href = 'client-dashboard.html';
             }, 3000);
         }
 
-        // Complete registration after payment (for non-referral programs)
-        function completeRegistration() {
-            setTimeout(() => {
-                const tempUserData = JSON.parse(localStorage.getItem('tempUserData'));
-                const selectedPackage = localStorage.getItem('selectedPackage');
-                
-                if (tempUserData && selectedPackage !== 'referral-only') {
-                    createUserAccount(tempUserData);
-                } else {
-                    // Store payment verification for later
-                    localStorage.setItem('paymentVerified', 'true');
-                    localStorage.setItem('paymentTimestamp', new Date().toISOString());
-                    alert('🎉 Payment verified successfully! Your account will be activated shortly.');
-                    window.location.href = 'login.html';
-                }
-            }, 2000);
-        }
-
-        // Create user account after payment
-        function createUserAccount(userData) {
-            const user = {
-                id: 'user_' + Date.now(),
-                fullName: userData.fullName,
-                email: userData.email,
-                phone: userData.phone,
-                password: userData.password,
-                package: localStorage.getItem('selectedPackage'),
-                registrationDate: new Date().toISOString(),
-                paymentVerified: true,
-                paymentTimestamp: new Date().toISOString(),
-                status: 'active',
-                joinDate: new Date().toLocaleDateString()
-            };
-            
-            // Save user to localStorage
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            users.push(user);
-            localStorage.setItem('users', JSON.stringify(users));
-            
-            // Set login session
-            localStorage.setItem('clientLoggedIn', 'true');
-            localStorage.setItem('clientEmail', user.email);
-            localStorage.setItem('clientPackage', user.package);
-            localStorage.setItem('clientName', user.fullName);
-            
-            // Clean up temporary data
-            localStorage.removeItem('tempUserData');
-            localStorage.removeItem('selectedPackage');
-            localStorage.removeItem('packageAmount');
-            localStorage.removeItem('packageName');
-            localStorage.removeItem('paymentVerified');
-            localStorage.removeItem('paymentTimestamp');
-            localStorage.removeItem('paymentReference');
-            
-            // Redirect to dashboard
-            alert('🎉 Registration Complete!\n\nWelcome to Crown Trade Academy!');
-            window.location.href = 'client-dashboard.html';
-        }
-
-        // Contact support
-        function contactSupport() {
-            const email = 'crowntradeacademy@gmail.com';
-            const subject = 'Payment Assistance Required';
-            const body = `I need help with my payment. Payment Reference: ${localStorage.getItem('paymentReference')}`;
-            
-            window.open(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
-        }
-
-        // Go back to package selection
-        function goBackToPackage() {
-            if (confirm('Are you sure you want to go back? Your current selection will be saved.')) {
-                window.location.href = 'register.html';
-            }
-        }
-
-        // Handle page refresh/back button
-        window.addEventListener('beforeunload', function(e) {
-            if (!localStorage.getItem('paymentVerified') && !localStorage.getItem('pendingApprovals')) {
-                e.preventDefault();
-                e.returnValue = 'Your payment is in progress. Are you sure you want to leave?';
+        // 🚀 CLEAN UP ON PAGE UNLOAD
+        window.addEventListener('beforeunload', function() {
+            if (approvalCheckInterval) {
+                clearInterval(approvalCheckInterval);
             }
         });
     </script>
