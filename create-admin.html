@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Admin - Crown Trade Academy</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 500px; 
+            margin: 100px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group { margin: 20px 0; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #ddd; 
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button { 
+            background: #3A2D28; 
+            color: white; 
+            padding: 12px 30px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover { background: #2A1F1A; }
+        .success { 
+            background: #28a745; 
+            color: white; 
+            padding: 15px; 
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Admin Account</h2>
+        <p>Create your first admin account to access the admin dashboard.</p>
+        
+        <form id="createAdminForm">
+            <div class="form-group">
+                <label for="adminEmail">Admin Email:</label>
+                <input type="email" id="adminEmail" required placeholder="admin@crowntradeacademy.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="adminPassword">Admin Password:</label>
+                <input type="password" id="adminPassword" required placeholder="Enter secure password" minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="adminName">Admin Name:</label>
+                <input type="text" id="adminName" required placeholder="System Administrator">
+            </div>
+            
+            <button type="submit">Create Admin Account</button>
+        </form>
+        
+        <div id="result" style="margin-top: 20px;"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
+            authDomain: "crowntradeacademy-67be1.firebaseapp.com",
+            projectId: "crowntradeacademy-67be1",
+            storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
+            messagingSenderId: "943453710285",
+            appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
+            measurementId: "G-E6Z4VS9S8N"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        document.getElementById('createAdminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const name = document.getElementById('adminName').value;
+            const button = e.target.querySelector('button');
+            const resultDiv = document.getElementById('result');
+
+            button.disabled = true;
+            button.textContent = 'Creating Admin...';
+
+            try {
+                // Create auth user
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Create user document in Firestore with admin role
+                await setDoc(doc(db, "users", user.uid), {
+                    email: email,
+                    fullName: name,
+                    role: "admin",
+                    createdAt: new Date(),
+                    isActive: true
+                });
+                
+                // Show success message
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <h3>✅ Admin Account Created Successfully!</h3>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Password:</strong> ${password}</p>
+                        <p><strong>Admin Name:</strong> ${name}</p>
+                        <p style="margin-top: 15px;">
+                            <a href="admin-login.html" style="color: white; text-decoration: underline;">
+                                Click here to login to Admin Dashboard
+                            </a>
+                        </p>
+                    </div>
+                `;
+                
+                // Clear form
+                document.getElementById('createAdminForm').reset();
+                
+                console.log("Admin created:", { email, password, name });
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="background: #dc3545; color: white; padding: 15px; border-radius: 8px;">
+                    <strong>Error:</strong> ${error.message}
+                </div>`;
+                console.error("Error creating admin:", error);
+            }
+
+            button.disabled = false;
+            button.textContent = 'Create Admin Account';
+        });
+    </script>
+</body>
+</html>
