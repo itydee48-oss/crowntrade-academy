@@ -6,7 +6,7 @@
     <title>Admin Dashboard - Crown Trade Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* [KEEP ALL YOUR EXISTING CSS STYLES - SAME AS BEFORE] */
+        /* [KEEP ALL YOUR EXISTING CSS STYLES] */
         :root {
             --dark-brown: #3A2D28;
             --muted-rose: #A48374;
@@ -345,7 +345,7 @@
             margin-bottom: 1rem;
         }
 
-        /* 🚀 ADD REAL-TIME NOTIFICATION STYLES */
+        /* 🚀 REAL-TIME NOTIFICATION STYLES */
         .live-alert {
             background: linear-gradient(135deg, #E74C3C, #C0392B);
             color: white;
@@ -354,6 +354,7 @@
             margin: 1rem 0;
             animation: pulse 2s infinite;
             display: none;
+            cursor: pointer;
         }
         
         @keyframes pulse {
@@ -377,6 +378,22 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+        
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
     </style>
 </head>
 <body>
@@ -393,6 +410,10 @@
                     <li><a href="admin-dashboard.html" style="color: var(--gold-accent); font-weight: 600;">Dashboard</a></li>
                     <li><a href="admin-referral-approvals.html">Referral Approvals</a></li>
                     <li><a href="admin-withdrawal-approvals.html">Withdrawal Approvals</a></li>
+                    <li class="notification-bell" onclick="showReferralApprovals()">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-dot" id="notificationDot" style="display: none;"></div>
+                    </li>
                     <li><span class="admin-badge-luxury" id="adminName">Administrator</span></li>
                     <li><a href="#" onclick="logoutAdmin()" style="color: var(--warm-beige);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
@@ -402,9 +423,9 @@
 
     <!-- 🚀 REAL-TIME ALERT SECTION -->
     <section class="premium-container">
-        <div class="live-alert" id="liveAlert">
+        <div class="live-alert" id="liveAlert" onclick="showReferralApprovals()">
             <strong>🚨 LIVE ALERT:</strong> <span id="alertMessage">New registration detected!</span>
-            <button class="luxury-btn" onclick="checkPendingApprovals()" style="margin-left: 1rem; padding: 5px 10px; font-size: 0.8rem;">
+            <button class="luxury-btn" style="margin-left: 1rem; padding: 5px 10px; font-size: 0.8rem; background: white; color: #E74C3C;">
                 View Now
             </button>
         </div>
@@ -516,6 +537,7 @@
                         <th>Activity</th>
                         <th>Time</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="recentActivity">
@@ -552,27 +574,29 @@
     </footer>
 
     <script>
+        // 🚀 GLOBAL VARIABLES
+        let monitoringInterval;
+        let lastPendingCount = 0;
+
         // Admin authentication check
         if (localStorage.getItem('adminLoggedIn') !== 'true') {
             window.location.href = 'admin-login.html';
         }
 
-        // 🚀 REAL-TIME MONITORING SYSTEM
-        let monitoringInterval;
-
+        // 🚀 INITIALIZE REAL-TIME MONITORING
         document.addEventListener('DOMContentLoaded', function() {
             const adminName = localStorage.getItem('adminName') || 'Administrator';
             document.getElementById('adminName').textContent = adminName;
             document.getElementById('adminWelcome').textContent = adminName;
             
-            // Initialize REAL data, not demo
+            // Initialize REAL data
             initializeRealTimeData();
             
             // Start real-time monitoring
             startRealTimeMonitoring();
         });
 
-        // 🚀 REAL-TIME DATA INITIALIZATION
+        // 🚀 INITIALIZE REAL-TIME DATA
         function initializeRealTimeData() {
             updateDashboardStats();
             updateRecentActivity();
@@ -581,133 +605,249 @@
 
         // 🚀 START REAL-TIME MONITORING
         function startRealTimeMonitoring() {
-            // Check for new activity every 3 seconds
+            // Check for new activity every 2 seconds (FASTER!)
             monitoringInterval = setInterval(() => {
                 updateDashboardStats();
                 checkForNewRegistrations();
                 updateLastUpdateTime();
-            }, 3000);
+            }, 2000);
         }
 
         // 🚀 UPDATE DASHBOARD STATS WITH REAL DATA
         function updateDashboardStats() {
-            // Get pending approvals
-            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
-            const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
-            
-            // Calculate real stats
-            const pendingReferrals = pendingApprovals.filter(approval => 
-                approval.status === 'pending_payment' || approval.status === 'pending_approval'
-            ).length;
-            
-            const totalClients = approvedUsers.length;
-            const totalRevenue = approvedUsers.reduce((sum, user) => sum + (user.amount || 0), 0);
-            
-            // Update UI with REAL data
-            document.getElementById('pendingReferralsCount').textContent = pendingReferrals;
-            document.getElementById('pendingReferrals').textContent = pendingReferrals;
-            document.getElementById('totalClients').textContent = totalClients;
-            document.getElementById('totalClientsCount').textContent = totalClients;
-            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
-            
-            // Update demo notice with real status
-            document.getElementById('realTimeStatus').textContent = 
-                `Monitoring ${pendingReferrals} pending approvals in real-time`;
+            try {
+                // Get pending approvals from BOTH sources
+                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+                const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+                const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                console.log('🔄 Checking pending approvals:', pendingApprovals.length);
+                console.log('🔄 Approved users:', approvedUsers.length);
+                
+                // Calculate real stats
+                const pendingReferrals = pendingApprovals.filter(approval => 
+                    approval.status === 'pending_payment' || approval.status === 'pending_approval'
+                ).length;
+                
+                const totalClients = approvedUsers.length;
+                const totalRevenue = approvedUsers.reduce((sum, user) => sum + (user.amount || 0), 0);
+                
+                // Update UI with REAL data
+                document.getElementById('pendingReferralsCount').textContent = pendingReferrals;
+                document.getElementById('pendingReferrals').textContent = pendingReferrals;
+                document.getElementById('totalClients').textContent = totalClients;
+                document.getElementById('totalClientsCount').textContent = totalClients;
+                document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
+                
+                // Update demo notice with real status
+                document.getElementById('realTimeStatus').textContent = 
+                    `Monitoring ${pendingReferrals} pending approvals in real-time`;
+                
+                // Check if new registrations arrived
+                if (pendingReferrals > lastPendingCount) {
+                    showNewRegistrationAlert(pendingReferrals - lastPendingCount);
+                }
+                lastPendingCount = pendingReferrals;
+                
+            } catch (error) {
+                console.error('Error updating dashboard stats:', error);
+            }
         }
 
         // 🚀 CHECK FOR NEW REGISTRATIONS INSTANTLY
         function checkForNewRegistrations() {
-            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const newRegistrations = pendingApprovals.filter(approval => 
-                approval.status === 'pending_payment'
-            );
-            
-            if (newRegistrations.length > 0) {
-                // Show alert for new registrations
-                const latestRegistration = newRegistrations[newRegistrations.length - 1];
-                showLiveAlert(`New registration from ${latestRegistration.fullName}`);
+            try {
+                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+                const newRegistrations = pendingApprovals.filter(approval => 
+                    approval.status === 'pending_payment' || approval.status === 'pending_approval'
+                );
                 
-                // Show new registrations badge
-                document.getElementById('newRegistrationsBadge').style.display = 'inline-block';
-            } else {
-                // Hide alert if no new registrations
-                document.getElementById('liveAlert').style.display = 'none';
-                document.getElementById('newRegistrationsBadge').style.display = 'none';
+                if (newRegistrations.length > 0) {
+                    // Show notification dot
+                    document.getElementById('notificationDot').style.display = 'block';
+                    
+                    // Show new registrations badge
+                    document.getElementById('newRegistrationsBadge').style.display = 'inline-block';
+                    document.getElementById('newRegistrationsBadge').textContent = `${newRegistrations.length} NEW`;
+                    
+                } else {
+                    // Hide alerts if no new registrations
+                    document.getElementById('liveAlert').style.display = 'none';
+                    document.getElementById('newRegistrationsBadge').style.display = 'none';
+                    document.getElementById('notificationDot').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error checking new registrations:', error);
             }
         }
 
-        // 🚀 SHOW LIVE ALERT FOR NEW ACTIVITY
-        function showLiveAlert(message) {
+        // 🚀 SHOW NEW REGISTRATION ALERT
+        function showNewRegistrationAlert(count) {
             const alertElement = document.getElementById('liveAlert');
             const alertMessage = document.getElementById('alertMessage');
             
-            alertMessage.textContent = message;
+            alertMessage.textContent = `${count} new registration${count > 1 ? 's' : ''} detected!`;
             alertElement.style.display = 'block';
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 10000);
         }
 
         // 🚀 UPDATE RECENT ACTIVITY WITH REAL DATA
         function updateRecentActivity() {
-            const activityTable = document.getElementById('recentActivity');
-            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
-            
-            // Clear existing rows
-            activityTable.innerHTML = '';
-            
-            // Combine and sort activities by timestamp
-            const allActivities = [
-                ...pendingApprovals.map(approval => ({
-                    type: 'pending',
-                    name: approval.fullName,
-                    activity: `Applied for ${approval.package}`,
-                    time: approval.timestamp,
-                    status: 'pending'
-                })),
-                ...approvedUsers.map(user => ({
-                    type: 'approved',
-                    name: user.fullName,
-                    activity: `Joined ${user.packageName}`,
-                    time: user.approvalTimestamp || user.registrationDate,
-                    status: 'approved'
-                }))
-            ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
-            
-            // Add activities to table
-            allActivities.forEach(activity => {
-                const row = document.createElement('tr');
+            try {
+                const activityTable = document.getElementById('recentActivity');
+                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+                const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
                 
-                const timeAgo = getTimeAgo(activity.time);
+                // Clear existing rows
+                activityTable.innerHTML = '';
                 
-                row.innerHTML = `
-                    <td style="font-weight: 600; color: var(--dark-brown);">${activity.name}</td>
-                    <td style="color: var(--muted-rose);">${activity.activity}</td>
-                    <td style="color: var(--muted-rose);">${timeAgo}</td>
-                    <td><span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">${activity.status === 'approved' ? 'Completed' : 'Pending'}</span></td>
-                `;
+                // Combine and sort activities by timestamp (newest first)
+                const allActivities = [
+                    ...pendingApprovals.map(approval => ({
+                        type: 'pending',
+                        id: approval.id,
+                        name: approval.fullName,
+                        activity: `Applied for ${approval.package}`,
+                        time: approval.timestamp,
+                        status: 'pending',
+                        email: approval.email
+                    })),
+                    ...approvedUsers.map(user => ({
+                        type: 'approved', 
+                        id: user.id,
+                        name: user.fullName,
+                        activity: `Joined ${user.packageName}`,
+                        time: user.approvalTimestamp || user.registrationDate,
+                        status: 'approved',
+                        email: user.email
+                    }))
+                ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 6);
                 
-                activityTable.appendChild(row);
-            });
+                // Add activities to table
+                allActivities.forEach(activity => {
+                    const row = document.createElement('tr');
+                    
+                    const timeAgo = getTimeAgo(activity.time);
+                    const isNew = isActivityNew(activity.time);
+                    
+                    row.innerHTML = `
+                        <td style="font-weight: 600; color: var(--dark-brown);">
+                            ${activity.name}
+                            ${isNew ? '<span style="color: var(--danger); font-size: 0.7rem;"> NEW</span>' : ''}
+                        </td>
+                        <td style="color: var(--muted-rose);">${activity.activity}</td>
+                        <td style="color: var(--muted-rose);">${timeAgo}</td>
+                        <td>
+                            <span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">
+                                ${activity.status === 'approved' ? 'Completed' : 'Pending'}
+                            </span>
+                        </td>
+                        <td>
+                            ${activity.status === 'pending' ? 
+                                `<button class="luxury-btn" style="padding: 5px 10px; font-size: 0.8rem;" onclick="approveUser('${activity.email}')">
+                                    Approve
+                                </button>` : 
+                                `<span style="color: var(--success);">✓ Approved</span>`
+                            }
+                        </td>
+                    `;
+                    
+                    activityTable.appendChild(row);
+                });
+                
+                // If no activities, show message
+                if (allActivities.length === 0) {
+                    activityTable.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
+                                No recent activity. New registrations will appear here.
+                            </td>
+                        </tr>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Error updating recent activity:', error);
+            }
+        }
+
+        // 🚀 CHECK IF ACTIVITY IS NEW (LAST 10 MINUTES)
+        function isActivityNew(timestamp) {
+            const activityTime = new Date(timestamp);
+            const now = new Date();
+            const diffMinutes = (now - activityTime) / (1000 * 60);
+            return diffMinutes < 10; // Consider new if within last 10 minutes
         }
 
         // 🚀 GET TIME AGO FOR DISPLAY
         function getTimeAgo(timestamp) {
-            const now = new Date();
-            const time = new Date(timestamp);
-            const diffMs = now - time;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins} min ago`;
-            if (diffHours < 24) return `${diffHours} hours ago`;
-            return `${diffDays} days ago`;
+            try {
+                const now = new Date();
+                const time = new Date(timestamp);
+                const diffMs = now - time;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins} min ago`;
+                if (diffHours < 24) return `${diffHours} hours ago`;
+                return `${diffDays} days ago`;
+            } catch (error) {
+                return 'Recently';
+            }
         }
 
         // 🚀 UPDATE LAST UPDATE TIME
         function updateLastUpdateTime() {
             document.getElementById('lastUpdate').textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+        }
+
+        // 🚀 APPROVE USER DIRECTLY FROM DASHBOARD
+        function approveUser(userEmail) {
+            if (confirm('Approve this user and grant dashboard access?')) {
+                try {
+                    const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+                    const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
+                    
+                    // Find user in pending approvals
+                    const userIndex = pendingApprovals.findIndex(approval => approval.email === userEmail);
+                    
+                    if (userIndex !== -1) {
+                        const user = pendingApprovals[userIndex];
+                        
+                        // Move to approved users
+                        approvedUsers.push({
+                            ...user,
+                            status: 'approved',
+                            approvalTimestamp: new Date().toISOString(),
+                            approvedBy: localStorage.getItem('adminName') || 'Administrator'
+                        });
+                        
+                        // Remove from pending
+                        pendingApprovals.splice(userIndex, 1);
+                        
+                        // Save updates
+                        localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
+                        localStorage.setItem('approvedUsers', JSON.stringify(approvedUsers));
+                        
+                        // Update UI
+                        updateDashboardStats();
+                        updateRecentActivity();
+                        
+                        alert(`✅ ${user.fullName} has been approved! They can now access their dashboard.`);
+                    } else {
+                        alert('User not found in pending approvals.');
+                    }
+                } catch (error) {
+                    console.error('Error approving user:', error);
+                    alert('Error approving user. Please try again.');
+                }
+            }
         }
 
         // 🚀 CHECK PENDING APPROVALS
