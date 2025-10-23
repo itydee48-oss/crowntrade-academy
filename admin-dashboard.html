@@ -1,890 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Crown Trade Academy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* [KEEP ALL YOUR EXISTING CSS STYLES] */
-        :root {
-            --dark-brown: #3A2D28;
-            --muted-rose: #A48374;
-            --warm-beige: #CBAD8D;
-            --light-taupe: #D1C7BD;
-            --off-white: #EBE3DB;
-            --cream-white: #F1EDE6;
-            --gold-accent: #D4AF37;
-            --success: #27AE60;
-            --warning: #E67E22;
-            --danger: #E74C3C;
-            --info: #3498DB;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-            color: var(--dark-brown);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        .premium-header {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 1.2rem 0;
-            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 3px solid var(--gold-accent);
-        }
-        
-        .premium-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--warm-beige);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--cream-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--gold-accent);
-        }
-        
-        .premium-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .luxury-card {
-            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-            border: 1px solid var(--light-taupe);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 1.5rem 0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
-        }
-        
-        .luxury-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
-        }
-        
-        .luxury-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .luxury-stat {
-            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-            border: 1px solid var(--light-taupe);
-            border-radius: 16px;
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-        
-        .luxury-stat::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--dark-brown), var(--muted-rose));
-        }
-        
-        .luxury-stat:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(58, 45, 40, 0.12);
-        }
-        
-        .luxury-stat-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--dark-brown), var(--muted-rose));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .luxury-stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--dark-brown);
-            margin-bottom: 0.5rem;
-        }
-        
-        .luxury-stat-label {
-            color: var(--muted-rose);
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .luxury-btn {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-            color: var(--cream-white);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .luxury-btn:hover {
-            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.3);
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #2ECC71);
-        }
-        
-        .btn-success:hover {
-            background: linear-gradient(135deg, #2ECC71, var(--success));
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #C0392B);
-        }
-        
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #C0392B, var(--danger));
-        }
-        
-        .luxury-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.08);
-        }
-        
-        .luxury-table th {
-            background: linear-gradient(135deg, var(--dark-brown), #4A3A32);
-            color: var(--cream-white);
-            padding: 1.5rem;
-            text-align: left;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-        }
-        
-        .luxury-table td {
-            padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid var(--light-taupe);
-            background: var(--cream-white);
-            transition: all 0.3s ease;
-        }
-        
-        .luxury-table tr:hover td {
-            background: var(--off-white);
-        }
-        
-        .status-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .status-approved {
-            background: rgba(39, 174, 96, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(39, 174, 96, 0.3);
-        }
-        
-        .status-pending {
-            background: rgba(230, 126, 34, 0.1);
-            color: var(--warning);
-            border: 1px solid rgba(230, 126, 34, 0.3);
-        }
-        
-        .admin-badge-luxury {
-            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
-            color: var(--dark-brown);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            border: 2px solid rgba(212, 175, 55, 0.3);
-        }
-        
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .action-card {
-            background: var(--off-white);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px solid var(--light-taupe);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .action-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(58, 45, 40, 0.1);
-            border-color: var(--warm-beige);
-        }
-        
-        .action-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--muted-rose);
-        }
-        
-        .pending-badge {
-            background: var(--warning);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-        }
-        
-        .premium-footer {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
-            border-top: 3px solid var(--gold-accent);
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .demo-notice {
-            background: linear-gradient(135deg, #3498DB, #2980B9);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Dashboard - Crown Trade Academy</title>
 
-        /* 🚀 REAL-TIME NOTIFICATION STYLES */
-        .live-alert {
-            background: linear-gradient(135deg, #E74C3C, #C0392B);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1rem 0;
-            animation: pulse 2s infinite;
-            display: none;
-            cursor: pointer;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-        
-        .new-registration-badge {
-            background: linear-gradient(135deg, #E67E22, #D35400);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .notification-bell {
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .notification-dot {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 12px;
-            height: 12px;
-            background: var(--danger);
-            border-radius: 50%;
-            animation: pulse 1s infinite;
-        }
-    </style>
+  <!-- === Your Luxury Nude Theme === -->
+  <style>
+    :root {
+      --dark-brown: #3A2D28;
+      --muted-rose: #A48374;
+      --warm-beige: #CBAD8D;
+      --light-taupe: #D1C7BD;
+      --off-white: #EBE3DB;
+      --cream-white: #F1EDE6;
+      --gold-accent: #D4AF37;
+      --success-green: #28a745;
+      --warning-orange: #ffc107;
+      --danger-red: #dc3545;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+      color: var(--dark-brown);
+      line-height:1.6;
+      min-height:100vh;
+    }
+    .premium-header{
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+      color: var(--cream-white);
+      padding:1.2rem 0;
+      box-shadow:0 4px 20px rgba(58,45,40,0.1);
+      border-bottom:3px solid var(--gold-accent);
+    }
+    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
+    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
+    .nav-links{ display:flex; gap:2rem; list-style:none; align-items:center; }
+    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
+    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+    .premium-card{
+      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+      border:1px solid var(--light-taupe);
+      border-radius:20px;
+      padding:2.5rem;
+      margin:1.5rem 0;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(58,45,40,0.08);
+    }
+    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
+    .btn-premium{
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer;
+    }
+    .btn-success {
+      background: var(--success-green);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-danger {
+      background: var(--danger-red);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
+    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .stat-card {
+      background: var(--off-white);
+      border: 1px solid var(--light-taupe);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(139, 115, 85, 0.1);
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--dark-brown);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      color: var(--muted-rose);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .application-card {
+      background: var(--off-white);
+      border: 1px solid var(--light-taupe);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .status-pending { background: var(--warning-orange); color: var(--dark-brown); }
+    .status-approved { background: var(--success-green); color: white; }
+    .status-rejected { background: var(--danger-red); color: white; }
+    
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <!-- Luxury Header -->
-    <header class="premium-header">
-        <nav class="premium-nav">
-            <a href="index.html" class="logo">
-                <span>👑</span>
-                Crown Trade Academy
-            </a>
-            <div style="display: flex; align-items: center; gap: 2rem;">
-                <span style="color: var(--gold-accent); font-weight: 600;">Admin Command Center</span>
-                <ul class="nav-links">
-                    <li><a href="admin-dashboard.html" style="color: var(--gold-accent); font-weight: 600;">Dashboard</a></li>
-                    <li><a href="admin-referral-approvals.html">Referral Approvals</a></li>
-                    <li><a href="admin-withdrawal-approvals.html">Withdrawal Approvals</a></li>
-                    <li class="notification-bell" onclick="showReferralApprovals()">
-                        <i class="fas fa-bell"></i>
-                        <div class="notification-dot" id="notificationDot" style="display: none;"></div>
-                    </li>
-                    <li><span class="admin-badge-luxury" id="adminName">Administrator</span></li>
-                    <li><a href="#" onclick="logoutAdmin()" style="color: var(--warm-beige);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+  <header class="premium-header">
+    <nav class="premium-nav">
+      <a href="index.html" class="logo">Crown Trade Academy</a>
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <span style="color: var(--warm-beige); font-weight: 600;">Admin Dashboard</span>
+        <ul class="nav-links">
+          <li><a href="admin-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
+          <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-    <!-- 🚀 REAL-TIME ALERT SECTION -->
-    <section class="premium-container">
-        <div class="live-alert" id="liveAlert" onclick="showReferralApprovals()">
-            <strong>🚨 LIVE ALERT:</strong> <span id="alertMessage">New registration detected!</span>
-            <button class="luxury-btn" style="margin-left: 1rem; padding: 5px 10px; font-size: 0.8rem; background: white; color: #E74C3C;">
-                View Now
-            </button>
+  <section class="premium-container" style="padding:2rem 0;">
+    <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+        <div>
+          <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚙️ Admin Dashboard</h1>
+          <p style="font-size: 1.1rem; font-weight: 600;">Manage referral applications and users</p>
         </div>
-    </section>
-
-    <!-- Demo Notice -->
-    <section class="premium-container">
-        <div class="demo-notice">
-            <strong>🏢 LIVE PRODUCTION MODE</strong> - <span id="realTimeStatus">Monitoring registrations in real-time</span>
+        <div style="text-align: right;">
+          <div style="font-size: 0.9rem; color: var(--dark-brown);">Logged in as</div>
+          <div style="font-size: 1rem; font-weight: 700;" id="adminEmail">Loading...</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Luxury Hero -->
-    <section class="premium-container" style="padding: 2rem 0;">
-        <div class="luxury-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-                <div style="flex: 1;">
-                    <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800;">
-                        <span>👑</span> Admin Command Center
-                    </h1>
-                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--dark-brown); opacity: 0.9;">
-                        Full System Control • Real-time Analytics • Complete Oversight
-                    </p>
-                </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 1rem; color: var(--dark-brown); opacity: 0.8;">Super Admin</div>
-                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--dark-brown);" id="adminWelcome">Administrator</div>
-                    <div style="font-size: 0.9rem; color: var(--dark-brown); opacity: 0.7; margin-top: 0.5rem;">
-                        <span id="lastUpdate">Last update: Just now</span>
-                    </div>
-                </div>
-            </div>
+  <!-- Admin Stats -->
+  <section class="premium-container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalApplications">0</div>
+        <div class="stat-label">Total Applications</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-number" id="pendingApplications">0</div>
+        <div class="stat-label">Pending Review</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-number" id="approvedApplications">0</div>
+        <div class="stat-label">Approved</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-number" id="rejectedApplications">0</div>
+        <div class="stat-label">Rejected</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pending Applications -->
+  <section class="premium-container">
+    <div class="premium-card">
+      <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📋 Pending Applications</h2>
+      
+      <div id="pendingApplicationsList">
+        <div style="text-align: center; color: var(--muted-rose); padding: 3rem;">
+          Loading applications...
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Quick Actions -->
-    <section class="premium-container">
-        <div class="quick-actions">
-            <div class="action-card" onclick="showReferralApprovals()">
-                <div class="action-icon">👥</div>
-                <h3>Referral Approvals</h3>
-                <p>Review new applications</p>
-                <span class="pending-badge" id="pendingReferralsCount">0</span>
-                <span class="new-registration-badge" id="newRegistrationsBadge" style="display: none;">NEW!</span>
-            </div>
-            
-            <div class="action-card" onclick="showWithdrawalApprovals()">
-                <div class="action-icon">💸</div>
-                <h3>Withdrawal Requests</h3>
-                <p>Process payments</p>
-                <span class="pending-badge" id="pendingWithdrawalsCount">0</span>
-            </div>
-            
-            <div class="action-card" onclick="showClientManagement()">
-                <div class="action-icon">📊</div>
-                <h3>Client Management</h3>
-                <p>View all clients</p>
-                <span class="pending-badge" id="totalClientsCount">0</span>
-            </div>
-            
-            <div class="action-card" onclick="showPaymentSettings()">
-                <div class="action-icon">⚙️</div>
-                <h3>System Settings</h3>
-                <p>Configure payments</p>
-            </div>
+  <!-- Recent Activity -->
+  <section class="premium-container">
+    <div class="premium-card">
+      <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📊 Recent Activity</h2>
+      
+      <div id="recentActivity">
+        <div style="text-align: center; color: var(--muted-rose); padding: 2rem;">
+          Loading recent activity...
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Luxury Stats Grid -->
-    <section class="premium-container">
-        <div class="luxury-stats">
-            <div class="luxury-stat fade-in-up" onclick="showReferralApprovals()">
-                <div class="luxury-stat-icon">👥</div>
-                <div class="luxury-stat-number" id="totalClients">0</div>
-                <div class="luxury-stat-label">Total Clients</div>
+  <footer class="premium-footer">
+    <div class="footer-content">
+      <div>
+        <h3>Admin Tools</h3>
+        <p>Application Management</p>
+        <p>User Approvals</p>
+      </div>
+      <div>
+        <h3>Quick Actions</h3>
+        <p>Review Pending Apps</p>
+        <p>Process Withdrawals</p>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <p>Email: crowntradeacademy@gmail.com</p>
+        <p>Admin Portal</p>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+      <p>&copy; 2024 Crown Trade Academy. Admin Dashboard.</p>
+    </div>
+  </footer>
+
+  <!-- === Firebase Admin Dashboard === -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, onSnapshot, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
+      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
+      projectId: "crowntradeacademy-67be1",
+      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
+      messagingSenderId: "943453710285",
+      appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
+      measurementId: "G-E6Z4VS9S8N"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Check admin authentication
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+
+      // Verify admin role
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+        alert('Access denied. Admin privileges required.');
+        window.location.href = 'admin-login.html';
+        return;
+      }
+
+      // Load admin dashboard
+      document.getElementById('adminEmail').textContent = user.email;
+      loadAdminDashboard();
+      setupRealTimeUpdates();
+    });
+
+    async function loadAdminDashboard() {
+      await loadApplications();
+      await loadStats();
+    }
+
+    async function loadApplications() {
+      const applicationsQuery = query(
+        collection(db, 'referralApplications'),
+        orderBy('registeredAt', 'desc')
+      );
+      
+      const snapshot = await getDocs(applicationsQuery);
+      const applications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      displayApplications(applications);
+    }
+
+    function displayApplications(applications) {
+      const pendingContainer = document.getElementById('pendingApplicationsList');
+      const pendingApps = applications.filter(app => app.status === 'pending');
+      
+      if (pendingApps.length === 0) {
+        pendingContainer.innerHTML = `
+          <div style="text-align: center; color: var(--muted-rose); padding: 3rem;">
+            No pending applications at the moment.
+          </div>
+        `;
+        return;
+      }
+
+      pendingContainer.innerHTML = pendingApps.map(app => `
+        <div class="application-card">
+          <div style="display: flex; justify-content: between; align-items: start; gap: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1;">
+              <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">${app.fullName}</h3>
+              <p style="color: var(--muted-rose); margin: 0.25rem 0;">
+                <strong>Email:</strong> ${app.email}
+              </p>
+              <p style="color: var(--muted-rose); margin: 0.25rem 0;">
+                <strong>Phone:</strong> ${app.phone}
+              </p>
+              <p style="color: var(--muted-rose); margin: 0.25rem 0;">
+                <strong>Applied:</strong> ${app.registeredAt?.toDate().toLocaleDateString()}
+              </p>
+              ${app.paymentProofUrl ? `
+                <p style="margin: 0.5rem 0;">
+                  <a href="${app.paymentProofUrl}" target="_blank" style="color: var(--warm-beige); text-decoration: none;">
+                    📎 View Payment Proof
+                  </a>
+                </p>
+              ` : ''}
             </div>
-            
-            <div class="luxury-stat fade-in-up">
-                <div class="luxury-stat-icon">💰</div>
-                <div class="luxury-stat-number">KES <span id="totalRevenue">0</span></div>
-                <div class="luxury-stat-label">Total Revenue</div>
+            <div class="action-buttons">
+              <button class="btn-success" onclick="approveApplication('${app.id}', '${app.email}', '${app.fullName}')">
+                Approve
+              </button>
+              <button class="btn-danger" onclick="showRejectModal('${app.id}', '${app.email}', '${app.fullName}')">
+                Reject
+              </button>
             </div>
-            
-            <div class="luxury-stat fade-in-up" onclick="showWithdrawalApprovals()">
-                <div class="luxury-stat-icon">⏳</div>
-                <div class="luxury-stat-number" id="pendingWithdrawals">0</div>
-                <div class="luxury-stat-label">Pending Withdrawals</div>
-            </div>
-            
-            <div class="luxury-stat fade-in-up" onclick="showReferralApprovals()">
-                <div class="luxury-stat-icon">📈</div>
-                <div class="luxury-stat-number" id="pendingReferrals">0</div>
-                <div class="luxury-stat-label">Pending Referrals</div>
-            </div>
+          </div>
         </div>
-    </section>
+      `).join('');
+    }
 
-    <!-- Recent Activity -->
-    <section class="premium-container">
-        <div class="luxury-card fade-in-up">
-            <h2 style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.8rem; font-weight: 800;">
-                <i class="fas fa-history"></i> Recent Activity
-            </h2>
-            
-            <table class="luxury-table">
-                <thead>
-                    <tr>
-                        <th>Client</th>
-                        <th>Activity</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="recentActivity">
-                    <!-- 🚀 DYNAMIC CONTENT WILL BE INSERTED HERE -->
-                </tbody>
-            </table>
-        </div>
-    </section>
+    async function loadStats() {
+      const applicationsQuery = query(collection(db, 'referralApplications'));
+      const snapshot = await getDocs(applicationsQuery);
+      const applications = snapshot.docs.map(doc => doc.data());
+      
+      const total = applications.length;
+      const pending = applications.filter(app => app.status === 'pending').length;
+      const approved = applications.filter(app => app.status === 'approved').length;
+      const rejected = applications.filter(app => app.status === 'rejected').length;
+      
+      document.getElementById('totalApplications').textContent = total;
+      document.getElementById('pendingApplications').textContent = pending;
+      document.getElementById('approvedApplications').textContent = approved;
+      document.getElementById('rejectedApplications').textContent = rejected;
+    }
 
-    <!-- Premium Footer -->
-    <footer class="premium-footer">
-        <div class="footer-content">
-            <div>
-                <h3>Admin System</h3>
-                <p>Team Management Portal</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
-            </div>
-            <div>
-                <h3>Quick Access</h3>
-                <p><a href="admin-referral-approvals.html" style="color: var(--warm-beige); text-decoration: none;">Referral Approvals</a></p>
-                <p><a href="admin-withdrawal-approvals.html" style="color: var(--warm-beige); text-decoration: none;">Withdrawal Approvals</a></p>
-                <p><a href="admin-payment-settings.html" style="color: var(--warm-beige); text-decoration: none;">Payment Settings</a></p>
-            </div>
-            <div>
-                <h3>System</h3>
-                <p>Settings Protected</p>
-                <p>Change History Logged</p>
-                <p>Auto-Backup Enabled</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
-        </div>
-    </footer>
+    function setupRealTimeUpdates() {
+      // Real-time listener for applications
+      const applicationsQuery = query(
+        collection(db, 'referralApplications'),
+        orderBy('registeredAt', 'desc')
+      );
 
-    <script>
-        // 🚀 GLOBAL VARIABLES
-        let monitoringInterval;
-        let lastPendingCount = 0;
+      onSnapshot(applicationsQuery, (snapshot) => {
+        const applications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        displayApplications(applications);
+        loadStats();
+      });
+    }
 
-        // Admin authentication check
-        if (localStorage.getItem('adminLoggedIn') !== 'true') {
-            window.location.href = 'admin-login.html';
-        }
+    // Approve application
+    window.approveApplication = async function(applicationId, userEmail, userName) {
+      if (!confirm(`Approve ${userName}'s application? They will be notified by email.`)) {
+        return;
+      }
 
-        // 🚀 INITIALIZE REAL-TIME MONITORING
-        document.addEventListener('DOMContentLoaded', function() {
-            const adminName = localStorage.getItem('adminName') || 'Administrator';
-            document.getElementById('adminName').textContent = adminName;
-            document.getElementById('adminWelcome').textContent = adminName;
-            
-            // Initialize REAL data
-            initializeRealTimeData();
-            
-            // Start real-time monitoring
-            startRealTimeMonitoring();
+      try {
+        await updateDoc(doc(db, 'referralApplications', applicationId), {
+          status: 'approved',
+          reviewedAt: new Date(),
+          reviewedBy: auth.currentUser.uid
         });
 
-        // 🚀 INITIALIZE REAL-TIME DATA
-        function initializeRealTimeData() {
-            updateDashboardStats();
-            updateRecentActivity();
-            checkForNewRegistrations();
-        }
+        // Here you would trigger an email notification
+        alert(`✅ ${userName}'s application approved! They can now access their dashboard.`);
+        
+        // Refresh the dashboard
+        loadAdminDashboard();
+      } catch (error) {
+        alert('Error approving application: ' + error.message);
+      }
+    };
 
-        // 🚀 START REAL-TIME MONITORING
-        function startRealTimeMonitoring() {
-            // Check for new activity every 2 seconds (FASTER!)
-            monitoringInterval = setInterval(() => {
-                updateDashboardStats();
-                checkForNewRegistrations();
-                updateLastUpdateTime();
-            }, 2000);
-        }
+    // Reject application
+    window.showRejectModal = function(applicationId, userEmail, userName) {
+      const reason = prompt(`Enter rejection reason for ${userName}:`, 'Payment proof unclear or invalid');
+      if (reason) {
+        rejectApplication(applicationId, userEmail, userName, reason);
+      }
+    };
 
-        // 🚀 UPDATE DASHBOARD STATS WITH REAL DATA
-        function updateDashboardStats() {
-            try {
-                // Get pending approvals from BOTH sources
-                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-                const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
-                const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
-                
-                console.log('🔄 Checking pending approvals:', pendingApprovals.length);
-                console.log('🔄 Approved users:', approvedUsers.length);
-                
-                // Calculate real stats
-                const pendingReferrals = pendingApprovals.filter(approval => 
-                    approval.status === 'pending_payment' || approval.status === 'pending_approval'
-                ).length;
-                
-                const totalClients = approvedUsers.length;
-                const totalRevenue = approvedUsers.reduce((sum, user) => sum + (user.amount || 0), 0);
-                
-                // Update UI with REAL data
-                document.getElementById('pendingReferralsCount').textContent = pendingReferrals;
-                document.getElementById('pendingReferrals').textContent = pendingReferrals;
-                document.getElementById('totalClients').textContent = totalClients;
-                document.getElementById('totalClientsCount').textContent = totalClients;
-                document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
-                
-                // Update demo notice with real status
-                document.getElementById('realTimeStatus').textContent = 
-                    `Monitoring ${pendingReferrals} pending approvals in real-time`;
-                
-                // Check if new registrations arrived
-                if (pendingReferrals > lastPendingCount) {
-                    showNewRegistrationAlert(pendingReferrals - lastPendingCount);
-                }
-                lastPendingCount = pendingReferrals;
-                
-            } catch (error) {
-                console.error('Error updating dashboard stats:', error);
-            }
-        }
-
-        // 🚀 CHECK FOR NEW REGISTRATIONS INSTANTLY
-        function checkForNewRegistrations() {
-            try {
-                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-                const newRegistrations = pendingApprovals.filter(approval => 
-                    approval.status === 'pending_payment' || approval.status === 'pending_approval'
-                );
-                
-                if (newRegistrations.length > 0) {
-                    // Show notification dot
-                    document.getElementById('notificationDot').style.display = 'block';
-                    
-                    // Show new registrations badge
-                    document.getElementById('newRegistrationsBadge').style.display = 'inline-block';
-                    document.getElementById('newRegistrationsBadge').textContent = `${newRegistrations.length} NEW`;
-                    
-                } else {
-                    // Hide alerts if no new registrations
-                    document.getElementById('liveAlert').style.display = 'none';
-                    document.getElementById('newRegistrationsBadge').style.display = 'none';
-                    document.getElementById('notificationDot').style.display = 'none';
-                }
-            } catch (error) {
-                console.error('Error checking new registrations:', error);
-            }
-        }
-
-        // 🚀 SHOW NEW REGISTRATION ALERT
-        function showNewRegistrationAlert(count) {
-            const alertElement = document.getElementById('liveAlert');
-            const alertMessage = document.getElementById('alertMessage');
-            
-            alertMessage.textContent = `${count} new registration${count > 1 ? 's' : ''} detected!`;
-            alertElement.style.display = 'block';
-            
-            // Auto-hide after 10 seconds
-            setTimeout(() => {
-                alertElement.style.display = 'none';
-            }, 10000);
-        }
-
-        // 🚀 UPDATE RECENT ACTIVITY WITH REAL DATA
-        function updateRecentActivity() {
-            try {
-                const activityTable = document.getElementById('recentActivity');
-                const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-                const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
-                
-                // Clear existing rows
-                activityTable.innerHTML = '';
-                
-                // Combine and sort activities by timestamp (newest first)
-                const allActivities = [
-                    ...pendingApprovals.map(approval => ({
-                        type: 'pending',
-                        id: approval.id,
-                        name: approval.fullName,
-                        activity: `Applied for ${approval.package}`,
-                        time: approval.timestamp,
-                        status: 'pending',
-                        email: approval.email
-                    })),
-                    ...approvedUsers.map(user => ({
-                        type: 'approved', 
-                        id: user.id,
-                        name: user.fullName,
-                        activity: `Joined ${user.packageName}`,
-                        time: user.approvalTimestamp || user.registrationDate,
-                        status: 'approved',
-                        email: user.email
-                    }))
-                ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 6);
-                
-                // Add activities to table
-                allActivities.forEach(activity => {
-                    const row = document.createElement('tr');
-                    
-                    const timeAgo = getTimeAgo(activity.time);
-                    const isNew = isActivityNew(activity.time);
-                    
-                    row.innerHTML = `
-                        <td style="font-weight: 600; color: var(--dark-brown);">
-                            ${activity.name}
-                            ${isNew ? '<span style="color: var(--danger); font-size: 0.7rem;"> NEW</span>' : ''}
-                        </td>
-                        <td style="color: var(--muted-rose);">${activity.activity}</td>
-                        <td style="color: var(--muted-rose);">${timeAgo}</td>
-                        <td>
-                            <span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">
-                                ${activity.status === 'approved' ? 'Completed' : 'Pending'}
-                            </span>
-                        </td>
-                        <td>
-                            ${activity.status === 'pending' ? 
-                                `<button class="luxury-btn" style="padding: 5px 10px; font-size: 0.8rem;" onclick="approveUser('${activity.email}')">
-                                    Approve
-                                </button>` : 
-                                `<span style="color: var(--success);">✓ Approved</span>`
-                            }
-                        </td>
-                    `;
-                    
-                    activityTable.appendChild(row);
-                });
-                
-                // If no activities, show message
-                if (allActivities.length === 0) {
-                    activityTable.innerHTML = `
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
-                                No recent activity. New registrations will appear here.
-                            </td>
-                        </tr>
-                    `;
-                }
-                
-            } catch (error) {
-                console.error('Error updating recent activity:', error);
-            }
-        }
-
-        // 🚀 CHECK IF ACTIVITY IS NEW (LAST 10 MINUTES)
-        function isActivityNew(timestamp) {
-            const activityTime = new Date(timestamp);
-            const now = new Date();
-            const diffMinutes = (now - activityTime) / (1000 * 60);
-            return diffMinutes < 10; // Consider new if within last 10 minutes
-        }
-
-        // 🚀 GET TIME AGO FOR DISPLAY
-        function getTimeAgo(timestamp) {
-            try {
-                const now = new Date();
-                const time = new Date(timestamp);
-                const diffMs = now - time;
-                const diffMins = Math.floor(diffMs / 60000);
-                const diffHours = Math.floor(diffMs / 3600000);
-                const diffDays = Math.floor(diffMs / 86400000);
-                
-                if (diffMins < 1) return 'Just now';
-                if (diffMins < 60) return `${diffMins} min ago`;
-                if (diffHours < 24) return `${diffHours} hours ago`;
-                return `${diffDays} days ago`;
-            } catch (error) {
-                return 'Recently';
-            }
-        }
-
-        // 🚀 UPDATE LAST UPDATE TIME
-        function updateLastUpdateTime() {
-            document.getElementById('lastUpdate').textContent = `Last update: ${new Date().toLocaleTimeString()}`;
-        }
-
-        // 🚀 APPROVE USER DIRECTLY FROM DASHBOARD
-        function approveUser(userEmail) {
-            if (confirm('Approve this user and grant dashboard access?')) {
-                try {
-                    const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
-                    const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
-                    
-                    // Find user in pending approvals
-                    const userIndex = pendingApprovals.findIndex(approval => approval.email === userEmail);
-                    
-                    if (userIndex !== -1) {
-                        const user = pendingApprovals[userIndex];
-                        
-                        // Move to approved users
-                        approvedUsers.push({
-                            ...user,
-                            status: 'approved',
-                            approvalTimestamp: new Date().toISOString(),
-                            approvedBy: localStorage.getItem('adminName') || 'Administrator'
-                        });
-                        
-                        // Remove from pending
-                        pendingApprovals.splice(userIndex, 1);
-                        
-                        // Save updates
-                        localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
-                        localStorage.setItem('approvedUsers', JSON.stringify(approvedUsers));
-                        
-                        // Update UI
-                        updateDashboardStats();
-                        updateRecentActivity();
-                        
-                        alert(`✅ ${user.fullName} has been approved! They can now access their dashboard.`);
-                    } else {
-                        alert('User not found in pending approvals.');
-                    }
-                } catch (error) {
-                    console.error('Error approving user:', error);
-                    alert('Error approving user. Please try again.');
-                }
-            }
-        }
-
-        // 🚀 CHECK PENDING APPROVALS
-        function checkPendingApprovals() {
-            showReferralApprovals();
-        }
-
-        // Navigation functions
-        function showReferralApprovals() {
-            window.location.href = 'admin-referral-approvals.html';
-        }
-
-        function showWithdrawalApprovals() {
-            window.location.href = 'admin-withdrawal-approvals.html';
-        }
-
-        function showClientManagement() {
-            const approvedUsers = JSON.parse(localStorage.getItem('approvedUsers') || '[]');
-            alert(`Client Management - Showing ${approvedUsers.length} active clients`);
-        }
-
-        function showPaymentSettings() {
-            window.location.href = 'admin-payment-settings.html';
-        }
-
-        function logoutAdmin() {
-            clearInterval(monitoringInterval);
-            localStorage.removeItem('adminLoggedIn');
-            localStorage.removeItem('adminRole');
-            localStorage.removeItem('adminName');
-            window.location.href = 'admin-login.html';
-        }
-
-        // Clean up interval when page unloads
-        window.addEventListener('beforeunload', function() {
-            clearInterval(monitoringInterval);
+    async function rejectApplication(applicationId, userEmail, userName, reason) {
+      try {
+        await updateDoc(doc(db, 'referralApplications', applicationId), {
+          status: 'rejected',
+          rejectionReason: reason,
+          reviewedAt: new Date(),
+          reviewedBy: auth.currentUser.uid
         });
-    </script>
+
+        // Here you would trigger an email notification
+        alert(`❌ ${userName}'s application rejected. They have been notified.`);
+        
+        // Refresh the dashboard
+        loadAdminDashboard();
+      } catch (error) {
+        alert('Error rejecting application: ' + error.message);
+      }
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = 'admin-login.html';
+    });
+  </script>
 </body>
 </html>
