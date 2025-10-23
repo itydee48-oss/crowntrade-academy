@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Join Referral Program - Crown Trade Academy</title>
 
-  <!-- === Your Luxury Nude Theme (unchanged) === -->
+  <!-- === Your Luxury Nude Theme === -->
   <style>
     :root {
       --dark-brown: #3A2D28;
@@ -166,21 +166,23 @@
 
   <!-- === Firebase + Form Logic === -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+    import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
 
+    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
       authDomain: "crowntradeacademy-67be1.firebaseapp.com",
       projectId: "crowntradeacademy-67be1",
       storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
       messagingSenderId: "943453710285",
-      appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
-      measurementId: "G-E6Z4VS9S8N"
+      appId: "1:943453710285:web:7f122e722f03f3854d4684",
+      measurementId: "G-7XESVW5YWL"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
