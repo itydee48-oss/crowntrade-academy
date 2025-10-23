@@ -335,6 +335,17 @@
         .fade-in-up {
             animation: fadeInUp 0.6s ease-out;
         }
+        
+        .refresh-btn {
+            background: var(--gold-accent);
+            color: var(--dark-brown);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -373,6 +384,9 @@
                 <div style="text-align: right;">
                     <div style="font-size: 1rem; color: var(--dark-brown); opacity: 0.8;">Super Admin</div>
                     <div style="font-size: 1.3rem; font-weight: 800; color: var(--dark-brown);" id="adminWelcome">Administrator</div>
+                    <button class="refresh-btn" onclick="loadDashboardData()">
+                        🔄 Refresh Data
+                    </button>
                 </div>
             </div>
         </div>
@@ -504,11 +518,16 @@
             document.getElementById('adminWelcome').textContent = adminName;
             
             loadDashboardData();
+            startAutoRefresh();
         });
 
         function loadDashboardData() {
+            console.log('Loading dashboard data...');
+            
             // Load referral applications
             const pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
+            console.log('Found pending applications:', pendingApplications.length);
+            
             document.getElementById('pendingReferrals').textContent = pendingApplications.length;
             document.getElementById('pendingReferralsCount').textContent = pendingApplications.length;
 
@@ -529,6 +548,8 @@
 
             // Load recent activity
             loadRecentActivity();
+            
+            console.log('Dashboard data loaded successfully');
         }
 
         function loadRecentActivity() {
@@ -569,54 +590,4 @@
             if (activities.length === 0) {
                 activityTable.innerHTML = `
                     <tr>
-                        <td colspan="4" style="text-align: center; color: var(--muted-rose); padding: 2rem;">
-                            No recent activity
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            activityTable.innerHTML = activities.map(activity => `
-                <tr>
-                    <td style="font-weight: 600; color: var(--dark-brown);">${activity.name}</td>
-                    <td style="color: var(--muted-rose);">${activity.activity}</td>
-                    <td style="color: var(--muted-rose);">${new Date(activity.time).toLocaleDateString()}</td>
-                    <td>
-                        <span class="status-badge ${activity.status === 'approved' ? 'status-approved' : 'status-pending'}">
-                            ${activity.status}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // Navigation functions
-        function showReferralApprovals() {
-            window.location.href = 'admin-referral-approvals.html';
-        }
-
-        function showWithdrawalApprovals() {
-            window.location.href = 'admin-withdrawal-approvals.html';
-        }
-
-        function showClientManagement() {
-            alert('Client Management feature coming soon!');
-        }
-
-        function showPaymentSettings() {
-            window.location.href = 'admin-payment-settings.html';
-        }
-
-        function logoutAdmin() {
-            localStorage.removeItem('adminLoggedIn');
-            localStorage.removeItem('adminRole');
-            localStorage.removeItem('adminName');
-            window.location.href = 'admin-login.html';
-        }
-
-        // Auto-refresh every 30 seconds
-        setInterval(loadDashboardData, 30000);
-    </script>
-</body>
-</html>
+                        <td colspan="4" style="text-align: center; color
