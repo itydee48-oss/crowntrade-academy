@@ -349,6 +349,25 @@
             border-radius: 10px;
             font-weight: 600;
         }
+
+        .homepage-btn {
+            background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige));
+            color: var(--dark-brown);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .homepage-btn:hover {
+            background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -465,28 +484,38 @@
         </div>
     </section>
 
-    <!-- 🚀 APPROVAL STATUS -->
+    <!-- 🚀 ENHANCED APPROVAL STATUS -->
     <section class="premium-container">
         <div class="approval-status status-pending" id="pendingStatus">
             <i class="fas fa-clock" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-            <h3>Awaiting Admin Approval</h3>
-            <p>Your payment has been submitted! Admins will review it shortly.</p>
+            <h3>Application Submitted!</h3>
+            <p>Your referral program application has been received. We are reviewing your payment and will activate your account within 24 hours.</p>
             <div class="loading-spinner"></div>
-            <p><strong>Status:</strong> <span id="statusMessage">Checking for approval...</span></p>
+            <p><strong>Status:</strong> <span id="statusMessage">Awaiting admin approval...</span></p>
             
             <div style="margin-top: 1rem;">
-                <button class="luxury-btn" onclick="checkApprovalStatus()" id="checkStatusBtn">
-                    <i class="fas fa-sync-alt"></i> Check Now
+                <button class="luxury-btn" onclick="forceCheckApproval()" id="checkStatusBtn">
+                    <i class="fas fa-sync-alt"></i> Check Approval Status
                 </button>
+            </div>
+            
+            <div style="margin-top: 1rem; text-align: center;">
+                <a href="index.html" class="homepage-btn">
+                    <i class="fas fa-home"></i> Return to Homepage
+                </a>
             </div>
         </div>
         
         <div class="approval-status status-approved" id="approvedStatus">
             <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
             <h3>Approved! 🎉</h3>
-            <p>Your account has been approved! Redirecting to dashboard...</p>
-            <div class="countdown" id="countdown">3</div>
+            <p>Your account has been approved! Redirecting to your dashboard...</p>
+            <div class="countdown" id="countdown">5</div>
             <div class="loading-spinner" style="border-top-color: var(--success);"></div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
+                <i class="fas fa-info-circle"></i> If redirect doesn't work, 
+                <a href="client-dashboard.html" style="color: var(--success); text-decoration: underline;">click here</a>
+            </p>
         </div>
     </section>
 
@@ -536,9 +565,10 @@
     </footer>
 
     <script>
-        // 🚀 BULLETPROOF APPROVAL SYSTEM
-        let userEmail = '';
+        // 🚀 BULLETPROOF APPROVAL DETECTION SYSTEM
         let checkInterval;
+        let approvalChecked = false;
+        let userEmail = '';
         let hasSubmitted = false;
 
         // Initialize page
@@ -548,13 +578,19 @@
             setupFileUpload();
             checkIfAlreadyApproved();
             
-            // Check every 3 seconds if already approved
-            setInterval(() => {
+            // Start automatic approval checking
+            startAutoApprovalCheck();
+        });
+
+        // Start automatic approval checking
+        function startAutoApprovalCheck() {
+            // Check every 3 seconds for approval
+            checkInterval = setInterval(() => {
                 if (hasSubmitted) {
                     checkApprovalStatus();
                 }
             }, 3000);
-        });
+        }
 
         // Load order summary
         function loadOrderSummary() {
@@ -648,18 +684,19 @@
 
             console.log('✅ Submitting payment for:', userData.email);
 
-            // 🚀 CRITICAL: Create pending approval entry
+            // Create pending approval entry
             const pendingEntry = {
+                id: 'pending_' + Date.now(),
                 email: userData.email,
                 name: userData.fullName,
                 package: localStorage.getItem('selectedPackage') || 'referral-only',
                 phone: userData.phone,
-                status: 'pending',
+                status: 'pending_approval',
                 timestamp: new Date().toISOString(),
                 amount: getPackageAmount(localStorage.getItem('selectedPackage'))
             };
             
-            // Save to pending list (OVERWRITE any existing)
+            // Save to pending list
             let pendingList = JSON.parse(localStorage.getItem('simplePending') || '[]');
             
             // Remove any existing entry for this user
@@ -670,7 +707,6 @@
             localStorage.setItem('simplePending', JSON.stringify(pendingList));
             
             console.log('📝 Added to pending list:', pendingEntry);
-            console.log('📋 Current pending list:', pendingList);
 
             // Show pending status
             document.getElementById('pendingStatus').style.display = 'block';
@@ -722,25 +758,53 @@
             }
         }
 
-        // Check approval status
+        // 🚀 ENHANCED APPROVAL CHECK
         function checkApprovalStatus() {
-            if (!hasSubmitted) return;
+            if (approvalChecked) return;
             
             const userData = JSON.parse(localStorage.getItem('pendingUserData') || '{}');
-            const approvedList = JSON.parse(localStorage.getItem('simpleApproved') || '[]');
-            const isApproved = approvedList.find(user => user.email === userData.email);
+            if (!userData.email) {
+                console.log('❌ No user data found');
+                return;
+            }
+
+            console.log('🔍 Checking approval for:', userData.email);
             
-            document.getElementById('statusMessage').textContent = `Last checked: ${new Date().toLocaleTimeString()}`;
+            // Check BOTH data sources for approval
+            const approvedList = JSON.parse(localStorage.getItem('simpleApproved') || '[]');
+            const usersList = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            const isApproved = approvedList.find(user => user.email === userData.email) || 
+                              usersList.find(user => user.email === userData.email && user.status === 'active');
             
             if (isApproved) {
-                console.log('🎉 APPROVAL DETECTED! Completing approval...');
+                console.log('🎉 APPROVAL DETECTED! Starting redirect...');
+                approvalChecked = true;
+                clearInterval(checkInterval); // Stop checking
                 completeApproval(isApproved);
-            } else {
-                console.log('⏳ Still waiting for approval...');
+                return true;
             }
+            
+            console.log('⏳ Still waiting for approval...');
+            document.getElementById('statusMessage').textContent = `Last checked: ${new Date().toLocaleTimeString()}`;
+            return false;
         }
 
-        // Complete approval
+        // Force check approval (manual button)
+        function forceCheckApproval() {
+            document.getElementById('checkStatusBtn').innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Checking...';
+            
+            setTimeout(() => {
+                if (checkApprovalStatus()) {
+                    document.getElementById('checkStatusBtn').innerHTML = '<i class="fas fa-check"></i> Approved!';
+                } else {
+                    document.getElementById('checkStatusBtn').innerHTML = '<i class="fas fa-sync-alt"></i> Check Again';
+                    alert('Still pending approval. Admins are reviewing your application.');
+                }
+            }, 1000);
+        }
+
+        // 🚀 ENHANCED COMPLETION WITH MULTIPLE FALLBACKS
         function completeApproval(userData) {
             console.log('🚀 Starting approval completion for:', userData.email);
             
@@ -754,14 +818,14 @@
                 step.classList.add('completed');
             });
             
-            // 🚀 CRITICAL: Set user session
+            // 🚀 CRITICAL: Set user session with fallbacks
             localStorage.setItem('clientLoggedIn', 'true');
             localStorage.setItem('clientEmail', userData.email);
-            localStorage.setItem('clientName', userData.name);
-            localStorage.setItem('clientPackage', userData.package);
+            localStorage.setItem('clientName', userData.fullName || userData.name);
+            localStorage.setItem('clientPackage', userData.package || 'referral-only');
             localStorage.setItem('clientJoinDate', new Date().toLocaleDateString());
             
-            console.log('✅ User session set for:', userData.email);
+            console.log('✅ User session established');
             
             // Remove from pending list
             let pendingList = JSON.parse(localStorage.getItem('simplePending') || '[]');
@@ -770,8 +834,8 @@
             
             console.log('🧹 Cleaned up pending list');
             
-            // Countdown and redirect
-            let countdown = 3;
+            // 🚀 BULLETPROOF REDIRECT WITH COUNTDOWN
+            let countdown = 5;
             const countdownElement = document.getElementById('countdown');
             
             const countdownInterval = setInterval(() => {
@@ -781,9 +845,21 @@
                 if (countdown <= 0) {
                     clearInterval(countdownInterval);
                     console.log('🔄 Redirecting to dashboard...');
-                    window.location.href = 'client-dashboard.html';
+                    
+                    // Multiple redirect methods for maximum reliability
+                    try {
+                        window.location.href = 'client-dashboard.html';
+                    } catch (error) {
+                        console.log('Primary redirect failed, trying fallback...');
+                        window.location.replace('client-dashboard.html');
+                    }
                 }
             }, 1000);
+            
+            // Fallback: Force redirect after 8 seconds regardless
+            setTimeout(() => {
+                window.location.href = 'client-dashboard.html';
+            }, 8000);
         }
 
         // Manual check button
