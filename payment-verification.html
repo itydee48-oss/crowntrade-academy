@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Payment - Crown Trade Academy</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .screenshot-section {
+            background: var(--off-white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px dashed var(--muted-rose);
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--warm-beige);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--cream-white);
+        }
+        
+        .upload-area:hover {
+            border-color: var(--gold-accent);
+            background: var(--off-white);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--muted-rose);
+            margin-bottom: 1rem;
+        }
+        
+        #previewImage {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 8px;
+            border: 2px solid var(--warm-beige);
+            margin: 1rem 0;
+        }
+        
+        .referral-benefits {
+            background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));
+            color: var(--dark-brown);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+    </style>
 </head>
 <body>
     <!-- Premium Header -->
@@ -28,11 +74,11 @@
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
                 <div>
                     <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰 Complete Your Registration</h1>
-                    <p style="font-size: 1.1rem; font-weight: 600;">Follow the instructions below to complete your payment</p>
+                    <p style="font-size: 1.1rem; font-weight: 600;" id="heroDescription">Follow the instructions below to complete your payment</p>
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 0.9rem; color: var(--dark-brown);">Package Selected</div>
-                    <div style="font-size: 1rem; font-weight: 700;" id="packageDisplay">Mentorship Program</div>
+                    <div style="font-size: 1rem; font-weight: 700;" id="packageDisplay">Loading...</div>
                 </div>
             </div>
         </div>
@@ -43,8 +89,8 @@
         <div class="premium-card">
             <div style="text-align: center; margin-bottom: 2rem;">
                 <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
-                <h2 style="color: var(--dark-brown); margin-bottom: 1rem;">Payment Pending</h2>
-                <p style="color: var(--muted-rose); font-size: 1.1rem;">Complete your payment to activate your account</p>
+                <h2 style="color: var(--dark-brown); margin-bottom: 1rem;" id="paymentTitle">Payment Pending</h2>
+                <p style="color: var(--muted-rose); font-size: 1.1rem;" id="paymentDescription">Complete your payment to activate your account</p>
             </div>
 
             <!-- Dynamic Payment Instructions -->
@@ -55,68 +101,65 @@
             <!-- Payment Amount -->
             <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; text-align: center; margin: 2rem 0;">
                 <div style="font-size: 0.9rem; color: var(--muted-rose); margin-bottom: 0.5rem;">Total Amount to Pay</div>
-                <div style="font-size: 3rem; font-weight: 700; color: var(--dark-brown);" id="paymentAmount">KES 50,000</div>
-                <div style="color: var(--muted-rose); font-size: 0.9rem;" id="packageDescription">Mentorship Program - Full Access</div>
+                <div style="font-size: 3rem; font-weight: 700; color: var(--dark-brown);" id="paymentAmount">KES 0</div>
+                <div style="color: var(--muted-rose); font-size: 0.9rem;" id="packageDescription">Package Description</div>
             </div>
 
-            <!-- Screenshot Upload Section (Only for Referral Program) -->
-            <div id="screenshotSection" style="display: none;">
-                <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; margin: 2rem 0;">
-                    <h3 style="color: var(--dark-brown); margin-bottom: 1.5rem; text-align: center;">
-                        📸 Upload Payment Proof (Required for Referral Program)
-                    </h3>
-                    
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">📎</div>
-                        <p style="color: var(--muted-rose);">Upload clear screenshot of your MPesa confirmation message</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Upload Screenshot</label>
-                        <input type="file" id="screenshotUpload" accept="image/*" class="form-control" 
-                               style="padding: 1rem; border: 2px dashed var(--muted-rose);" onchange="previewImage(this)">
-                        <small style="color: var(--muted-rose);">Accepted formats: JPG, PNG, GIF • Max size: 5MB</small>
-                    </div>
-
-                    <div id="uploadPreview" style="margin-top: 1.5rem; text-align: center; display: none;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">✅</div>
-                        <img id="previewImage" style="max-width: 300px; max-height: 300px; border-radius: 8px; border: 2px solid var(--warm-beige); margin-bottom: 1rem;">
-                        <div style="margin-top: 0.5rem;">
-                            <button type="button" class="btn-secondary" onclick="removeScreenshot()" style="padding: 0.5rem 1rem;">
-                                🗑️ Remove Image
-                            </button>
-                        </div>
-                    </div>
+            <!-- Screenshot Upload Section (For Referral Program) -->
+            <div id="screenshotSection" class="screenshot-section" style="display: none;">
+                <h3 style="color: var(--dark-brown); margin-bottom: 1.5rem;">
+                    📸 Upload Payment Proof (Required for Referral Program)
+                </h3>
+                
+                <div class="upload-area" onclick="document.getElementById('screenshotUpload').click()">
+                    <div class="upload-icon">📎</div>
+                    <h4 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Upload MPesa Confirmation Screenshot</h4>
+                    <p style="color: var(--muted-rose); margin-bottom: 1rem;">
+                        Click here to upload screenshot of your MPesa confirmation message
+                    </p>
+                    <small style="color: var(--muted-rose);">Accepted: JPG, PNG, GIF • Max: 5MB</small>
                 </div>
 
-                <!-- Referral Program Benefits -->
-                <div style="background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose)); color: var(--dark-brown); padding: 2rem; border-radius: 12px; margin: 2rem 0;">
-                    <h3 style="margin-bottom: 1.5rem; text-align: center;">💰 Referral Program Benefits</h3>
+                <input type="file" id="screenshotUpload" accept="image/*" style="display: none;" onchange="previewImage(this)">
+
+                <div id="uploadPreview" style="margin-top: 1.5rem; text-align: center; display: none;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem; color: var(--success);">✅</div>
+                    <img id="previewImage" alt="Preview">
+                    <div style="margin-top: 1rem;">
+                        <button class="btn-secondary" onclick="removeScreenshot()" style="padding: 0.5rem 1rem;">
+                            🗑️ Remove Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Benefits (For Referral Program) -->
+            <div id="referralBenefits" class="referral-benefits" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem; text-align: center;">💰 Referral Program Benefits</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💵</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">KES 300 per Referral</div>
+                        <div style="font-size: 0.9rem;">Earn for every successful referral</div>
+                    </div>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                        <div style="text-align: center; padding: 1rem;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💵</div>
-                            <div style="font-weight: 700; margin-bottom: 0.5rem;">KES 300 per Referral</div>
-                            <div style="font-size: 0.9rem;">Earn for every successful referral</div>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 1rem;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏰</div>
-                            <div style="font-weight: 700; margin-bottom: 0.5rem;">24/7 Withdrawals</div>
-                            <div style="font-size: 0.9rem;">Withdraw anytime (Min: KES 100)</div>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 1rem;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
-                            <div style="font-weight: 700; margin-bottom: 0.5rem;">Real-time Tracking</div>
-                            <div style="font-size: 0.9rem;">Monitor your referrals live</div>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 1rem;">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎁</div>
-                            <div style="font-weight: 700; margin-bottom: 0.5rem;">Weekly Bonuses</div>
-                            <div style="font-size: 0.9rem;">Extra rewards for top performers</div>
-                        </div>
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏰</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">24/7 Withdrawals</div>
+                        <div style="font-size: 0.9rem;">Withdraw anytime (Min: KES 100)</div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Real-time Tracking</div>
+                        <div style="font-size: 0.9rem;">Monitor your referrals live</div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎁</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Weekly Bonuses</div>
+                        <div style="font-size: 0.9rem;">Extra rewards for top performers</div>
                     </div>
                 </div>
             </div>
@@ -140,8 +183,8 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
                 <button class="btn-premium" onclick="submitPayment()" style="padding: 1.2rem;">
                     <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">✅</div>
-                    <div>I've Made Payment</div>
-                    <div style="font-size: 0.8rem; opacity: 0.8;" id="submitButtonText">Verify & Activate Account</div>
+                    <div id="submitButtonText">I've Made Payment</div>
+                    <div style="font-size: 0.8rem; opacity: 0.8;" id="submitButtonSubtext">Verify & Activate Account</div>
                 </button>
                 
                 <button class="btn-secondary" onclick="contactSupport()" style="padding: 1.2rem;">
@@ -164,14 +207,14 @@
         <div class="premium-card" id="paymentStatusSection" style="display: none;">
             <div style="text-align: center;">
                 <div id="statusIcon" style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
-                <h3 id="statusTitle" style="color: var(--dark-brown); margin-bottom: 1rem;">Checking Payment Status</h3>
+                <h3 id="statusTitle" style="color: var(--dark-brown); margin-bottom: 1rem;">Processing...</h3>
                 <p id="statusMessage" style="color: var(--muted-rose); margin-bottom: 2rem;">
-                    Please wait while we verify your payment...
+                    Please wait while we process your request...
                 </p>
                 <div id="statusProgress" style="background: var(--off-white); padding: 1rem; border-radius: 8px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>Payment Verification</span>
-                        <span id="progressText">Checking...</span>
+                        <span>Processing</span>
+                        <span id="progressText">Starting...</span>
                     </div>
                     <div style="background: var(--light-taupe); height: 6px; border-radius: 3px; overflow: hidden;">
                         <div id="progressBar" style="background: var(--warm-beige); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
@@ -241,7 +284,12 @@
             if (selectedPackage === 'referral-only') {
                 // Show screenshot section for referral program
                 document.getElementById('screenshotSection').style.display = 'block';
+                document.getElementById('referralBenefits').style.display = 'block';
                 document.getElementById('submitButtonText').textContent = 'Submit for Approval';
+                document.getElementById('submitButtonSubtext').textContent = 'Upload screenshot & wait for approval';
+                document.getElementById('paymentTitle').textContent = 'Referral Program Application';
+                document.getElementById('paymentDescription').textContent = 'Complete payment and upload proof for approval';
+                document.getElementById('heroDescription').textContent = 'Join our referral program and start earning';
                 
                 // Update verification message for referral
                 document.getElementById('verificationMessage').textContent = 
@@ -321,7 +369,7 @@
                                     <li>Enter reference: <strong>${paymentReference}</strong></li>
                                     <li>Enter your MPesa PIN</li>
                                     <li>Wait for confirmation message</li>
-                                    <li><strong>Take screenshot</strong> of the confirmation message</li>
+                                    <li id="screenshotStep"><strong>Take screenshot</strong> of the confirmation message</li>
                                 </ol>
                             </div>
                         </div>
@@ -358,7 +406,7 @@
                                     <li>Enter reference: <strong>${paymentReference}</strong></li>
                                     <li>Enter your MPesa PIN</li>
                                     <li>Wait for confirmation message</li>
-                                    <li><strong>Take screenshot</strong> of the confirmation message</li>
+                                    <li id="screenshotStep"><strong>Take screenshot</strong> of the confirmation message</li>
                                 </ol>
                             </div>
                         </div>
@@ -395,7 +443,7 @@
                                     <li>Enter amount: <strong>KES ${parseInt(packageAmount).toLocaleString()}</strong></li>
                                     <li>Enter your MPesa PIN</li>
                                     <li>Wait for confirmation message</li>
-                                    <li><strong>Take screenshot</strong> of the confirmation message</li>
+                                    <li id="screenshotStep"><strong>Take screenshot</strong> of the confirmation message</li>
                                 </ol>
                             </div>
                         </div>
@@ -405,13 +453,11 @@
 
             instructionsContainer.innerHTML = instructionsHTML;
 
-            // Load verification message from settings
-            const savedSettings = localStorage.getItem('paymentSettings');
-            if (savedSettings) {
-                const settings = JSON.parse(savedSettings);
-                if (settings.instructions && settings.instructions.verificationMessage) {
-                    document.getElementById('verificationMessage').textContent = settings.instructions.verificationMessage;
-                }
+            // Hide screenshot step for non-referral programs
+            const selectedPackage = localStorage.getItem('selectedPackage');
+            if (selectedPackage !== 'referral-only') {
+                const screenshotStep = document.getElementById('screenshotStep');
+                if (screenshotStep) screenshotStep.style.display = 'none';
             }
         }
 
@@ -480,7 +526,7 @@
                 submitForApproval();
             } else {
                 // For other programs, proceed with automatic verification
-                checkPaymentStatus();
+                processPayment();
             }
         }
 
@@ -494,6 +540,14 @@
             
             // Simulate submission process
             simulateApprovalProcess();
+        }
+
+        // Process payment (Non-referral programs)
+        function processPayment() {
+            const statusSection = document.getElementById('paymentStatusSection');
+            statusSection.style.display = 'block';
+            statusSection.scrollIntoView({ behavior: 'smooth' });
+            simulatePaymentVerification();
         }
 
         // Simulate approval process for referral program
@@ -526,6 +580,39 @@
                         completeReferralSubmission();
                     }
                 }, (index + 1) * 1500);
+            });
+        }
+
+        // Simulate payment verification for non-referral programs
+        function simulatePaymentVerification() {
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const statusIcon = document.getElementById('statusIcon');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            const steps = [
+                { progress: 20, text: 'Checking payment...', icon: '🔍' },
+                { progress: 40, text: 'Verifying transaction...', icon: '💰' },
+                { progress: 60, text: 'Confirming with bank...', icon: '🏦' },
+                { progress: 80, text: 'Activating account...', icon: '⚡' },
+                { progress: 100, text: 'Payment Verified!', icon: '✅' }
+            ];
+            
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    progress = step.progress;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = step.text;
+                    statusIcon.textContent = step.icon;
+                    
+                    if (progress === 100) {
+                        statusTitle.textContent = 'Payment Verified Successfully!';
+                        statusMessage.textContent = 'Your account is being activated...';
+                        completeRegistration();
+                    }
+                }, (index + 1) * 2000);
             });
         }
 
@@ -563,48 +650,6 @@
             }, 3000);
         }
 
-        // Check payment status (for non-referral programs)
-        function checkPaymentStatus() {
-            const statusSection = document.getElementById('paymentStatusSection');
-            statusSection.style.display = 'block';
-            
-            statusSection.scrollIntoView({ behavior: 'smooth' });
-            simulatePaymentVerification();
-        }
-
-        // Simulate payment verification for non-referral programs
-        function simulatePaymentVerification() {
-            let progress = 0;
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            const statusIcon = document.getElementById('statusIcon');
-            const statusTitle = document.getElementById('statusTitle');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            const steps = [
-                { progress: 20, text: 'Checking payment...', icon: '🔍' },
-                { progress: 40, text: 'Verifying transaction...', icon: '💰' },
-                { progress: 60, text: 'Confirming with bank...', icon: '🏦' },
-                { progress: 80, text: 'Activating account...', icon: '⚡' },
-                { progress: 100, text: 'Payment Verified!', icon: '✅' }
-            ];
-            
-            steps.forEach((step, index) => {
-                setTimeout(() => {
-                    progress = step.progress;
-                    progressBar.style.width = progress + '%';
-                    progressText.textContent = step.text;
-                    statusIcon.textContent = step.icon;
-                    
-                    if (progress === 100) {
-                        statusTitle.textContent = 'Payment Verified Successfully!';
-                        statusMessage.textContent = 'Your account is being activated...';
-                        completeRegistration();
-                    }
-                }, (index + 1) * 2000);
-            });
-        }
-
         // Complete registration after payment (for non-referral programs)
         function completeRegistration() {
             setTimeout(() => {
@@ -634,7 +679,7 @@
                 package: localStorage.getItem('selectedPackage'),
                 registrationDate: new Date().toISOString(),
                 paymentVerified: true,
-                paymentTimestamp: localStorage.getItem('paymentTimestamp'),
+                paymentTimestamp: new Date().toISOString(),
                 status: 'active',
                 joinDate: new Date().toLocaleDateString()
             };
