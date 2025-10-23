@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Firebase Connection</title>
+</head>
+<body>
+    <h2>Firebase Connection Test</h2>
+    <div id="status" style="padding: 20px; margin: 20px; border-radius: 10px; font-size: 18px;">Testing Firebase connection...</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
+
+        // Your Firebase config - MAKE SURE THIS IS CORRECT
+        const firebaseConfig = {
+            apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
+            authDomain: "crowntradeacademy-67be1.firebaseapp.com",
+            projectId: "crowntradeacademy-67be1",
+            storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
+            messagingSenderId: "943453710285",
+            appId: "1:943453710285:web:7f122e722f03f3854d4684",
+            measurementId: "G-7XESVW5YWL"
+        };
+
+        try {
+            console.log("Initializing Firebase...");
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            const storage = getStorage(app);
+            
+            document.getElementById('status').innerHTML = "✅ Firebase Connected Successfully!";
+            document.getElementById('status').style.background = "#d4edda";
+            document.getElementById('status').style.color = "#155724";
+            document.getElementById('status').style.border = "2px solid #c3e6cb";
+            
+            console.log("Firebase services initialized:", { app, auth, db, storage });
+            
+        } catch (error) {
+            document.getElementById('status').innerHTML = "❌ Firebase Connection Failed: " + error.message;
+            document.getElementById('status').style.background = "#f8d7da";
+            document.getElementById('status').style.color = "#721c24";
+            document.getElementById('status').style.border = "2px solid #f5c6cb";
+            
+            console.error("Firebase error:", error);
+        }
+    </script>
+</body>
+</html>
