@@ -4,7 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activate Account - Crown Trade Academy</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Premium Nude Color Palette */
+        :root {
+            --dark-brown: #3A2D28;
+            --muted-rose: #A48374;
+            --warm-beige: #CBAD8D;
+            --light-taupe: #D1C7BD;
+            --off-white: #EBE3DB;
+            --cream-white: #F1EDE6;
+            --gold-accent: #D4AF37;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            color: var(--dark-brown);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .premium-header {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
+            border-bottom: 3px solid var(--gold-accent);
+        }
+        
+        .premium-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--warm-beige);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--cream-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold-accent);
+        }
+        
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .premium-card {
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
+        }
+        
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light-taupe);
+            border-radius: 8px;
+            background: var(--off-white);
+            color: var(--dark-brown);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .btn-premium {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+            color: var(--cream-white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 100%;
+        }
+        
+        .btn-premium:hover {
+            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
+            transform: translateY(-3px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--dark-brown);
+            border: 2px solid var(--warm-beige);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--warm-beige);
+            color: var(--dark-brown);
+        }
+        
+        .premium-footer {
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--gold-accent);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+    </style>
 </head>
 <body>
     <header class="premium-header">
@@ -79,7 +249,7 @@
             </div>
 
             <!-- Submit for Approval -->
-            <button id="submitBtn" class="btn-premium" style="width: 100%; padding: 1.2rem;" onclick="submitForApproval()">
+            <button id="submitBtn" class="btn-premium" onclick="submitForApproval()">
                 ✅ Submit for Approval
             </button>
 
@@ -160,9 +330,9 @@
             // Show success message
             alert('✅ Application submitted successfully!\n\nWe will review your payment and activate your account within 24 hours. You will receive an email once approved.');
             
-            // Redirect to pending page
+            // Redirect to success page
             window.location.href = 'referral-pending.html';
         }
     </script>
 </body>
-  </html>
+</html>
