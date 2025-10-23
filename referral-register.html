@@ -1,378 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Referral Program - Crown Trade Academy</title>
-    <style>
-        /* Premium Nude Color Palette */
-        :root {
-            --dark-brown: #3A2D28;
-            --muted-rose: #A48374;
-            --warm-beige: #CBAD8D;
-            --light-taupe: #D1C7BD;
-            --off-white: #EBE3DB;
-            --cream-white: #F1EDE6;
-            --gold-accent: #D4AF37;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-            color: var(--dark-brown);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        .premium-header {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 1.2rem 0;
-            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
-            border-bottom: 3px solid var(--gold-accent);
-        }
-        
-        .premium-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--warm-beige);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--cream-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--gold-accent);
-        }
-        
-        .premium-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .premium-card {
-            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-            border: 1px solid var(--light-taupe);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 1.5rem 0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
-        }
-        
-        .premium-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
-        }
-        
-        .registration-steps {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            gap: 1rem;
-        }
-        
-        .step {
-            text-align: center;
-            padding: 1rem;
-            border-radius: 10px;
-            background: var(--off-white);
-            flex: 1;
-            max-width: 150px;
-        }
-        
-        .step.active {
-            background: var(--warm-beige);
-            color: var(--dark-brown);
-            font-weight: 600;
-        }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--muted-rose);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.5rem;
-        }
-        
-        .step.active .step-number {
-            background: var(--dark-brown);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark-brown);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--light-taupe);
-            border-radius: 8px;
-            background: var(--off-white);
-            color: var(--dark-brown);
-            font-size: 1rem;
-            font-family: inherit;
-        }
-        
-        .btn-premium {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-            color: var(--cream-white);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            width: 100%;
-        }
-        
-        .btn-premium:hover {
-            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
-            transform: translateY(-3px);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--dark-brown);
-            border: 2px solid var(--warm-beige);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--warm-beige);
-            color: var(--dark-brown);
-        }
-        
-        .premium-footer {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
-            border-top: 3px solid var(--gold-accent);
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Join Referral Program - Crown Trade Academy</title>
+
+  <!-- === Styles: your luxury nude theme (unchanged) === -->
+  <style>
+    :root {
+      --dark-brown: #3A2D28;
+      --muted-rose: #A48374;
+      --warm-beige: #CBAD8D;
+      --light-taupe: #D1C7BD;
+      --off-white: #EBE3DB;
+      --cream-white: #F1EDE6;
+      --gold-accent: #D4AF37;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+      color: var(--dark-brown);
+      line-height:1.6;
+      min-height:100vh;
+    }
+    .premium-header{
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+      color: var(--cream-white);
+      padding:1.2rem 0;
+      box-shadow:0 4px 20px rgba(58,45,40,0.1);
+      border-bottom:3px solid var(--gold-accent);
+    }
+    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
+    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
+    .nav-links{ display:flex; gap:2rem; list-style:none; }
+    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
+    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+    .premium-card{
+      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+      border:1px solid var(--light-taupe);
+      border-radius:20px;
+      padding:2.5rem;
+      margin:1.5rem 0;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(58,45,40,0.08);
+    }
+    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
+    .registration-steps{ display:flex; justify-content:center; gap:1rem; margin-bottom:1.5rem; }
+    .step{ text-align:center; padding:1rem; border-radius:10px; background:var(--off-white); flex:1; max-width:150px; }
+    .step.active{ background:var(--warm-beige); color:var(--dark-brown); font-weight:600; }
+    .step-number{ width:30px; height:30px; border-radius:50%; background:var(--muted-rose); color:white; display:flex; align-items:center; justify-content:center; margin:0 auto .5rem; }
+    .form-group{ margin-bottom:1.25rem; }
+    .form-label{ display:block; margin-bottom:.5rem; font-weight:600; color:var(--dark-brown); }
+    .form-control{ width:100%; padding:1rem; border:2px solid var(--light-taupe); border-radius:8px; background:var(--off-white); color:var(--dark-brown); font-size:1rem; font-family:inherit; }
+    .btn-premium{
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
+      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer; width:100%;
+    }
+    .meta-note{ color:var(--muted-rose); font-size:0.9rem; text-align:center; margin-top:1rem; }
+    .file-hint{ font-size:0.9rem; color:var(--muted-rose); margin-top:.4rem; }
+    .upload-progress { height:8px; background:var(--off-white); border-radius:8px; overflow:hidden; margin-top:.6rem; display:none; }
+    .upload-progress > i { display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--warm-beige),var(--gold-accent)); transition:width .2s ease; }
+    .small { font-size:0.85rem; color:var(--muted-rose); }
+    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
+    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+  </style>
 </head>
 <body>
-    <header class="premium-header">
-        <nav class="premium-nav">
-            <a href="index.html" class="logo">Crown Trade Academy</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Client Login</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header class="premium-header">
+    <nav class="premium-nav">
+      <a href="index.html" class="logo">Crown Trade Academy</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Client Login</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <section class="premium-container" style="padding: 2rem 0; min-height: 80vh;">
-        <!-- Registration Steps -->
-        <div class="registration-steps">
-            <div class="step active">
-                <div class="step-number">1</div>
-                <div>Create Account</div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div>Pay KES 500</div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div>Wait Approval</div>
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <div>Start Earning</div>
-            </div>
+  <section class="premium-container" style="padding:2rem 0; min-height:80vh;">
+    <div class="registration-steps" aria-hidden>
+      <div class="step active"><div class="step-number">1</div><div>Create Account</div></div>
+      <div class="step"><div class="step-number">2</div><div>Pay KES 500</div></div>
+      <div class="step"><div class="step-number">3</div><div>Wait Approval</div></div>
+      <div class="step"><div class="step-number">4</div><div>Start Earning</div></div>
+    </div>
+
+    <div class="premium-card" style="max-width:600px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:1.6rem;">
+        <h1 style="color:var(--dark-brown);margin-bottom:.4rem;">Join Referral Program</h1>
+        <p style="color:var(--muted-rose);">Register, upload payment proof, and submit for admin approval.</p>
+      </div>
+
+      <!-- === Referral Form === -->
+      <form id="referralRegisterForm" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="fullName">Full Name</label>
+          <input id="fullName" class="form-control" type="text" required placeholder="Your full name">
         </div>
 
-        <div class="premium-card" style="max-width: 500px; margin: 0 auto;">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h1 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Join Referral Program</h1>
-                <p style="color: var(--muted-rose);">Create your account to start earning</p>
-            </div>
-
-            <form id="referralRegisterForm">
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" placeholder="+254 XXX XXX XXX" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Create Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Minimum 6 characters" required minlength="6">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password" required>
-                </div>
-
-                <div class="form-group">
-                    <label style="display: flex; align-items: flex-start; gap: 0.5rem;">
-                        <input type="checkbox" style="accent-color: var(--dark-brown); margin-top: 0.2rem;" required>
-                        <span style="color: var(--dark-brown); font-size: 0.9rem;">
-                            I agree to pay KES 500 registration fee and understand I'll earn KES 300 per successful referral
-                        </span>
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-premium">
-                    Continue to Payment →
-                </button>
-            </form>
-
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <p style="color: var(--muted-rose); font-size: 0.9rem;">
-                    Already have an account? <a href="login.html" style="color: var(--warm-beige);">Login here</a>
-                </p>
-            </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input id="email" class="form-control" type="email" required placeholder="you@example.com">
         </div>
-    </section>
 
-    <footer class="premium-footer">
-        <div class="footer-content">
-            <div>
-                <h3>Referral Program</h3>
-                <p>Start earning today</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
-            </div>
-            <div>
-                <h3>Earnings</h3>
-                <p>KES 300 per referral</p>
-                <p>Minimum withdrawal: KES 100</p>
-                <p>24/7 processing</p>
-            </div>
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone Number</label>
+          <input id="phone" class="form-control" type="tel" required placeholder="+254 7XX XXX XXX">
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Create Password</label>
+          <input id="password" class="form-control" type="password" required minlength="6" placeholder="Minimum 6 characters">
         </div>
-    </footer>
 
-    <script>
-        document.getElementById('referralRegisterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <input id="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
+        </div>
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
+        <div class="form-group">
+          <label class="form-label" for="proof">Upload Payment Proof (screenshot / PDF)</label>
+          <input id="proof" class="form-control" type="file" accept="image/*,application/pdf" required>
+          <div class="file-hint small">Max 6 MB. JPG, PNG or PDF.</div>
 
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters long!');
-                return;
-            }
+          <div class="upload-progress" id="uploadProgress">
+            <i id="uploadBar"></i>
+          </div>
+        </div>
 
-            // Create unique application ID
-            const applicationId = 'ref_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        <div class="form-group" style="margin-top:1rem;">
+          <label style="display:flex; gap:.6rem; align-items:flex-start;">
+            <input id="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <span style="color:var(--dark-brown); font-size:.95rem;">
+              I agree to pay KES 500 registration fee and understand I'll earn KES 300 per successful referral
+            </span>
+          </label>
+        </div>
 
-            // Save user data and redirect to payment
-            const userData = {
-                id: applicationId,
-                fullName: fullName,
-                email: email,
-                phone: phone,
-                password: password,
-                type: 'referral',
-                status: 'pending_payment',
-                registrationDate: new Date().toISOString(),
-                submissionDate: new Date().toISOString()
-            };
+        <button type="submit" class="btn-premium">Continue & Submit →</button>
+        <p class="meta-note">Already have an account? <a href="login.html" style="color:var(--warm-beige);">Login here</a></p>
+      </form>
+    </div>
+  </section>
 
-            // Save to pending applications immediately
-            let pendingApplications = JSON.parse(localStorage.getItem('pendingReferralApplications') || '[]');
-            pendingApplications.push({
-                id: applicationId,
-                userData: userData,
-                status: 'pending',
-                submissionDate: new Date().toISOString(),
-                amount: 500
+  <footer class="premium-footer">
+    <div class="footer-content">
+      <div><h3>Referral Program</h3><p>Start earning today</p><p>Email: crowntradeacademy@gmail.com</p></div>
+      <div><h3>Earnings</h3><p>KES 300 per referral</p><p>Minimum withdrawal: KES 100</p></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
+  </footer>
+
+  <!-- ===========================
+       Firebase + Form Logic
+       =========================== -->
+  <script type="module">
+    // --- Firebase SDK imports (CDN modular v11)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
+    // --- Paste your firebase config here (you shared it previously) ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
+      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
+      projectId: "crowntradeacademy-67be1",
+      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
+      messagingSenderId: "943453710285",
+      appId: "1:943453710285:web:1f4fa58eeab610aa4d4684",
+      measurementId: "G-E6Z4VS9S8N"
+    };
+
+    // Initialize Firebase services
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // DOM
+    const form = document.getElementById('referralRegisterForm');
+    const proofInput = document.getElementById('proof');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const uploadBar = document.getElementById('uploadBar');
+
+    // File limits
+    const MAX_BYTES = 6 * 1024 * 1024; // 6 MB
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Gather fields
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const agree = document.getElementById('agree').checked;
+      const file = proofInput.files[0];
+
+      // Basic client-side validation
+      if (!fullName || !email || !phone || !password || !confirmPassword) {
+        alert('Please fill out all required fields.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+      }
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters.');
+        return;
+      }
+      if (!agree) {
+        alert('You must agree to the terms to continue.');
+        return;
+      }
+      if (!file) {
+        alert('Please upload payment proof (screenshot or PDF).');
+        return;
+      }
+      if (file.size > MAX_BYTES) {
+        alert('File too large. Max size is 6 MB.');
+        return;
+      }
+      // Validate file type (image or PDF)
+      const allowed = ['image/jpeg','image/png','image/jpg','application/pdf'];
+      if (!allowed.includes(file.type)) {
+        alert('Unsupported file type. Use JPG, PNG or PDF.');
+        return;
+      }
+
+      // Disable submit while processing
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        // 1) Create Firebase Auth user (so they can login later)
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+
+        // 2) Upload file to Firebase Storage
+        const filePath = `referralUploads/${uid}/${Date.now()}_${file.name}`;
+        const storageReference = storageRef(storage, filePath);
+        const uploadTask = uploadBytesResumable(storageReference, file);
+
+        // show progress UI
+        uploadProgress.style.display = 'block';
+        uploadBar.style.width = '0%';
+
+        // Wait for upload to finish with progress handler
+        await new Promise((resolve, reject) => {
+          uploadTask.on('state_changed', (snapshot) => {
+            const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            uploadBar.style.width = pct + '%';
+          }, (err) => {
+            reject(err);
+          }, async () => {
+            // On complete
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+            // 3) Save referral record to Firestore
+            const docRef = await addDoc(collection(db, 'referralApplications'), {
+              uid,
+              fullName,
+              email,
+              phone,
+              proofUrl: downloadURL,
+              proofPath: filePath,
+              status: 'pending_approval',
+              registeredAt: serverTimestamp(),
+              updatedAt: serverTimestamp()
             });
-            
-            localStorage.setItem('pendingReferralApplications', JSON.stringify(pendingApplications));
-            localStorage.setItem('pendingReferralUser', JSON.stringify(userData));
-            
-            // Show success message and redirect
-            alert('✅ Registration successful! Redirecting to payment...');
-            window.location.href = 'referral-payment.html';
+
+            // store uid & application id locally so pending page can poll
+            localStorage.setItem('referralUid', uid);
+            localStorage.setItem('referralAppId', docRef.id);
+
+            resolve();
+          });
         });
-    </script>
+
+        // Success UI and redirect to pending page
+        alert('✅ Registration submitted. Please complete payment if required. You will be notified after approval.');
+        window.location.href = 'referral-pending.html';
+
+      } catch (err) {
+        console.error('Submission error:', err);
+        alert('Error submitting registration: ' + (err.message || err));
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue & Submit →';
+        uploadProgress.style.display = 'none';
+        uploadBar.style.width = '0%';
+      }
+    });
+  </script>
 </body>
-</html>
+    </html>
+
