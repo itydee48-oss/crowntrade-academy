@@ -4,353 +4,118 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>User Dashboard - Crown Trade Academy</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --dark-brown: #3A2D28;
-      --muted-rose: #A48374;
-      --warm-beige: #CBAD8D;
-      --light-taupe: #D1C7BD;
-      --off-white: #EBE3DB;
-      --cream-white: #F1EDE6;
-      --gold-accent: #D4AF37;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-      color: var(--dark-brown);
-      line-height:1.6;
-      min-height:100vh;
-    }
-    .premium-header{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-      color: var(--cream-white);
-      padding:1.2rem 0;
-      box-shadow:0 4px 20px rgba(58,45,40,0.1);
-      border-bottom:3px solid var(--gold-accent);
-    }
-    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
-    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .nav-links{ display:flex; gap:2rem; list-style:none; align-items:center; }
-    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
-    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
-    .premium-card{
-      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-      border:1px solid var(--light-taupe);
-      border-radius:20px;
-      padding:2.5rem;
-      margin:1.5rem 0;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 15px 40px rgba(58,45,40,0.08);
-    }
-    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
-      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    .btn-premium{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer;
-    }
-    
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .stat-card {
-      background: var(--off-white);
-      border: 1px solid var(--light-taupe);
-      border-radius: 15px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-    
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(139, 115, 85, 0.1);
-    }
-    
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--dark-brown);
-      margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-      color: var(--muted-rose);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .referral-code {
-      background: var(--off-white);
-      border: 2px dashed var(--gold-accent);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      margin: 1.5rem 0;
-    }
-    
-    .code-display {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--dark-brown);
-      margin: 1rem 0;
-      letter-spacing: 2px;
-    }
+    :root{--dark-brown:#3A2D28;--muted-rose:#A48374;--gold-accent:#D4AF37;--off-white:#EBE3DB;--cream-white:#F1EDE6;--light-taupe:#D1C7BD}
+    body{font-family:Segoe UI,Arial; background:linear-gradient(135deg,var(--off-white),var(--cream-white)); margin:0;color:var(--dark-brown)}
+    .premium-header{background:linear-gradient(135deg,var(--dark-brown),#2A1F1A); color:#fff; padding:1rem 2rem; border-bottom:3px solid var(--gold-accent); display:flex; justify-content:space-between; align-items:center;}
+    .logo{color:var(--warm-beige); font-weight:700; text-decoration:none}
+    .premium-container{max-width:1100px;margin:2rem auto;padding:0 20px;}
+    .premium-card{background:linear-gradient(135deg,#fff,var(--cream-white));border-radius:14px;padding:1.6rem;margin-bottom:1rem;border:1px solid var(--light-taupe);box-shadow:0 15px 40px rgba(58,45,40,0.06)}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
+    .stat-card{background:var(--off-white);padding:1rem;border-radius:10px;text-align:center;border:1px solid var(--light-taupe)}
+    .btn-premium{background:linear-gradient(135deg,var(--dark-brown),#4A3A32);color:#fff;padding:.8rem 1rem;border-radius:10px;border:none;cursor:pointer;transition:transform .12s,box-shadow .18s}
+    .btn-premium:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(212,175,55,0.12)}
+    .btn-secondary{background:transparent;border:1px solid var(--gold-accent);padding:.5rem .8rem;border-radius:8px}
+    .referral-code{padding:1rem;border-radius:10px;border:2px dashed var(--gold-accent);text-align:center;margin-top:1rem}
+    .form-control{padding:.6rem;border:1px solid var(--light-taupe);border-radius:8px;width:100%}
+    #loader-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#000000 40%,#b8860b 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity .8s ease,visibility .8s ease;visibility:visible;opacity:1}
+    #loader-spinner{width:90px;height:90px;border:4px solid rgba(255,215,0,0.3);border-top-color:#ffd700;border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 25px 5px rgba(255,215,0,0.3)}
+    #loader-text{margin-top:18px;color:#ffd700;font-weight:700}
+    body.loaded #loader-overlay{opacity:0;visibility:hidden}
+    @keyframes spin{100%{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
+  <div id="loader-overlay"><div id="loader-spinner"></div><div id="loader-text">Crown Trade Loading...</div></div>
+
   <header class="premium-header">
-    <nav class="premium-nav">
-      <a href="index.html" class="logo">Crown Trade Academy</a>
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <span style="color: var(--warm-beige); font-weight: 600;" id="userWelcome">Welcome!</span>
-        <ul class="nav-links">
-          <li><a href="user-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
-          <li><a href="#" onclick="logout()">Logout</a></li>
-        </ul>
-      </div>
-    </nav>
+    <a class="logo" href="index.html">Crown Trade Academy</a>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span id="userWelcome" style="color:var(--gold-accent)"></span>
+      <button class="btn-secondary" onclick="logout()">Logout</button>
+    </div>
   </header>
 
-  <section class="premium-container" style="padding:2rem 0;">
-    <!-- Welcome Section -->
+  <main class="premium-container">
     <div class="premium-card">
-      <h1 style="color:var(--dark-brown); margin-bottom:1rem;">Welcome to Your Dashboard!</h1>
-      <p style="color:var(--muted-rose);">Start earning through our referral program. Share your unique code and earn KES 300 for every successful referral.</p>
+      <h1>Welcome to Your Dashboard</h1>
+      <p style="color:var(--muted-rose)">Share your unique referral link and earn when people you refer are approved.</p>
     </div>
 
-    <!-- Stats Overview -->
     <div class="premium-card">
-      <h2 style="color:var(--dark-brown); margin-bottom:2rem;">Your Earnings Overview</h2>
-      
+      <h2>Your Earnings Overview</h2>
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number" id="currentBalance">KES 0</div>
-          <div class="stat-label">Current Balance</div>
+          <div style="font-size:1.6rem;font-weight:700" id="currentBalance">KES 0</div>
+          <div style="color:var(--muted-rose)">Current Balance</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" id="totalEarnings">KES 0</div>
-          <div class="stat-label">Total Earnings</div>
+          <div style="font-size:1.6rem;font-weight:700" id="totalEarnings">KES 0</div>
+          <div style="color:var(--muted-rose)">Total Earnings</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" id="referralCount">0</div>
-          <div class="stat-label">Successful Referrals</div>
+          <div style="font-size:1.6rem;font-weight:700" id="referralCount">0</div>
+          <div style="color:var(--muted-rose)">Successful Referrals</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" id="pendingEarnings">KES 0</div>
-          <div class="stat-label">Pending Earnings</div>
+          <div style="font-size:1.6rem;font-weight:700" id="pendingEarnings">KES 0</div>
+          <div style="color:var(--muted-rose)">Pending Earnings</div>
         </div>
       </div>
     </div>
 
-    <!-- Referral Code Section -->
     <div class="premium-card">
-      <h2 style="color:var(--dark-brown); margin-bottom:1rem;">Your Referral Code</h2>
-      <p style="color:var(--muted-rose); margin-bottom:1.5rem;">Share this code with friends and earn KES 300 when they join using your code.</p>
-      
+      <h2>Your Referral Link</h2>
       <div class="referral-code">
-        <div class="code-display" id="referralCodeDisplay">CTA-USER-0001</div>
-        <button class="btn-premium" onclick="copyReferralCode()">Copy Referral Code</button>
-      </div>
-      
-      <div style="margin-top:1.5rem;">
-        <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Share Via:</h3>
-        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-          <button class="btn-premium" style="background:var(--muted-rose);" onclick="shareViaWhatsApp()">WhatsApp</button>
-          <button class="btn-premium" style="background:var(--muted-rose);" onclick="shareViaEmail()">Email</button>
-          <button class="btn-premium" style="background:var(--muted-rose);" onclick="shareViaSMS()">SMS</button>
+        <div id="referralCodeDisplay" style="word-break:break-all;">—</div>
+        <div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center">
+          <button class="btn-premium" onclick="userCopyReferralLink()">Copy Link</button>
+          <button class="btn-premium" style="background:var(--muted-rose)" onclick="userShareWhatsApp()">WhatsApp</button>
+          <button class="btn-premium" style="background:var(--muted-rose)" onclick="userShareEmail()">Email</button>
         </div>
       </div>
     </div>
 
-    <!-- Withdrawal Section -->
     <div class="premium-card">
-      <h2 style="color:var(--dark-brown); margin-bottom:1rem;">Withdraw Earnings</h2>
-      <p style="color:var(--muted-rose); margin-bottom:1.5rem;">Minimum withdrawal amount: KES 100</p>
-      
-      <div style="display:flex; gap:1rem; align-items:end; flex-wrap:wrap;">
-        <div style="flex:1; min-width:200px;">
-          <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:var(--dark-brown);">Withdrawal Amount (KES)</label>
-          <input type="number" id="withdrawalAmount" class="form-control" placeholder="Enter amount" style="padding:0.75rem; border:2px solid var(--light-taupe); border-radius:8px; width:100%;">
-        </div>
-        <div style="flex:1; min-width:200px;">
-          <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:var(--dark-brown);">MPesa Phone Number</label>
-          <input type="tel" id="withdrawalPhone" class="form-control" placeholder="07XXXXXXXX" style="padding:0.75rem; border:2px solid var(--light-taupe); border-radius:8px; width:100%;">
-        </div>
-        <button class="btn-premium" onclick="requestWithdrawal()" style="min-width:150px;">Request Withdrawal</button>
+      <h2>Withdraw Earnings</h2>
+      <p style="color:var(--muted-rose)">Minimum withdrawal is set by admin.</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <input id="withdrawalAmount" class="form-control" placeholder="Amount (KES)" style="width:220px">
+        <input id="withdrawalPhone" class="form-control" placeholder="MPesa Phone (07...)" style="width:220px">
+        <button class="btn-premium" onclick="userRequestWithdrawal()">Request Withdrawal</button>
       </div>
     </div>
 
-    <!-- Referral History -->
     <div class="premium-card">
-      <h2 style="color:var(--dark-brown); margin-bottom:1rem;">Referral History</h2>
+      <h2>Referral History</h2>
       <div id="referralHistory">
-        <div style="text-align:center; color:var(--muted-rose); padding:2rem;">
-          No referrals yet. Share your code to start earning!
+        <div style="text-align:center;color:var(--muted-rose);padding:1.2rem">No referrals yet. Share your link to start earning.</div>
+      </div>
+    </div>
+
+    <div class="premium-card">
+      <h2>Account Settings</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div>
+          <h4>Change Password</h4>
+          <input id="userNewPassword" class="form-control" placeholder="New password">
+          <div style="margin-top:.6rem"><button class="btn-premium" onclick="userChangePassword()">Save Password</button></div>
+        </div>
+        <div>
+          <h4>Danger Zone</h4>
+          <p style="color:var(--muted-rose)">Logout to end session on this browser.</p>
+          <button class="btn-secondary" onclick="logout()">Logout</button>
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
+  <script src="script.js"></script>
   <script>
-    function loadUserDashboard() {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const currentUserEmail = localStorage.getItem('current_user_email');
-      const settings = JSON.parse(localStorage.getItem('program_settings') || '{}');
-      
-      if (!currentUserEmail) {
-        window.location.href = 'index.html';
-        return;
-      }
-      
-      const user = users.find(u => u.email === currentUserEmail);
-      
-      if (!user || user.status !== 'approved') {
-        window.location.href = 'waiting.html';
-        return;
-      }
-      
-      // Update welcome message
-      document.getElementById('userWelcome').textContent = `Welcome, ${user.fullName}!`;
-      
-      // Update stats
-      document.getElementById('currentBalance').textContent = `KES ${user.balance || 0}`;
-      document.getElementById('totalEarnings').textContent = `KES ${user.totalEarnings || 0}`;
-      document.getElementById('referralCount').textContent = user.referrals ? user.referrals.length : 0;
-      document.getElementById('pendingEarnings').textContent = `KES ${user.pendingEarnings || 0}`;
-      
-      // Generate referral code if not exists
-      if (!user.referralCode) {
-        user.referralCode = `CTA-${user.fullName.substring(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
-        localStorage.setItem('users', JSON.stringify(users));
-      }
-      
-      document.getElementById('referralCodeDisplay').textContent = user.referralCode;
-      
-      // Load referral history
-      loadReferralHistory(user);
-    }
-    
-    function loadReferralHistory(user) {
-      const referralHistory = document.getElementById('referralHistory');
-      
-      if (!user.referrals || user.referrals.length === 0) {
-        referralHistory.innerHTML = `
-          <div style="text-align:center; color:var(--muted-rose); padding:2rem;">
-            No referrals yet. Share your code to start earning!
-          </div>
-        `;
-        return;
-      }
-      
-      referralHistory.innerHTML = user.referrals.map(ref => `
-        <div style="background:var(--off-white); padding:1rem; border-radius:8px; margin:0.5rem 0; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <strong style="color:var(--dark-brown);">${ref.name}</strong>
-            <p style="color:var(--muted-rose); margin:0.25rem 0;">Joined: ${new Date(ref.joinedAt).toLocaleDateString()}</p>
-          </div>
-          <div style="color:var(--gold-accent); font-weight:600;">KES 300</div>
-        </div>
-      `).join('');
-    }
-    
-    function copyReferralCode() {
-      const code = document.getElementById('referralCodeDisplay').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        alert('Referral code copied to clipboard!');
-      });
-    }
-    
-    function shareViaWhatsApp() {
-      const code = document.getElementById('referralCodeDisplay').textContent;
-      const message = `Join Crown Trade Academy using my referral code: ${code}. Earn money through their referral program!`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-    }
-    
-    function shareViaEmail() {
-      const code = document.getElementById('referralCodeDisplay').textContent;
-      const subject = 'Join Crown Trade Academy with my referral code';
-      const body = `Hi! I wanted to share this amazing opportunity with you. Join Crown Trade Academy using my referral code: ${code}. You can earn money through their referral program just like I do!`;
-      window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
-    }
-    
-    function shareViaSMS() {
-      const code = document.getElementById('referralCodeDisplay').textContent;
-      const message = `Join Crown Trade Academy using my referral code: ${code}. Earn money through their referral program!`;
-      window.open(`sms:?body=${encodeURIComponent(message)}`, '_blank');
-    }
-    
-    function requestWithdrawal() {
-      const amount = parseInt(document.getElementById('withdrawalAmount').value);
-      const phone = document.getElementById('withdrawalPhone').value;
-      const settings = JSON.parse(localStorage.getItem('program_settings') || '{}');
-      const minWithdrawal = settings.minWithdrawal || 100;
-      
-      if (!amount || !phone) {
-        alert('Please enter both amount and phone number');
-        return;
-      }
-      
-      if (amount < minWithdrawal) {
-        alert(`Minimum withdrawal amount is KES ${minWithdrawal}`);
-        return;
-      }
-      
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const currentUserEmail = localStorage.getItem('current_user_email');
-      const userIndex = users.findIndex(u => u.email === currentUserEmail);
-      
-      if (userIndex === -1) return;
-      
-      if (amount > users[userIndex].balance) {
-        alert('Insufficient balance');
-        return;
-      }
-      
-      // Create withdrawal request
-      const withdrawal = {
-        id: Date.now().toString(),
-        userName: users[userIndex].fullName,
-        userEmail: currentUserEmail,
-        amount: amount,
-        phone: phone,
-        requestedAt: new Date().toISOString(),
-        status: 'pending'
-      };
-      
-      const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
-      withdrawals.push(withdrawal);
-      localStorage.setItem('withdrawal_requests', JSON.stringify(withdrawals));
-      
-      // Update user balance
-      users[userIndex].balance -= amount;
-      localStorage.setItem('users', JSON.stringify(users));
-      
-      alert('Withdrawal request submitted successfully! It will be processed within 24 hours.');
-      
-      // Reset form
-      document.getElementById('withdrawalAmount').value = '';
-      document.getElementById('withdrawalPhone').value = '';
-      
-      // Reload dashboard
-      loadUserDashboard();
-    }
-    
-    function logout() {
-      localStorage.removeItem('current_user_email');
-      window.location.href = 'index.html';
-    }
-    
-    // Initialize dashboard when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      loadUserDashboard();
+    // On DOM ready script.js will run userLoadDashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      // userLoadDashboard called in script.js auto initializer
     });
   </script>
 </body>
