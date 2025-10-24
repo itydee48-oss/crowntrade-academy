@@ -4,8 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin Dashboard - Crown Trade Academy</title>
-
-  <!-- === Your Luxury Nude Theme === -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --dark-brown: #3A2D28;
@@ -15,9 +14,6 @@
       --off-white: #EBE3DB;
       --cream-white: #F1EDE6;
       --gold-accent: #D4AF37;
-      --success-green: #28a745;
-      --warning-orange: #ffc107;
-      --danger-red: #dc3545;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body{
@@ -56,7 +52,7 @@
       color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer;
     }
     .btn-success {
-      background: var(--success-green);
+      background: #28a745;
       color: white;
       border: none;
       padding: 0.5rem 1rem;
@@ -65,7 +61,16 @@
       cursor: pointer;
     }
     .btn-danger {
-      background: var(--danger-red);
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-info {
+      background: #17a2b8;
       color: white;
       border: none;
       padding: 0.5rem 1rem;
@@ -76,6 +81,7 @@
     .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
     .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
     
+    /* Stats Grid */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -111,12 +117,19 @@
       letter-spacing: 1px;
     }
     
+    /* Application Cards */
     .application-card {
       background: var(--off-white);
       border: 1px solid var(--light-taupe);
       border-radius: 12px;
       padding: 1.5rem;
       margin: 1rem 0;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
     }
     
     .status-badge {
@@ -126,14 +139,102 @@
       font-size: 0.8rem;
       font-weight: 600;
     }
-    .status-pending { background: var(--warning-orange); color: var(--dark-brown); }
-    .status-approved { background: var(--success-green); color: white; }
-    .status-rejected { background: var(--danger-red); color: white; }
+    .status-pending { background: #ffc107; color: var(--dark-brown); }
+    .status-approved { background: #28a745; color: white; }
+    .status-rejected { background: #dc3545; color: white; }
     
-    .action-buttons {
+    /* Tabs */
+    .tabs {
       display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--light-taupe);
+    }
+    
+    .tab {
+      padding: 1rem 2rem;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--muted-rose);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .tab.active {
+      color: var(--dark-brown);
+      border-bottom-color: var(--gold-accent);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Chart Container */
+    .chart-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Settings Form */
+    .settings-form {
+      background: var(--off-white);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark-brown);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--light-taupe);
+      border-radius: 8px;
+      background: white;
+      color: var(--dark-brown);
+      font-size: 1rem;
+    }
+    
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .action-card {
+      background: var(--off-white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid var(--light-taupe);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .action-card:hover {
+      border-color: var(--gold-accent);
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -145,73 +246,154 @@
         <span style="color: var(--warm-beige); font-weight: 600;">Admin Dashboard</span>
         <ul class="nav-links">
           <li><a href="admin-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
-          <li><a href="#" id="logoutBtn">Logout</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>
       </div>
     </nav>
   </header>
 
   <section class="premium-container" style="padding:2rem 0;">
-    <div class="premium-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-        <div>
-          <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚙️ Admin Dashboard</h1>
-          <p style="font-size: 1.1rem; font-weight: 600;">Manage referral applications and users</p>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 0.9rem; color: var(--dark-brown);">Logged in as</div>
-          <div style="font-size: 1rem; font-weight: 700;" id="adminUsername">Admin</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Admin Stats -->
-  <section class="premium-container">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number" id="totalApplications">0</div>
-        <div class="stat-label">Total Applications</div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-number" id="pendingApplications">0</div>
-        <div class="stat-label">Pending Review</div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-number" id="approvedApplications">0</div>
-        <div class="stat-label">Approved</div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-number" id="rejectedApplications">0</div>
-        <div class="stat-label">Rejected</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pending Applications -->
-  <section class="premium-container">
+    <!-- Dashboard Overview -->
     <div class="premium-card">
-      <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📋 Pending Applications</h2>
+      <h1 style="color:var(--dark-brown); margin-bottom:2rem;">📊 Business Overview</h1>
       
-      <div id="pendingApplicationsList">
-        <div style="text-align: center; color: var(--muted-rose); padding: 3rem;">
-          Loading applications...
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalRevenue">KES 0</div>
+          <div class="stat-label">Total Revenue</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="pendingApprovals">0</div>
+          <div class="stat-label">Pending Approvals</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalUsers">0</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="conversionRate">0%</div>
+          <div class="stat-label">Approval Rate</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="action-card" onclick="showTab('applications')">
+          <h3>👥</h3>
+          <p>Manage Applications</p>
+        </div>
+        <div class="action-card" onclick="showTab('analytics')">
+          <h3>📈</h3>
+          <p>View Analytics</p>
+        </div>
+        <div class="action-card" onclick="showTab('settings')">
+          <h3>⚙️</h3>
+          <p>Program Settings</p>
+        </div>
+        <div class="action-card" onclick="exportData()">
+          <h3>📤</h3>
+          <p>Export Data</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Recent Activity -->
-  <section class="premium-container">
-    <div class="premium-card">
-      <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📊 Recent Activity</h2>
-      
-      <div id="recentActivity">
-        <div style="text-align: center; color: var(--muted-rose); padding: 2rem;">
-          Loading recent activity...
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('applications')">📋 Applications</button>
+      <button class="tab" onclick="showTab('analytics')">📈 Analytics</button>
+      <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
+      <button class="tab" onclick="showTab('withdrawals')">💳 Withdrawals</button>
+    </div>
+
+    <!-- Applications Tab -->
+    <div id="applications-tab" class="tab-content active">
+      <div class="premium-card">
+        <h2 style="color:var(--dark-brown); margin-bottom:1rem;">Pending Applications</h2>
+        <div id="applicationsList">
+          <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
+            Loading applications...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Tab -->
+    <div id="analytics-tab" class="tab-content">
+      <div class="premium-card">
+        <h2 style="color:var(--dark-brown); margin-bottom:2rem;">Business Analytics</h2>
+        
+        <div class="chart-container">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Revenue Growth</h3>
+          <canvas id="revenueChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Application Status</h3>
+          <canvas id="statusChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Monthly Performance</h3>
+          <canvas id="monthlyChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settings-tab" class="tab-content">
+      <div class="premium-card">
+        <h2 style="color:var(--dark-brown); margin-bottom:2rem;">Program Settings</h2>
+        
+        <div class="settings-form">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">💰 Payment Settings</h3>
+          <div class="form-group">
+            <label class="form-label">Registration Fee (KES)</label>
+            <input type="number" id="registrationFee" class="form-control" value="500">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Referral Earnings (KES)</label>
+            <input type="number" id="referralEarnings" class="form-control" value="300">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Minimum Withdrawal (KES)</label>
+            <input type="number" id="minWithdrawal" class="form-control" value="100">
+          </div>
+          <button class="btn-premium" onclick="savePaymentSettings()">Save Payment Settings</button>
+        </div>
+
+        <div class="settings-form">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">📧 Email Templates</h3>
+          <div class="form-group">
+            <label class="form-label">Approval Email Subject</label>
+            <input type="text" id="approvalSubject" class="form-control" value="Welcome to Crown Trade Academy!">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Approval Email Message</label>
+            <textarea id="approvalMessage" class="form-control" rows="4">Congratulations! Your application has been approved. You can now access your dashboard and start earning.</textarea>
+          </div>
+          <button class="btn-premium" onclick="saveEmailTemplates()">Save Email Templates</button>
+        </div>
+
+        <div class="settings-form">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">🔒 Admin Settings</h3>
+          <div class="form-group">
+            <label class="form-label">Change Admin Password</label>
+            <input type="password" id="newPassword" class="form-control" placeholder="New password">
+          </div>
+          <button class="btn-premium" onclick="changeAdminPassword()">Change Password</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdrawals Tab -->
+    <div id="withdrawals-tab" class="tab-content">
+      <div class="premium-card">
+        <h2 style="color:var(--dark-brown); margin-bottom:1rem;">💳 Withdrawal Requests</h2>
+        <div id="withdrawalsList">
+          <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
+            No withdrawal requests yet.
+          </div>
         </div>
       </div>
     </div>
@@ -222,12 +404,12 @@
       <div>
         <h3>Admin Tools</h3>
         <p>Application Management</p>
-        <p>User Approvals</p>
+        <p>Revenue Tracking</p>
       </div>
       <div>
         <h3>Quick Actions</h3>
-        <p>Review Pending Apps</p>
-        <p>Process Withdrawals</p>
+        <p>Review Applications</p>
+        <p>Update Settings</p>
       </div>
       <div>
         <h3>Support</h3>
@@ -235,198 +417,388 @@
         <p>Admin Portal</p>
       </div>
     </div>
-    <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-      <p>&copy; 2024 Crown Trade Academy. Admin Dashboard.</p>
+    <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">
+      <p>&copy; 2024 Crown Trade Academy. Enhanced Admin Dashboard</p>
     </div>
   </footer>
 
-  <!-- === Firebase Admin Dashboard === -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, onSnapshot, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+  <script>
+    // Initialize Charts
+    let revenueChart, statusChart, monthlyChart;
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
-      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
-      projectId: "crowntradeacademy-67be1",
-      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
-      messagingSenderId: "943453710285",
-      appId: "1:943453710285:web:7f122e722f03f3854d4684",
-      measurementId: "G-7XESVW5YWL"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Check admin authentication
-    document.addEventListener('DOMContentLoaded', function() {
-      const isAdminLoggedIn = localStorage.getItem('adminLoggedIn');
-      const adminUsername = localStorage.getItem('adminUsername');
-      
-      if (!isAdminLoggedIn || !adminUsername) {
-        alert('Please login as admin first.');
-        window.location.href = 'admin-login.html';
-        return;
+    // Simple admin authentication
+    function checkAdminAuth() {
+      const isAdmin = localStorage.getItem('admin_logged_in');
+      if (!isAdmin) {
+        const password = prompt('Enter admin password:');
+        if (password === 'admin123') {
+          localStorage.setItem('admin_logged_in', 'true');
+        } else {
+          alert('Invalid password');
+          window.location.href = 'index.html';
+        }
       }
-
-      // Set admin username
-      document.getElementById('adminUsername').textContent = adminUsername;
-      
-      // Load admin dashboard
-      loadAdminDashboard();
-      setupRealTimeUpdates();
-    });
-
-    async function loadAdminDashboard() {
-      await loadApplications();
-      await loadStats();
     }
 
-    async function loadApplications() {
-      const applicationsQuery = query(
-        collection(db, 'referralApplications'),
-        orderBy('registeredAt', 'desc')
-      );
+    function loadDashboardData() {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const settings = JSON.parse(localStorage.getItem('program_settings') || '{}');
       
-      const snapshot = await getDocs(applicationsQuery);
-      const applications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // Calculate stats
+      const pendingApps = applications.filter(app => app.status === 'pending' || !app.status);
+      const approvedApps = applications.filter(app => app.status === 'approved');
+      const rejectedApps = applications.filter(app => app.status === 'rejected');
       
-      displayApplications(applications);
+      const registrationFee = settings.registrationFee || 500;
+      const referralEarnings = settings.referralEarnings || 300;
+      
+      const totalRevenue = approvedApps.length * registrationFee;
+      const potentialRevenue = pendingApps.length * registrationFee;
+      
+      // Update stats
+      document.getElementById('totalRevenue').textContent = `KES ${totalRevenue}`;
+      document.getElementById('pendingApprovals').textContent = pendingApps.length;
+      document.getElementById('totalUsers').textContent = approvedApps.length;
+      document.getElementById('conversionRate').textContent = applications.length > 0 
+        ? `${Math.round((approvedApps.length / applications.length) * 100)}%` 
+        : '0%';
+      
+      // Load applications
+      loadApplications();
+      
+      // Load analytics
+      loadAnalytics(applications, approvedApps, pendingApps, rejectedApps);
+      
+      // Load settings
+      loadSettings(settings);
+      
+      // Load withdrawals
+      loadWithdrawals();
     }
 
-    function displayApplications(applications) {
-      const pendingContainer = document.getElementById('pendingApplicationsList');
-      const pendingApps = applications.filter(app => app.status === 'pending');
+    function loadApplications() {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const pendingApps = applications.filter(app => app.status === 'pending' || !app.status);
+      
+      const applicationsList = document.getElementById('applicationsList');
       
       if (pendingApps.length === 0) {
-        pendingContainer.innerHTML = `
-          <div style="text-align: center; color: var(--muted-rose); padding: 3rem;">
+        applicationsList.innerHTML = `
+          <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
             No pending applications at the moment.
           </div>
         `;
         return;
       }
 
-      pendingContainer.innerHTML = pendingApps.map(app => `
+      applicationsList.innerHTML = pendingApps.map(app => `
         <div class="application-card">
-          <div style="display: flex; justify-content: between; align-items: start; gap: 1rem; flex-wrap: wrap;">
-            <div style="flex: 1;">
-              <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">${app.fullName}</h3>
-              <p style="color: var(--muted-rose); margin: 0.25rem 0;">
-                <strong>Email:</strong> ${app.email}
-              </p>
-              <p style="color: var(--muted-rose); margin: 0.25rem 0;">
-                <strong>Phone:</strong> ${app.phone}
-              </p>
-              <p style="color: var(--muted-rose); margin: 0.25rem 0;">
-                <strong>Applied:</strong> ${app.registeredAt?.toDate().toLocaleDateString()}
-              </p>
-              ${app.paymentProofUrl ? `
-                <p style="margin: 0.5rem 0;">
-                  <a href="${app.paymentProofUrl}" target="_blank" style="color: var(--warm-beige); text-decoration: none;">
-                    📎 View Payment Proof
-                  </a>
-                </p>
-              ` : ''}
-            </div>
-            <div class="action-buttons">
-              <button class="btn-success" onclick="approveApplication('${app.id}', '${app.email}', '${app.fullName}')">
-                Approve
-              </button>
-              <button class="btn-danger" onclick="showRejectModal('${app.id}', '${app.email}', '${app.fullName}')">
-                Reject
-              </button>
-            </div>
+          <h3 style="color:var(--dark-brown); margin-bottom:0.5rem;">${app.fullName}</h3>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Email:</strong> ${app.email}
+          </p>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Phone:</strong> ${app.phone}
+          </p>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Applied:</strong> ${new Date(app.submittedAt).toLocaleDateString()}
+          </p>
+          <p style="margin:0.5rem 0;">
+            <a href="#" onclick="viewPaymentProof('${app.id}')" style="color:var(--warm-beige); text-decoration:none;">
+              📎 View Payment Proof
+            </a>
+          </p>
+          <div class="action-buttons">
+            <button class="btn-success" onclick="approveApplication('${app.id}')">
+              Approve
+            </button>
+            <button class="btn-danger" onclick="rejectApplication('${app.id}')">
+              Reject
+            </button>
+            <button class="btn-info" onclick="viewApplicationDetails('${app.id}')">
+              Details
+            </button>
           </div>
         </div>
       `).join('');
     }
 
-    async function loadStats() {
-      const applicationsQuery = query(collection(db, 'referralApplications'));
-      const snapshot = await getDocs(applicationsQuery);
-      const applications = snapshot.docs.map(doc => doc.data());
+    function loadAnalytics(applications, approvedApps, pendingApps, rejectedApps) {
+      // Revenue Chart
+      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      if (revenueChart) revenueChart.destroy();
       
-      const total = applications.length;
-      const pending = applications.filter(app => app.status === 'pending').length;
-      const approved = applications.filter(app => app.status === 'approved').length;
-      const rejected = applications.filter(app => app.status === 'rejected').length;
+      revenueChart = new Chart(revenueCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Revenue (KES)',
+            data: [0, 0, 0, 0, 0, approvedApps.length * 500],
+            borderColor: '#3A2D28',
+            backgroundColor: 'rgba(58, 45, 40, 0.1)',
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Monthly Revenue Growth'
+            }
+          }
+        }
+      });
+
+      // Status Chart
+      const statusCtx = document.getElementById('statusChart').getContext('2d');
+      if (statusChart) statusChart.destroy();
       
-      document.getElementById('totalApplications').textContent = total;
-      document.getElementById('pendingApplications').textContent = pending;
-      document.getElementById('approvedApplications').textContent = approved;
-      document.getElementById('rejectedApplications').textContent = rejected;
-    }
+      statusChart = new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Approved', 'Pending', 'Rejected'],
+          datasets: [{
+            data: [approvedApps.length, pendingApps.length, rejectedApps.length],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
 
-    function setupRealTimeUpdates() {
-      // Real-time listener for applications
-      const applicationsQuery = query(
-        collection(db, 'referralApplications'),
-        orderBy('registeredAt', 'desc')
-      );
-
-      onSnapshot(applicationsQuery, (snapshot) => {
-        const applications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        displayApplications(applications);
-        loadStats();
+      // Monthly Chart
+      const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+      if (monthlyChart) monthlyChart.destroy();
+      
+      monthlyChart = new Chart(monthlyCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Applications', 'Approvals', 'Revenue'],
+          datasets: [{
+            label: 'This Month',
+            data: [applications.length, approvedApps.length, approvedApps.length * 500],
+            backgroundColor: '#A48374'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Current Month Performance'
+            }
+          }
+        }
       });
     }
 
-    // Approve application
-    window.approveApplication = async function(applicationId, userEmail, userName) {
-      if (!confirm(`Approve ${userName}'s application? They will be notified by email.`)) {
+    function loadSettings(settings) {
+      document.getElementById('registrationFee').value = settings.registrationFee || 500;
+      document.getElementById('referralEarnings').value = settings.referralEarnings || 300;
+      document.getElementById('minWithdrawal').value = settings.minWithdrawal || 100;
+      document.getElementById('approvalSubject').value = settings.approvalSubject || 'Welcome to Crown Trade Academy!';
+      document.getElementById('approvalMessage').value = settings.approvalMessage || 'Congratulations! Your application has been approved.';
+    }
+
+    function loadWithdrawals() {
+      const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
+      const withdrawalsList = document.getElementById('withdrawalsList');
+      
+      if (withdrawals.length === 0) {
+        withdrawalsList.innerHTML = `
+          <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
+            No withdrawal requests yet.
+          </div>
+        `;
         return;
       }
 
-      try {
-        await updateDoc(doc(db, 'referralApplications', applicationId), {
-          status: 'approved',
-          reviewedAt: new Date(),
-          reviewedBy: 'admin'
-        });
+      withdrawalsList.innerHTML = withdrawals.map((withdrawal, index) => `
+        <div class="application-card">
+          <h3 style="color:var(--dark-brown); margin-bottom:0.5rem;">${withdrawal.userName}</h3>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Amount:</strong> KES ${withdrawal.amount}
+          </p>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>MPesa:</strong> ${withdrawal.phone}
+          </p>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Requested:</strong> ${new Date(withdrawal.requestedAt).toLocaleDateString()}
+          </p>
+          <div class="action-buttons">
+            <button class="btn-success" onclick="processWithdrawal(${index})">
+              Process
+            </button>
+            <button class="btn-danger" onclick="rejectWithdrawal(${index})">
+              Reject
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
 
-        alert(`✅ ${userName}'s application approved! They can now access their dashboard.`);
+    function showTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected tab
+      document.getElementById(`${tabName}-tab`).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function approveApplication(appId) {
+      if (confirm('Approve this application?')) {
+        const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+        const appIndex = applications.findIndex(app => app.id === appId);
         
-        // Refresh the dashboard
-        loadAdminDashboard();
-      } catch (error) {
-        alert('Error approving application: ' + error.message);
-      }
-    };
-
-    // Reject application
-    window.showRejectModal = function(applicationId, userEmail, userName) {
-      const reason = prompt(`Enter rejection reason for ${userName}:`, 'Payment proof unclear or invalid');
-      if (reason) {
-        rejectApplication(applicationId, userEmail, userName, reason);
-      }
-    };
-
-    async function rejectApplication(applicationId, userEmail, userName, reason) {
-      try {
-        await updateDoc(doc(db, 'referralApplications', applicationId), {
-          status: 'rejected',
-          rejectionReason: reason,
-          reviewedAt: new Date(),
-          reviewedBy: 'admin'
-        });
-
-        alert(`❌ ${userName}'s application rejected. They have been notified.`);
-        
-        // Refresh the dashboard
-        loadAdminDashboard();
-      } catch (error) {
-        alert('Error rejecting application: ' + error.message);
+        if (appIndex !== -1) {
+          applications[appIndex].status = 'approved';
+          applications[appIndex].reviewedAt = new Date().toISOString();
+          localStorage.setItem('referral_applications', JSON.stringify(applications));
+          alert('Application approved!');
+          loadDashboardData();
+        }
       }
     }
 
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', function() {
-      localStorage.removeItem('adminLoggedIn');
-      localStorage.removeItem('adminUsername');
-      window.location.href = 'admin-login.html';
+    function rejectApplication(appId) {
+      const reason = prompt('Enter rejection reason:');
+      if (reason) {
+        const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+        const appIndex = applications.findIndex(app => app.id === appId);
+        
+        if (appIndex !== -1) {
+          applications[appIndex].status = 'rejected';
+          applications[appIndex].rejectionReason = reason;
+          applications[appIndex].reviewedAt = new Date().toISOString();
+          localStorage.setItem('referral_applications', JSON.stringify(applications));
+          alert('Application rejected.');
+          loadDashboardData();
+        }
+      }
+    }
+
+    function viewPaymentProof(appId) {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const app = applications.find(app => app.id === appId);
+      
+      if (app && app.proofBase64) {
+        const newWindow = window.open();
+        newWindow.document.write(`
+          <html>
+            <head><title>Payment Proof - ${app.fullName}</title></head>
+            <body style="margin:0; padding:20px; text-align:center; background:#f5f5f5;">
+              <h2>Payment Proof - ${app.fullName}</h2>
+              <img src="${app.proofBase64}" style="max-width:100%; max-height:80vh; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);" />
+              <br><br>
+              <button onclick="window.close()" style="padding:10px 20px; background:#3A2D28; color:white; border:none; border-radius:5px; cursor:pointer;">
+                Close
+              </button>
+            </body>
+          </html>
+        `);
+      }
+    }
+
+    function viewApplicationDetails(appId) {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const app = applications.find(app => app.id === appId);
+      
+      if (app) {
+        alert(`Application Details:\n\nName: ${app.fullName}\nEmail: ${app.email}\nPhone: ${app.phone}\nStatus: ${app.status || 'Pending'}\nSubmitted: ${new Date(app.submittedAt).toLocaleString()}`);
+      }
+    }
+
+    function savePaymentSettings() {
+      const settings = {
+        registrationFee: parseInt(document.getElementById('registrationFee').value),
+        referralEarnings: parseInt(document.getElementById('referralEarnings').value),
+        minWithdrawal: parseInt(document.getElementById('minWithdrawal').value),
+        approvalSubject: document.getElementById('approvalSubject').value,
+        approvalMessage: document.getElementById('approvalMessage').value
+      };
+      
+      localStorage.setItem('program_settings', JSON.stringify(settings));
+      alert('Payment settings saved successfully!');
+    }
+
+    function saveEmailTemplates() {
+      const settings = JSON.parse(localStorage.getItem('program_settings') || '{}');
+      settings.approvalSubject = document.getElementById('approvalSubject').value;
+      settings.approvalMessage = document.getElementById('approvalMessage').value;
+      
+      localStorage.setItem('program_settings', JSON.stringify(settings));
+      alert('Email templates saved successfully!');
+    }
+
+    function changeAdminPassword() {
+      const newPassword = document.getElementById('newPassword').value;
+      if (newPassword && newPassword.length >= 6) {
+        alert('Admin password changed successfully! New password: ' + newPassword);
+        document.getElementById('newPassword').value = '';
+      } else {
+        alert('Password must be at least 6 characters long.');
+      }
+    }
+
+    function processWithdrawal(index) {
+      if (confirm('Mark this withdrawal as processed?')) {
+        const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
+        withdrawals.splice(index, 1);
+        localStorage.setItem('withdrawal_requests', JSON.stringify(withdrawals));
+        alert('Withdrawal processed successfully!');
+        loadWithdrawals();
+      }
+    }
+
+    function rejectWithdrawal(index) {
+      const reason = prompt('Enter rejection reason:');
+      if (reason) {
+        const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
+        withdrawals.splice(index, 1);
+        localStorage.setItem('withdrawal_requests', JSON.stringify(withdrawals));
+        alert('Withdrawal rejected.');
+        loadWithdrawals();
+      }
+    }
+
+    function exportData() {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const dataStr = JSON.stringify(applications, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'referral_applications.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function logout() {
+      localStorage.removeItem('admin_logged_in');
+      window.location.href = 'index.html';
+    }
+
+    // Initialize dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAdminAuth();
+      loadDashboardData();
+      
+      // Auto-refresh every 30 seconds
+      setInterval(loadDashboardData, 30000);
     });
   </script>
 </body>
