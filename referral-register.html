@@ -93,36 +93,36 @@
       </div>
 
       <!-- === Referral Form === -->
-      <form id="referralRegisterForm" enctype="multipart/form-data" novalidate>
+      <form id="referralRegisterForm" action="process-registration.php" method="POST" enctype="multipart/form-data" novalidate>
         <div class="form-group">
           <label class="form-label" for="fullName">Full Name</label>
-          <input id="fullName" class="form-control" type="text" required placeholder="Your full name">
+          <input id="fullName" name="fullName" class="form-control" type="text" required placeholder="Your full name">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="email">Email Address</label>
-          <input id="email" class="form-control" type="email" required placeholder="you@example.com">
+          <input id="email" name="email" class="form-control" type="email" required placeholder="you@example.com">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="phone">Phone Number</label>
-          <input id="phone" class="form-control" type="tel" required placeholder="+254 7XX XXX XXX">
+          <input id="phone" name="phone" class="form-control" type="tel" required placeholder="+254 7XX XXX XXX">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="password">Create Password</label>
-          <input id="password" class="form-control" type="password" required minlength="6" placeholder="Minimum 6 characters">
+          <input id="password" name="password" class="form-control" type="password" required minlength="6" placeholder="Minimum 6 characters">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="confirmPassword">Confirm Password</label>
-          <input id="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
+          <input id="confirmPassword" name="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
         </div>
 
         <!-- === Payment Proof Section === -->
         <div class="form-group">
           <label class="form-label" for="proof">Upload Payment Proof (MPesa Screenshot)</label>
-          <input id="proof" class="form-control" type="file" accept="image/*" required>
+          <input id="proof" name="proof" class="form-control" type="file" accept="image/*" required>
           <div class="file-hint small">Max 6 MB. JPG or PNG screenshot of MPesa payment.</div>
 
           <div class="upload-progress" id="uploadProgress">
@@ -133,7 +133,7 @@
         <!-- I Have Paid Confirmation -->
         <div class="form-group">
           <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="paidConfirmation" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <input id="paidConfirmation" name="paidConfirmation" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
             <span style="color:var(--dark-brown); font-size:.95rem;">
               ✅ I confirm I have paid KES 500 registration fee via MPesa
             </span>
@@ -142,7 +142,7 @@
 
         <div class="form-group" style="margin-top:1rem;">
           <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <input id="agree" name="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
             <span style="color:var(--dark-brown); font-size:.95rem;">
               I agree to the terms and understand I'll earn KES 300 per successful referral
             </span>
@@ -163,35 +163,8 @@
     <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
   </footer>
 
-  <!-- === SIMPLE FIREBASE SETUP === -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
-
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
-      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
-      projectId: "crowntradeacademy-67be1",
-      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
-      messagingSenderId: "943453710285",
-      appId: "1:943453710285:web:7f122e722f03f3854d4684",
-      measurementId: "G-7XESVW5YWL"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-
-    console.log("Firebase initialized:", app);
-
-    document.getElementById('referralRegisterForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
+    document.getElementById('referralRegisterForm').addEventListener('submit', function(e) {
       const fullName = document.getElementById('fullName').value.trim();
       const email = document.getElementById('email').value.trim().toLowerCase();
       const phone = document.getElementById('phone').value.trim();
@@ -204,121 +177,60 @@
       // Validation
       if (!fullName || !email || !phone || !password || !confirmPassword) {
         alert('Please fill out all required fields.');
+        e.preventDefault();
         return;
       }
       if (password !== confirmPassword) {
         alert('Passwords do not match.');
+        e.preventDefault();
         return;
       }
       if (password.length < 6) {
         alert('Password must be at least 6 characters.');
+        e.preventDefault();
         return;
       }
       if (!paidConfirmation) {
         alert('Please confirm that you have paid KES 500.');
+        e.preventDefault();
         return;
       }
       if (!agree) {
         alert('You must agree to the terms to continue.');
+        e.preventDefault();
         return;
       }
       if (!file) {
         alert('Please upload MPesa payment screenshot.');
+        e.preventDefault();
         return;
       }
       if (file.size > 6 * 1024 * 1024) {
         alert('File too large. Max size is 6 MB.');
+        e.preventDefault();
         return;
       }
       if (!['image/jpeg','image/png','image/jpg'].includes(file.type)) {
         alert('Please upload JPG or PNG image only.');
+        e.preventDefault();
         return;
       }
 
+      // Show loading state
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
-
-      try {
-        console.log('Starting registration process...');
-
-        // 1. Create user account
-        console.log('Creating user account...');
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        console.log('User created:', user.uid);
-
-        // 2. Upload file to storage
-        console.log('Uploading file...');
-        const storageRef = storage.ref();
-        const fileRef = storageRef.child('paymentProofs/' + user.uid + '/' + Date.now() + '_' + file.name);
-        
-        const uploadTask = fileRef.put(file);
-        
-        // Show progress
-        document.getElementById('uploadProgress').style.display = 'block';
-        
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            // Progress
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            document.getElementById('uploadBar').style.width = progress + '%';
-          },
-          (error) => {
-            throw error;
-          },
-          async () => {
-            // Upload completed
-            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-            console.log('File available at:', downloadURL);
-
-            // 3. Save application to Firestore
-            console.log('Saving to Firestore...');
-            await db.collection('referralApplications').add({
-              uid: user.uid,
-              fullName: fullName,
-              email: email,
-              phone: phone,
-              paymentProofUrl: downloadURL,
-              paymentProofPath: uploadTask.snapshot.ref.fullPath,
-              status: 'pending',
-              paidConfirmation: true,
-              registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
-              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-
-            console.log('Application saved successfully!');
-
-            // Store user info
-            localStorage.setItem('referralUid', user.uid);
-            localStorage.setItem('userEmail', email);
-
-            // Success
-            alert('✅ Registration submitted successfully! Awaiting admin approval.');
-            window.location.href = 'referral-pending.html';
-          }
-        );
-
-      } catch (error) {
-        console.error('Registration error:', error);
-        
-        let errorMessage = 'Registration failed. Please try again.';
-        
-        if (error.code === 'auth/email-already-in-use') {
-          errorMessage = 'This email is already registered. Please use a different email.';
-        } else if (error.code === 'auth/invalid-email') {
-          errorMessage = 'Invalid email address format.';
-        } else if (error.code === 'auth/weak-password') {
-          errorMessage = 'Password is too weak. Use at least 6 characters.';
-        } else if (error.code === 'auth/network-request-failed') {
-          errorMessage = 'Network error. Please check your internet connection.';
-        }
-        
-        alert('Error: ' + errorMessage);
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit for Approval →';
-        document.getElementById('uploadProgress').style.display = 'none';
-      }
+      
+      // Show upload progress
+      document.getElementById('uploadProgress').style.display = 'block';
+      
+      // Simulate progress for better UX
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += 10;
+        document.getElementById('uploadBar').style.width = progress + '%';
+        if (progress >= 90) clearInterval(progressInterval);
+      }, 200);
     });
   </script>
 </body>
