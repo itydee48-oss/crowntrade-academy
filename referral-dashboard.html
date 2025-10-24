@@ -1,122 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>User Dashboard - Crown Trade Academy</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    :root{--dark-brown:#3A2D28;--muted-rose:#A48374;--gold-accent:#D4AF37;--off-white:#EBE3DB;--cream-white:#F1EDE6;--light-taupe:#D1C7BD}
-    body{font-family:Segoe UI,Arial; background:linear-gradient(135deg,var(--off-white),var(--cream-white)); margin:0;color:var(--dark-brown)}
-    .premium-header{background:linear-gradient(135deg,var(--dark-brown),#2A1F1A); color:#fff; padding:1rem 2rem; border-bottom:3px solid var(--gold-accent); display:flex; justify-content:space-between; align-items:center;}
-    .logo{color:var(--warm-beige); font-weight:700; text-decoration:none}
-    .premium-container{max-width:1100px;margin:2rem auto;padding:0 20px;}
-    .premium-card{background:linear-gradient(135deg,#fff,var(--cream-white));border-radius:14px;padding:1.6rem;margin-bottom:1rem;border:1px solid var(--light-taupe);box-shadow:0 15px 40px rgba(58,45,40,0.06)}
-    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem}
-    .stat-card{background:var(--off-white);padding:1rem;border-radius:10px;text-align:center;border:1px solid var(--light-taupe)}
-    .btn-premium{background:linear-gradient(135deg,var(--dark-brown),#4A3A32);color:#fff;padding:.8rem 1rem;border-radius:10px;border:none;cursor:pointer;transition:transform .12s,box-shadow .18s}
-    .btn-premium:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(212,175,55,0.12)}
-    .btn-secondary{background:transparent;border:1px solid var(--gold-accent);padding:.5rem .8rem;border-radius:8px}
-    .referral-code{padding:1rem;border-radius:10px;border:2px dashed var(--gold-accent);text-align:center;margin-top:1rem}
-    .form-control{padding:.6rem;border:1px solid var(--light-taupe);border-radius:8px;width:100%}
-    #loader-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#000000 40%,#b8860b 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity .8s ease,visibility .8s ease;visibility:visible;opacity:1}
-    #loader-spinner{width:90px;height:90px;border:4px solid rgba(255,215,0,0.3);border-top-color:#ffd700;border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 25px 5px rgba(255,215,0,0.3)}
-    #loader-text{margin-top:18px;color:#ffd700;font-weight:700}
-    body.loaded #loader-overlay{opacity:0;visibility:hidden}
-    @keyframes spin{100%{transform:rotate(360deg)}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referral Dashboard - Crown Trade Academy</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; }
+  .premium-header { background:#3a2d28; padding:1rem; }
+  .premium-header .premium-nav { display:flex; justify-content:space-between; align-items:center; }
+  .premium-header .premium-nav a.logo { color:#d4af37; font-weight:bold; text-decoration:none; font-size:1.2rem; }
+  .premium-card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:2rem; max-width:900px; margin:3rem auto; }
+  h1,h3,h4 { color:#3a2d28; }
+  .summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem; }
+  .summary-item { background:#f5f5f5; padding:1rem; border-radius:8px; text-align:center; }
+  .referral-list { margin-top:2rem; }
+  table { width:100%; border-collapse:collapse; margin-top:1rem; }
+  th,td { padding:0.8rem; text-align:left; border-bottom:1px solid #ccc; }
+  th { background:#f5f5f5; }
+  .status-pending { color:#ffc107; font-weight:bold; }
+  .status-approved { color:#28a745; font-weight:bold; }
+  .btn-copy { padding:0.4rem 0.8rem; background:#3a2d28; color:#d4af37; border:none; border-radius:6px; cursor:pointer; margin-left:0.5rem; }
+</style>
 </head>
 <body>
-  <div id="loader-overlay"><div id="loader-spinner"></div><div id="loader-text">Crown Trade Loading...</div></div>
 
-  <header class="premium-header">
-    <a class="logo" href="index.html">Crown Trade Academy</a>
-    <div style="display:flex;align-items:center;gap:1rem">
-      <span id="userWelcome" style="color:var(--gold-accent)"></span>
-      <button class="btn-secondary" onclick="logout()">Logout</button>
-    </div>
-  </header>
+<header class="premium-header">
+  <nav class="premium-nav">
+    <a href="referral-dashboard.html" class="logo">Referral Dashboard</a>
+  </nav>
+</header>
 
-  <main class="premium-container">
-    <div class="premium-card">
-      <h1>Welcome to Your Dashboard</h1>
-      <p style="color:var(--muted-rose)">Share your unique referral link and earn when people you refer are approved.</p>
-    </div>
+<section>
+  <div class="premium-card">
+    <h1>Welcome, <span id="clientName">-</span></h1>
 
-    <div class="premium-card">
-      <h2>Your Earnings Overview</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div style="font-size:1.6rem;font-weight:700" id="currentBalance">KES 0</div>
-          <div style="color:var(--muted-rose)">Current Balance</div>
-        </div>
-        <div class="stat-card">
-          <div style="font-size:1.6rem;font-weight:700" id="totalEarnings">KES 0</div>
-          <div style="color:var(--muted-rose)">Total Earnings</div>
-        </div>
-        <div class="stat-card">
-          <div style="font-size:1.6rem;font-weight:700" id="referralCount">0</div>
-          <div style="color:var(--muted-rose)">Successful Referrals</div>
-        </div>
-        <div class="stat-card">
-          <div style="font-size:1.6rem;font-weight:700" id="pendingEarnings">KES 0</div>
-          <div style="color:var(--muted-rose)">Pending Earnings</div>
-        </div>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <h4>Total Earnings</h4>
+        <p>KES <span id="totalEarnings">0</span></p>
+      </div>
+      <div class="summary-item">
+        <h4>Available Balance</h4>
+        <p>KES <span id="pendingEarnings">0</span></p>
+      </div>
+      <div class="summary-item" style="grid-column: 1 / -1;">
+        <h4>Your Referral Link</h4>
+        <p><span id="referralLink">-</span> 
+          <button class="btn-copy" onclick="copyReferralLink()">Copy</button>
+        </p>
       </div>
     </div>
 
-    <div class="premium-card">
-      <h2>Your Referral Link</h2>
-      <div class="referral-code">
-        <div id="referralCodeDisplay" style="word-break:break-all;">—</div>
-        <div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center">
-          <button class="btn-premium" onclick="userCopyReferralLink()">Copy Link</button>
-          <button class="btn-premium" style="background:var(--muted-rose)" onclick="userShareWhatsApp()">WhatsApp</button>
-          <button class="btn-premium" style="background:var(--muted-rose)" onclick="userShareEmail()">Email</button>
-        </div>
-      </div>
+    <div class="referral-list">
+      <h3>Referred Users</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="referralsTable">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
     </div>
+  </div>
+</section>
 
-    <div class="premium-card">
-      <h2>Withdraw Earnings</h2>
-      <p style="color:var(--muted-rose)">Minimum withdrawal is set by admin.</p>
-      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-        <input id="withdrawalAmount" class="form-control" placeholder="Amount (KES)" style="width:220px">
-        <input id="withdrawalPhone" class="form-control" placeholder="MPesa Phone (07...)" style="width:220px">
-        <button class="btn-premium" onclick="userRequestWithdrawal()">Request Withdrawal</button>
-      </div>
-    </div>
+<script>
+const currentUserEmail = localStorage.getItem('current_user_email');
+const users = JSON.parse(localStorage.getItem('users') || '[]');
+const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
 
-    <div class="premium-card">
-      <h2>Referral History</h2>
-      <div id="referralHistory">
-        <div style="text-align:center;color:var(--muted-rose);padding:1.2rem">No referrals yet. Share your link to start earning.</div>
-      </div>
-    </div>
+const currentUser = users.find(u=>u.email===currentUserEmail);
 
-    <div class="premium-card">
-      <h2>Account Settings</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-        <div>
-          <h4>Change Password</h4>
-          <input id="userNewPassword" class="form-control" placeholder="New password">
-          <div style="margin-top:.6rem"><button class="btn-premium" onclick="userChangePassword()">Save Password</button></div>
-        </div>
-        <div>
-          <h4>Danger Zone</h4>
-          <p style="color:var(--muted-rose)">Logout to end session on this browser.</p>
-          <button class="btn-secondary" onclick="logout()">Logout</button>
-        </div>
-      </div>
-    </div>
-  </main>
+if(currentUser){
+  document.getElementById('clientName').textContent = currentUser.fullName;
+  document.getElementById('totalEarnings').textContent = currentUser.totalEarnings || 0;
+  document.getElementById('pendingEarnings').textContent = currentUser.pendingEarnings || 0;
 
-  <script src="script.js"></script>
-  <script>
-    // On DOM ready script.js will run userLoadDashboard
-    document.addEventListener('DOMContentLoaded', () => {
-      // userLoadDashboard called in script.js auto initializer
-    });
-  </script>
+  const referralLink = `${window.location.origin}/referral-register.html?ref=${currentUser.email}`;
+  document.getElementById('referralLink').textContent = referralLink;
+}
+
+// Populate referred users
+const referralsTable = document.getElementById('referralsTable');
+const referredUsers = applications.filter(app=>app.referralCode===currentUserEmail);
+referredUsers.forEach(app=>{
+  const tr = document.createElement('tr');
+
+  const nameTd = document.createElement('td'); nameTd.textContent = app.fullName; tr.appendChild(nameTd);
+  const emailTd = document.createElement('td'); emailTd.textContent = app.email; tr.appendChild(emailTd);
+
+  const statusTd = document.createElement('td');
+  statusTd.textContent = app.status;
+  statusTd.className = app.status==='approved'?'status-approved':app.status==='rejected'?'status-rejected':'status-pending';
+  tr.appendChild(statusTd);
+
+  referralsTable.appendChild(tr);
+});
+
+function copyReferralLink(){
+  const link = document.getElementById('referralLink').textContent;
+  navigator.clipboard.writeText(link).then(()=>alert('Referral link copied!'));
+}
+</script>
+
 </body>
 </html>
