@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Awaiting Approval - Crown Trade Academy</title>
-
+  <title>Application Pending - Crown Trade Academy</title>
   <style>
     :root {
       --dark-brown: #3A2D28;
@@ -22,6 +21,8 @@
       color: var(--dark-brown);
       line-height:1.6;
       min-height:100vh;
+      display: flex;
+      flex-direction: column;
     }
     .premium-header{
       background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
@@ -32,51 +33,45 @@
     }
     .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
     .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .nav-links{ display:flex; gap:2rem; list-style:none; }
-    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
-    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+    .premium-container{ max-width:600px; margin:0 auto; padding:0 20px; flex:1; display:flex; align-items:center; }
     .premium-card{
       background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
       border:1px solid var(--light-taupe);
       border-radius:20px;
-      padding:2.5rem;
-      margin:1.5rem 0;
+      padding:3rem;
+      margin:2rem 0;
       position:relative;
       overflow:hidden;
       box-shadow:0 15px 40px rgba(58,45,40,0.08);
+      text-align:center;
     }
     .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
       background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    .btn-premium{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer; width:100%;
-    }
-    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
-    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
     
-    .status-badge {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: 600;
-      margin: 0.5rem 0;
-    }
-    .status-pending { background: #ffc107; color: var(--dark-brown); }
-    .status-approved { background: #28a745; color: white; }
-    .status-rejected { background: #dc3545; color: white; }
-    
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
+    .spinner {
       border: 4px solid var(--light-taupe);
       border-top: 4px solid var(--gold-accent);
       border-radius: 50%;
+      width: 60px;
+      height: 60px;
       animation: spin 1s linear infinite;
-      margin: 0 auto 1.5rem;
+      margin: 2rem auto;
     }
+    
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #ffc107;
+      color: var(--dark-brown);
+      margin: 1rem 0;
     }
   </style>
 </head>
@@ -84,128 +79,59 @@
   <header class="premium-header">
     <nav class="premium-nav">
       <a href="index.html" class="logo">Crown Trade Academy</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="referral-register.html">Join Program</a></li>
-      </ul>
     </nav>
   </header>
 
-  <section class="premium-container" style="padding:2rem 0; min-height:80vh;">
-    <div class="premium-card" style="max-width:600px;margin:0 auto; text-align:center;">
-      <div id="statusContent">
-        <!-- Content will be loaded by JavaScript -->
+  <section class="premium-container">
+    <div class="premium-card">
+      <div class="spinner"></div>
+      <h1 style="color:var(--dark-brown); margin-bottom:1rem;">Application Under Review</h1>
+      <div class="status-badge">PENDING APPROVAL</div>
+      <p style="color:var(--muted-rose); margin-bottom:1.5rem;">
+        Thank you for applying to Crown Trade Academy! Your application is currently being reviewed by our team.
+      </p>
+      <p style="color:var(--muted-rose); margin-bottom:2rem;">
+        You will be automatically redirected to your dashboard once your application is approved. This usually takes 24-48 hours.
+      </p>
+      <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; text-align:left;">
+        <h4 style="color:var(--dark-brown); margin-bottom:1rem;">What happens next?</h4>
+        <ul style="color:var(--muted-rose); padding-left:1.5rem;">
+          <li>Our team reviews your application</li>
+          <li>We verify your payment details</li>
+          <li>You receive approval notification</li>
+          <li>Access to your dashboard is granted</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <footer class="premium-footer">
-    <div class="footer-content">
-      <div><h3>Referral Program</h3><p>Start earning today</p><p>Email: crowntradeacademy@gmail.com</p></div>
-      <div><h3>Support</h3><p>Approval within 24 hours</p><p>Contact for questions</p></div>
-    </div>
-    <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
-  </footer>
-
   <script>
-    function loadApplicationStatus() {
-      const userEmail = localStorage.getItem('current_user_email');
-      const userName = localStorage.getItem('current_user_name');
-      const applicationId = localStorage.getItem('current_application_id');
-
-      if (!userEmail) {
-        // No user session found, redirect to registration
-        window.location.href = 'referral-register.html';
-        return;
-      }
-
-      // Get application data
-      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      const application = applications.find(app => app.id === applicationId);
-
-      if (!application) {
-        showError('Application not found. Please register again.');
-        return;
-      }
-
-      const status = application.status || 'pending';
+    // Check application status every 5 seconds
+    function checkApplicationStatus() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const currentUserEmail = localStorage.getItem('current_user_email');
       
-      let statusHTML = '';
-      
-      if (status === 'approved') {
-        statusHTML = `
-          <div style="margin-bottom:2rem;">
-            <h1 style="color:var(--dark-brown);margin-bottom:1rem;">Application Approved!</h1>
-            <p style="color:var(--muted-rose);">Congratulations ${userName}!</p>
-          </div>
-
-          <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
-          <div class="status-badge status-approved">Approved!</div>
-          <p style="color:var(--dark-brown); margin:1.5rem 0;">
-            Your application has been approved! You can now access your dashboard and start earning.
-          </p>
-          <button onclick="window.location.href='referral-dashboard.html'" class="btn-premium">
-            Go to Dashboard
-          </button>
-        `;
-      } else if (status === 'rejected') {
-        statusHTML = `
-          <div style="margin-bottom:2rem;">
-            <h1 style="color:var(--dark-brown);margin-bottom:1rem;">Application Status</h1>
-            <p style="color:var(--muted-rose);">Hello ${userName}</p>
-          </div>
-
-          <div style="font-size:4rem; margin-bottom:1rem;">❌</div>
-          <div class="status-badge status-rejected">Application Rejected</div>
-          <p style="color:var(--dark-brown); margin:1.5rem 0;">
-            ${application.rejectionReason || 'Your application was not approved. Please contact admin for details.'}
-          </p>
-          <button onclick="window.location.href='referral-register.html'" class="btn-premium">
-            Apply Again
-          </button>
-        `;
-      } else {
-        statusHTML = `
-          <div style="margin-bottom:2rem;">
-            <h1 style="color:var(--dark-brown);margin-bottom:1rem;">Application Submitted</h1>
-            <p style="color:var(--muted-rose);">Hello ${userName}, your application is under review</p>
-          </div>
-
-          <div class="loading-spinner"></div>
-          <div class="status-badge status-pending">Pending Approval</div>
-          <p style="color:var(--dark-brown); margin:1rem 0;">
-            We are reviewing your application and payment proof. You will be notified once approved.
-          </p>
-          
-          <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; margin:1.5rem 0;">
-            <h3 style="color:var(--dark-brown); margin-bottom:1rem;">What happens next?</h3>
-            <ul style="text-align:left; color:var(--muted-rose);">
-              <li>Admin reviews your payment proof</li>
-              <li>Approval within 24 hours</li>
-              <li>Access to your referral dashboard</li>
-              <li>Start earning KES 300 per referral</li>
-            </ul>
-          </div>
-        `;
+      if (currentUserEmail) {
+        const user = users.find(u => u.email === currentUserEmail);
+        if (user && user.status === 'approved') {
+          // Redirect to dashboard
+          window.location.href = 'user-dashboard.html';
+        }
       }
-      
-      document.getElementById('statusContent').innerHTML = statusHTML;
-    }
-
-    function showError(message) {
-      document.getElementById('statusContent').innerHTML = `
-        <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
-          <h2 style="color:var(--dark-brown);">Error</h2>
-          <p>${message}</p>
-          <button onclick="window.location.href='referral-register.html'" class="btn-premium" style="margin-top:1rem;">
-            Go to Registration
-          </button>
-        </div>
-      `;
     }
     
-    // Load status when page loads
-    document.addEventListener('DOMContentLoaded', loadApplicationStatus);
+    // Set current user email (in a real app, this would be set during login/application)
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the most recent application
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      if (applications.length > 0) {
+        const latestApp = applications[applications.length - 1];
+        localStorage.setItem('current_user_email', latestApp.email);
+      }
+      
+      // Start checking status
+      setInterval(checkApplicationStatus, 5000);
+    });
   </script>
 </body>
 </html>
