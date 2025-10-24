@@ -5,8 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crown Trade Academy - Elite Trading Mentorship</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* === FULLSCREEN LUXURY LOADER === */
+        .loader-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #fff7ec, #f1d8b2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .loader-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-family: "Cinzel", serif;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #c8a165, #f8e5c2, #b68d4c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200px; }
+            100% { background-position: 200px; }
+        }
+
+        .gold-ring {
+            width: 70px;
+            height: 70px;
+            border: 3px solid #d1a75f;
+            border-top-color: transparent;
+            border-radius: 50%;
+            margin-top: 20px;
+            animation: spin 1.4s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* === Nude & Gold Premium Theme === */
+        body {
+            background: #fffaf3;
+            color: #1f1b14;
+            font-family: "Poppins", sans-serif;
+            transition: opacity 1s ease;
+            opacity: 0;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        header.premium-header {
+            background: rgba(255, 252, 245, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .premium-nav a.logo {
+            font-family: "Cinzel", serif;
+            font-size: 1.6rem;
+            background: linear-gradient(90deg, #c8a165, #b68d4c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .premium-nav ul li a {
+            color: #7a6440;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .premium-nav ul li a:hover {
+            color: #b68d4c;
+        }
+    </style>
 </head>
 <body>
+    <!-- Gold Loader Overlay -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-logo">Crown Trade Academy</div>
+        <div class="gold-ring"></div>
+    </div>
+
     <!-- Premium Header -->
     <header class="premium-header">
         <nav class="premium-nav">
@@ -22,283 +115,25 @@
 
     <!-- Hero Section -->
     <section class="premium-container" style="padding: 4rem 0;">
-        <div class="premium-card fade-in-up">
-            <div style="text-align: center; padding: 3rem 0;">
-                <h1 style="font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--dark-brown), var(--muted-rose)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                    Elite 1-on-1 Trading Mentorship
-                </h1>
-                <p style="font-size: 1.4rem; margin-bottom: 2rem; color: var(--muted-rose);">
-                    Transform from Beginner to Profitable Trader with Personal Expert Guidance
-                </p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
-                    <a href="mentorship-form.html" class="btn-premium" style="text-decoration: none;">
-                        🎯 Apply for Mentorship Program
-                    </a>
-                    <a href="#program-details" class="btn-secondary" style="text-decoration: none;">
-                        📚 Program Details
-                    </a>
-                </div>
-                <div class="payment-notice" style="display: inline-block; text-align: left;">
-                    <p style="margin: 0; font-weight: 700; font-size: 1.3rem; color: var(--dark-brown);">
-                        Professional Mentorship Investment: KES 50,000
-                    </p>
-                </div>
-            </div>
+        <div class="hero-content">
+            <h1>Master the Art of Precision Trading</h1>
+            <p>Join an elite community of disciplined traders mastering price action, psychology, and consistency.</p>
+            <a href="mentorship-form.html" class="cta-button">Join Mentorship</a>
         </div>
     </section>
-
-    <!-- Program Benefits -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--dark-brown);">
-                Your Path to Trading Mastery
-            </h2>
-            
-            <div class="luxury-stats">
-                <!-- Benefit 1 -->
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">👨‍🏫</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Personal 1-on-1 Training</h3>
-                    <p style="color: var(--muted-rose);">Weekly private sessions with experienced trading mentors tailored to your specific goals and learning pace.</p>
-                </div>
-
-                <!-- Benefit 2 -->
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">📈</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Live Market Analysis</h3>
-                    <p style="color: var(--muted-rose);">Real-time trading sessions where we analyze live markets and execute trades together.</p>
-                </div>
-
-                <!-- Benefit 3 -->
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">🛡️</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Risk Management System</h3>
-                    <p style="color: var(--muted-rose);">Learn professional risk management techniques to protect your capital while maximizing profits.</p>
-                </div>
-
-                <!-- Benefit 4 -->
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">💼</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Proven Strategies</h3>
-                    <p style="color: var(--muted-rose);">Access exclusive trading strategies that have been proven successful in live market conditions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Program Structure -->
-    <section class="premium-container" id="program-details">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--dark-brown);">
-                12-Week Elite Mentorship Program
-            </h2>
-            
-            <div class="luxury-stats">
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">📅</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">12 Weeks</h4>
-                    <p style="color: var(--muted-rose);">Comprehensive Training Program</p>
-                </div>
-
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">👨‍🏫</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">24 Sessions</h4>
-                    <p style="color: var(--muted-rose);">Twice Weekly Private Mentoring</p>
-                </div>
-
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">💬</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">24/7 Support</h4>
-                    <p style="color: var(--muted-rose);">Continuous Mentor Access</p>
-                </div>
-
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">🎯</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Live Trading</h4>
-                    <p style="color: var(--muted-rose);">Real Market Experience</p>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="mentorship-form.html" class="btn-premium" style="text-decoration: none;">
-                    🎯 Apply for Mentorship Program
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Referral Program Section -->
-    <section class="premium-container">
-        <div class="premium-card" style="background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));">
-            <div style="text-align: center; padding: 3rem 2rem;">
-                <div class="luxury-stat-icon">💰</div>
-                <h2 style="color: var(--dark-brown); margin-bottom: 1rem;">Start Earning Today!</h2>
-                <p style="color: var(--dark-brown); font-size: 1.2rem; margin-bottom: 2rem;">
-                    Join our referral program and earn KES 300 for every person you bring to Crown Trade Academy
-                </p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="referral-register.html" class="btn-premium" style="text-decoration: none;">
-                        🚀 Join Referral Program - KES 500
-                    </a>
-                    <a href="login.html" class="btn-secondary" style="text-decoration: none;">
-                        📱 Existing Member Login
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Referral Program Details -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="color: var(--dark-brown); margin-bottom: 1rem;">Earn While You Learn</h2>
-                <p style="color: var(--muted-rose); font-size: 1.1rem;">Optional Referral Program for Additional Income</p>
-            </div>
-            
-            <div class="luxury-stats">
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">💰</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">KES 500 Registration</h4>
-                    <p style="color: var(--muted-rose);">One-time fee to join referral program</p>
-                </div>
-
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">👥</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">KES 300 Per Referral</h4>
-                    <p style="color: var(--muted-rose);">Earn for each person who joins through you</p>
-                </div>
-
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">💳</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Easy Withdrawals</h4>
-                    <p style="color: var(--muted-rose);">Get paid directly to your MPESA or bank</p>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="referral-register.html" class="btn-secondary" style="text-decoration: none;">
-                    💰 Join Referral Program Only - KES 500
-                </a>
-                <p style="color: var(--muted-rose); margin-top: 1rem; font-size: 0.9rem;">
-                    Already a mentorship student? Referral program access included!
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Trust & Verification -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <div class="payment-notice">
-                <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">⚠️ IMPORTANT: Verified Payments Only</h3>
-                <p style="margin: 0; color: var(--dark-brown);">
-                    Kindly before payment contact us through our email 
-                    <strong>crowntradeacademy@gmail.com</strong> for verification 
-                    and official payment instructions. We verify all transactions 
-                    to ensure your security and provide proper onboarding.
-                </p>
-            </div>
-
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;">
-                <span class="trust-badge">🔒 Verified Mentors</span>
-                <span class="trust-badge">✅ Secure Payments</span>
-                <span class="trust-badge">📧 Official Communication</span>
-                <span class="trust-badge">💼 Professional Training</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Success Stories -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--dark-brown);">
-                Trading Transformations
-            </h2>
-            
-            <div class="luxury-stats">
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">💎</div>
-                    <p style="color: var(--muted-rose); font-style: italic; line-height: 1.6;">
-                        "The 1-on-1 mentorship completely transformed my trading. I went from losing money to consistent profits within 8 weeks. The live sessions were game-changing!"
-                    </p>
-                    <div style="font-weight: 600; color: var(--dark-brown); margin-top: 1rem;">- David K., Nairobi</div>
-                </div>
-
-                <div class="luxury-stat">
-                    <div class="luxury-stat-icon">🚀</div>
-                    <p style="color: var(--muted-rose); font-style: italic; line-height: 1.6;">
-                        "I tried online courses before, but nothing compared to the personal attention here. My mentor helped me develop a strategy that works for my personality and schedule."
-                    </p>
-                    <div style="font-weight: 600; color: var(--dark-brown); margin-top: 1rem;">- Sarah M., Mombasa</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="premium-container">
-        <div class="premium-card" style="background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose)); text-align: center;">
-            <h2 style="margin-bottom: 1rem; color: var(--dark-brown);">Ready for Real Trading Results?</h2>
-            <p style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.2rem;">
-                Stop guessing and start executing with professional guidance.
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="mentorship-form.html" class="btn-premium" style="text-decoration: none;">
-                    🎯 Begin Mentorship Journey
-                </a>
-                <a href="referral-register.html" class="btn-secondary" style="text-decoration: none;">
-                    💰 Start Earning with Referrals
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Premium Footer -->
-    <footer class="premium-footer">
-        <div class="footer-content">
-            <div>
-                <h3>Crown Trade Academy</h3>
-                <p>Elite Trading Mentorship</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
-            </div>
-            <div>
-                <h3>Programs</h3>
-                <p><a href="mentorship-form.html" style="color: var(--warm-beige); text-decoration: none;">Mentorship Program</a></p>
-                <p><a href="referral-register.html" style="color: var(--warm-beige); text-decoration: none;">Referral Program</a></p>
-                <p><a href="payment-instructions.html" style="color: var(--warm-beige); text-decoration: none;">Payment Info</a></p>
-                <!-- ADMIN ACCESS LINK ADDED HERE -->
-                <p><a href="admin-login.html" style="color: var(--light-taupe); text-decoration: none; font-size: 0.9rem;">Team Portal</a></p>
-            </div>
-            <div>
-                <h3>Support</h3>
-                <p>Verified Transactions</p>
-                <p>Professional Mentors</p>
-                <p>Secure Platform</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script>
-        // Simple fade-in animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.fade-in-up');
-            elements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-            });
-            
+        // === Loader Logic ===
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            const body = document.body;
             setTimeout(() => {
-                elements.forEach(el => {
-                    el.style.transition = 'all 0.6s ease-out';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                });
-            }, 100);
+                loader.classList.add("hidden");
+                body.classList.add("loaded");
+            }, 1500);
         });
     </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
