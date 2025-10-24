@@ -4,84 +4,97 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Awaiting Approval - Crown Trade Academy</title>
-
-  <style>
-    /* Your existing styles here */
-    .status-badge {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: 600;
-      margin: 0.5rem 0;
-    }
-    .status-pending { background: #ffc107; color: #3A2D28; }
-    .status-approved { background: #28a745; color: white; }
-    .status-rejected { background: #dc3545; color: white; }
-  </style>
+  
+  <!-- Same styles as before -->
 </head>
 <body>
-  <!-- Your existing header and navigation -->
+  <!-- Same header as before -->
 
   <section class="premium-container" style="padding:2rem 0; min-height:80vh;">
     <div class="premium-card" style="max-width:600px;margin:0 auto; text-align:center;">
-      <div style="margin-bottom:2rem;">
-        <h1 style="color:var(--dark-brown);margin-bottom:1rem;">Application Submitted</h1>
-        <p style="color:var(--muted-rose);">Your referral program application is under review</p>
-      </div>
-
       <div id="statusContent">
-        <div class="status-badge status-pending">Pending Approval</div>
-        <p style="color:var(--dark-brown); margin:1rem 0;">
-          We are reviewing your application and payment proof. You will receive an email notification once approved.
-        </p>
-        
-        <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; margin:1.5rem 0;">
-          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">What happens next?</h3>
-          <ul style="text-align:left; color:var(--muted-rose);">
-            <li>Admin reviews your payment proof</li>
-            <li>Approval email sent within 24 hours</li>
-            <li>Access to your referral dashboard</li>
-            <li>Start earning KES 300 per referral</li>
-          </ul>
-        </div>
+        <!-- Status will be loaded by JavaScript -->
       </div>
-
-      <p style="color:var(--muted-rose); margin-top:2rem; font-size:0.9rem;">
-        This page will check for status updates automatically.<br>
-        You will also receive an email notification.
-      </p>
     </div>
   </section>
 
-  <!-- Your existing footer -->
+  <!-- Same footer as before -->
 
   <script>
-    // Check application status every 10 seconds
-    function checkApplicationStatus() {
-      fetch('check-status.php')
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === 'approved') {
-            window.location.href = 'referral-dashboard.html';
-          } else if (data.status === 'rejected') {
-            document.getElementById('statusContent').innerHTML = `
-              <div style="font-size:4rem; margin-bottom:1rem;">❌</div>
-              <div class="status-badge status-rejected">Application Rejected</div>
-              <p style="color:var(--dark-brown); margin:1.5rem 0;">
-                ${data.reason || 'Your application was not approved. Please check your email for details.'}
-              </p>
-              <button onclick="window.location.href='referral-register.html'" class="btn-premium">Apply Again</button>
-            `;
-          }
-        })
-        .catch(error => console.error('Error checking status:', error));
-    }
+    function loadApplicationStatus() {
+      const userEmail = localStorage.getItem('user_email');
+      const userName = localStorage.getItem('user_name');
+      const status = localStorage.getItem('application_status') || 'pending';
+      
+      let statusHTML = '';
+      
+      if (status === 'approved') {
+        statusHTML = `
+          <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
+          <div style="background: #28a745; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; margin: 0.5rem 0; display: inline-block;">
+            Approved!
+          </div>
+          <p style="color:var(--dark-brown); margin:1.5rem 0;">
+            Congratulations ${userName}! Your application has been approved.
+          </p>
+          <button onclick="window.location.href='referral-dashboard.html'" class="btn-premium">
+            Go to Dashboard
+          </button>
+        `;
+      } else if (status === 'rejected') {
+        statusHTML = `
+          <div style="font-size:4rem; margin-bottom:1rem;">❌</div>
+          <div style="background: #dc3545; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; margin: 0.5rem 0; display: inline-block;">
+            Application Rejected
+          </div>
+          <p style="color:var(--dark-brown); margin:1.5rem 0;">
+            Your application was not approved. Please contact admin.
+          </p>
+          <button onclick="window.location.href='referral-register.html'" class="btn-premium">
+            Apply Again
+          </button>
+        `;
+      } else {
+        statusHTML = `
+          <div style="margin-bottom:2rem;">
+            <h1 style="color:var(--dark-brown);margin-bottom:1rem;">Application Submitted</h1>
+            <p style="color:var(--muted-rose);">Hello ${userName}, your application is under review</p>
+          </div>
 
-    // Check status every 10 seconds
-    setInterval(checkApplicationStatus, 10000);
+          <div style="background: #ffc107; color: #3A2D28; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; margin: 0.5rem 0; display: inline-block;">
+            Pending Approval
+          </div>
+          <p style="color:var(--dark-brown); margin:1rem 0;">
+            We are reviewing your application and payment proof.
+          </p>
+          
+          <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; margin:1.5rem 0;">
+            <h3 style="color:var(--dark-brown); margin-bottom:1rem;">What happens next?</h3>
+            <ul style="text-align:left; color:var(--muted-rose);">
+              <li>Admin reviews your payment proof</li>
+              <li>You'll be notified when approved</li>
+              <li>Access to your referral dashboard</li>
+              <li>Start earning KES 300 per referral</li>
+            </ul>
+          </div>
+        `;
+      }
+      
+      document.getElementById('statusContent').innerHTML = statusHTML;
+    }
     
-    // Check immediately on page load
-    checkApplicationStatus();
+    // Check for admin updates (simulated)
+    function checkForUpdates() {
+      // In a real system, this would check your Google Sheet
+      // For now, we'll just use localStorage
+      console.log('Checking for status updates...');
+    }
+    
+    // Load status on page load
+    loadApplicationStatus();
+    
+    // Check for updates every 30 seconds
+    setInterval(checkForUpdates, 30000);
   </script>
 </body>
 </html>
