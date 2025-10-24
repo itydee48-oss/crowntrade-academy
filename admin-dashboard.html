@@ -78,6 +78,15 @@
       font-weight: 600;
       cursor: pointer;
     }
+    .btn-warning {
+      background: #ffc107;
+      color: var(--dark-brown);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
     .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
     .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
     
@@ -149,6 +158,7 @@
       gap: 1rem;
       margin-bottom: 2rem;
       border-bottom: 2px solid var(--light-taupe);
+      flex-wrap: wrap;
     }
     
     .tab {
@@ -237,168 +247,134 @@
       transform: translateY(-2px);
     }
 
-    /* NEW STYLES FOR ENHANCEMENTS */
+    /* NEW STYLES FOR MENTORSHIP MANAGEMENT */
     
-    /* Search and Filter */
-    .search-filter-bar {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-    
-    .search-box {
-      flex: 1;
-      min-width: 250px;
-    }
-    
-    .filter-select {
-      padding: 0.75rem;
-      border: 2px solid var(--light-taupe);
-      border-radius: 8px;
-      background: white;
-      color: var(--dark-brown);
-      font-size: 1rem;
-    }
-    
-    /* Notification System */
-    .notification-badge {
-      position: relative;
-    }
-    
-    .notification-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--gold-accent);
-      color: var(--dark-brown);
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: bold;
-    }
-    
-    .notification-panel {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background: white;
-      border: 1px solid var(--light-taupe);
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      width: 350px;
-      max-height: 400px;
-      overflow-y: auto;
-      z-index: 100;
-      display: none;
-    }
-    
-    .notification-panel.active {
-      display: block;
-    }
-    
-    .notification-item {
-      padding: 1rem;
-      border-bottom: 1px solid var(--light-taupe);
-    }
-    
-    .notification-item:last-child {
-      border-bottom: none;
-    }
-    
-    .notification-item.unread {
-      background: rgba(212, 175, 55, 0.1);
-    }
-    
-    /* User Management */
-    .user-grid {
+    /* Mentorship Sessions */
+    .sessions-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 1.5rem;
+      margin: 1.5rem 0;
     }
     
-    .user-card {
+    .session-card {
       background: var(--off-white);
       border: 1px solid var(--light-taupe);
       border-radius: 12px;
       padding: 1.5rem;
+      position: relative;
     }
     
-    /* Mobile Menu */
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--cream-white);
-      font-size: 1.5rem;
+    .session-status {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .session-upcoming { background: var(--warm-beige); color: var(--dark-brown); }
+    .session-completed { background: var(--muted-rose); color: white; }
+    .session-cancelled { background: #dc3545; color: white; }
+    
+    /* Announcements */
+    .announcement-card {
+      background: var(--off-white);
+      border: 1px solid var(--light-taupe);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+    
+    .announcement-priority {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .priority-high { background: #dc3545; color: white; }
+    .priority-medium { background: #ffc107; color: var(--dark-brown); }
+    .priority-low { background: var(--muted-rose); color: white; }
+    
+    /* Pricing Tables */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .pricing-card {
+      background: var(--off-white);
+      border: 1px solid var(--light-taupe);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    
+    .pricing-popular {
+      border: 2px solid var(--gold-accent);
+      transform: scale(1.05);
+    }
+    
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold-accent);
+      color: var(--dark-brown);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    /* Calendar */
+    .calendar-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+    
+    .calendar-day {
+      padding: 1rem;
+      text-align: center;
+      border-radius: 8px;
+      background: var(--off-white);
       cursor: pointer;
     }
     
-    /* Loading States */
-    .loading {
-      opacity: 0.7;
-      pointer-events: none;
+    .calendar-day.has-session {
+      background: var(--warm-beige);
+      font-weight: 600;
     }
     
-    .spinner {
-      border: 4px solid var(--light-taupe);
-      border-top: 4px solid var(--gold-accent);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 2rem auto;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .premium-nav {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .nav-links {
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-        display: none;
-      }
-      
-      .nav-links.active {
-        display: flex;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-        position: absolute;
-        right: 2rem;
-        top: 1.5rem;
-      }
-      
-      .tabs {
-        flex-direction: column;
-      }
-      
-      .search-filter-bar {
-        flex-direction: column;
-      }
-      
-      .quick-actions {
-        grid-template-columns: 1fr;
-      }
-      
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
+    .calendar-day.today {
+      border: 2px solid var(--gold-accent);
     }
   </style>
 </head>
@@ -406,26 +382,10 @@
   <header class="premium-header">
     <nav class="premium-nav">
       <a href="index.html" class="logo">Crown Trade Academy</a>
-      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
       <div style="display: flex; align-items: center; gap: 2rem;">
         <span style="color: var(--warm-beige); font-weight: 600;">Admin Dashboard</span>
-        <ul class="nav-links" id="navLinks">
+        <ul class="nav-links">
           <li><a href="admin-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
-          <li class="notification-badge">
-            <a href="#" onclick="toggleNotifications()">🔔 <span class="notification-count" id="notificationCount">0</span></a>
-            <div class="notification-panel" id="notificationPanel">
-              <div class="notification-item unread">
-                <strong>New Application</strong>
-                <p>John Doe submitted a new application</p>
-                <small>2 minutes ago</small>
-              </div>
-              <div class="notification-item">
-                <strong>Withdrawal Request</strong>
-                <p>Jane Smith requested KES 500 withdrawal</p>
-                <small>1 hour ago</small>
-              </div>
-            </div>
-          </li>
           <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>
       </div>
@@ -455,6 +415,14 @@
           <div class="stat-number" id="conversionRate">0%</div>
           <div class="stat-label">Approval Rate</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-number" id="activeSessions">0</div>
+          <div class="stat-label">Active Sessions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="mentorshipRevenue">KES 0</div>
+          <div class="stat-label">Mentorship Revenue</div>
+        </div>
       </div>
 
       <!-- Quick Actions -->
@@ -462,6 +430,10 @@
         <div class="action-card" onclick="showTab('applications')">
           <h3>👥</h3>
           <p>Manage Applications</p>
+        </div>
+        <div class="action-card" onclick="showTab('mentorship')">
+          <h3>🎓</h3>
+          <p>Mentorship</p>
         </div>
         <div class="action-card" onclick="showTab('analytics')">
           <h3>📈</h3>
@@ -471,18 +443,14 @@
           <h3>⚙️</h3>
           <p>Program Settings</p>
         </div>
-        <div class="action-card" onclick="exportData()">
-          <h3>📤</h3>
-          <p>Export Data</p>
-        </div>
       </div>
     </div>
 
     <!-- Tabs Navigation -->
     <div class="tabs">
       <button class="tab active" onclick="showTab('applications')">📋 Applications</button>
+      <button class="tab" onclick="showTab('mentorship')">🎓 Mentorship</button>
       <button class="tab" onclick="showTab('analytics')">📈 Analytics</button>
-      <button class="tab" onclick="showTab('users')">👥 Users</button>
       <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
       <button class="tab" onclick="showTab('withdrawals')">💳 Withdrawals</button>
     </div>
@@ -491,29 +459,73 @@
     <div id="applications-tab" class="tab-content active">
       <div class="premium-card">
         <h2 style="color:var(--dark-brown); margin-bottom:1rem;">Pending Applications</h2>
-        
-        <!-- Search and Filter Bar -->
-        <div class="search-filter-bar">
-          <div class="search-box">
-            <input type="text" id="applicationSearch" class="form-control" placeholder="Search applications..." onkeyup="filterApplications()">
-          </div>
-          <select id="statusFilter" class="filter-select" onchange="filterApplications()">
-            <option value="all">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
-          <select id="dateFilter" class="filter-select" onchange="filterApplications()">
-            <option value="all">All Time</option>
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-          </select>
-        </div>
-        
         <div id="applicationsList">
           <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
             Loading applications...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mentorship Tab -->
+    <div id="mentorship-tab" class="tab-content">
+      <div class="premium-card">
+        <h2 style="color:var(--dark-brown); margin-bottom:1rem;">🎓 Mentorship Management</h2>
+        
+        <!-- Mentorship Sessions -->
+        <div class="settings-form">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">📅 Scheduled Sessions</h3>
+          <button class="btn-premium" onclick="openSessionModal()" style="margin-bottom: 1.5rem;">+ Schedule New Session</button>
+          
+          <div class="sessions-grid" id="sessionsList">
+            <div style="text-align:center; color:var(--muted-rose); padding:2rem; grid-column: 1/-1;">
+              No sessions scheduled yet.
+            </div>
+          </div>
+        </div>
+
+        <!-- Mentorship Pricing -->
+        <div class="settings-form">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">💰 Mentorship Pricing</h3>
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <h3 style="color:var(--dark-brown);">Basic Plan</h3>
+              <div class="stat-number" id="basicPrice">KES 2,000</div>
+              <p style="color:var(--muted-rose); margin:1rem 0;">4 sessions/month</p>
+              <button class="btn-premium" onclick="editPricing('basic')">Edit Price</button>
+            </div>
+            
+            <div class="pricing-card pricing-popular">
+              <div class="popular-badge">Most Popular</div>
+              <h3 style="color:var(--dark-brown);">Standard Plan</h3>
+              <div class="stat-number" id="standardPrice">KES 4,500</div>
+              <p style="color:var(--muted-rose); margin:1rem 0;">8 sessions/month</p>
+              <button class="btn-premium" onclick="editPricing('standard')">Edit Price</button>
+            </div>
+            
+            <div class="pricing-card">
+              <h3 style="color:var(--dark-brown);">Premium Plan</h3>
+              <div class="stat-number" id="premiumPrice">KES 8,000</div>
+              <p style="color:var(--muted-rose); margin:1rem 0;">Unlimited sessions</p>
+              <button class="btn-premium" onclick="editPricing('premium')">Edit Price</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Announcements -->
+        <div class="settings-form">
+          <h3 style="color:var(--dark-brown); margin-bottom:1rem;">📢 Announcements</h3>
+          <button class="btn-premium" onclick="openAnnouncementModal()" style="margin-bottom: 1.5rem;">+ Create Announcement</button>
+          
+          <div id="announcementsList">
+            <div class="announcement-card">
+              <h4 style="color:var(--dark-brown); margin-bottom:0.5rem;">Welcome to Crown Trade Academy!</h4>
+              <p style="color:var(--muted-rose); margin-bottom:1rem;">We're excited to announce our new mentorship program starting next month. Get ready for an amazing learning experience!</p>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <small style="color:var(--muted-rose);">Posted: 2024-01-15</small>
+                <span class="announcement-priority priority-high">High</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -537,30 +549,6 @@
         <div class="chart-container">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Monthly Performance</h3>
           <canvas id="monthlyChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Users Tab -->
-    <div id="users-tab" class="tab-content">
-      <div class="premium-card">
-        <h2 style="color:var(--dark-brown); margin-bottom:1rem;">User Management</h2>
-        
-        <div class="search-filter-bar">
-          <div class="search-box">
-            <input type="text" id="userSearch" class="form-control" placeholder="Search users..." onkeyup="filterUsers()">
-          </div>
-          <select id="userStatusFilter" class="filter-select" onchange="filterUsers()">
-            <option value="all">All Users</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-        
-        <div class="user-grid" id="usersList">
-          <div style="text-align:center; color:var(--muted-rose); padding:3rem; grid-column: 1/-1;">
-            Loading users...
-          </div>
         </div>
       </div>
     </div>
@@ -624,6 +612,68 @@
     </div>
   </section>
 
+  <!-- Session Modal -->
+  <div id="sessionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:2rem; border-radius:12px; width:90%; max-width:500px;">
+      <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Schedule New Session</h3>
+      <div class="form-group">
+        <label class="form-label">Session Title</label>
+        <input type="text" id="sessionTitle" class="form-control" placeholder="e.g., Forex Trading Basics">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mentor</label>
+        <select id="sessionMentor" class="form-control">
+          <option value="john">John Doe (Forex Expert)</option>
+          <option value="jane">Jane Smith (Crypto Specialist)</option>
+          <option value="mike">Mike Johnson (Stocks Analyst)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Date & Time</label>
+        <input type="datetime-local" id="sessionDateTime" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Duration (minutes)</label>
+        <input type="number" id="sessionDuration" class="form-control" value="60">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Max Participants</label>
+        <input type="number" id="sessionMaxParticipants" class="form-control" value="20">
+      </div>
+      <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+        <button class="btn-premium" onclick="saveSession()" style="flex:1;">Schedule Session</button>
+        <button class="btn-danger" onclick="closeSessionModal()" style="flex:1;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Announcement Modal -->
+  <div id="announcementModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:2rem; border-radius:12px; width:90%; max-width:500px;">
+      <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Create Announcement</h3>
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" id="announcementTitle" class="form-control" placeholder="Announcement title">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea id="announcementMessage" class="form-control" rows="4" placeholder="Announcement message"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Priority</label>
+        <select id="announcementPriority" class="form-control">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+        <button class="btn-premium" onclick="saveAnnouncement()" style="flex:1;">Publish Announcement</button>
+        <button class="btn-danger" onclick="closeAnnouncementModal()" style="flex:1;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <footer class="premium-footer">
     <div class="footer-content">
       <div>
@@ -650,6 +700,11 @@
   <script>
     // Initialize Charts
     let revenueChart, statusChart, monthlyChart;
+
+    // Mentorship data
+    let mentorshipSessions = JSON.parse(localStorage.getItem('mentorship_sessions') || '[]');
+    let mentorshipPricing = JSON.parse(localStorage.getItem('mentorship_pricing') || '{"basic":2000,"standard":4500,"premium":8000}');
+    let announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
 
     // Simple admin authentication
     function checkAdminAuth() {
@@ -688,11 +743,19 @@
         ? `${Math.round((approvedApps.length / applications.length) * 100)}%` 
         : '0%';
       
-      // Update notification count
-      document.getElementById('notificationCount').textContent = pendingApps.length;
+      // Mentorship stats
+      const activeSessions = mentorshipSessions.filter(session => 
+        new Date(session.dateTime) > new Date() && session.status !== 'cancelled'
+      ).length;
+      
+      document.getElementById('activeSessions').textContent = activeSessions;
+      document.getElementById('mentorshipRevenue').textContent = `KES ${mentorshipPricing.standard * 5}`; // Sample data
       
       // Load applications
       loadApplications();
+      
+      // Load mentorship data
+      loadMentorshipData();
       
       // Load analytics
       loadAnalytics(applications, approvedApps, pendingApps, rejectedApps);
@@ -702,9 +765,6 @@
       
       // Load withdrawals
       loadWithdrawals();
-      
-      // Load users
-      loadUsers();
     }
 
     function loadApplications() {
@@ -713,17 +773,17 @@
       
       const applicationsList = document.getElementById('applicationsList');
       
-      if (applications.length === 0) {
+      if (pendingApps.length === 0) {
         applicationsList.innerHTML = `
           <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
-            No applications found.
+            No pending applications at the moment.
           </div>
         `;
         return;
       }
 
-      applicationsList.innerHTML = applications.map(app => `
-        <div class="application-card" data-status="${app.status || 'pending'}" data-date="${app.submittedAt}">
+      applicationsList.innerHTML = pendingApps.map(app => `
+        <div class="application-card">
           <h3 style="color:var(--dark-brown); margin-bottom:0.5rem;">${app.fullName}</h3>
           <p style="color:var(--muted-rose); margin:0.25rem 0;">
             <strong>Email:</strong> ${app.email}
@@ -735,18 +795,15 @@
             <strong>Applied:</strong> ${new Date(app.submittedAt).toLocaleDateString()}
           </p>
           <p style="margin:0.5rem 0;">
-            <span class="status-badge status-${app.status || 'pending'}">${(app.status || 'pending').toUpperCase()}</span>
-          </p>
-          <p style="margin:0.5rem 0;">
             <a href="#" onclick="viewPaymentProof('${app.id}')" style="color:var(--warm-beige); text-decoration:none;">
               📎 View Payment Proof
             </a>
           </p>
           <div class="action-buttons">
-            <button class="btn-success" onclick="approveApplication('${app.id}')" ${app.status === 'approved' ? 'disabled' : ''}>
+            <button class="btn-success" onclick="approveApplication('${app.id}')">
               Approve
             </button>
-            <button class="btn-danger" onclick="rejectApplication('${app.id}')" ${app.status === 'rejected' ? 'disabled' : ''}>
+            <button class="btn-danger" onclick="rejectApplication('${app.id}')">
               Reject
             </button>
             <button class="btn-info" onclick="viewApplicationDetails('${app.id}')">
@@ -757,111 +814,98 @@
       `).join('');
     }
 
-    function filterApplications() {
-      const searchTerm = document.getElementById('applicationSearch').value.toLowerCase();
-      const statusFilter = document.getElementById('statusFilter').value;
-      const dateFilter = document.getElementById('dateFilter').value;
+    function loadMentorshipData() {
+      // Load pricing
+      document.getElementById('basicPrice').textContent = `KES ${mentorshipPricing.basic.toLocaleString()}`;
+      document.getElementById('standardPrice').textContent = `KES ${mentorshipPricing.standard.toLocaleString()}`;
+      document.getElementById('premiumPrice').textContent = `KES ${mentorshipPricing.premium.toLocaleString()}`;
       
-      const applications = document.querySelectorAll('.application-card');
+      // Load sessions
+      loadSessions();
       
-      applications.forEach(card => {
-        const name = card.querySelector('h3').textContent.toLowerCase();
-        const status = card.getAttribute('data-status');
-        const date = new Date(card.getAttribute('data-date'));
-        const now = new Date();
-        
-        let show = true;
-        
-        // Search filter
-        if (searchTerm && !name.includes(searchTerm)) {
-          show = false;
-        }
-        
-        // Status filter
-        if (statusFilter !== 'all' && status !== statusFilter) {
-          show = false;
-        }
-        
-        // Date filter
-        if (dateFilter !== 'all') {
-          const diffTime = Math.abs(now - date);
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          
-          if (dateFilter === 'today' && diffDays > 1) {
-            show = false;
-          } else if (dateFilter === 'week' && diffDays > 7) {
-            show = false;
-          } else if (dateFilter === 'month' && diffDays > 30) {
-            show = false;
-          }
-        }
-        
-        card.style.display = show ? 'block' : 'none';
-      });
+      // Load announcements
+      loadAnnouncements();
     }
 
-    function loadUsers() {
-      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      const approvedUsers = applications.filter(app => app.status === 'approved');
+    function loadSessions() {
+      const sessionsList = document.getElementById('sessionsList');
       
-      const usersList = document.getElementById('usersList');
-      
-      if (approvedUsers.length === 0) {
-        usersList.innerHTML = `
-          <div style="text-align:center; color:var(--muted-rose); padding:3rem; grid-column: 1/-1;">
-            No approved users yet.
+      if (mentorshipSessions.length === 0) {
+        sessionsList.innerHTML = `
+          <div style="text-align:center; color:var(--muted-rose); padding:2rem; grid-column: 1/-1;">
+            No sessions scheduled yet.
           </div>
         `;
         return;
       }
 
-      usersList.innerHTML = approvedUsers.map(user => `
-        <div class="user-card">
-          <h3 style="color:var(--dark-brown); margin-bottom:0.5rem;">${user.fullName}</h3>
-          <p style="color:var(--muted-rose); margin:0.25rem 0;">
-            <strong>Email:</strong> ${user.email}
-          </p>
-          <p style="color:var(--muted-rose); margin:0.25rem 0;">
-            <strong>Phone:</strong> ${user.phone}
-          </p>
-          <p style="color:var(--muted-rose); margin:0.25rem 0;">
-            <strong>Joined:</strong> ${new Date(user.reviewedAt || user.submittedAt).toLocaleDateString()}
-          </p>
+      sessionsList.innerHTML = mentorshipSessions.map((session, index) => {
+        const sessionDate = new Date(session.dateTime);
+        const now = new Date();
+        const status = sessionDate > now ? 'upcoming' : 'completed';
+        
+        return `
+          <div class="session-card">
+            <span class="session-status session-${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+            <h4 style="color:var(--dark-brown); margin-bottom:0.5rem;">${session.title}</h4>
+            <p style="color:var(--muted-rose); margin:0.25rem 0;">
+              <strong>Mentor:</strong> ${session.mentor}
+            </p>
+            <p style="color:var(--muted-rose); margin:0.25rem 0;">
+              <strong>Date:</strong> ${sessionDate.toLocaleString()}
+            </p>
+            <p style="color:var(--muted-rose); margin:0.25rem 0;">
+              <strong>Duration:</strong> ${session.duration} minutes
+            </p>
+            <p style="color:var(--muted-rose); margin:0.25rem 0;">
+              <strong>Participants:</strong> 0/${session.maxParticipants}
+            </p>
+            <div class="action-buttons">
+              <button class="btn-info" onclick="editSession(${index})">
+                Edit
+              </button>
+              <button class="btn-warning" onclick="cancelSession(${index})" ${status !== 'upcoming' ? 'disabled' : ''}>
+                Cancel
+              </button>
+              <button class="btn-danger" onclick="deleteSession(${index})">
+                Delete
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function loadAnnouncements() {
+      const announcementsList = document.getElementById('announcementsList');
+      
+      if (announcements.length === 0) {
+        announcementsList.innerHTML = `
+          <div style="text-align:center; color:var(--muted-rose); padding:2rem;">
+            No announcements yet.
+          </div>
+        `;
+        return;
+      }
+
+      announcementsList.innerHTML = announcements.map((announcement, index) => `
+        <div class="announcement-card">
+          <h4 style="color:var(--dark-brown); margin-bottom:0.5rem;">${announcement.title}</h4>
+          <p style="color:var(--muted-rose); margin-bottom:1rem;">${announcement.message}</p>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <small style="color:var(--muted-rose);">Posted: ${new Date(announcement.createdAt).toLocaleDateString()}</small>
+            <span class="announcement-priority priority-${announcement.priority}">${announcement.priority.charAt(0).toUpperCase() + announcement.priority.slice(1)}</span>
+          </div>
           <div class="action-buttons">
-            <button class="btn-info" onclick="viewUserDetails('${user.id}')">
-              View Details
+            <button class="btn-info" onclick="editAnnouncement(${index})">
+              Edit
             </button>
-            <button class="btn-danger" onclick="deactivateUser('${user.id}')">
-              Deactivate
+            <button class="btn-danger" onclick="deleteAnnouncement(${index})">
+              Delete
             </button>
           </div>
         </div>
       `).join('');
-    }
-
-    function filterUsers() {
-      const searchTerm = document.getElementById('userSearch').value.toLowerCase();
-      const statusFilter = document.getElementById('userStatusFilter').value;
-      
-      const users = document.querySelectorAll('.user-card');
-      
-      users.forEach(card => {
-        const name = card.querySelector('h3').textContent.toLowerCase();
-        
-        let show = true;
-        
-        // Search filter
-        if (searchTerm && !name.includes(searchTerm)) {
-          show = false;
-        }
-        
-        // Status filter (currently all users are active in this demo)
-        if (statusFilter === 'inactive') {
-          show = false; // In a real app, you would check the user's status
-        }
-        
-        card.style.display = show ? 'block' : 'none';
-      });
     }
 
     function loadAnalytics(applications, approvedApps, pendingApps, rejectedApps) {
@@ -1000,17 +1044,142 @@
       event.target.classList.add('active');
     }
 
-    function toggleNotifications() {
-      const panel = document.getElementById('notificationPanel');
-      panel.classList.toggle('active');
-      event.preventDefault();
+    // Session Management Functions
+    function openSessionModal() {
+      document.getElementById('sessionModal').style.display = 'flex';
     }
 
-    function toggleMobileMenu() {
-      const navLinks = document.getElementById('navLinks');
-      navLinks.classList.toggle('active');
+    function closeSessionModal() {
+      document.getElementById('sessionModal').style.display = 'none';
+      // Reset form
+      document.getElementById('sessionTitle').value = '';
+      document.getElementById('sessionDateTime').value = '';
+      document.getElementById('sessionDuration').value = '60';
+      document.getElementById('sessionMaxParticipants').value = '20';
     }
 
+    function saveSession() {
+      const title = document.getElementById('sessionTitle').value;
+      const mentor = document.getElementById('sessionMentor').value;
+      const dateTime = document.getElementById('sessionDateTime').value;
+      const duration = document.getElementById('sessionDuration').value;
+      const maxParticipants = document.getElementById('sessionMaxParticipants').value;
+      
+      if (!title || !dateTime) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      const newSession = {
+        id: Date.now().toString(),
+        title,
+        mentor: document.getElementById('sessionMentor').options[document.getElementById('sessionMentor').selectedIndex].text,
+        dateTime,
+        duration: parseInt(duration),
+        maxParticipants: parseInt(maxParticipants),
+        status: 'upcoming',
+        createdAt: new Date().toISOString()
+      };
+      
+      mentorshipSessions.push(newSession);
+      localStorage.setItem('mentorship_sessions', JSON.stringify(mentorshipSessions));
+      
+      closeSessionModal();
+      loadSessions();
+      loadDashboardData();
+      alert('Session scheduled successfully!');
+    }
+
+    function cancelSession(index) {
+      if (confirm('Are you sure you want to cancel this session?')) {
+        mentorshipSessions[index].status = 'cancelled';
+        localStorage.setItem('mentorship_sessions', JSON.stringify(mentorshipSessions));
+        loadSessions();
+        alert('Session cancelled successfully!');
+      }
+    }
+
+    function deleteSession(index) {
+      if (confirm('Are you sure you want to delete this session?')) {
+        mentorshipSessions.splice(index, 1);
+        localStorage.setItem('mentorship_sessions', JSON.stringify(mentorshipSessions));
+        loadSessions();
+        alert('Session deleted successfully!');
+      }
+    }
+
+    function editSession(index) {
+      // For simplicity, we'll just allow deletion and recreation
+      alert('To edit this session, please delete it and create a new one with the correct details.');
+    }
+
+    // Pricing Management Functions
+    function editPricing(plan) {
+      const currentPrice = mentorshipPricing[plan];
+      const newPrice = prompt(`Enter new price for ${plan} plan (KES):`, currentPrice);
+      
+      if (newPrice && !isNaN(newPrice) && newPrice > 0) {
+        mentorshipPricing[plan] = parseInt(newPrice);
+        localStorage.setItem('mentorship_pricing', JSON.stringify(mentorshipPricing));
+        loadMentorshipData();
+        alert(`${plan.charAt(0).toUpperCase() + plan.slice(1)} plan price updated to KES ${newPrice}`);
+      }
+    }
+
+    // Announcement Management Functions
+    function openAnnouncementModal() {
+      document.getElementById('announcementModal').style.display = 'flex';
+    }
+
+    function closeAnnouncementModal() {
+      document.getElementById('announcementModal').style.display = 'none';
+      // Reset form
+      document.getElementById('announcementTitle').value = '';
+      document.getElementById('announcementMessage').value = '';
+      document.getElementById('announcementPriority').value = 'medium';
+    }
+
+    function saveAnnouncement() {
+      const title = document.getElementById('announcementTitle').value;
+      const message = document.getElementById('announcementMessage').value;
+      const priority = document.getElementById('announcementPriority').value;
+      
+      if (!title || !message) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      const newAnnouncement = {
+        id: Date.now().toString(),
+        title,
+        message,
+        priority,
+        createdAt: new Date().toISOString()
+      };
+      
+      announcements.push(newAnnouncement);
+      localStorage.setItem('announcements', JSON.stringify(announcements));
+      
+      closeAnnouncementModal();
+      loadAnnouncements();
+      alert('Announcement published successfully!');
+    }
+
+    function editAnnouncement(index) {
+      // For simplicity, we'll just allow deletion and recreation
+      alert('To edit this announcement, please delete it and create a new one with the correct details.');
+    }
+
+    function deleteAnnouncement(index) {
+      if (confirm('Are you sure you want to delete this announcement?')) {
+        announcements.splice(index, 1);
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+        loadAnnouncements();
+        alert('Announcement deleted successfully!');
+      }
+    }
+
+    // Existing functions from previous code
     function approveApplication(appId) {
       if (confirm('Approve this application?')) {
         const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
@@ -1071,23 +1240,6 @@
       
       if (app) {
         alert(`Application Details:\n\nName: ${app.fullName}\nEmail: ${app.email}\nPhone: ${app.phone}\nStatus: ${app.status || 'Pending'}\nSubmitted: ${new Date(app.submittedAt).toLocaleString()}`);
-      }
-    }
-
-    function viewUserDetails(userId) {
-      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      const user = applications.find(app => app.id === userId);
-      
-      if (user) {
-        alert(`User Details:\n\nName: ${user.fullName}\nEmail: ${user.email}\nPhone: ${user.phone}\nStatus: Approved\nJoined: ${new Date(user.reviewedAt || user.submittedAt).toLocaleString()}`);
-      }
-    }
-
-    function deactivateUser(userId) {
-      if (confirm('Deactivate this user? They will no longer have access to the platform.')) {
-        // In a real app, you would update the user's status in the database
-        alert('User deactivated successfully!');
-        loadUsers();
       }
     }
 
@@ -1161,23 +1313,10 @@
       window.location.href = 'index.html';
     }
 
-    // Close notification panel when clicking outside
-    document.addEventListener('click', function(event) {
-      const notificationPanel = document.getElementById('notificationPanel');
-      const notificationBadge = document.querySelector('.notification-badge');
-      
-      if (!notificationBadge.contains(event.target) && notificationPanel.classList.contains('active')) {
-        notificationPanel.classList.remove('active');
-      }
-    });
-
     // Initialize dashboard when page loads
     document.addEventListener('DOMContentLoaded', function() {
       checkAdminAuth();
       loadDashboardData();
-      
-      // Set up mobile menu
-      document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
       
       // Auto-refresh every 30 seconds
       setInterval(loadDashboardData, 30000);
