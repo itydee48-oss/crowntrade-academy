@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Join Referral Program - Crown Trade Academy</title>
-
+  <title>Apply - Crown Trade Academy</title>
   <style>
     :root {
       --dark-brown: #3A2D28;
@@ -32,277 +31,311 @@
     }
     .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
     .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .nav-links{ display:flex; gap:2rem; list-style:none; }
-    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
-    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+    .premium-container{ max-width:600px; margin:0 auto; padding:0 20px; }
     .premium-card{
       background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
       border:1px solid var(--light-taupe);
       border-radius:20px;
       padding:2.5rem;
-      margin:1.5rem 0;
+      margin:2rem 0;
       position:relative;
       overflow:hidden;
       box-shadow:0 15px 40px rgba(58,45,40,0.08);
     }
     .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
       background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    .registration-steps{ display:flex; justify-content:center; gap:1rem; margin-bottom:1.5rem; }
-    .step{ text-align:center; padding:1rem; border-radius:10px; background:var(--off-white); flex:1; max-width:150px; }
-    .step.active{ background:var(--warm-beige); color:var(--dark-brown); font-weight:600; }
-    .step-number{ width:30px; height:30px; border-radius:50%; background:var(--muted-rose); color:white; display:flex; align-items:center; justify-content:center; margin:0 auto .5rem; }
-    .form-group{ margin-bottom:1.25rem; }
-    .form-label{ display:block; margin-bottom:.5rem; font-weight:600; color:var(--dark-brown); }
-    .form-control{ width:100%; padding:1rem; border:2px solid var(--light-taupe); border-radius:8px; background:var(--off-white); color:var(--dark-brown); font-size:1rem; font-family:inherit; }
     .btn-premium{
       background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
       color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer; width:100%;
     }
-    .meta-note{ color:var(--muted-rose); font-size:0.9rem; text-align:center; margin-top:1rem; }
-    .file-hint{ font-size:0.9rem; color:var(--muted-rose); margin-top:.4rem; }
-    .upload-progress { height:8px; background:var(--off-white); border-radius:8px; overflow:hidden; margin-top:.6rem; display:none; }
-    .upload-progress > i { display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--warm-beige),var(--gold-accent)); transition:width .2s ease; }
-    .small { font-size:0.85rem; color:var(--muted-rose); }
-    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
-    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark-brown);
+    }
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--light-taupe);
+      border-radius: 8px;
+      background: white;
+      color: var(--dark-brown);
+      font-size: 1rem;
+    }
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .step-indicator::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--light-taupe);
+      z-index: 1;
+    }
+    .step {
+      background: var(--off-white);
+      border: 2px solid var(--light-taupe);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+    }
+    .step.active {
+      background: var(--gold-accent);
+      border-color: var(--gold-accent);
+      color: var(--dark-brown);
+    }
+    .step.completed {
+      background: var(--muted-rose);
+      border-color: var(--muted-rose);
+      color: white;
+    }
+    .step-content {
+      display: none;
+    }
+    .step-content.active {
+      display: block;
+    }
+    .payment-instructions {
+      background: var(--off-white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--gold-accent);
+    }
   </style>
 </head>
 <body>
   <header class="premium-header">
     <nav class="premium-nav">
       <a href="index.html" class="logo">Crown Trade Academy</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.html">Client Login</a></li>
-      </ul>
     </nav>
   </header>
 
-  <section class="premium-container" style="padding:2rem 0; min-height:80vh;">
-    <div class="registration-steps" aria-hidden>
-      <div class="step active"><div class="step-number">1</div><div>Create Account</div></div>
-      <div class="step"><div class="step-number">2</div><div>Pay KES 500</div></div>
-      <div class="step"><div class="step-number">3</div><div>Wait Approval</div></div>
-      <div class="step"><div class="step-number">4</div><div>Start Earning</div></div>
-    </div>
-
-    <div class="premium-card" style="max-width:600px;margin:0 auto;">
-      <div style="text-align:center;margin-bottom:1.6rem;">
-        <h1 style="color:var(--dark-brown);margin-bottom:.4rem;">Join Referral Program</h1>
-        <p style="color:var(--muted-rose);">Register, upload payment proof, and submit for admin approval.</p>
+  <section class="premium-container" style="padding:2rem 0;">
+    <div class="premium-card">
+      <h1 style="color:var(--dark-brown); margin-bottom:1rem; text-align:center;">Apply for Referral Program</h1>
+      <p style="color:var(--muted-rose); text-align:center; margin-bottom:2rem;">Complete your application in 3 simple steps</p>
+      
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step active">1</div>
+        <div class="step">2</div>
+        <div class="step">3</div>
       </div>
 
-      <!-- === Referral Form === -->
-      <form id="referralRegisterForm" enctype="multipart/form-data" novalidate>
-        <div class="form-group">
-          <label class="form-label" for="fullName">Full Name</label>
-          <input id="fullName" class="form-control" type="text" required placeholder="Your full name">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="email">Email Address</label>
-          <input id="email" class="form-control" type="email" required placeholder="you@example.com">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="phone">Phone Number</label>
-          <input id="phone" class="form-control" type="tel" required placeholder="+254 7XX XXX XXX">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="password">Create Password</label>
-          <input id="password" class="form-control" type="password" required minlength="6" placeholder="Minimum 6 characters">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="confirmPassword">Confirm Password</label>
-          <input id="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
-        </div>
-
-        <!-- === Payment Proof Section === -->
-        <div class="form-group">
-          <label class="form-label" for="proof">Upload Payment Proof (MPesa Screenshot)</label>
-          <input id="proof" class="form-control" type="file" accept="image/*" required>
-          <div class="file-hint small">Max 6 MB. JPG or PNG screenshot of MPesa payment.</div>
-
-          <div class="upload-progress" id="uploadProgress">
-            <i id="uploadBar"></i>
+      <!-- Step 1: Personal Information -->
+      <div id="step1" class="step-content active">
+        <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Personal Information</h3>
+        
+        <form id="applicationForm">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="fullName" class="form-control" required>
           </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="phone" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Referral Code (Optional)</label>
+            <input type="text" id="referralCode" class="form-control">
+          </div>
+          
+          <button type="button" class="btn-premium" onclick="nextStep(2)">Continue to Payment</button>
+        </form>
+      </div>
+
+      <!-- Step 2: Payment -->
+      <div id="step2" class="step-content">
+        <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Payment Details</h3>
+        
+        <div class="payment-instructions">
+          <h4 style="color:var(--dark-brown); margin-bottom:1rem;">Payment Instructions</h4>
+          <p style="color:var(--muted-rose); margin-bottom:0.5rem;">1. Send KES 500 to Till Number: <strong>123456</strong></p>
+          <p style="color:var(--muted-rose); margin-bottom:0.5rem;">2. Use your name as the reference</p>
+          <p style="color:var(--muted-rose); margin-bottom:1rem;">3. Upload the payment screenshot below</p>
         </div>
 
-        <!-- I Have Paid Confirmation -->
         <div class="form-group">
-          <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="paidConfirmation" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
-            <span style="color:var(--dark-brown); font-size:.95rem;">
-              ✅ I confirm I have paid KES 500 registration fee via MPesa
-            </span>
-          </label>
+          <label class="form-label">Upload Payment Proof (Screenshot)</label>
+          <input type="file" id="paymentProof" class="form-control" accept="image/*" required>
+          <small style="color:var(--muted-rose);">Upload a clear screenshot of your MPesa payment confirmation</small>
         </div>
-
-        <div class="form-group" style="margin-top:1rem;">
-          <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
-            <span style="color:var(--dark-brown); font-size:.95rem;">
-              I agree to the terms and understand I'll earn KES 300 per successful referral
-            </span>
-          </label>
+        
+        <div style="display:flex; gap:1rem;">
+          <button type="button" class="btn-premium" style="background:var(--muted-rose);" onclick="prevStep(1)">Back</button>
+          <button type="button" class="btn-premium" onclick="nextStep(3)">Continue to Review</button>
         </div>
+      </div>
 
-        <button type="submit" class="btn-premium" id="submitBtn">Submit for Approval →</button>
-        <p class="meta-note">Already have an account? <a href="login.html" style="color:var(--warm-beige);">Login here</a></p>
-      </form>
+      <!-- Step 3: Review & Submit -->
+      <div id="step3" class="step-content">
+        <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Review & Submit</h3>
+        
+        <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; margin-bottom:1.5rem;">
+          <h4 style="color:var(--dark-brown); margin-bottom:1rem;">Application Summary</h4>
+          <div id="applicationSummary"></div>
+        </div>
+        
+        <div style="display:flex; gap:1rem;">
+          <button type="button" class="btn-premium" style="background:var(--muted-rose);" onclick="prevStep(2)">Back</button>
+          <button type="button" class="btn-premium" onclick="submitApplication()">Submit Application</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer class="premium-footer">
-    <div class="footer-content">
-      <div><h3>Referral Program</h3><p>Start earning today</p><p>Email: crowntradeacademy@gmail.com</p></div>
-      <div><h3>Earnings</h3><p>KES 300 per referral</p><p>Minimum withdrawal: KES 100</p></div>
-    </div>
-    <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
-  </footer>
-
-  <!-- === Google Sheets as Database === -->
   <script>
-    // Google Apps Script Web App URL - You'll create this next
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+    let currentStep = 1;
+    let applicationData = {
+      fullName: '',
+      email: '',
+      phone: '',
+      referralCode: '',
+      proofBase64: ''
+    };
 
-    document.getElementById('referralRegisterForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const fullName = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim().toLowerCase();
-      const phone = document.getElementById('phone').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      const paidConfirmation = document.getElementById('paidConfirmation').checked;
-      const agree = document.getElementById('agree').checked;
-      const file = document.getElementById('proof').files[0];
-
-      // Validation
-      if (!fullName || !email || !phone || !password || !confirmPassword) {
-        alert('Please fill out all required fields.');
-        return;
+    function nextStep(step) {
+      // Validate current step
+      if (step === 2 && !validateStep1()) return;
+      if (step === 3 && !validateStep2()) return;
+      
+      // Hide current step
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      document.querySelectorAll('.step')[currentStep - 1].classList.remove('active');
+      
+      // Show next step
+      document.getElementById(`step${step}`).classList.add('active');
+      document.querySelectorAll('.step')[step - 1].classList.add('active');
+      
+      // Update step indicators
+      for (let i = 0; i < step - 1; i++) {
+        document.querySelectorAll('.step')[i].classList.add('completed');
       }
-      if (password !== confirmPassword) {
-        alert('Passwords do not match.');
-        return;
+      
+      currentStep = step;
+      
+      // Update summary for step 3
+      if (step === 3) {
+        updateApplicationSummary();
       }
-      if (password.length < 6) {
-        alert('Password must be at least 6 characters.');
-        return;
-      }
-      if (!paidConfirmation) {
-        alert('Please confirm that you have paid KES 500.');
-        return;
-      }
-      if (!agree) {
-        alert('You must agree to the terms to continue.');
-        return;
-      }
-      if (!file) {
-        alert('Please upload MPesa payment screenshot.');
-        return;
-      }
-      if (file.size > 6 * 1024 * 1024) {
-        alert('File too large. Max size is 6 MB.');
-        return;
-      }
-      if (!['image/jpeg','image/png','image/jpg'].includes(file.type)) {
-        alert('Please upload JPG or PNG image only.');
-        return;
-      }
-
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-
-      try {
-        // Convert image to base64 for storage
-        const proofBase64 = await fileToBase64(file);
-        
-        // Create application data
-        const applicationData = {
-          fullName: fullName,
-          email: email,
-          phone: phone,
-          password: btoa(password), // Simple encoding (not secure but works)
-          proofBase64: proofBase64,
-          proofType: file.type,
-          paidConfirmation: paidConfirmation,
-          agree: agree,
-          timestamp: new Date().toISOString(),
-          status: 'pending'
-        };
-
-        // Save to localStorage as backup
-        saveToLocalStorage(applicationData);
-        
-        // Try to save to Google Sheets
-        await saveToGoogleSheets(applicationData);
-
-        // Store user session
-        localStorage.setItem('user_email', email);
-        localStorage.setItem('user_name', fullName);
-        localStorage.setItem('application_status', 'pending');
-
-        alert('✅ Registration submitted successfully! Awaiting admin approval.');
-        window.location.href = 'referral-pending.html';
-
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Registration submitted (offline mode). Admin will review soon.');
-        
-        // Still redirect to pending page
-        localStorage.setItem('user_email', email);
-        localStorage.setItem('user_name', fullName);
-        localStorage.setItem('application_status', 'pending');
-        window.location.href = 'referral-pending.html';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit for Approval →';
-      }
-    });
-
-    // Helper function to convert file to base64
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
     }
 
-    // Save to localStorage as backup
-    function saveToLocalStorage(data) {
-      let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      applications.push(data);
+    function prevStep(step) {
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      document.querySelectorAll('.step')[currentStep - 1].classList.remove('active');
+      
+      document.getElementById(`step${step}`).classList.add('active');
+      document.querySelectorAll('.step')[step - 1].classList.add('active');
+      
+      currentStep = step;
+    }
+
+    function validateStep1() {
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      
+      if (!fullName || !email || !phone) {
+        alert('Please fill in all required fields');
+        return false;
+      }
+      
+      // Save data
+      applicationData.fullName = fullName;
+      applicationData.email = email;
+      applicationData.phone = phone;
+      applicationData.referralCode = document.getElementById('referralCode').value;
+      
+      return true;
+    }
+
+    function validateStep2() {
+      const fileInput = document.getElementById('paymentProof');
+      
+      if (!fileInput.files.length) {
+        alert('Please upload your payment proof screenshot');
+        return false;
+      }
+      
+      // Convert image to base64
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        applicationData.proofBase64 = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      
+      return true;
+    }
+
+    function updateApplicationSummary() {
+      const summary = document.getElementById('applicationSummary');
+      summary.innerHTML = `
+        <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Name:</strong> ${applicationData.fullName}</p>
+        <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Email:</strong> ${applicationData.email}</p>
+        <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Phone:</strong> ${applicationData.phone}</p>
+        <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Referral Code:</strong> ${applicationData.referralCode || 'None'}</p>
+      `;
+    }
+
+    function submitApplication() {
+      // Create application object
+      const application = {
+        id: Date.now().toString(),
+        ...applicationData,
+        status: 'pending',
+        submittedAt: new Date().toISOString()
+      };
+      
+      // Save to localStorage
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      applications.push(application);
       localStorage.setItem('referral_applications', JSON.stringify(applications));
-    }
-
-    // Save to Google Sheets via Apps Script
-    async function saveToGoogleSheets(data) {
-      // This will work after you set up the Google Apps Script
-      try {
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-        
-        if (!response.ok) {
-          throw new Error('Google Sheets save failed');
-        }
-        
-        return await response.json();
-      } catch (error) {
-        console.log('Google Sheets unavailable, using localStorage only');
-        throw error;
-      }
+      
+      // Create user account
+      const user = {
+        id: Date.now().toString(),
+        fullName: applicationData.fullName,
+        email: applicationData.email,
+        phone: applicationData.phone,
+        status: 'pending',
+        joinedAt: new Date().toISOString(),
+        balance: 0,
+        referrals: []
+      };
+      
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      users.push(user);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      alert('Application submitted successfully! You will be redirected to the waiting page.');
+      
+      // Redirect to waiting page
+      setTimeout(() => {
+        window.location.href = 'waiting.html';
+      }, 2000);
     }
   </script>
 </body>
