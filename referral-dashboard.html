@@ -6,107 +6,128 @@
 <title>Referral Dashboard - Crown Trade Academy</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; }
-  .premium-header { background:#3a2d28; padding:1rem; }
-  .premium-header .premium-nav { display:flex; justify-content:space-between; align-items:center; }
-  .premium-header .premium-nav a.logo { color:#d4af37; font-weight:bold; text-decoration:none; font-size:1.2rem; }
-  .premium-card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:2rem; max-width:900px; margin:3rem auto; }
-  h1,h3,h4 { color:#3a2d28; }
-  .summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem; }
-  .summary-item { background:#f5f5f5; padding:1rem; border-radius:8px; text-align:center; }
-  .referral-list { margin-top:2rem; }
-  table { width:100%; border-collapse:collapse; margin-top:1rem; }
-  th,td { padding:0.8rem; text-align:left; border-bottom:1px solid #ccc; }
-  th { background:#f5f5f5; }
-  .status-pending { color:#ffc107; font-weight:bold; }
-  .status-approved { color:#28a745; font-weight:bold; }
-  .btn-copy { padding:0.4rem 0.8rem; background:#3a2d28; color:#d4af37; border:none; border-radius:6px; cursor:pointer; margin-left:0.5rem; }
+  body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;}
+  .premium-header{background:#3a2d28;padding:1rem;}
+  .premium-header .premium-nav{display:flex;justify-content:space-between;align-items:center;}
+  .premium-header .premium-nav a.logo{color:#d4af37;font-weight:bold;text-decoration:none;font-size:1.2rem;}
+  .premium-container{max-width:900px;margin:3rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  .card{background:#fff;border:1px solid #ccc;padding:1rem;border-radius:8px;margin-bottom:1rem;}
+  .btn-withdraw{background:#28a745;color:#fff;padding:0.5rem 1rem;border:none;border-radius:6px;cursor:pointer;}
+  input{padding:0.5rem;width:100%;border-radius:6px;border:1px solid #ccc;}
 </style>
 </head>
 <body>
 
 <header class="premium-header">
   <nav class="premium-nav">
-    <a href="referral-dashboard.html" class="logo">Referral Dashboard</a>
+    <a href="referral-dashboard.html" class="logo">Crown Trade Academy</a>
   </nav>
 </header>
 
-<section>
-  <div class="premium-card">
-    <h1>Welcome, <span id="clientName">-</span></h1>
+<section class="premium-container">
+  <h1>Referral Dashboard</h1>
+  
+  <div class="card">
+    <h3>Your Unique Referral Link</h3>
+    <input type="text" id="referralLink" readonly>
+    <button onclick="copyLink()" class="btn-withdraw" style="margin-top:0.5rem;">Copy Link</button>
+  </div>
 
-    <div class="summary-grid">
-      <div class="summary-item">
-        <h4>Total Earnings</h4>
-        <p>KES <span id="totalEarnings">0</span></p>
-      </div>
-      <div class="summary-item">
-        <h4>Available Balance</h4>
-        <p>KES <span id="pendingEarnings">0</span></p>
-      </div>
-      <div class="summary-item" style="grid-column: 1 / -1;">
-        <h4>Your Referral Link</h4>
-        <p><span id="referralLink">-</span> 
-          <button class="btn-copy" onclick="copyReferralLink()">Copy</button>
-        </p>
-      </div>
-    </div>
+  <div class="card">
+    <h3>Referral Earnings</h3>
+    <p><strong>Balance:</strong> KES <span id="balance">0</span></p>
+    <p><strong>Total Earnings:</strong> KES <span id="totalEarnings">0</span></p>
+    <p><strong>Pending Earnings:</strong> KES <span id="pendingEarnings">0</span></p>
+    <button class="btn-withdraw" onclick="requestWithdrawal()">Request Withdrawal</button>
+  </div>
 
-    <div class="referral-list">
-      <h3>Referred Users</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="referralsTable">
-          <!-- Populated dynamically -->
-        </tbody>
-      </table>
-    </div>
+  <div class="card">
+    <h3>Referrals</h3>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Earnings</th>
+        </tr>
+      </thead>
+      <tbody id="referralsTable"></tbody>
+    </table>
   </div>
 </section>
 
 <script>
-const currentUserEmail = localStorage.getItem('current_user_email');
-const users = JSON.parse(localStorage.getItem('users') || '[]');
-const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+let currentUserEmail = localStorage.getItem('current_user_email');
+let users = JSON.parse(localStorage.getItem('users') || '[]');
+let currentUser = users.find(u => u.email === currentUserEmail);
 
-const currentUser = users.find(u=>u.email===currentUserEmail);
+if(!currentUser){
+  alert('User not found. Redirecting to login.');
+  window.location.href='login.html';
+}
 
-if(currentUser){
-  document.getElementById('clientName').textContent = currentUser.fullName;
+function updateDashboard(){
+  // Unique referral link
+  const link = window.location.origin + '/referral-register.html?ref=' + currentUser.email;
+  document.getElementById('referralLink').value = link;
+
+  // Earnings
+  document.getElementById('balance').textContent = currentUser.balance || 0;
   document.getElementById('totalEarnings').textContent = currentUser.totalEarnings || 0;
   document.getElementById('pendingEarnings').textContent = currentUser.pendingEarnings || 0;
 
-  const referralLink = `${window.location.origin}/referral-register.html?ref=${currentUser.email}`;
-  document.getElementById('referralLink').textContent = referralLink;
+  // Referrals table
+  const referrals = users.filter(u => u.referralCodeUsed === currentUser.email);
+  const tbody = document.getElementById('referralsTable');
+  tbody.innerHTML = '';
+  referrals.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.fullName}</td>
+      <td>${r.email}</td>
+      <td>${r.status}</td>
+      <td>${r.status==='approved'? 300 : 0}</td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
-// Populate referred users
-const referralsTable = document.getElementById('referralsTable');
-const referredUsers = applications.filter(app=>app.referralCode===currentUserEmail);
-referredUsers.forEach(app=>{
-  const tr = document.createElement('tr');
-
-  const nameTd = document.createElement('td'); nameTd.textContent = app.fullName; tr.appendChild(nameTd);
-  const emailTd = document.createElement('td'); emailTd.textContent = app.email; tr.appendChild(emailTd);
-
-  const statusTd = document.createElement('td');
-  statusTd.textContent = app.status;
-  statusTd.className = app.status==='approved'?'status-approved':app.status==='rejected'?'status-rejected':'status-pending';
-  tr.appendChild(statusTd);
-
-  referralsTable.appendChild(tr);
-});
-
-function copyReferralLink(){
-  const link = document.getElementById('referralLink').textContent;
-  navigator.clipboard.writeText(link).then(()=>alert('Referral link copied!'));
+function copyLink(){
+  const linkInput = document.getElementById('referralLink');
+  linkInput.select();
+  linkInput.setSelectionRange(0, 99999);
+  document.execCommand('copy');
+  alert('Referral link copied!');
 }
+
+function requestWithdrawal(){
+  const amount = parseInt(currentUser.balance || 0);
+  if(amount <= 0){
+    alert('No balance available for withdrawal.');
+    return;
+  }
+
+  // Save withdrawal request
+  let withdrawals = JSON.parse(localStorage.getItem('withdrawals')||'[]');
+  withdrawals.push({
+    userEmail: currentUser.email,
+    amount: amount,
+    status: 'pending',
+    requestedAt: new Date().toISOString()
+  });
+  localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+
+  // Reset user balance
+  currentUser.balance = 0;
+  users = users.map(u => u.email === currentUser.email ? currentUser : u);
+  localStorage.setItem('users', JSON.stringify(users));
+
+  alert('Withdrawal request submitted!');
+  updateDashboard();
+}
+
+updateDashboard();
 </script>
 
 </body>
