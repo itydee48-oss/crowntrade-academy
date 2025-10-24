@@ -3,159 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Referral Approvals - Crown Trade Academy</title>
+<title>Admin - Referral Approvals</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; }
-  .premium-header { background:#3a2d28; padding:1rem; }
-  .premium-header .premium-nav { display:flex; justify-content:space-between; align-items:center; }
-  .premium-header .premium-nav a.logo { color:#d4af37; font-weight:bold; text-decoration:none; font-size:1.2rem; }
-  .premium-card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:2rem; max-width:1000px; margin:3rem auto; }
-  h1,h3,h4 { color:#3a2d28; }
-  table { width:100%; border-collapse:collapse; margin-top:1rem; }
-  th,td { padding:0.8rem; text-align:left; border-bottom:1px solid #ccc; }
-  th { background:#f5f5f5; }
-  .status-pending { color:#ffc107; font-weight:bold; }
-  .status-approved { color:#28a745; font-weight:bold; }
-  .status-rejected { color:#dc3545; font-weight:bold; }
-  .btn-approve, .btn-reject { padding:0.4rem 0.8rem; border:none; border-radius:6px; cursor:pointer; font-weight:bold; margin-right:0.5rem; }
-  .btn-approve { background:#28a745; color:#fff; }
-  .btn-reject { background:#dc3545; color:#fff; }
-  .btn-preview { padding:0.4rem 0.8rem; background:#3a2d28; color:#d4af37; border:none; border-radius:6px; cursor:pointer; }
+  body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;}
+  .premium-header{background:#3a2d28;padding:1rem;}
+  .premium-header .premium-nav{display:flex;justify-content:space-between;align-items:center;}
+  .premium-header .premium-nav a.logo{color:#d4af37;font-weight:bold;text-decoration:none;font-size:1.2rem;}
+  .premium-container{max-width:1000px;margin:3rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  table{width:100%;border-collapse:collapse;}
+  th,td{padding:0.75rem;text-align:left;border-bottom:1px solid #ccc;}
+  th{background:#3a2d28;color:#d4af37;}
+  .btn-approve{background:#28a745;color:#fff;padding:0.3rem 0.7rem;border:none;border-radius:6px;cursor:pointer;margin-right:0.5rem;}
+  .btn-reject{background:#dc3545;color:#fff;padding:0.3rem 0.7rem;border:none;border-radius:6px;cursor:pointer;}
 </style>
 </head>
 <body>
 
 <header class="premium-header">
   <nav class="premium-nav">
-    <a href="admin-dashboard.html" class="logo">Admin Dashboard</a>
+    <a href="admin-dashboard.html" class="logo">Crown Trade Academy - Admin</a>
   </nav>
 </header>
 
-<section>
-  <div class="premium-card">
-    <h1>Referral Approvals</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Full Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Referral Code Used</th>
-          <th>Payment Proof</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="applicationsTable">
-        <!-- Populated dynamically -->
-      </tbody>
-    </table>
-  </div>
+<section class="premium-container">
+  <h1>Referral Approvals</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Applicant Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Referrer</th>
+        <th>Status</th>
+        <th>Applied At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="referralsTable"></tbody>
+  </table>
 </section>
 
 <script>
-let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+let referrals = JSON.parse(localStorage.getItem('referral_applications') || '[]');
 let users = JSON.parse(localStorage.getItem('users') || '[]');
 
-function renderApplications(){
-  const tbody = document.getElementById('applicationsTable');
-  tbody.innerHTML='';
-  
-  applications.forEach((app, index)=>{
-    const tr=document.createElement('tr');
-    
-    // Full Name
-    const nameTd=document.createElement('td'); nameTd.textContent=app.fullName;
-    tr.appendChild(nameTd);
-
-    // Email
-    const emailTd=document.createElement('td'); emailTd.textContent=app.email;
-    tr.appendChild(emailTd);
-
-    // Phone
-    const phoneTd=document.createElement('td'); phoneTd.textContent=app.phone;
-    tr.appendChild(phoneTd);
-
-    // Referral Code
-    const refTd=document.createElement('td'); refTd.textContent=app.referralCode || '-';
-    tr.appendChild(refTd);
-
-    // Payment Proof
-    const proofTd=document.createElement('td');
-    if(app.proofBase64){
-      const btnPreview=document.createElement('button');
-      btnPreview.className='btn-preview';
-      btnPreview.textContent='View';
-      btnPreview.onclick=()=>{ 
-        const newWindow=window.open();
-        newWindow.document.write(`
-          <html><head><title>Payment Proof</title></head>
-          <body style="margin:0; padding:20px; text-align:center; background:#f5f5f5;">
-          <h2>${app.fullName} Payment Proof</h2>
-          <img src="${app.proofBase64}" style="max-width:90%; max-height:80vh; border-radius:10px;" />
-          </body></html>
-        `);
-      };
-      proofTd.appendChild(btnPreview);
-    } else { proofTd.textContent='No proof'; }
-    tr.appendChild(proofTd);
-
-    // Status
-    const statusTd=document.createElement('td');
-    statusTd.textContent=app.status;
-    statusTd.className=app.status==='approved'?'status-approved':app.status==='rejected'?'status-rejected':'status-pending';
-    tr.appendChild(statusTd);
-
-    // Actions
-    const actionsTd=document.createElement('td');
-    if(app.status==='pending'){
-      const approveBtn=document.createElement('button');
-      approveBtn.className='btn-approve';
-      approveBtn.textContent='Approve';
-      approveBtn.onclick=()=>approveApplication(index);
-
-      const rejectBtn=document.createElement('button');
-      rejectBtn.className='btn-reject';
-      rejectBtn.textContent='Reject';
-      rejectBtn.onclick=()=>rejectApplication(index);
-
-      actionsTd.appendChild(approveBtn);
-      actionsTd.appendChild(rejectBtn);
-    } else {
-      actionsTd.textContent='-';
-    }
-    tr.appendChild(actionsTd);
-
+function updateTable(){
+  const tbody = document.getElementById('referralsTable');
+  tbody.innerHTML = '';
+  referrals.forEach((r, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.fullName}</td>
+      <td>${r.email}</td>
+      <td>${r.phone}</td>
+      <td>${r.referralCode || 'None'}</td>
+      <td>${r.status}</td>
+      <td>${new Date(r.submittedAt).toLocaleString()}</td>
+      <td>
+        ${r.status==='pending'? 
+          `<button class="btn-approve" onclick="approveReferral(${index})">Approve</button>
+           <button class="btn-reject" onclick="rejectReferral(${index})">Reject</button>` : ''
+        }
+      </td>
+    `;
     tbody.appendChild(tr);
   });
 }
 
-function approveApplication(index){
-  const app = applications[index];
-  app.status='approved';
+function approveReferral(index){
+  const referral = referrals[index];
+  referral.status = 'approved';
 
-  // Update referrer's earnings
-  if(app.referralCode){
-    const referrer = users.find(u=>u.email===app.referralCode);
+  // Update user
+  const user = users.find(u => u.email === referral.email);
+  if(user){
+    user.status = 'approved';
+    user.approvedAt = new Date().toISOString();
+  }
+
+  // Credit referrer
+  if(referral.referralCode){
+    const referrer = users.find(u => u.userReferralCode === referral.referralCode && u.status==='approved');
     if(referrer){
-      referrer.pendingEarnings = (referrer.pendingEarnings || 0) + 300;
-      referrer.totalEarnings = (referrer.totalEarnings || 0) + 300;
-      localStorage.setItem('users', JSON.stringify(users));
+      referrer.balance += 300; // Referrer bonus
+      users.find(u => u.email === 'business@cta.com').balance += 200; // Business receives 200 KES (ensure a business account exists)
     }
   }
 
-  localStorage.setItem('referral_applications', JSON.stringify(applications));
-  renderApplications();
+  localStorage.setItem('referral_applications', JSON.stringify(referrals));
+  localStorage.setItem('users', JSON.stringify(users));
+  updateTable();
+  alert('Referral approved and bonuses applied!');
 }
 
-function rejectApplication(index){
-  applications[index].status='rejected';
-  localStorage.setItem('referral_applications', JSON.stringify(applications));
-  renderApplications();
+function rejectReferral(index){
+  const referral = referrals[index];
+  referral.status = 'rejected';
+
+  const user = users.find(u => u.email === referral.email);
+  if(user){
+    user.status = 'rejected';
+  }
+
+  localStorage.setItem('referral_applications', JSON.stringify(referrals));
+  localStorage.setItem('users', JSON.stringify(users));
+  updateTable();
+  alert('Referral rejected.');
 }
 
-renderApplications();
+updateTable();
 </script>
 
 </body>
