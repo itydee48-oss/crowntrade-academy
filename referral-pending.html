@@ -5,73 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Awaiting Approval - Crown Trade Academy</title>
 
-  <!-- === Your Luxury Nude Theme === -->
   <style>
-    :root {
-      --dark-brown: #3A2D28;
-      --muted-rose: #A48374;
-      --warm-beige: #CBAD8D;
-      --light-taupe: #D1C7BD;
-      --off-white: #EBE3DB;
-      --cream-white: #F1EDE6;
-      --gold-accent: #D4AF37;
-      --success-green: #28a745;
-      --warning-orange: #ffc107;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-      color: var(--dark-brown);
-      line-height:1.6;
-      min-height:100vh;
-    }
-    .premium-header{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-      color: var(--cream-white);
-      padding:1.2rem 0;
-      box-shadow:0 4px 20px rgba(58,45,40,0.1);
-      border-bottom:3px solid var(--gold-accent);
-    }
-    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
-    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .nav-links{ display:flex; gap:2rem; list-style:none; }
-    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
-    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
-    .premium-card{
-      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-      border:1px solid var(--light-taupe);
-      border-radius:20px;
-      padding:2.5rem;
-      margin:1.5rem 0;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 15px 40px rgba(58,45,40,0.08);
-    }
-    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
-      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    .btn-premium{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer; width:100%;
-    }
-    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
-    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
-    
-    /* Loading Animation */
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid var(--light-taupe);
-      border-top: 4px solid var(--gold-accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1.5rem;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
+    /* Your existing styles here */
     .status-badge {
       display: inline-block;
       padding: 0.5rem 1rem;
@@ -79,21 +14,13 @@
       font-weight: 600;
       margin: 0.5rem 0;
     }
-    .status-pending { background: var(--warning-orange); color: var(--dark-brown); }
-    .status-approved { background: var(--success-green); color: white; }
+    .status-pending { background: #ffc107; color: #3A2D28; }
+    .status-approved { background: #28a745; color: white; }
     .status-rejected { background: #dc3545; color: white; }
   </style>
 </head>
 <body>
-  <header class="premium-header">
-    <nav class="premium-nav">
-      <a href="index.html" class="logo">Crown Trade Academy</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="referral-register.html">Join Program</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- Your existing header and navigation -->
 
   <section class="premium-container" style="padding:2rem 0; min-height:80vh;">
     <div class="premium-card" style="max-width:600px;margin:0 auto; text-align:center;">
@@ -102,10 +29,8 @@
         <p style="color:var(--muted-rose);">Your referral program application is under review</p>
       </div>
 
-      <div class="loading-spinner"></div>
-      
       <div id="statusContent">
-        <div class="status-badge status-pending" id="statusBadge">Pending Approval</div>
+        <div class="status-badge status-pending">Pending Approval</div>
         <p style="color:var(--dark-brown); margin:1rem 0;">
           We are reviewing your application and payment proof. You will receive an email notification once approved.
         </p>
@@ -121,122 +46,42 @@
         </div>
       </div>
 
-      <div id="approvedContent" style="display:none;">
-        <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
-        <div class="status-badge status-approved">Approved!</div>
-        <p style="color:var(--dark-brown); margin:1.5rem 0;">
-          Congratulations! Your application has been approved. You can now access your dashboard and start earning.
-        </p>
-        <button id="goToDashboard" class="btn-premium">Go to Dashboard</button>
-      </div>
-
-      <div id="rejectedContent" style="display:none;">
-        <div style="font-size:4rem; margin-bottom:1rem;">❌</div>
-        <div class="status-badge status-rejected">Application Rejected</div>
-        <p style="color:var(--dark-brown); margin:1.5rem 0;" id="rejectionReason">
-          Your application was not approved. Please check your email for details.
-        </p>
-        <button onclick="window.location.href='referral-register.html'" class="btn-premium">Apply Again</button>
-      </div>
-
       <p style="color:var(--muted-rose); margin-top:2rem; font-size:0.9rem;">
-        This page will automatically update when your status changes.<br>
+        This page will check for status updates automatically.<br>
         You will also receive an email notification.
       </p>
     </div>
   </section>
 
-  <footer class="premium-footer">
-    <div class="footer-content">
-      <div><h3>Referral Program</h3><p>Start earning today</p><p>Email: crowntradeacademy@gmail.com</p></div>
-      <div><h3>Support</h3><p>Approval within 24 hours</p><p>Contact for questions</p></div>
-    </div>
-    <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
-  </footer>
+  <!-- Your existing footer -->
 
-  <!-- === Firebase Real-time Status Check === -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, onSnapshot, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
-      authDomain: "crowntradeacademy-67be1.firebaseapp.com",
-      projectId: "crowntradeacademy-67be1",
-      storageBucket: "crowntradeacademy-67be1.firebasestorage.app",
-      messagingSenderId: "943453710285",
-      appId: "1:943453710285:web:7f122e722f03f3854d4684",
-      measurementId: "G-7XESVW5YWL"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // Check authentication and application status
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = 'referral-register.html';
-        return;
-      }
-
-      // Real-time listener for application status
-      const q = query(
-        collection(db, 'referralApplications'),
-        where('uid', '==', user.uid),
-        orderBy('registeredAt', 'desc'),
-        limit(1)
-      );
-
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        if (snapshot.empty) {
-          console.log('No application found');
-          return;
-        }
-
-        const application = snapshot.docs[0].data();
-        const status = application.status;
-        
-        const statusContent = document.getElementById('statusContent');
-        const approvedContent = document.getElementById('approvedContent');
-        const rejectedContent = document.getElementById('rejectedContent');
-        const statusBadge = document.getElementById('statusBadge');
-
-        // Hide all first
-        statusContent.style.display = 'none';
-        approvedContent.style.display = 'none';
-        rejectedContent.style.display = 'none';
-
-        if (status === 'approved') {
-          approvedContent.style.display = 'block';
-          // Auto-redirect to dashboard after 3 seconds
-          setTimeout(() => {
+  <script>
+    // Check application status every 10 seconds
+    function checkApplicationStatus() {
+      fetch('check-status.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'approved') {
             window.location.href = 'referral-dashboard.html';
-          }, 3000);
-        } else if (status === 'rejected') {
-          rejectedContent.style.display = 'block';
-          if (application.rejectionReason) {
-            document.getElementById('rejectionReason').textContent = application.rejectionReason;
+          } else if (data.status === 'rejected') {
+            document.getElementById('statusContent').innerHTML = `
+              <div style="font-size:4rem; margin-bottom:1rem;">❌</div>
+              <div class="status-badge status-rejected">Application Rejected</div>
+              <p style="color:var(--dark-brown); margin:1.5rem 0;">
+                ${data.reason || 'Your application was not approved. Please check your email for details.'}
+              </p>
+              <button onclick="window.location.href='referral-register.html'" class="btn-premium">Apply Again</button>
+            `;
           }
-        } else {
-          statusContent.style.display = 'block';
-          statusBadge.textContent = status === 'pending' ? 'Pending Approval' : status;
-        }
-      });
+        })
+        .catch(error => console.error('Error checking status:', error));
+    }
 
-      // Setup dashboard button
-      document.getElementById('goToDashboard').addEventListener('click', () => {
-        window.location.href = 'referral-dashboard.html';
-      });
-    });
-
-    // Auto-check every 30 seconds as backup
-    setInterval(() => {
-      location.reload();
-    }, 30000);
+    // Check status every 10 seconds
+    setInterval(checkApplicationStatus, 10000);
+    
+    // Check immediately on page load
+    checkApplicationStatus();
   </script>
 </body>
 </html>
