@@ -4,185 +4,59 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Application Pending - Crown Trade Academy</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --dark-brown: #3A2D28;
-      --muted-rose: #A48374;
-      --warm-beige: #CBAD8D;
-      --light-taupe: #D1C7BD;
-      --off-white: #EBE3DB;
-      --cream-white: #F1EDE6;
-      --gold-accent: #D4AF37;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-      color: var(--dark-brown);
-      line-height:1.6;
-      min-height:100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .premium-header{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-      color: var(--cream-white);
-      padding:1.2rem 0;
-      box-shadow:0 4px 20px rgba(58,45,40,0.1);
-      border-bottom:3px solid var(--gold-accent);
-    }
-    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
-    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .premium-container{ max-width:600px; margin:0 auto; padding:0 20px; flex:1; display:flex; align-items:center; }
-    .premium-card{
-      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-      border:1px solid var(--light-taupe);
-      border-radius:20px;
-      padding:3rem;
-      margin:2rem 0;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 15px 40px rgba(58,45,40,0.08);
-      text-align:center;
-    }
-    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
-      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    
-    .spinner {
-      border: 4px solid var(--light-taupe);
-      border-top: 4px solid var(--gold-accent);
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-      margin: 2rem auto;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .status-badge {
-      display: inline-block;
-      padding: 0.5rem 1.5rem;
-      border-radius: 20px;
-      font-size: 1rem;
-      font-weight: 600;
-      background: #ffc107;
-      color: var(--dark-brown);
-      margin: 1rem 0;
-    }
-    
-    .checkmark {
-      color: #28a745;
-      font-size: 4rem;
-      margin: 1rem 0;
-    }
-    
-    .countdown {
-      font-size: 0.9rem;
-      color: var(--muted-rose);
-      margin-top: 1rem;
-    }
+    :root{--dark-brown:#3A2D28;--muted-rose:#A48374;--off-white:#EBE3DB;--cream-white:#F1EDE6;--gold-accent:#D4AF37}
+    body{font-family:Segoe UI, Tahoma, Arial; margin:0; min-height:100vh; background:linear-gradient(135deg,var(--off-white),var(--cream-white)); color:var(--dark-brown); display:flex; flex-direction:column;}
+    .premium-header{background:linear-gradient(135deg,var(--dark-brown),#2A1F1A); color:#fff; padding:1rem 2rem; border-bottom:3px solid var(--gold-accent);}
+    .logo{color:var(--warm-beige); font-weight:700; text-decoration:none;}
+    .premium-container{max-width:700px;margin:3rem auto;padding:0 20px;}
+    .premium-card{background:linear-gradient(135deg,#fff,var(--cream-white)); border-radius:14px;padding:2rem;border:1px solid #e5ded6;box-shadow:0 20px 40px rgba(58,45,40,0.06);text-align:center}
+    .spinner{border:6px solid rgba(209,199,189,0.6); border-top:6px solid var(--gold-accent); border-radius:50%; width:80px;height:80px; margin:1rem auto; animation:spin 1s linear infinite; box-shadow:0 8px 30px rgba(212,175,55,0.12)}
+    @keyframes spin{100%{transform:rotate(360deg)}}
+    .status-badge{display:inline-block;padding:.5rem 1rem;border-radius:20px;font-weight:700;background:#ffc107;color:#3A2D28}
+    #countdown{color:var(--muted-rose); margin-top:1rem}
+    /* Loader */
+    #loader-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#000000 40%,#b8860b 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity .8s ease,visibility .8s ease;visibility:visible;opacity:1;}
+    #loader-spinner{width:90px;height:90px;border:4px solid rgba(255,215,0,0.3);border-top-color:#ffd700;border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 25px 5px rgba(255,215,0,0.3)}
+    #loader-text{margin-top:18px;color:#ffd700;font-weight:700}
+    body.loaded #loader-overlay{opacity:0;visibility:hidden}
   </style>
 </head>
 <body>
+  <div id="loader-overlay">
+    <div id="loader-spinner"></div>
+    <div id="loader-text">Crown Trade Loading...</div>
+  </div>
+
   <header class="premium-header">
-    <nav class="premium-nav">
-      <a href="index.html" class="logo">Crown Trade Academy</a>
-    </nav>
+    <a href="index.html" class="logo">Crown Trade Academy</a>
   </header>
 
-  <section class="premium-container">
+  <main class="premium-container">
     <div class="premium-card">
       <div class="spinner" id="loadingSpinner"></div>
-      <div class="checkmark" id="approvedCheckmark" style="display:none;">✅</div>
-      
-      <h1 style="color:var(--dark-brown); margin-bottom:1rem;" id="statusTitle">Application Under Review</h1>
-      
-      <div class="status-badge" id="statusBadge">PENDING APPROVAL</div>
-      
-      <p style="color:var(--muted-rose); margin-bottom:1.5rem;" id="statusMessage">
-        Thank you for applying to Crown Trade Academy! Your application is currently being reviewed by our team.
-      </p>
-      
-      <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; text-align:left; margin-bottom:2rem;">
-        <h4 style="color:var(--dark-brown); margin-bottom:1rem;">What happens next?</h4>
-        <ul style="color:var(--muted-rose); padding-left:1.5rem;">
-          <li>Our team reviews your application</li>
-          <li>We verify your payment details</li>
-          <li>You receive approval notification</li>
-          <li>Access to your dashboard is granted</li>
+      <div id="approvedCheckmark" style="display:none;font-size:48px;color:#28a745">✅</div>
+      <h1 id="statusTitle" style="margin:.5rem 0 0 0">Application Under Review</h1>
+      <div class="status-badge" id="statusBadge" style="margin-top:.6rem">PENDING APPROVAL</div>
+      <p id="statusMessage" style="color:var(--muted-rose); margin-top:1rem">Thank you — your application is being reviewed. This page will auto-check for approval.</p>
+      <div style="margin-top:1.4rem;border-radius:10px;background:var(--off-white);padding:1rem;text-align:left">
+        <h4 style="margin:0 0 .5rem 0">What happens next?</h4>
+        <ul style="margin:0;color:var(--muted-rose)">
+          <li>Our team verifies your payment</li>
+          <li>We review your submission</li>
+          <li>If approved you'll be redirected to your dashboard</li>
         </ul>
       </div>
-      
-      <div class="countdown" id="countdown">
-        Checking status... <span id="counter">5</span>s
-      </div>
+      <div id="countdown">Checking status... <span id="counter">5</span>s</div>
     </div>
-  </section>
+  </main>
 
+  <script src="script.js"></script>
   <script>
-    let checkCount = 0;
-    const maxChecks = 300; // 25 minutes at 5-second intervals
-    
-    function checkApplicationStatus() {
-        const currentUserEmail = localStorage.getItem('current_user_email');
-        
-        if (!currentUserEmail) {
-            console.log('No user email found in localStorage');
-            return;
-        }
-        
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const user = users.find(u => u.email === currentUserEmail);
-        
-        checkCount++;
-        document.getElementById('counter').textContent = Math.ceil((maxChecks - checkCount) * 5 / 60);
-        
-        if (user) {
-            if (user.status === 'approved') {
-                // User approved - show success and redirect
-                document.getElementById('loadingSpinner').style.display = 'none';
-                document.getElementById('approvedCheckmark').style.display = 'block';
-                document.getElementById('statusTitle').textContent = 'Application Approved!';
-                document.getElementById('statusBadge').textContent = 'APPROVED';
-                document.getElementById('statusBadge').style.background = '#28a745';
-                document.getElementById('statusBadge').style.color = 'white';
-                document.getElementById('statusMessage').textContent = 'Congratulations! Your application has been approved. You will be redirected to your dashboard shortly.';
-                document.getElementById('countdown').innerHTML = '🎉 Redirecting to dashboard...';
-                
-                setTimeout(() => {
-                    window.location.href = 'user-dashboard.html';
-                }, 3000);
-                return;
-            } else if (user.status === 'rejected') {
-                // User rejected
-                document.getElementById('loadingSpinner').style.display = 'none';
-                document.getElementById('statusTitle').textContent = 'Application Not Approved';
-                document.getElementById('statusBadge').textContent = 'REJECTED';
-                document.getElementById('statusBadge').style.background = '#dc3545';
-                document.getElementById('statusBadge').style.color = 'white';
-                document.getElementById('statusMessage').textContent = 'We regret to inform you that your application was not approved at this time.';
-                document.getElementById('countdown').innerHTML = 'Please contact support for more information.';
-                return;
-            }
-        }
-        
-        // Continue checking if not approved/rejected and within limit
-        if (checkCount < maxChecks) {
-            setTimeout(checkApplicationStatus, 5000);
-        } else {
-            // Timeout reached
-            document.getElementById('countdown').innerHTML = 'Status check timeout. Please refresh the page or contact support.';
-        }
-    }
-    
-    // Start checking status when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initial check after 2 seconds
-        setTimeout(checkApplicationStatus, 2000);
+    // Start polling (script.js exposes startPendingAutoCheck)
+    document.addEventListener('DOMContentLoaded', () => {
+      startPendingAutoCheck();
     });
   </script>
 </body>
