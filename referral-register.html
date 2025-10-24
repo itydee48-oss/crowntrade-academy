@@ -163,14 +163,14 @@
     <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
   </footer>
 
-  <!-- === Firebase + Form Logic === -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-    import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
+  <!-- === SIMPLE FIREBASE SETUP === -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
 
-    // Your Firebase configuration
+  <script>
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAa16xt5nZTIVNp_NRSZm388XT4hIVoF9k",
       authDomain: "crowntradeacademy-67be1.firebaseapp.com",
@@ -182,20 +182,14 @@
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-    const form = document.getElementById('referralRegisterForm');
-    const proofInput = document.getElementById('proof');
-    const uploadProgress = document.getElementById('uploadProgress');
-    const uploadBar = document.getElementById('uploadBar');
-    const submitBtn = document.getElementById('submitBtn');
+    console.log("Firebase initialized:", app);
 
-    const MAX_BYTES = 6 * 1024 * 1024;
-
-    form.addEventListener('submit', async (e) => {
+    document.getElementById('referralRegisterForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const fullName = document.getElementById('fullName').value.trim();
@@ -205,7 +199,7 @@
       const confirmPassword = document.getElementById('confirmPassword').value;
       const paidConfirmation = document.getElementById('paidConfirmation').checked;
       const agree = document.getElementById('agree').checked;
-      const file = proofInput.files[0];
+      const file = document.getElementById('proof').files[0];
 
       // Validation
       if (!fullName || !email || !phone || !password || !confirmPassword) {
@@ -232,89 +226,86 @@
         alert('Please upload MPesa payment screenshot.');
         return;
       }
-      if (file.size > MAX_BYTES) {
+      if (file.size > 6 * 1024 * 1024) {
         alert('File too large. Max size is 6 MB.');
         return;
       }
-      const allowed = ['image/jpeg','image/png','image/jpg'];
-      if (!allowed.includes(file.type)) {
+      if (!['image/jpeg','image/png','image/jpg'].includes(file.type)) {
         alert('Please upload JPG or PNG image only.');
         return;
       }
 
+      const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
 
       try {
+        console.log('Starting registration process...');
+
         // 1. Create user account
         console.log('Creating user account...');
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const uid = userCredential.user.uid;
-        console.log('User created with UID:', uid);
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log('User created:', user.uid);
 
-        // 2. Upload payment proof
-        const filePath = `paymentProofs/${uid}/${Date.now()}_${file.name}`;
-        const storageReference = storageRef(storage, filePath);
-        const uploadTask = uploadBytesResumable(storageReference, file);
+        // 2. Upload file to storage
+        console.log('Uploading file...');
+        const storageRef = storage.ref();
+        const fileRef = storageRef.child('paymentProofs/' + user.uid + '/' + Date.now() + '_' + file.name);
+        
+        const uploadTask = fileRef.put(file);
+        
+        // Show progress
+        document.getElementById('uploadProgress').style.display = 'block';
+        
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // Progress
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            document.getElementById('uploadBar').style.width = progress + '%';
+          },
+          (error) => {
+            throw error;
+          },
+          async () => {
+            // Upload completed
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+            console.log('File available at:', downloadURL);
 
-        uploadProgress.style.display = 'block';
-        uploadBar.style.width = '0%';
+            // 3. Save application to Firestore
+            console.log('Saving to Firestore...');
+            await db.collection('referralApplications').add({
+              uid: user.uid,
+              fullName: fullName,
+              email: email,
+              phone: phone,
+              paymentProofUrl: downloadURL,
+              paymentProofPath: uploadTask.snapshot.ref.fullPath,
+              status: 'pending',
+              paidConfirmation: true,
+              registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
 
-        // Wait for upload to complete
-        await new Promise((resolve, reject) => {
-          uploadTask.on('state_changed', 
-            (snapshot) => {
-              // Progress
-              const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-              uploadBar.style.width = pct + '%';
-            }, 
-            (error) => {
-              // Error
-              reject(error);
-            }, 
-            async () => {
-              // Complete
-              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              console.log('File uploaded to:', downloadURL);
-              resolve(downloadURL);
-            }
-          );
-        });
+            console.log('Application saved successfully!');
 
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            // Store user info
+            localStorage.setItem('referralUid', user.uid);
+            localStorage.setItem('userEmail', email);
 
-        // 3. Save application to Firestore
-        console.log('Saving application to Firestore...');
-        await addDoc(collection(db, 'referralApplications'), {
-          uid: uid,
-          fullName: fullName,
-          email: email,
-          phone: phone,
-          paymentProofUrl: downloadURL,
-          paymentProofPath: filePath,
-          status: 'pending',
-          paidConfirmation: true,
-          registeredAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        });
-
-        console.log('Application saved successfully!');
-
-        // Store user info for pending page
-        localStorage.setItem('referralUid', uid);
-        localStorage.setItem('userEmail', email);
-
-        // Success
-        alert('✅ Registration submitted successfully! Awaiting admin approval.');
-        window.location.href = 'referral-pending.html';
+            // Success
+            alert('✅ Registration submitted successfully! Awaiting admin approval.');
+            window.location.href = 'referral-pending.html';
+          }
+        );
 
       } catch (error) {
-        console.error('Error during registration:', error);
+        console.error('Registration error:', error);
         
         let errorMessage = 'Registration failed. Please try again.';
         
         if (error.code === 'auth/email-already-in-use') {
-          errorMessage = 'This email is already registered. Please use a different email or login.';
+          errorMessage = 'This email is already registered. Please use a different email.';
         } else if (error.code === 'auth/invalid-email') {
           errorMessage = 'Invalid email address format.';
         } else if (error.code === 'auth/weak-password') {
@@ -324,12 +315,9 @@
         }
         
         alert('Error: ' + errorMessage);
-      } finally {
-        // Reset button state
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit for Approval →';
-        uploadProgress.style.display = 'none';
-        uploadBar.style.width = '0%';
+        document.getElementById('uploadProgress').style.display = 'none';
       }
     });
   </script>
