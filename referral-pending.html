@@ -73,6 +73,18 @@
       color: var(--dark-brown);
       margin: 1rem 0;
     }
+    
+    .checkmark {
+      color: #28a745;
+      font-size: 4rem;
+      margin: 1rem 0;
+    }
+    
+    .countdown {
+      font-size: 0.9rem;
+      color: var(--muted-rose);
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -84,16 +96,18 @@
 
   <section class="premium-container">
     <div class="premium-card">
-      <div class="spinner"></div>
-      <h1 style="color:var(--dark-brown); margin-bottom:1rem;">Application Under Review</h1>
-      <div class="status-badge">PENDING APPROVAL</div>
-      <p style="color:var(--muted-rose); margin-bottom:1.5rem;">
+      <div class="spinner" id="loadingSpinner"></div>
+      <div class="checkmark" id="approvedCheckmark" style="display:none;">✅</div>
+      
+      <h1 style="color:var(--dark-brown); margin-bottom:1rem;" id="statusTitle">Application Under Review</h1>
+      
+      <div class="status-badge" id="statusBadge">PENDING APPROVAL</div>
+      
+      <p style="color:var(--muted-rose); margin-bottom:1.5rem;" id="statusMessage">
         Thank you for applying to Crown Trade Academy! Your application is currently being reviewed by our team.
       </p>
-      <p style="color:var(--muted-rose); margin-bottom:2rem;">
-        You will be automatically redirected to your dashboard once your application is approved. This usually takes 24-48 hours.
-      </p>
-      <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; text-align:left;">
+      
+      <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; text-align:left; margin-bottom:2rem;">
         <h4 style="color:var(--dark-brown); margin-bottom:1rem;">What happens next?</h4>
         <ul style="color:var(--muted-rose); padding-left:1.5rem;">
           <li>Our team reviews your application</li>
@@ -102,35 +116,73 @@
           <li>Access to your dashboard is granted</li>
         </ul>
       </div>
+      
+      <div class="countdown" id="countdown">
+        Checking status... <span id="counter">5</span>s
+      </div>
     </div>
   </section>
 
   <script>
-    // Check application status every 5 seconds
+    let checkCount = 0;
+    const maxChecks = 300; // 25 minutes at 5-second intervals
+    
     function checkApplicationStatus() {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const currentUserEmail = localStorage.getItem('current_user_email');
-      
-      if (currentUserEmail) {
-        const user = users.find(u => u.email === currentUserEmail);
-        if (user && user.status === 'approved') {
-          // Redirect to dashboard
-          window.location.href = 'user-dashboard.html';
+        const currentUserEmail = localStorage.getItem('current_user_email');
+        
+        if (!currentUserEmail) {
+            console.log('No user email found in localStorage');
+            return;
         }
-      }
+        
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const user = users.find(u => u.email === currentUserEmail);
+        
+        checkCount++;
+        document.getElementById('counter').textContent = Math.ceil((maxChecks - checkCount) * 5 / 60);
+        
+        if (user) {
+            if (user.status === 'approved') {
+                // User approved - show success and redirect
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('approvedCheckmark').style.display = 'block';
+                document.getElementById('statusTitle').textContent = 'Application Approved!';
+                document.getElementById('statusBadge').textContent = 'APPROVED';
+                document.getElementById('statusBadge').style.background = '#28a745';
+                document.getElementById('statusBadge').style.color = 'white';
+                document.getElementById('statusMessage').textContent = 'Congratulations! Your application has been approved. You will be redirected to your dashboard shortly.';
+                document.getElementById('countdown').innerHTML = '🎉 Redirecting to dashboard...';
+                
+                setTimeout(() => {
+                    window.location.href = 'user-dashboard.html';
+                }, 3000);
+                return;
+            } else if (user.status === 'rejected') {
+                // User rejected
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('statusTitle').textContent = 'Application Not Approved';
+                document.getElementById('statusBadge').textContent = 'REJECTED';
+                document.getElementById('statusBadge').style.background = '#dc3545';
+                document.getElementById('statusBadge').style.color = 'white';
+                document.getElementById('statusMessage').textContent = 'We regret to inform you that your application was not approved at this time.';
+                document.getElementById('countdown').innerHTML = 'Please contact support for more information.';
+                return;
+            }
+        }
+        
+        // Continue checking if not approved/rejected and within limit
+        if (checkCount < maxChecks) {
+            setTimeout(checkApplicationStatus, 5000);
+        } else {
+            // Timeout reached
+            document.getElementById('countdown').innerHTML = 'Status check timeout. Please refresh the page or contact support.';
+        }
     }
     
-    // Set current user email (in a real app, this would be set during login/application)
+    // Start checking status when page loads
     document.addEventListener('DOMContentLoaded', function() {
-      // Get the most recent application
-      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      if (applications.length > 0) {
-        const latestApp = applications[applications.length - 1];
-        localStorage.setItem('current_user_email', latestApp.email);
-      }
-      
-      // Start checking status
-      setInterval(checkApplicationStatus, 5000);
+        // Initial check after 2 seconds
+        setTimeout(checkApplicationStatus, 2000);
     });
   </script>
 </body>
