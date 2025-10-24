@@ -236,16 +236,196 @@
       border-color: var(--gold-accent);
       transform: translateY(-2px);
     }
+
+    /* NEW STYLES FOR ENHANCEMENTS */
+    
+    /* Search and Filter */
+    .search-filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .filter-select {
+      padding: 0.75rem;
+      border: 2px solid var(--light-taupe);
+      border-radius: 8px;
+      background: white;
+      color: var(--dark-brown);
+      font-size: 1rem;
+    }
+    
+    /* Notification System */
+    .notification-badge {
+      position: relative;
+    }
+    
+    .notification-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--gold-accent);
+      color: var(--dark-brown);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    
+    .notification-panel {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid var(--light-taupe);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 350px;
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    
+    .notification-panel.active {
+      display: block;
+    }
+    
+    .notification-item {
+      padding: 1rem;
+      border-bottom: 1px solid var(--light-taupe);
+    }
+    
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+    
+    .notification-item.unread {
+      background: rgba(212, 175, 55, 0.1);
+    }
+    
+    /* User Management */
+    .user-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .user-card {
+      background: var(--off-white);
+      border: 1px solid var(--light-taupe);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--cream-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Loading States */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    
+    .spinner {
+      border: 4px solid var(--light-taupe);
+      border-top: 4px solid var(--gold-accent);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .premium-nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        display: none;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        right: 2rem;
+        top: 1.5rem;
+      }
+      
+      .tabs {
+        flex-direction: column;
+      }
+      
+      .search-filter-bar {
+        flex-direction: column;
+      }
+      
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="premium-header">
     <nav class="premium-nav">
       <a href="index.html" class="logo">Crown Trade Academy</a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
       <div style="display: flex; align-items: center; gap: 2rem;">
         <span style="color: var(--warm-beige); font-weight: 600;">Admin Dashboard</span>
-        <ul class="nav-links">
+        <ul class="nav-links" id="navLinks">
           <li><a href="admin-dashboard.html" style="color: var(--warm-beige);">Dashboard</a></li>
+          <li class="notification-badge">
+            <a href="#" onclick="toggleNotifications()">🔔 <span class="notification-count" id="notificationCount">0</span></a>
+            <div class="notification-panel" id="notificationPanel">
+              <div class="notification-item unread">
+                <strong>New Application</strong>
+                <p>John Doe submitted a new application</p>
+                <small>2 minutes ago</small>
+              </div>
+              <div class="notification-item">
+                <strong>Withdrawal Request</strong>
+                <p>Jane Smith requested KES 500 withdrawal</p>
+                <small>1 hour ago</small>
+              </div>
+            </div>
+          </li>
           <li><a href="#" onclick="logout()">Logout</a></li>
         </ul>
       </div>
@@ -302,6 +482,7 @@
     <div class="tabs">
       <button class="tab active" onclick="showTab('applications')">📋 Applications</button>
       <button class="tab" onclick="showTab('analytics')">📈 Analytics</button>
+      <button class="tab" onclick="showTab('users')">👥 Users</button>
       <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
       <button class="tab" onclick="showTab('withdrawals')">💳 Withdrawals</button>
     </div>
@@ -310,6 +491,26 @@
     <div id="applications-tab" class="tab-content active">
       <div class="premium-card">
         <h2 style="color:var(--dark-brown); margin-bottom:1rem;">Pending Applications</h2>
+        
+        <!-- Search and Filter Bar -->
+        <div class="search-filter-bar">
+          <div class="search-box">
+            <input type="text" id="applicationSearch" class="form-control" placeholder="Search applications..." onkeyup="filterApplications()">
+          </div>
+          <select id="statusFilter" class="filter-select" onchange="filterApplications()">
+            <option value="all">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <select id="dateFilter" class="filter-select" onchange="filterApplications()">
+            <option value="all">All Time</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+          </select>
+        </div>
+        
         <div id="applicationsList">
           <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
             Loading applications...
@@ -336,6 +537,30 @@
         <div class="chart-container">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Monthly Performance</h3>
           <canvas id="monthlyChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="users-tab" class="tab-content">
+      <div class="premium-card">
+        <h2 style="color:var(--dark-brown); margin-bottom:1rem;">User Management</h2>
+        
+        <div class="search-filter-bar">
+          <div class="search-box">
+            <input type="text" id="userSearch" class="form-control" placeholder="Search users..." onkeyup="filterUsers()">
+          </div>
+          <select id="userStatusFilter" class="filter-select" onchange="filterUsers()">
+            <option value="all">All Users</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        
+        <div class="user-grid" id="usersList">
+          <div style="text-align:center; color:var(--muted-rose); padding:3rem; grid-column: 1/-1;">
+            Loading users...
+          </div>
         </div>
       </div>
     </div>
@@ -463,6 +688,9 @@
         ? `${Math.round((approvedApps.length / applications.length) * 100)}%` 
         : '0%';
       
+      // Update notification count
+      document.getElementById('notificationCount').textContent = pendingApps.length;
+      
       // Load applications
       loadApplications();
       
@@ -474,6 +702,9 @@
       
       // Load withdrawals
       loadWithdrawals();
+      
+      // Load users
+      loadUsers();
     }
 
     function loadApplications() {
@@ -482,17 +713,17 @@
       
       const applicationsList = document.getElementById('applicationsList');
       
-      if (pendingApps.length === 0) {
+      if (applications.length === 0) {
         applicationsList.innerHTML = `
           <div style="text-align:center; color:var(--muted-rose); padding:3rem;">
-            No pending applications at the moment.
+            No applications found.
           </div>
         `;
         return;
       }
 
-      applicationsList.innerHTML = pendingApps.map(app => `
-        <div class="application-card">
+      applicationsList.innerHTML = applications.map(app => `
+        <div class="application-card" data-status="${app.status || 'pending'}" data-date="${app.submittedAt}">
           <h3 style="color:var(--dark-brown); margin-bottom:0.5rem;">${app.fullName}</h3>
           <p style="color:var(--muted-rose); margin:0.25rem 0;">
             <strong>Email:</strong> ${app.email}
@@ -504,15 +735,18 @@
             <strong>Applied:</strong> ${new Date(app.submittedAt).toLocaleDateString()}
           </p>
           <p style="margin:0.5rem 0;">
+            <span class="status-badge status-${app.status || 'pending'}">${(app.status || 'pending').toUpperCase()}</span>
+          </p>
+          <p style="margin:0.5rem 0;">
             <a href="#" onclick="viewPaymentProof('${app.id}')" style="color:var(--warm-beige); text-decoration:none;">
               📎 View Payment Proof
             </a>
           </p>
           <div class="action-buttons">
-            <button class="btn-success" onclick="approveApplication('${app.id}')">
+            <button class="btn-success" onclick="approveApplication('${app.id}')" ${app.status === 'approved' ? 'disabled' : ''}>
               Approve
             </button>
-            <button class="btn-danger" onclick="rejectApplication('${app.id}')">
+            <button class="btn-danger" onclick="rejectApplication('${app.id}')" ${app.status === 'rejected' ? 'disabled' : ''}>
               Reject
             </button>
             <button class="btn-info" onclick="viewApplicationDetails('${app.id}')">
@@ -521,6 +755,113 @@
           </div>
         </div>
       `).join('');
+    }
+
+    function filterApplications() {
+      const searchTerm = document.getElementById('applicationSearch').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const dateFilter = document.getElementById('dateFilter').value;
+      
+      const applications = document.querySelectorAll('.application-card');
+      
+      applications.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const status = card.getAttribute('data-status');
+        const date = new Date(card.getAttribute('data-date'));
+        const now = new Date();
+        
+        let show = true;
+        
+        // Search filter
+        if (searchTerm && !name.includes(searchTerm)) {
+          show = false;
+        }
+        
+        // Status filter
+        if (statusFilter !== 'all' && status !== statusFilter) {
+          show = false;
+        }
+        
+        // Date filter
+        if (dateFilter !== 'all') {
+          const diffTime = Math.abs(now - date);
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          if (dateFilter === 'today' && diffDays > 1) {
+            show = false;
+          } else if (dateFilter === 'week' && diffDays > 7) {
+            show = false;
+          } else if (dateFilter === 'month' && diffDays > 30) {
+            show = false;
+          }
+        }
+        
+        card.style.display = show ? 'block' : 'none';
+      });
+    }
+
+    function loadUsers() {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const approvedUsers = applications.filter(app => app.status === 'approved');
+      
+      const usersList = document.getElementById('usersList');
+      
+      if (approvedUsers.length === 0) {
+        usersList.innerHTML = `
+          <div style="text-align:center; color:var(--muted-rose); padding:3rem; grid-column: 1/-1;">
+            No approved users yet.
+          </div>
+        `;
+        return;
+      }
+
+      usersList.innerHTML = approvedUsers.map(user => `
+        <div class="user-card">
+          <h3 style="color:var(--dark-brown); margin-bottom:0.5rem;">${user.fullName}</h3>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Email:</strong> ${user.email}
+          </p>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Phone:</strong> ${user.phone}
+          </p>
+          <p style="color:var(--muted-rose); margin:0.25rem 0;">
+            <strong>Joined:</strong> ${new Date(user.reviewedAt || user.submittedAt).toLocaleDateString()}
+          </p>
+          <div class="action-buttons">
+            <button class="btn-info" onclick="viewUserDetails('${user.id}')">
+              View Details
+            </button>
+            <button class="btn-danger" onclick="deactivateUser('${user.id}')">
+              Deactivate
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterUsers() {
+      const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+      const statusFilter = document.getElementById('userStatusFilter').value;
+      
+      const users = document.querySelectorAll('.user-card');
+      
+      users.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        
+        let show = true;
+        
+        // Search filter
+        if (searchTerm && !name.includes(searchTerm)) {
+          show = false;
+        }
+        
+        // Status filter (currently all users are active in this demo)
+        if (statusFilter === 'inactive') {
+          show = false; // In a real app, you would check the user's status
+        }
+        
+        card.style.display = show ? 'block' : 'none';
+      });
     }
 
     function loadAnalytics(applications, approvedApps, pendingApps, rejectedApps) {
@@ -659,6 +1000,17 @@
       event.target.classList.add('active');
     }
 
+    function toggleNotifications() {
+      const panel = document.getElementById('notificationPanel');
+      panel.classList.toggle('active');
+      event.preventDefault();
+    }
+
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
     function approveApplication(appId) {
       if (confirm('Approve this application?')) {
         const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
@@ -719,6 +1071,23 @@
       
       if (app) {
         alert(`Application Details:\n\nName: ${app.fullName}\nEmail: ${app.email}\nPhone: ${app.phone}\nStatus: ${app.status || 'Pending'}\nSubmitted: ${new Date(app.submittedAt).toLocaleString()}`);
+      }
+    }
+
+    function viewUserDetails(userId) {
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const user = applications.find(app => app.id === userId);
+      
+      if (user) {
+        alert(`User Details:\n\nName: ${user.fullName}\nEmail: ${user.email}\nPhone: ${user.phone}\nStatus: Approved\nJoined: ${new Date(user.reviewedAt || user.submittedAt).toLocaleString()}`);
+      }
+    }
+
+    function deactivateUser(userId) {
+      if (confirm('Deactivate this user? They will no longer have access to the platform.')) {
+        // In a real app, you would update the user's status in the database
+        alert('User deactivated successfully!');
+        loadUsers();
       }
     }
 
@@ -792,10 +1161,23 @@
       window.location.href = 'index.html';
     }
 
+    // Close notification panel when clicking outside
+    document.addEventListener('click', function(event) {
+      const notificationPanel = document.getElementById('notificationPanel');
+      const notificationBadge = document.querySelector('.notification-badge');
+      
+      if (!notificationBadge.contains(event.target) && notificationPanel.classList.contains('active')) {
+        notificationPanel.classList.remove('active');
+      }
+    });
+
     // Initialize dashboard when page loads
     document.addEventListener('DOMContentLoaded', function() {
       checkAdminAuth();
       loadDashboardData();
+      
+      // Set up mobile menu
+      document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
       
       // Auto-refresh every 30 seconds
       setInterval(loadDashboardData, 30000);
