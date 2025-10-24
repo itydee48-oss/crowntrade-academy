@@ -4,90 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Apply - Crown Trade Academy</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --dark-brown: #3A2D28;
-      --muted-rose: #A48374;
-      --warm-beige: #CBAD8D;
-      --light-taupe: #D1C7BD;
-      --off-white: #EBE3DB;
-      --cream-white: #F1EDE6;
-      --gold-accent: #D4AF37;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-      color: var(--dark-brown);
-      line-height:1.6;
-      min-height:100vh;
-    }
-    .premium-header{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-      color: var(--cream-white);
-      padding:1.2rem 0;
-      box-shadow:0 4px 20px rgba(58,45,40,0.1);
-      border-bottom:3px solid var(--gold-accent);
-    }
-    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
-    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .premium-container{ max-width:600px; margin:0 auto; padding:0 20px; }
-    .premium-card{
-      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-      border:1px solid var(--light-taupe);
-      border-radius:20px;
-      padding:2.5rem;
-      margin:2rem 0;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 15px 40px rgba(58,45,40,0.08);
-    }
-    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
-      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    .btn-premium{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer; width:100%;
-      transition: all 0.3s ease;
-    }
-    .btn-premium:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(58,45,40,0.2);
-    }
-    .btn-premium:disabled {
-      background: var(--light-taupe);
-      cursor: not-allowed;
-      transform: none;
-    }
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: var(--dark-brown);
-    }
-    .form-control {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid var(--light-taupe);
-      border-radius: 8px;
-      background: white;
-      color: var(--dark-brown);
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-    }
-    .form-control:focus {
-      outline: none;
-      border-color: var(--gold-accent);
-    }
-    .step-indicator {
+    /* Scoped styles - won't affect homepage */
+    .referral-step-content { display: none; }
+    .referral-step-content.active { display: block; }
+    
+    .referral-step-indicator {
       display: flex;
       justify-content: space-between;
       margin-bottom: 2rem;
       position: relative;
     }
-    .step-indicator::before {
+    
+    .referral-step-indicator::before {
       content: '';
       position: absolute;
       top: 15px;
@@ -97,7 +27,8 @@
       background: var(--light-taupe);
       z-index: 1;
     }
-    .step {
+    
+    .referral-step {
       background: var(--off-white);
       border: 2px solid var(--light-taupe);
       border-radius: 50%;
@@ -111,30 +42,20 @@
       z-index: 2;
       transition: all 0.3s ease;
     }
-    .step.active {
+    
+    .referral-step.active {
       background: var(--gold-accent);
       border-color: var(--gold-accent);
       color: var(--dark-brown);
     }
-    .step.completed {
+    
+    .referral-step.completed {
       background: var(--muted-rose);
       border-color: var(--muted-rose);
       color: white;
     }
-    .step-content {
-      display: none;
-    }
-    .step-content.active {
-      display: block;
-    }
-    .payment-instructions {
-      background: var(--off-white);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin: 1.5rem 0;
-      border-left: 4px solid var(--gold-accent);
-    }
-    .file-upload {
+    
+    .referral-file-upload {
       border: 2px dashed var(--light-taupe);
       border-radius: 8px;
       padding: 2rem;
@@ -142,18 +63,12 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .file-upload:hover {
+    
+    .referral-file-upload:hover {
       border-color: var(--gold-accent);
     }
-    .file-upload.dragover {
-      border-color: var(--gold-accent);
-      background: rgba(212, 175, 55, 0.1);
-    }
-    .loading {
-      opacity: 0.7;
-      pointer-events: none;
-    }
-    .spinner {
+    
+    .referral-spinner {
       border: 2px solid var(--light-taupe);
       border-top: 2px solid var(--gold-accent);
       border-radius: 50%;
@@ -163,41 +78,10 @@
       display: inline-block;
       margin-right: 10px;
     }
+    
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
-    }
-
-    /* Success Modal Styles */
-    #successModal {
-      animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    /* Summary Grid Styles */
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    
-    .summary-item {
-      margin-bottom: 1rem;
-    }
-    
-    .summary-label {
-      color: var(--muted-rose);
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
-    }
-    
-    .summary-value {
-      color: var(--dark-brown);
-      font-weight: 600;
     }
   </style>
 </head>
@@ -214,14 +98,14 @@
       <p style="color:var(--muted-rose); text-align:center; margin-bottom:2rem;">Complete your application in 3 simple steps</p>
       
       <!-- Step Indicator -->
-      <div class="step-indicator">
-        <div class="step active">1</div>
-        <div class="step">2</div>
-        <div class="step">3</div>
+      <div class="referral-step-indicator">
+        <div class="referral-step active">1</div>
+        <div class="referral-step">2</div>
+        <div class="referral-step">3</div>
       </div>
 
       <!-- Step 1: Personal Information -->
-      <div id="step1" class="step-content active">
+      <div id="referral-step1" class="referral-step-content active">
         <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Personal Information</h3>
         
         <form id="applicationForm">
@@ -247,19 +131,19 @@
       </div>
 
       <!-- Step 2: Payment -->
-      <div id="step2" class="step-content">
+      <div id="referral-step2" class="referral-step-content">
         <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Payment Details</h3>
         
-        <div class="payment-instructions">
+        <div class="payment-notice">
           <h4 style="color:var(--dark-brown); margin-bottom:1rem;">💰 Payment Instructions</h4>
-          <p style="color:var(--muted-rose); margin-bottom:0.5rem;">1. Send <strong>KES 500</strong> to Till Number: <strong>123456</strong></p>
-          <p style="color:var(--muted-rose); margin-bottom:0.5rem;">2. Use your <strong>full name</strong> as the reference</p>
-          <p style="color:var(--muted-rose); margin-bottom:1rem;">3. Upload the payment screenshot below</p>
+          <p style="color:var(--dark-brown); margin-bottom:0.5rem;">1. Send <strong>KES 500</strong> to Till Number: <strong>123456</strong></p>
+          <p style="color:var(--dark-brown); margin-bottom:0.5rem;">2. Use your <strong>full name</strong> as the reference</p>
+          <p style="color:var(--dark-brown); margin-bottom:1rem;">3. Upload the payment screenshot below</p>
         </div>
 
         <div class="form-group">
           <label class="form-label">Upload Payment Proof (Screenshot) *</label>
-          <div class="file-upload" id="fileUploadArea" onclick="document.getElementById('paymentProof').click()">
+          <div class="referral-file-upload" id="fileUploadArea" onclick="document.getElementById('paymentProof').click()">
             <input type="file" id="paymentProof" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
             <div id="fileUploadContent">
               <p style="color:var(--muted-rose); margin-bottom:0.5rem;">📁 Click to upload or drag and drop</p>
@@ -268,43 +152,43 @@
             <div id="filePreview" style="display:none;">
               <img id="previewImage" src="" style="max-width:200px; max-height:150px; border-radius:8px; margin-bottom:1rem;">
               <p style="color:var(--muted-rose);">✅ File selected</p>
-              <button type="button" class="btn-premium" style="background:var(--muted-rose); margin-top:1rem;" onclick="changeFile()">Change File</button>
+              <button type="button" class="btn-secondary" onclick="changeFile()" style="margin-top:1rem;">Change File</button>
             </div>
           </div>
         </div>
         
         <div style="display:flex; gap:1rem;">
-          <button type="button" class="btn-premium" style="background:var(--muted-rose);" onclick="prevStep(1)">Back</button>
+          <button type="button" class="btn-secondary" onclick="prevStep(1)">Back</button>
           <button type="button" class="btn-premium" onclick="validateStep2()">Continue to Review</button>
         </div>
       </div>
 
       <!-- Step 3: Review & Submit -->
-      <div id="step3" class="step-content">
+      <div id="referral-step3" class="referral-step-content">
         <h3 style="color:var(--dark-brown); margin-bottom:1.5rem;">Review & Submit</h3>
         
         <div style="background:var(--off-white); padding:1.5rem; border-radius:12px; margin-bottom:1.5rem;">
           <h4 style="color:var(--dark-brown); margin-bottom:1rem;">📋 Application Summary</h4>
           <div id="applicationSummary">
-            <div class="summary-grid">
-              <div class="summary-item">
-                <div class="summary-label">Name:</div>
-                <div class="summary-value" id="summaryName">-</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Name:</strong></p>
+                <p style="color:var(--dark-brown); font-weight:600;" id="summaryName">-</p>
               </div>
-              <div class="summary-item">
-                <div class="summary-label">Email:</div>
-                <div class="summary-value" id="summaryEmail">-</div>
+              <div>
+                <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Email:</strong></p>
+                <p style="color:var(--dark-brown); font-weight:600;" id="summaryEmail">-</p>
               </div>
-              <div class="summary-item">
-                <div class="summary-label">Phone:</div>
-                <div class="summary-value" id="summaryPhone">-</div>
+              <div>
+                <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Phone:</strong></p>
+                <p style="color:var(--dark-brown); font-weight:600;" id="summaryPhone">-</p>
               </div>
-              <div class="summary-item">
-                <div class="summary-label">Referral Code:</div>
-                <div class="summary-value" id="summaryReferral">-</div>
+              <div>
+                <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Referral Code:</strong></p>
+                <p style="color:var(--dark-brown); font-weight:600;" id="summaryReferral">-</p>
               </div>
-              <div class="summary-item" style="grid-column: 1 / -1;">
-                <div class="summary-label">Payment Proof:</div>
+              <div style="grid-column: 1 / -1;">
+                <p style="color:var(--muted-rose); margin:0.5rem 0;"><strong>Payment Proof:</strong></p>
                 <div id="paymentProofStatus" style="display: flex; align-items: center; gap: 0.5rem;">
                   <span style="color:#dc3545;">❌ Not uploaded</span>
                 </div>
@@ -318,30 +202,17 @@
             <input type="checkbox" id="termsAgreement" style="margin-right:10px; margin-top:0.2rem;">
             <span style="color:var(--muted-rose);">
               <strong style="color:var(--dark-brown);">I agree to the Terms and Conditions</strong><br>
-              I confirm that all information provided is accurate and I understand that my application will be reviewed within 24-48 hours.
+              I confirm that all information provided is accurate.
             </span>
           </label>
         </div>
         
         <div style="display:flex; gap:1rem; margin-top:2rem;">
-          <button type="button" class="btn-premium" style="background:var(--muted-rose); flex:1;" onclick="prevStep(2)">← Back to Payment</button>
+          <button type="button" class="btn-secondary" style="flex:1;" onclick="prevStep(2)">← Back</button>
           <button type="button" class="btn-premium" id="submitButton" style="flex:1;" onclick="submitApplication()">
-            <span class="spinner" id="submitSpinner" style="display:none;"></span>
+            <span class="referral-spinner" id="submitSpinner" style="display:none;"></span>
             <span id="submitText">🚀 Submit Application</span>
           </button>
-        </div>
-
-        <!-- Success Modal -->
-        <div id="successModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
-          <div style="background:white; padding:2rem; border-radius:12px; width:90%; max-width:400px; text-align:center;">
-            <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
-            <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Application Submitted!</h3>
-            <p style="color:var(--muted-rose); margin-bottom:1.5rem;">
-              Your application has been received and is under review. You will be redirected to the waiting page shortly.
-            </p>
-            <div class="spinner" style="margin:1rem auto;"></div>
-            <p style="color:var(--muted-rose); font-size:0.9rem;">Redirecting in <span id="redirectCountdown">3</span> seconds...</p>
-          </div>
         </div>
       </div>
     </div>
@@ -357,8 +228,10 @@
       proofBase64: ''
     };
 
-    // Initialize file upload area
+    // Initialize
     document.addEventListener('DOMContentLoaded', function() {
+      showStep(1);
+      
       const fileUploadArea = document.getElementById('fileUploadArea');
       
       // Drag and drop functionality
@@ -381,34 +254,34 @@
       });
     });
 
-    function nextStep(step) {
-      document.getElementById(`step${currentStep}`).classList.remove('active');
-      document.querySelectorAll('.step')[currentStep - 1].classList.remove('active');
+    function showStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.referral-step-content').forEach(content => {
+        content.style.display = 'none';
+      });
       
-      document.getElementById(`step${step}`).classList.add('active');
-      document.querySelectorAll('.step')[step - 1].classList.add('active');
+      // Show current step
+      document.getElementById('referral-step' + step).style.display = 'block';
       
       // Update step indicators
-      for (let i = 0; i < step - 1; i++) {
-        document.querySelectorAll('.step')[i].classList.add('completed');
-      }
+      document.querySelectorAll('.referral-step').forEach((stepEl, index) => {
+        stepEl.classList.remove('active', 'completed');
+        if (index + 1 === step) {
+          stepEl.classList.add('active');
+        } else if (index + 1 < step) {
+          stepEl.classList.add('completed');
+        }
+      });
       
       currentStep = step;
-      
-      // Update summary for step 3
-      if (step === 3) {
-        updateApplicationSummary();
-      }
+    }
+
+    function nextStep(step) {
+      showStep(step);
     }
 
     function prevStep(step) {
-      document.getElementById(`step${currentStep}`).classList.remove('active');
-      document.querySelectorAll('.step')[currentStep - 1].classList.remove('active');
-      
-      document.getElementById(`step${step}`).classList.add('active');
-      document.querySelectorAll('.step')[step - 1].classList.add('active');
-      
-      currentStep = step;
+      showStep(step);
     }
 
     function validateStep1() {
@@ -416,38 +289,8 @@
       const email = document.getElementById('email').value.trim();
       const phone = document.getElementById('phone').value.trim();
       
-      // Basic validation
-      if (!fullName) {
-        alert('Please enter your full name');
-        document.getElementById('fullName').focus();
-        return;
-      }
-      
-      if (!email) {
-        alert('Please enter your email address');
-        document.getElementById('email').focus();
-        return;
-      }
-      
-      // Basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address');
-        document.getElementById('email').focus();
-        return;
-      }
-      
-      if (!phone) {
-        alert('Please enter your phone number');
-        document.getElementById('phone').focus();
-        return;
-      }
-      
-      // Check if email already exists
-      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      const existingApplication = applications.find(app => app.email === email);
-      if (existingApplication) {
-        alert('An application with this email already exists. Please use a different email address.');
+      if (!fullName || !email || !phone) {
+        alert('Please fill in all required fields');
         return;
       }
       
@@ -466,6 +309,7 @@
         return;
       }
       
+      updateApplicationSummary();
       nextStep(3);
     }
 
@@ -507,7 +351,6 @@
     }
 
     function updateApplicationSummary() {
-      // Update the summary with actual data
       document.getElementById('summaryName').textContent = applicationData.fullName || '-';
       document.getElementById('summaryEmail').textContent = applicationData.email || '-';
       document.getElementById('summaryPhone').textContent = applicationData.phone || '-';
@@ -522,8 +365,6 @@
             View
           </button>
         `;
-      } else {
-        paymentProofStatus.innerHTML = '<span style="color:#dc3545;">❌ Not uploaded</span>';
       }
     }
 
@@ -547,24 +388,8 @@
     }
 
     function submitApplication() {
-      console.log('Submit application function called');
-      
-      // Validate terms agreement
       if (!document.getElementById('termsAgreement').checked) {
-        alert('Please agree to the Terms and Conditions before submitting your application.');
-        return;
-      }
-
-      // Final validation
-      if (!applicationData.fullName || !applicationData.email || !applicationData.phone) {
-        alert('Please complete all required personal information.');
-        prevStep(1);
-        return;
-      }
-
-      if (!applicationData.proofBase64) {
-        alert('Please upload your payment proof before submitting.');
-        prevStep(2);
+        alert('Please agree to the Terms and Conditions');
         return;
       }
 
@@ -577,96 +402,40 @@
       submitSpinner.style.display = 'inline-block';
       submitText.textContent = 'Submitting...';
 
-      // Create application object with enhanced data
-      const applicationId = 'CTA-' + Date.now().toString();
+      // Create application
       const application = {
-        id: applicationId,
-        fullName: applicationData.fullName,
-        email: applicationData.email,
-        phone: applicationData.phone,
-        referralCode: applicationData.referralCode,
-        proofBase64: applicationData.proofBase64,
+        id: 'CTA-' + Date.now().toString(),
+        ...applicationData,
         status: 'pending',
-        submittedAt: new Date().toISOString(),
-        reviewedAt: null,
-        rejectionReason: null,
-        applicationType: 'referral_program'
+        submittedAt: new Date().toISOString()
       };
 
-      console.log('Creating application:', application);
+      // Save application
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      applications.push(application);
+      localStorage.setItem('referral_applications', JSON.stringify(applications));
 
-      // Save application to localStorage
-      try {
-        const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-        applications.push(application);
-        localStorage.setItem('referral_applications', JSON.stringify(applications));
-        console.log('Application saved to localStorage');
-      } catch (error) {
-        console.error('Error saving application:', error);
-        alert('Error saving application. Please try again.');
-        submitButton.disabled = false;
-        submitSpinner.style.display = 'none';
-        submitText.textContent = '🚀 Submit Application';
-        return;
-      }
-
-      // Create or update user account
+      // Create user
       const user = {
         id: 'USER-' + Date.now().toString(),
         fullName: applicationData.fullName,
         email: applicationData.email,
         phone: applicationData.phone,
-        referralCodeUsed: applicationData.referralCode,
-        userReferralCode: 'CTA-' + applicationData.fullName.substring(0, 3).toUpperCase() + '-' + Date.now().toString().slice(-4),
         status: 'pending',
         joinedAt: new Date().toISOString(),
-        approvedAt: null,
-        balance: 0,
-        totalEarnings: 0,
-        pendingEarnings: 0,
-        referrals: [],
-        applicationId: applicationId
+        balance: 0
       };
 
-      try {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        
-        // Check if user already exists
-        const existingUserIndex = users.findIndex(u => u.email === applicationData.email);
-        if (existingUserIndex !== -1) {
-          users[existingUserIndex] = { ...users[existingUserIndex], ...user };
-        } else {
-          users.push(user);
-        }
-        
-        localStorage.setItem('users', JSON.stringify(users));
-        console.log('User saved to localStorage');
-      } catch (error) {
-        console.error('Error saving user:', error);
-        // Continue anyway as application is already saved
-      }
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      users.push(user);
+      localStorage.setItem('users', JSON.stringify(users));
 
-      // Set current user for waiting page
+      // Set current user
       localStorage.setItem('current_user_email', applicationData.email);
-      console.log('Current user email set:', applicationData.email);
 
-      // Show success modal
       setTimeout(() => {
-        document.getElementById('successModal').style.display = 'flex';
-        
-        // Start countdown for redirect
-        let countdown = 3;
-        const countdownElement = document.getElementById('redirectCountdown');
-        const countdownInterval = setInterval(() => {
-          countdown--;
-          countdownElement.textContent = countdown;
-          
-          if (countdown <= 0) {
-            clearInterval(countdownInterval);
-            // Redirect to waiting page
-            window.location.href = 'referral-pending.html';
-          }
-        }, 1000);
+        alert('Application submitted successfully! Redirecting...');
+        window.location.href = 'referral-pending.html';
       }, 1000);
     }
   </script>
