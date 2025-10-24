@@ -5,238 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin Dashboard - Crown Trade Academy</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --dark-brown: #3A2D28;
-      --muted-rose: #A48374;
-      --warm-beige: #CBAD8D;
-      --light-taupe: #D1C7BD;
-      --off-white: #EBE3DB;
-      --cream-white: #F1EDE6;
-      --gold-accent: #D4AF37;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-      color: var(--dark-brown);
-      line-height:1.6;
-      min-height:100vh;
-    }
-    .premium-header{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-      color: var(--cream-white);
-      padding:1.2rem 0;
-      box-shadow:0 4px 20px rgba(58,45,40,0.1);
-      border-bottom:3px solid var(--gold-accent);
-    }
-    .premium-nav{ display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:0 2rem; }
-    .logo{ font-size:2rem; font-weight:700; color:var(--warm-beige); text-decoration:none; }
-    .nav-links{ display:flex; gap:2rem; list-style:none; align-items:center; }
-    .nav-links a{ color:var(--cream-white); text-decoration:none; font-weight:500; }
-    .premium-container{ max-width:1200px; margin:0 auto; padding:0 20px; }
-    .premium-card{
-      background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-      border:1px solid var(--light-taupe);
-      border-radius:20px;
-      padding:2.5rem;
-      margin:1.5rem 0;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 15px 40px rgba(58,45,40,0.08);
-    }
-    .premium-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
-      background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent)); }
-    .btn-premium{
-      background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-      color: var(--cream-white); border:none; padding:1rem 2rem; border-radius:12px; font-weight:700; cursor:pointer;
-    }
-    .btn-success {
-      background: #28a745;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-danger {
-      background: #dc3545;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-info {
-      background: #17a2b8;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .premium-footer{ background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%); color: var(--cream-white); padding:3rem 0 2rem; margin-top:4rem; border-top:3px solid var(--gold-accent); }
-    .footer-content{ max-width:1200px; margin:0 auto; padding:0 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
-    
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .stat-card {
-      background: var(--off-white);
-      border: 1px solid var(--light-taupe);
-      border-radius: 15px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-    
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(139, 115, 85, 0.1);
-    }
-    
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--dark-brown);
-      margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-      color: var(--muted-rose);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    /* Application Cards */
-    .application-card {
-      background: var(--off-white);
-      border: 1px solid var(--light-taupe);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 1rem 0;
-    }
-    
-    .action-buttons {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-    
-    .status-badge {
-      display: inline-block;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-    .status-pending { background: #ffc107; color: var(--dark-brown); }
-    .status-approved { background: #28a745; color: white; }
-    .status-rejected { background: #dc3545; color: white; }
-    
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid var(--light-taupe);
-    }
-    
-    .tab {
-      padding: 1rem 2rem;
-      background: none;
-      border: none;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--muted-rose);
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all 0.3s ease;
-    }
-    
-    .tab.active {
-      color: var(--dark-brown);
-      border-bottom-color: var(--gold-accent);
-    }
-    
-    .tab-content {
-      display: none;
-    }
-    
-    .tab-content.active {
-      display: block;
-    }
-    
-    /* Chart Container */
-    .chart-container {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      margin: 2rem 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    
-    /* Settings Form */
-    .settings-form {
-      background: var(--off-white);
-      padding: 2rem;
-      border-radius: 12px;
-      margin: 1rem 0;
-    }
-    
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: var(--dark-brown);
-    }
-    
-    .form-control {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid var(--light-taupe);
-      border-radius: 8px;
-      background: white;
-      color: var(--dark-brown);
-      font-size: 1rem;
-    }
-    
-    /* Quick Actions */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    
-    .action-card {
-      background: var(--off-white);
-      padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      border: 2px solid var(--light-taupe);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .action-card:hover {
-      border-color: var(--gold-accent);
-      transform: translateY(-2px);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="premium-header">
@@ -258,40 +27,44 @@
       <h1 style="color:var(--dark-brown); margin-bottom:2rem;">📊 Business Overview</h1>
       
       <!-- Stats Grid -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number" id="totalRevenue">KES 0</div>
-          <div class="stat-label">Total Revenue</div>
+      <div class="luxury-stats">
+        <div class="luxury-stat">
+          <div class="luxury-stat-icon">💰</div>
+          <div class="luxury-stat-number" id="totalRevenue">KES 0</div>
+          <div class="luxury-stat-label">Total Revenue</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="pendingApprovals">0</div>
-          <div class="stat-label">Pending Approvals</div>
+        <div class="luxury-stat">
+          <div class="luxury-stat-icon">⏳</div>
+          <div class="luxury-stat-number" id="pendingApprovals">0</div>
+          <div class="luxury-stat-label">Pending Approvals</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="totalUsers">0</div>
-          <div class="stat-label">Total Users</div>
+        <div class="luxury-stat">
+          <div class="luxury-stat-icon">👥</div>
+          <div class="luxury-stat-number" id="totalUsers">0</div>
+          <div class="luxury-stat-label">Total Users</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="conversionRate">0%</div>
-          <div class="stat-label">Approval Rate</div>
+        <div class="luxury-stat">
+          <div class="luxury-stat-icon">📈</div>
+          <div class="luxury-stat-number" id="conversionRate">0%</div>
+          <div class="luxury-stat-label">Approval Rate</div>
         </div>
       </div>
 
       <!-- Quick Actions -->
-      <div class="quick-actions">
-        <div class="action-card" onclick="showTab('applications')">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+        <div class="application-card" onclick="showTab('applications')" style="text-align: center; cursor: pointer;">
           <h3>👥</h3>
           <p>Manage Applications</p>
         </div>
-        <div class="action-card" onclick="showTab('analytics')">
+        <div class="application-card" onclick="showTab('analytics')" style="text-align: center; cursor: pointer;">
           <h3>📈</h3>
           <p>View Analytics</p>
         </div>
-        <div class="action-card" onclick="showTab('settings')">
+        <div class="application-card" onclick="showTab('settings')" style="text-align: center; cursor: pointer;">
           <h3>⚙️</h3>
           <p>Program Settings</p>
         </div>
-        <div class="action-card" onclick="exportData()">
+        <div class="application-card" onclick="exportData()" style="text-align: center; cursor: pointer;">
           <h3>📤</h3>
           <p>Export Data</p>
         </div>
@@ -299,11 +72,11 @@
     </div>
 
     <!-- Tabs Navigation -->
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('applications')">📋 Applications</button>
-      <button class="tab" onclick="showTab('analytics')">📈 Analytics</button>
-      <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
-      <button class="tab" onclick="showTab('withdrawals')">💳 Withdrawals</button>
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid var(--light-taupe);">
+      <button class="luxury-btn active" onclick="showTab('applications')">📋 Applications</button>
+      <button class="luxury-btn" onclick="showTab('analytics')">📈 Analytics</button>
+      <button class="luxury-btn" onclick="showTab('settings')">⚙️ Settings</button>
+      <button class="luxury-btn" onclick="showTab('withdrawals')">💳 Withdrawals</button>
     </div>
 
     <!-- Applications Tab -->
@@ -323,17 +96,17 @@
       <div class="premium-card">
         <h2 style="color:var(--dark-brown); margin-bottom:2rem;">Business Analytics</h2>
         
-        <div class="chart-container">
+        <div style="background: white; border-radius: 12px; padding: 2rem; margin: 2rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Revenue Growth</h3>
           <canvas id="revenueChart"></canvas>
         </div>
         
-        <div class="chart-container">
+        <div style="background: white; border-radius: 12px; padding: 2rem; margin: 2rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Application Status</h3>
           <canvas id="statusChart"></canvas>
         </div>
         
-        <div class="chart-container">
+        <div style="background: white; border-radius: 12px; padding: 2rem; margin: 2rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">Monthly Performance</h3>
           <canvas id="monthlyChart"></canvas>
         </div>
@@ -345,7 +118,7 @@
       <div class="premium-card">
         <h2 style="color:var(--dark-brown); margin-bottom:2rem;">Program Settings</h2>
         
-        <div class="settings-form">
+        <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; margin: 1rem 0;">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">💰 Payment Settings</h3>
           <div class="form-group">
             <label class="form-label">Registration Fee (KES)</label>
@@ -359,10 +132,10 @@
             <label class="form-label">Minimum Withdrawal (KES)</label>
             <input type="number" id="minWithdrawal" class="form-control" value="100">
           </div>
-          <button class="btn-premium" onclick="savePaymentSettings()">Save Payment Settings</button>
+          <button class="luxury-btn" onclick="savePaymentSettings()">Save Payment Settings</button>
         </div>
 
-        <div class="settings-form">
+        <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; margin: 1rem 0;">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">📧 Email Templates</h3>
           <div class="form-group">
             <label class="form-label">Approval Email Subject</label>
@@ -372,16 +145,16 @@
             <label class="form-label">Approval Email Message</label>
             <textarea id="approvalMessage" class="form-control" rows="4">Congratulations! Your application has been approved. You can now access your dashboard and start earning.</textarea>
           </div>
-          <button class="btn-premium" onclick="saveEmailTemplates()">Save Email Templates</button>
+          <button class="luxury-btn" onclick="saveEmailTemplates()">Save Email Templates</button>
         </div>
 
-        <div class="settings-form">
+        <div style="background: var(--off-white); padding: 2rem; border-radius: 12px; margin: 1rem 0;">
           <h3 style="color:var(--dark-brown); margin-bottom:1rem;">🔒 Admin Settings</h3>
           <div class="form-group">
             <label class="form-label">Change Admin Password</label>
             <input type="password" id="newPassword" class="form-control" placeholder="New password">
           </div>
-          <button class="btn-premium" onclick="changeAdminPassword()">Change Password</button>
+          <button class="luxury-btn" onclick="changeAdminPassword()">Change Password</button>
         </div>
       </div>
     </div>
@@ -441,8 +214,11 @@
     }
 
     function loadDashboardData() {
+      console.log('Loading dashboard data...');
       const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
       const settings = JSON.parse(localStorage.getItem('program_settings') || '{}');
+      
+      console.log('Found applications:', applications);
       
       // Calculate stats
       const pendingApps = applications.filter(app => app.status === 'pending' || !app.status);
@@ -504,18 +280,18 @@
             <strong>Applied:</strong> ${new Date(app.submittedAt).toLocaleDateString()}
           </p>
           <p style="margin:0.5rem 0;">
-            <a href="#" onclick="viewPaymentProof('${app.id}')" style="color:var(--warm-beige); text-decoration:none;">
+            <a href="#" onclick="viewPaymentProof('${app.id}')" style="color:var(--warm-beige); text-decoration:none; font-weight:600;">
               📎 View Payment Proof
             </a>
           </p>
-          <div class="action-buttons">
-            <button class="btn-success" onclick="approveApplication('${app.id}')">
+          <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+            <button class="luxury-btn btn-success" onclick="approveApplication('${app.id}')">
               Approve
             </button>
-            <button class="btn-danger" onclick="rejectApplication('${app.id}')">
+            <button class="luxury-btn btn-danger" onclick="rejectApplication('${app.id}')">
               Reject
             </button>
-            <button class="btn-info" onclick="viewApplicationDetails('${app.id}')">
+            <button class="luxury-btn" onclick="viewApplicationDetails('${app.id}')">
               Details
             </button>
           </div>
@@ -561,7 +337,7 @@
           labels: ['Approved', 'Pending', 'Rejected'],
           datasets: [{
             data: [approvedApps.length, pendingApps.length, rejectedApps.length],
-            backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+            backgroundColor: ['#27AE60', '#E67E22', '#E74C3C']
           }]
         },
         options: {
@@ -633,11 +409,11 @@
           <p style="color:var(--muted-rose); margin:0.25rem 0;">
             <strong>Requested:</strong> ${new Date(withdrawal.requestedAt).toLocaleDateString()}
           </p>
-          <div class="action-buttons">
-            <button class="btn-success" onclick="processWithdrawal(${index})">
+          <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+            <button class="luxury-btn btn-success" onclick="processWithdrawal(${index})">
               Process
             </button>
-            <button class="btn-danger" onclick="rejectWithdrawal(${index})">
+            <button class="luxury-btn btn-danger" onclick="rejectWithdrawal(${index})">
               Reject
             </button>
           </div>
@@ -646,42 +422,108 @@
     }
 
     function showTab(tabName) {
+      console.log('Showing tab:', tabName);
       // Hide all tabs
       document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
+        tab.style.display = 'none';
       });
-      document.querySelectorAll('.tab').forEach(tab => {
+      document.querySelectorAll('.luxury-btn').forEach(tab => {
         tab.classList.remove('active');
       });
       
       // Show selected tab
-      document.getElementById(`${tabName}-tab`).classList.add('active');
+      document.getElementById(`${tabName}-tab`).style.display = 'block';
       event.target.classList.add('active');
     }
 
+    // FIXED: Approve Application Function
     function approveApplication(appId) {
-      if (confirm('Approve this application?')) {
+      console.log('Approving application:', appId);
+      
+      if (confirm('Are you sure you want to approve this application?')) {
         const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+        console.log('All applications:', applications);
+        
         const appIndex = applications.findIndex(app => app.id === appId);
+        console.log('Found application at index:', appIndex);
         
         if (appIndex !== -1) {
+          // Update application status
           applications[appIndex].status = 'approved';
           applications[appIndex].reviewedAt = new Date().toISOString();
           localStorage.setItem('referral_applications', JSON.stringify(applications));
+          console.log('Application approved and saved');
           
-          // Update user status in users data
+          // Update user status
           const userEmail = applications[appIndex].email;
           const users = JSON.parse(localStorage.getItem('users') || '[]');
           const userIndex = users.findIndex(user => user.email === userEmail);
+          
           if (userIndex !== -1) {
             users[userIndex].status = 'approved';
             users[userIndex].approvedAt = new Date().toISOString();
             localStorage.setItem('users', JSON.stringify(users));
+            console.log('User status updated to approved');
           }
           
-          alert('Application approved! User can now access their dashboard.');
+          alert('✅ Application approved successfully! User can now access their dashboard.');
           loadDashboardData();
+        } else {
+          alert('❌ Application not found!');
         }
+      }
+    }
+
+    // FIXED: View Payment Proof Function
+    function viewPaymentProof(appId) {
+      console.log('Viewing payment proof for:', appId);
+      
+      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      const app = applications.find(app => app.id === appId);
+      
+      if (app && app.proofBase64) {
+        // Open image in new window
+        const newWindow = window.open();
+        newWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Payment Proof - ${app.fullName}</title>
+            <style>
+              body { 
+                margin: 0; 
+                padding: 20px; 
+                text-align: center; 
+                background: #f5f5f5; 
+                font-family: Arial, sans-serif;
+              }
+              img { 
+                max-width: 100%; 
+                max-height: 80vh; 
+                border-radius: 10px; 
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+              }
+              button { 
+                padding: 10px 20px; 
+                background: #3A2D28; 
+                color: white; 
+                border: none; 
+                border-radius: 5px; 
+                cursor: pointer;
+                margin-top: 20px;
+              }
+            </style>
+          </head>
+          <body>
+            <h2>Payment Proof - ${app.fullName}</h2>
+            <img src="${app.proofBase64}" alt="Payment Proof" />
+            <br><br>
+            <button onclick="window.close()">Close</button>
+          </body>
+          </html>
+        `);
+      } else {
+        alert('No payment proof found for this application.');
       }
     }
 
@@ -699,30 +541,6 @@
           alert('Application rejected.');
           loadDashboardData();
         }
-      }
-    }
-
-    function viewPaymentProof(appId) {
-      const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-      const app = applications.find(app => app.id === appId);
-      
-      if (app && app.proofBase64) {
-        const newWindow = window.open();
-        newWindow.document.write(`
-          <html>
-            <head><title>Payment Proof - ${app.fullName}</title></head>
-            <body style="margin:0; padding:20px; text-align:center; background:#f5f5f5;">
-              <h2>Payment Proof - ${app.fullName}</h2>
-              <img src="${app.proofBase64}" style="max-width:100%; max-height:80vh; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);" />
-              <br><br>
-              <button onclick="window.close()" style="padding:10px 20px; background:#3A2D28; color:white; border:none; border-radius:5px; cursor:pointer;">
-                Close
-              </button>
-            </body>
-          </html>
-        `);
-      } else {
-        alert('No payment proof uploaded for this application.');
       }
     }
 
@@ -809,6 +627,9 @@
     document.addEventListener('DOMContentLoaded', function() {
       checkAdminAuth();
       loadDashboardData();
+      
+      // Show applications tab by default
+      document.getElementById('applications-tab').style.display = 'block';
       
       // Auto-refresh every 30 seconds
       setInterval(loadDashboardData, 30000);
