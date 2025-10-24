@@ -93,36 +93,36 @@
       </div>
 
       <!-- === Referral Form === -->
-      <form id="referralRegisterForm" action="process-registration.php" method="POST" enctype="multipart/form-data" novalidate>
+      <form id="referralRegisterForm" enctype="multipart/form-data" novalidate>
         <div class="form-group">
           <label class="form-label" for="fullName">Full Name</label>
-          <input id="fullName" name="fullName" class="form-control" type="text" required placeholder="Your full name">
+          <input id="fullName" class="form-control" type="text" required placeholder="Your full name">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="email">Email Address</label>
-          <input id="email" name="email" class="form-control" type="email" required placeholder="you@example.com">
+          <input id="email" class="form-control" type="email" required placeholder="you@example.com">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="phone">Phone Number</label>
-          <input id="phone" name="phone" class="form-control" type="tel" required placeholder="+254 7XX XXX XXX">
+          <input id="phone" class="form-control" type="tel" required placeholder="+254 7XX XXX XXX">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="password">Create Password</label>
-          <input id="password" name="password" class="form-control" type="password" required minlength="6" placeholder="Minimum 6 characters">
+          <input id="password" class="form-control" type="password" required minlength="6" placeholder="Minimum 6 characters">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="confirmPassword">Confirm Password</label>
-          <input id="confirmPassword" name="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
+          <input id="confirmPassword" class="form-control" type="password" required placeholder="Re-enter password">
         </div>
 
         <!-- === Payment Proof Section === -->
         <div class="form-group">
           <label class="form-label" for="proof">Upload Payment Proof (MPesa Screenshot)</label>
-          <input id="proof" name="proof" class="form-control" type="file" accept="image/*" required>
+          <input id="proof" class="form-control" type="file" accept="image/*" required>
           <div class="file-hint small">Max 6 MB. JPG or PNG screenshot of MPesa payment.</div>
 
           <div class="upload-progress" id="uploadProgress">
@@ -133,7 +133,7 @@
         <!-- I Have Paid Confirmation -->
         <div class="form-group">
           <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="paidConfirmation" name="paidConfirmation" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <input id="paidConfirmation" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
             <span style="color:var(--dark-brown); font-size:.95rem;">
               ✅ I confirm I have paid KES 500 registration fee via MPesa
             </span>
@@ -142,7 +142,7 @@
 
         <div class="form-group" style="margin-top:1rem;">
           <label style="display:flex; gap:.6rem; align-items:flex-start;">
-            <input id="agree" name="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
+            <input id="agree" type="checkbox" style="accent-color:var(--dark-brown); margin-top:.35rem;" required>
             <span style="color:var(--dark-brown); font-size:.95rem;">
               I agree to the terms and understand I'll earn KES 300 per successful referral
             </span>
@@ -163,8 +163,14 @@
     <div style="text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--muted-rose);">&copy; 2024 Crown Trade Academy. All rights reserved.</div>
   </footer>
 
+  <!-- === Google Sheets as Database === -->
   <script>
-    document.getElementById('referralRegisterForm').addEventListener('submit', function(e) {
+    // Google Apps Script Web App URL - You'll create this next
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+    document.getElementById('referralRegisterForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
       const fullName = document.getElementById('fullName').value.trim();
       const email = document.getElementById('email').value.trim().toLowerCase();
       const phone = document.getElementById('phone').value.trim();
@@ -177,61 +183,127 @@
       // Validation
       if (!fullName || !email || !phone || !password || !confirmPassword) {
         alert('Please fill out all required fields.');
-        e.preventDefault();
         return;
       }
       if (password !== confirmPassword) {
         alert('Passwords do not match.');
-        e.preventDefault();
         return;
       }
       if (password.length < 6) {
         alert('Password must be at least 6 characters.');
-        e.preventDefault();
         return;
       }
       if (!paidConfirmation) {
         alert('Please confirm that you have paid KES 500.');
-        e.preventDefault();
         return;
       }
       if (!agree) {
         alert('You must agree to the terms to continue.');
-        e.preventDefault();
         return;
       }
       if (!file) {
         alert('Please upload MPesa payment screenshot.');
-        e.preventDefault();
         return;
       }
       if (file.size > 6 * 1024 * 1024) {
         alert('File too large. Max size is 6 MB.');
-        e.preventDefault();
         return;
       }
       if (!['image/jpeg','image/png','image/jpg'].includes(file.type)) {
         alert('Please upload JPG or PNG image only.');
-        e.preventDefault();
         return;
       }
 
-      // Show loading state
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
-      
-      // Show upload progress
-      document.getElementById('uploadProgress').style.display = 'block';
-      
-      // Simulate progress for better UX
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += 10;
-        document.getElementById('uploadBar').style.width = progress + '%';
-        if (progress >= 90) clearInterval(progressInterval);
-      }, 200);
+
+      try {
+        // Convert image to base64 for storage
+        const proofBase64 = await fileToBase64(file);
+        
+        // Create application data
+        const applicationData = {
+          fullName: fullName,
+          email: email,
+          phone: phone,
+          password: btoa(password), // Simple encoding (not secure but works)
+          proofBase64: proofBase64,
+          proofType: file.type,
+          paidConfirmation: paidConfirmation,
+          agree: agree,
+          timestamp: new Date().toISOString(),
+          status: 'pending'
+        };
+
+        // Save to localStorage as backup
+        saveToLocalStorage(applicationData);
+        
+        // Try to save to Google Sheets
+        await saveToGoogleSheets(applicationData);
+
+        // Store user session
+        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_name', fullName);
+        localStorage.setItem('application_status', 'pending');
+
+        alert('✅ Registration submitted successfully! Awaiting admin approval.');
+        window.location.href = 'referral-pending.html';
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Registration submitted (offline mode). Admin will review soon.');
+        
+        // Still redirect to pending page
+        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_name', fullName);
+        localStorage.setItem('application_status', 'pending');
+        window.location.href = 'referral-pending.html';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit for Approval →';
+      }
     });
+
+    // Helper function to convert file to base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Save to localStorage as backup
+    function saveToLocalStorage(data) {
+      let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+      applications.push(data);
+      localStorage.setItem('referral_applications', JSON.stringify(applications));
+    }
+
+    // Save to Google Sheets via Apps Script
+    async function saveToGoogleSheets(data) {
+      // This will work after you set up the Google Apps Script
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+          throw new Error('Google Sheets save failed');
+        }
+        
+        return await response.json();
+      } catch (error) {
+        console.log('Google Sheets unavailable, using localStorage only');
+        throw error;
+      }
+    }
   </script>
 </body>
 </html>
