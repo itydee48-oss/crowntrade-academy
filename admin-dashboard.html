@@ -1,130 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Admin Dashboard - Crown Trade Academy</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    :root{--dark-brown:#3A2D28;--muted-rose:#A48374;--gold-accent:#D4AF37;--off-white:#EBE3DB;--cream-white:#F1EDE6;--light-taupe:#D1C7BD}
-    body{font-family:Segoe UI,Arial;background:linear-gradient(135deg,var(--off-white),var(--cream-white));margin:0;color:var(--dark-brown)}
-    .premium-header{background:linear-gradient(135deg,var(--dark-brown),#2A1F1A); color:#fff; padding:1rem 2rem; border-bottom:3px solid var(--gold-accent); display:flex;justify-content:space-between;align-items:center}
-    .logo{font-weight:700;color:var(--warm-beige);text-decoration:none}
-    .premium-container{max-width:1200px;margin:2rem auto;padding:0 20px}
-    .premium-card{background:linear-gradient(135deg,#fff,var(--cream-white));border-radius:14px;padding:1.2rem;margin-bottom:1rem;border:1px solid var(--light-taupe);box-shadow:0 12px 40px rgba(58,45,40,0.06)}
-    .luxury-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
-    .luxury-stat{background:var(--off-white);padding:1rem;border-radius:10px;text-align:center;border:1px solid var(--light-taupe)}
-    .luxury-btn{background:linear-gradient(135deg,var(--dark-brown),#4A3A32);color:#fff;padding:.8rem 1rem;border-radius:10px;border:none;cursor:pointer}
-    .application-card{padding:1rem;border-radius:10px;border:1px solid var(--light-taupe);background:var(--off-white);margin-bottom:.8rem}
-    .btn-success{background:#27AE60;color:white;border:none;padding:.5rem .8rem;border-radius:8px}
-    .btn-danger{background:#E74C3C;color:#fff;border:none;padding:.5rem .8rem;border-radius:8px}
-    .form-control{padding:.6rem;border-radius:8px;border:1px solid var(--light-taupe)}
-    #loader-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#000000 40%,#b8860b 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}
-    #loader-spinner{width:90px;height:90px;border:4px solid rgba(255,215,0,0.3);border-top-color:#ffd700;border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 25px 5px rgba(255,215,0,0.3)}
-    #loader-text{margin-top:18px;color:#ffd700;font-weight:700}
-    @keyframes spin{100%{transform:rotate(360deg)}}
-    body.loaded #loader-overlay{opacity:0;visibility:hidden}
-    .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    @media(max-width:800px){.settings-grid{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Crown Trade Academy</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;}
+  .premium-header{background:#3a2d28;padding:1rem;}
+  .premium-header .premium-nav{display:flex;justify-content:space-between;align-items:center;}
+  .premium-header .premium-nav a.logo{color:#d4af37;font-weight:bold;text-decoration:none;font-size:1.2rem;}
+  .premium-container{max-width:900px;margin:3rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  table{width:100%;border-collapse:collapse;margin-top:1.5rem;}
+  th,td{padding:0.8rem;border:1px solid #ccc;text-align:left;}
+  th{background:#d4af37;color:#3a2d28;}
+  button{padding:0.5rem 1rem;border:none;border-radius:6px;cursor:pointer;}
+  .btn-approve{background:#28a745;color:#fff;}
+  .btn-reject{background:#dc3545;color:#fff;}
+</style>
 </head>
 <body>
-  <div id="loader-overlay"><div id="loader-spinner"></div><div id="loader-text">Crown Trade Loading...</div></div>
 
-  <header class="premium-header">
-    <a class="logo" href="index.html">Crown Trade Academy</a>
-    <div style="display:flex;align-items:center;gap:1rem">
-      <span id="currentAdminUser" style="color:var(--gold-accent)"></span>
-      <button class="luxury-btn" onclick="adminLogout()">Logout</button>
-    </div>
-  </header>
+<header class="premium-header">
+  <nav class="premium-nav">
+    <a href="admin-dashboard.html" class="logo">Crown Trade Academy - Admin</a>
+  </nav>
+</header>
 
-  <main class="premium-container">
-    <div class="premium-card">
-      <h1>Admin Dashboard</h1>
-      <div class="luxury-stats" style="margin-top:1rem">
-        <div class="luxury-stat"><div>💰</div><div id="totalRevenue">KES 0</div><div style="color:var(--muted-rose)">Total Revenue</div></div>
-        <div class="luxury-stat"><div>⏳</div><div id="pendingApprovals">0</div><div style="color:var(--muted-rose)">Pending</div></div>
-        <div class="luxury-stat"><div>👥</div><div id="totalUsers">0</div><div style="color:var(--muted-rose)">Approved Users</div></div>
-        <div class="luxury-stat"><div>📈</div><div id="conversionRate">0%</div><div style="color:var(--muted-rose)">Approval Rate</div></div>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
-        <button class="luxury-btn" onclick="showTab('applications')">Applications</button>
-        <button class="luxury-btn" onclick="showTab('analytics')">Analytics</button>
-        <button class="luxury-btn" onclick="showTab('settings')">Settings</button>
-        <button class="luxury-btn" onclick="showTab('withdrawals')">Withdrawals</button>
-      </div>
-    </div>
+<section class="premium-container">
+  <h1>Referral Applications</h1>
+  <table id="applicationsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Referral Code</th>
+        <th>Status</th>
+        <th>Payment Proof</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
 
-    <!-- Applications -->
-    <div id="applications-tab" class="tab-content">
-      <div class="premium-card">
-        <h2>Pending Applications</h2>
-        <div id="applicationsList"><div style="text-align:center;color:var(--muted-rose);padding:2rem">Loading...</div></div>
-      </div>
-    </div>
+<script>
+function loadApplications(){
+  const applications = JSON.parse(localStorage.getItem('referral_applications')||'[]');
+  const tbody = document.querySelector('#applicationsTable tbody');
+  tbody.innerHTML = '';
+  applications.forEach((app,index)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML=`
+      <td>${app.fullName}</td>
+      <td>${app.email}</td>
+      <td>${app.phone}</td>
+      <td>${app.referralCode||'None'}</td>
+      <td>${app.status}</td>
+      <td>${app.proofBase64?'<button onclick="viewProof('+index+')">View</button>':'Not uploaded'}</td>
+      <td>
+        ${app.status==='pending'?`
+          <button class="btn-approve" onclick="approveApplication(${index})">Approve</button>
+          <button class="btn-reject" onclick="rejectApplication(${index})">Reject</button>
+        `:'-'}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
-    <!-- Withdrawals -->
-    <div id="withdrawals-tab" class="tab-content" style="display:none">
-      <div class="premium-card">
-        <h2>Withdrawal Requests</h2>
-        <div id="withdrawalsList"><div style="text-align:center;color:var(--muted-rose);padding:2rem">No withdrawal requests yet.</div></div>
-      </div>
-    </div>
+function viewProof(index){
+  const applications = JSON.parse(localStorage.getItem('referral_applications')||'[]');
+  const app = applications[index];
+  if(app.proofBase64){
+    const win = window.open();
+    win.document.write(`<img src="${app.proofBase64}" style="max-width:100%; margin-top:20px;">`);
+  }
+}
 
-    <!-- Settings -->
-    <div id="settings-tab" class="tab-content" style="display:none">
-      <div class="premium-card">
-        <h2>Program Settings</h2>
-        <div class="settings-grid">
-          <div style="background:var(--off-white);padding:1rem;border-radius:10px">
-            <h3>Payment Settings</h3>
-            <label>Registration Fee (KES)</label>
-            <input id="registrationFee" class="form-control" value="500">
-            <label style="margin-top:.6rem">Referral Earnings (KES)</label>
-            <input id="referralEarnings" class="form-control" value="300">
-            <label style="margin-top:.6rem">Business Share (KES)</label>
-            <input id="businessShare" class="form-control" value="200">
-            <label style="margin-top:.6rem">Minimum Withdrawal (KES)</label>
-            <input id="minWithdrawal" class="form-control" value="950">
-            <label style="margin-top:.6rem">Starting Balance on Approval (KES)</label>
-            <input id="startBalance" class="form-control" value="500">
-            <div style="margin-top:.8rem"><button class="luxury-btn" onclick="adminSaveSettingsFromUI()">Save Settings</button></div>
-          </div>
+function approveApplication(index){
+  const applications = JSON.parse(localStorage.getItem('referral_applications')||'[]');
+  const app = applications[index];
+  app.status='approved';
+  applications[index]=app;
+  localStorage.setItem('referral_applications',JSON.stringify(applications));
 
-          <div style="background:var(--off-white);padding:1rem;border-radius:10px">
-            <h3>Admin Controls</h3>
-            <div style="margin-bottom:.6rem"><label>Change Admin Password</label><input id="newAdminPassword" class="form-control" placeholder="New admin password"></div>
-            <div style="margin-top:.6rem"><button class="luxury-btn" onclick="adminChangePassword('newAdminPassword')">Change Password</button></div>
-            <hr style="margin:1rem 0">
-            <h3>Business Stats</h3>
-            <p>Total Business Earnings: <strong id="businessEarnings">KES 0</strong></p>
-            <p>Total Referral Payouts: <strong id="totalReferralPayouts">KES 0</strong></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Analytics (simple placeholders) -->
-    <div id="analytics-tab" class="tab-content" style="display:none">
-      <div class="premium-card">
-        <h2>Analytics</h2>
-        <p style="color:var(--muted-rose)">Simple analytics available below (live charts require Chart.js if desired).</p>
-      </div>
-    </div>
-
-  </main>
-
-  <script src="script.js"></script>
-  <script>
-    // small helper showTab
-    function showTab(tabName){
-      document.querySelectorAll('.tab-content').forEach(t => t.style.display='none');
-      document.getElementById(tabName+'-tab').style.display = 'block';
-      // ensure admin data loaded
-      adminLoadDashboard();
+  // Update user status
+  const users = JSON.parse(localStorage.getItem('users')||'[]');
+  const userIndex = users.findIndex(u=>u.email===app.email);
+  if(userIndex!==-1){
+    users[userIndex].status='approved';
+    users[userIndex].approvedAt = new Date().toISOString();
+    
+    // Check if user was referred
+    if(users[userIndex].referralCodeUsed){
+      const referrerIndex = users.findIndex(u=>u.email===users[userIndex].referralCodeUsed);
+      if(referrerIndex!==-1){
+        users[referrerIndex].balance += 300; // Referrer bonus
+        users[userIndex].balance += 0; // New user starts at 0 (already paid to business?)
+        alert(`${users[referrerIndex].fullName} received KES 300 as referral bonus!`);
+      }
+      // Business gets KES 200 (not tracked in user balance)
     }
-    // On load admin auth will be prompted by script.js; adminLoadDashboard auto-called
-  </script>
+  }
+  localStorage.setItem('users',JSON.stringify(users));
+  loadApplications();
+}
+
+function rejectApplication(index){
+  const applications = JSON.parse(localStorage.getItem('referral_applications')||'[]');
+  const app = applications[index];
+  app.status='rejected';
+  applications[index]=app;
+  localStorage.setItem('referral_applications',JSON.stringify(applications));
+
+  // Update user status
+  const users = JSON.parse(localStorage.getItem('users')||'[]');
+  const userIndex = users.findIndex(u=>u.email===app.email);
+  if(userIndex!==-1){
+    users[userIndex].status='rejected';
+  }
+  localStorage.setItem('users',JSON.stringify(users));
+  loadApplications();
+}
+
+loadApplications();
+</script>
+
 </body>
 </html>
