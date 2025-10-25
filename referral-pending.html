@@ -3,24 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Referral Dashboard - Crown Trade Academy</title>
-<link rel="stylesheet" href="style.css">
+<title>Application Under Review - Crown Trade Academy</title>
 <style>
-  body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; }
-  .premium-header { background:#3a2d28; padding:1rem; }
-  .premium-header .premium-nav { display:flex; justify-content:space-between; align-items:center; }
-  .premium-header .premium-nav a.logo { color:#d4af37; font-weight:bold; text-decoration:none; font-size:1.2rem; }
-  .premium-card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:2rem; max-width:800px; margin:3rem auto; }
-  h1,h3,h4 { color:#3a2d28; }
-  .referral-info, .referrals-list { margin-bottom:2rem; }
-  .referral-link { background:#f0f0f0; padding:0.5rem; border-radius:6px; word-break:break-all; display:inline-block; margin-top:0.5rem; color:#3a2d28; font-weight:600; }
-  .earnings { background:#d4af37; color:#3a2d28; padding:0.5rem 1rem; border-radius:6px; display:inline-block; margin-top:0.5rem; font-weight:bold; }
-  table { width:100%; border-collapse:collapse; }
-  th,td { padding:0.8rem; text-align:left; border-bottom:1px solid #ccc; }
-  th { background:#f5f5f5; }
-  .status-pending { color:#ffc107; font-weight:bold; }
-  .status-approved { color:#28a745; font-weight:bold; }
-  .btn-premium { background:#d4af37; color:#3a2d28; padding:0.6rem 1.2rem; border:none; border-radius:6px; cursor:pointer; font-weight:bold; margin-top:1rem; }
+  :root {
+    --dark-brown: #3a2d28;
+    --gold-accent: #d4af37;
+    --muted-rose: #a67c7c;
+    --soft-beige: #e8d5c4;
+    --off-white: #faf8f6;
+    --light-taupe: #d4c5b9;
+  }
+
+  body { 
+    font-family: 'Georgia', serif; 
+    background: linear-gradient(135deg, var(--off-white) 0%, var(--soft-beige) 100%);
+    margin:0; 
+    min-height: 100vh;
+  }
+
+  .premium-header { 
+    background: var(--dark-brown);
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 20px rgba(58, 45, 40, 0.15);
+  }
+
+  .premium-header .premium-nav { 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .premium-header .premium-nav a.logo { 
+    color: var(--gold-accent); 
+    font-weight: 700; 
+    text-decoration:none; 
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    font-family: 'Georgia', serif;
+  }
+
+  .premium-card { 
+    background: linear-gradient(135deg, #fff 0%, var(--off-white) 100%);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(58, 45, 40, 0.12);
+    padding: 4rem 3rem;
+    max-width: 650px;
+    margin: 6rem auto;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .premium-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold-accent), var(--muted-rose));
+  }
+
+  h1 { 
+    color: var(--dark-brown); 
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .pending-icon { 
+    font-size: 5rem; 
+    margin-bottom: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.3));
+  }
+
+  @keyframes pulse { 
+    0%, 100% { transform: scale(1); opacity: 1; } 
+    50% { transform: scale(1.05); opacity: 0.8; } 
+  }
+
+  .status-message { 
+    color: var(--muted-rose);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .info-box {
+    background: var(--off-white);
+    border-left: 4px solid var(--gold-accent);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    text-align: left;
+  }
+
+  .info-box h3 {
+    color: var(--dark-brown);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .info-box p {
+    color: var(--muted-rose);
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  .spinner {
+    border: 3px solid var(--light-taupe);
+    border-top: 3px solid var(--gold-accent);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .checking-status {
+    color: var(--gold-accent);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  .application-details {
+    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--off-white) 100%);
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin: 2rem 0;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(166, 124, 124, 0.2);
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    color: var(--muted-rose);
+    font-weight: 600;
+  }
+
+  .detail-value {
+    color: var(--dark-brown);
+    font-weight: 500;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--muted-rose);
+    border: 2px solid var(--muted-rose);
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+  }
+
+  .btn-secondary:hover {
+    background: var(--muted-rose);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(166, 124, 124, 0.3);
+  }
 </style>
 </head>
 <body>
@@ -33,86 +200,78 @@
 
 <section>
   <div class="premium-card">
-    <h1>Your Referral Dashboard</h1>
+    <div class="pending-icon">⏳</div>
+    <h1>Application Under Review</h1>
+    
+    <p class="status-message">
+      Thank you for submitting your application! Our team is currently reviewing your details and payment proof.
+    </p>
 
-    <div class="referral-info">
-      <h3>Welcome, <span id="userName">-</span></h3>
-      <div>Your unique referral link:</div>
-      <div class="referral-link" id="userReferralLink">-</div>
-      <div class="earnings">Your Current Earnings: KES <span id="userEarnings">0</span></div>
+    <div class="application-details">
+      <div class="detail-row">
+        <span class="detail-label">Application ID:</span>
+        <span class="detail-value" id="applicationId">-</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Submitted:</span>
+        <span class="detail-value" id="submittedDate">-</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Status:</span>
+        <span class="detail-value" style="color: #ffc107; font-weight: 700;">Pending</span>
+      </div>
     </div>
 
-    <div class="referrals-list">
-      <h3>Referrals Status</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Referral Name</th>
-            <th>Email</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="referralsTable">
-          <!-- Filled dynamically -->
-        </tbody>
-      </table>
+    <div class="info-box">
+      <h3>📋 What Happens Next?</h3>
+      <p>✓ Our team will verify your payment within 24-48 hours</p>
+      <p>✓ You'll be automatically redirected to your dashboard once approved</p>
+      <p>✓ You'll receive your unique referral link and can start earning</p>
     </div>
 
-    <button class="btn-premium" onclick="logout()">Logout</button>
+    <div class="spinner"></div>
+    <p class="checking-status">Automatically checking for approval status...</p>
+
+    <button class="btn-secondary" onclick="logout()">Return to Home</button>
   </div>
 </section>
 
 <script>
 const currentUserEmail = localStorage.getItem('current_user_email');
-let applications = JSON.parse(localStorage.getItem('referral_applications')||'[]');
 
-function getCurrentUser(){
-  return applications.find(app=>app.email===currentUserEmail);
+function checkApprovalStatus() {
+  if (!currentUserEmail) {
+    window.location.href = 'referral-register.html';
+    return;
+  }
+
+  const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+  const userApplication = applications.find(app => app.email === currentUserEmail);
+
+  if (!userApplication) {
+    window.location.href = 'referral-register.html';
+    return;
+  }
+
+  document.getElementById('applicationId').textContent = userApplication.id || '-';
+  document.getElementById('submittedDate').textContent = userApplication.submittedAt 
+    ? new Date(userApplication.submittedAt).toLocaleString() 
+    : '-';
+
+  if (userApplication.status === 'approved') {
+    window.location.href = 'referral-dashboard.html';
+  } else if (userApplication.status === 'rejected') {
+    alert('Your application has been rejected. Please contact support for more information.');
+    logout();
+  }
 }
 
-function updateDashboard(){
-  const user = getCurrentUser();
-  if(!user){ window.location.href='referral-register.html'; return; }
-  document.getElementById('userName').textContent=user.fullName;
-  const referralLink = `${window.location.origin}/referral-register.html?ref=${user.email}`;
-  document.getElementById('userReferralLink').textContent=referralLink;
+checkApprovalStatus();
+setInterval(checkApprovalStatus, 5000);
 
-  // Calculate earnings: only approved referrals
-  let earnings = 0;
-  const referrals = applications.filter(app=>app.referralCode===user.email);
-  referrals.forEach(r=>{ if(r.status==='approved') earnings+=300; });
-  document.getElementById('userEarnings').textContent=earnings;
-
-  // Populate referrals table
-  const tbody = document.getElementById('referralsTable');
-  tbody.innerHTML='';
-  referrals.forEach(r=>{
-    const tr=document.createElement('tr');
-    const nameTd=document.createElement('td'); nameTd.textContent=r.fullName;
-    const emailTd=document.createElement('td'); emailTd.textContent=r.email;
-    const statusTd=document.createElement('td');
-    statusTd.textContent=r.status;
-    statusTd.className = r.status==='approved'?'status-approved':'status-pending';
-    tr.appendChild(nameTd); tr.appendChild(emailTd); tr.appendChild(statusTd);
-    tbody.appendChild(tr);
-  });
-}
-
-// Check URL params to auto-fill referral code
-const urlParams = new URLSearchParams(window.location.search);
-const ref = urlParams.get('ref');
-if(ref && currentUserEmail===null){ 
-  // prefill referral code for new user
-  const regData = JSON.parse(localStorage.getItem('referral_register_temp')||'{}');
-  regData.referralCode=ref;
-  localStorage.setItem('referral_register_temp', JSON.stringify(regData));
-}
-
-updateDashboard();
-
-function logout(){
+function logout() {
   localStorage.removeItem('current_user_email');
-  window.location.href='login.html';
+  window.location.href = 'index.html';
 }
 </script>
 
