@@ -4,130 +4,523 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Referral Dashboard - Crown Trade Academy</title>
-<link rel="stylesheet" href="style.css">
 <style>
-  body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;}
-  .premium-header{background:#3a2d28;padding:1rem;}
-  .premium-header .premium-nav{display:flex;justify-content:space-between;align-items:center;}
-  .premium-header .premium-nav a.logo{color:#d4af37;font-weight:bold;text-decoration:none;font-size:1.2rem;}
-  .premium-container{max-width:900px;margin:3rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-  .card{background:#fff;border:1px solid #ccc;padding:1rem;border-radius:8px;margin-bottom:1rem;}
-  .btn-withdraw{background:#28a745;color:#fff;padding:0.5rem 1rem;border:none;border-radius:6px;cursor:pointer;}
-  input{padding:0.5rem;width:100%;border-radius:6px;border:1px solid #ccc;}
+  :root {
+    --dark-brown: #3a2d28;
+    --gold-accent: #d4af37;
+    --muted-rose: #a67c7c;
+    --soft-beige: #e8d5c4;
+    --off-white: #faf8f6;
+    --light-taupe: #d4c5b9;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body { 
+    font-family: 'Georgia', serif; 
+    background: linear-gradient(135deg, var(--off-white) 0%, var(--soft-beige) 100%);
+    min-height: 100vh;
+  }
+
+  .premium-header { 
+    background: var(--dark-brown);
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 20px rgba(58, 45, 40, 0.15);
+  }
+
+  .premium-header .premium-nav { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .premium-header .premium-nav a.logo { 
+    color: var(--gold-accent); 
+    font-weight: 700; 
+    text-decoration: none; 
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .welcome-card {
+    background: linear-gradient(135deg, var(--dark-brown) 0%, #2a1f1b 100%);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-bottom: 2rem;
+    color: white;
+    box-shadow: 0 20px 60px rgba(58, 45, 40, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .welcome-card h1 {
+    color: var(--gold-accent);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+
+  .welcome-card p {
+    color: var(--soft-beige);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(58, 45, 40, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(58, 45, 40, 0.15);
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .stat-label {
+    color: var(--muted-rose);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-value {
+    color: var(--dark-brown);
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .referral-link-card {
+    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--off-white) 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px dashed var(--gold-accent);
+  }
+
+  .referral-link-card h3 {
+    color: var(--dark-brown);
+    margin-bottom: 1rem;
+  }
+
+  .referral-link-display {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(58, 45, 40, 0.08);
+    flex-wrap: wrap;
+  }
+
+  .referral-link-text {
+    color: var(--dark-brown);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    word-break: break-all;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .btn-copy {
+    background: var(--gold-accent);
+    color: var(--dark-brown);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .btn-copy:hover {
+    background: #c59d2a;
+    transform: scale(1.05);
+  }
+
+  .btn-withdraw {
+    background: linear-gradient(135deg, var(--muted-rose) 0%, #8f6565 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(166, 124, 124, 0.3);
+    margin-top: 1rem;
+  }
+
+  .btn-withdraw:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(166, 124, 124, 0.4);
+  }
+
+  .btn-withdraw:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .referrals-section {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(58, 45, 40, 0.08);
+    margin-bottom: 2rem;
+  }
+
+  .referrals-section h3 {
+    color: var(--dark-brown);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    background: var(--off-white);
+    color: var(--dark-brown);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--light-taupe);
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--light-taupe);
+    color: var(--muted-rose);
+  }
+
+  tr:hover {
+    background: var(--off-white);
+  }
+
+  .status-pending {
+    color: #ffc107;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .status-approved {
+    color: #28a745;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .btn-logout {
+    background: transparent;
+    color: var(--muted-rose);
+    border: 2px solid var(--muted-rose);
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+  }
+
+  .btn-logout:hover {
+    background: var(--muted-rose);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--muted-rose);
+  }
+
+  .empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .referral-link-display {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-copy {
+      width: 100%;
+    }
+
+    table {
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 0.5rem;
+    }
+  }
 </style>
 </head>
 <body>
 
 <header class="premium-header">
   <nav class="premium-nav">
-    <a href="referral-dashboard.html" class="logo">Crown Trade Academy</a>
+    <a href="index.html" class="logo">Crown Trade Academy</a>
   </nav>
 </header>
 
-<section class="premium-container">
-  <h1>Referral Dashboard</h1>
-  
-  <div class="card">
-    <h3>Your Unique Referral Link</h3>
-    <input type="text" id="referralLink" readonly>
-    <button onclick="copyLink()" class="btn-withdraw" style="margin-top:0.5rem;">Copy Link</button>
+<div class="dashboard-container">
+  <div class="welcome-card">
+    <h1>Welcome back, <span id="userName">Loading...</span>! 👋</h1>
+    <p>Your referral empire awaits. Share your link and watch your earnings grow.</p>
   </div>
 
-  <div class="card">
-    <h3>Referral Earnings</h3>
-    <p><strong>Balance:</strong> KES <span id="balance">0</span></p>
-    <p><strong>Total Earnings:</strong> KES <span id="totalEarnings">0</span></p>
-    <p><strong>Pending Earnings:</strong> KES <span id="pendingEarnings">0</span></p>
-    <button class="btn-withdraw" onclick="requestWithdrawal()">Request Withdrawal</button>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-icon">💰</span>
+      <div class="stat-label">Total Earnings</div>
+      <div class="stat-value">KES <span id="totalEarnings">0</span></div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">👥</span>
+      <div class="stat-label">Total Referrals</div>
+      <div class="stat-value" id="totalReferrals">0</div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">✅</span>
+      <div class="stat-label">Approved Referrals</div>
+      <div class="stat-value" id="approvedReferrals">0</div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">⏳</span>
+      <div class="stat-label">Pending Approval</div>
+      <div class="stat-value" id="pendingReferrals">0</div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Referrals</h3>
-    <table style="width:100%;border-collapse:collapse;">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Earnings</th>
-        </tr>
-      </thead>
-      <tbody id="referralsTable"></tbody>
-    </table>
+  <div class="referral-link-card">
+    <h3>🔗 Your Unique Referral Link</h3>
+    <p style="color: var(--muted-rose); margin-bottom: 1rem;">Share this link with friends and earn KES 300 for each approved referral!</p>
+    
+    <div class="referral-link-display">
+      <span class="referral-link-text" id="userReferralLink">Loading...</span>
+      <button class="btn-copy" onclick="copyReferralLink()">📋 Copy Link</button>
+    </div>
+
+    <button class="btn-withdraw" onclick="requestWithdrawal()" id="withdrawBtn">
+      💸 Request Withdrawal
+    </button>
+    <p style="color: var(--muted-rose); font-size: 0.9rem; margin-top: 0.5rem;">
+      Minimum withdrawal: KES 500
+    </p>
   </div>
-</section>
+
+  <div class="referrals-section">
+    <h3>📊 Your Referrals</h3>
+    <div id="referralsTableContainer">
+      <table id="referralsTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date Joined</th>
+            <th>Status</th>
+            <th>Earnings</th>
+          </tr>
+        </thead>
+        <tbody id="referralsTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="btn-logout" onclick="logout()">🚪 Logout</button>
+</div>
 
 <script>
-let currentUserEmail = localStorage.getItem('current_user_email');
-let users = JSON.parse(localStorage.getItem('users') || '[]');
-let currentUser = users.find(u => u.email === currentUserEmail);
+const currentUserEmail = localStorage.getItem('current_user_email');
+let currentUser = null;
 
-if(!currentUser){
-  alert('User not found. Redirecting to login.');
-  window.location.href='login.html';
-}
-
-function updateDashboard(){
-  // Unique referral link
-  const link = window.location.origin + '/referral-register.html?ref=' + currentUser.email;
-  document.getElementById('referralLink').value = link;
-
-  // Earnings
-  document.getElementById('balance').textContent = currentUser.balance || 0;
-  document.getElementById('totalEarnings').textContent = currentUser.totalEarnings || 0;
-  document.getElementById('pendingEarnings').textContent = currentUser.pendingEarnings || 0;
-
-  // Referrals table
-  const referrals = users.filter(u => u.referralCodeUsed === currentUser.email);
-  const tbody = document.getElementById('referralsTable');
-  tbody.innerHTML = '';
-  referrals.forEach(r => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${r.fullName}</td>
-      <td>${r.email}</td>
-      <td>${r.status}</td>
-      <td>${r.status==='approved'? 300 : 0}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-function copyLink(){
-  const linkInput = document.getElementById('referralLink');
-  linkInput.select();
-  linkInput.setSelectionRange(0, 99999);
-  document.execCommand('copy');
-  alert('Referral link copied!');
-}
-
-function requestWithdrawal(){
-  const amount = parseInt(currentUser.balance || 0);
-  if(amount <= 0){
-    alert('No balance available for withdrawal.');
+function loadDashboard() {
+  if (!currentUserEmail) {
+    window.location.href = 'referral-register.html';
     return;
   }
 
-  // Save withdrawal request
-  let withdrawals = JSON.parse(localStorage.getItem('withdrawals')||'[]');
-  withdrawals.push({
-    userEmail: currentUser.email,
-    amount: amount,
-    status: 'pending',
-    requestedAt: new Date().toISOString()
-  });
-  localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+  const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+  const userApplication = applications.find(app => app.email === currentUserEmail);
 
-  // Reset user balance
-  currentUser.balance = 0;
-  users = users.map(u => u.email === currentUser.email ? currentUser : u);
-  localStorage.setItem('users', JSON.stringify(users));
+  if (!userApplication) {
+    alert('User not found. Please register first.');
+    window.location.href = 'referral-register.html';
+    return;
+  }
 
-  alert('Withdrawal request submitted!');
-  updateDashboard();
+  if (userApplication.status !== 'approved') {
+    window.location.href = 'referral-pending.html';
+    return;
+  }
+
+  currentUser = userApplication;
+
+  document.getElementById('userName').textContent = userApplication.fullName;
+
+  const referralLink = window.location.origin + '/referral-register.html?ref=' + encodeURIComponent(userApplication.email);
+  document.getElementById('userReferralLink').textContent = referralLink;
+
+  const referrals = applications.filter(app => app.referralCode === userApplication.email);
+
+  const totalReferrals = referrals.length;
+  const approvedReferrals = referrals.filter(r => r.status === 'approved').length;
+  const pendingReferrals = referrals.filter(r => r.status === 'pending').length;
+  const totalEarnings = approvedReferrals * 300;
+
+  document.getElementById('totalEarnings').textContent = totalEarnings.toLocaleString();
+  document.getElementById('totalReferrals').textContent = totalReferrals;
+  document.getElementById('approvedReferrals').textContent = approvedReferrals;
+  document.getElementById('pendingReferrals').textContent = pendingReferrals;
+
+  const withdrawBtn = document.getElementById('withdrawBtn');
+  if (totalEarnings < 500) {
+    withdrawBtn.disabled = true;
+    withdrawBtn.textContent = '💸 Minimum KES 500 required';
+  }
+
+  const tbody = document.getElementById('referralsTableBody');
+  tbody.innerHTML = '';
+
+  if (referrals.length === 0) {
+    document.getElementById('referralsTableContainer').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <h4 style="color: var(--dark-brown); margin-bottom: 0.5rem;">No referrals yet</h4>
+        <p>Share your referral link to start earning!</p>
+      </div>
+    `;
+  } else {
+    referrals.forEach(referral => {
+      const tr = document.createElement('tr');
+      const earnings = referral.status === 'approved' ? 300 : 0;
+      
+      tr.innerHTML = `
+        <td style="font-weight: 600; color: var(--dark-brown);">${referral.fullName}</td>
+        <td>${referral.email}</td>
+        <td>${new Date(referral.submittedAt).toLocaleDateString()}</td>
+        <td>
+          <span class="status-${referral.status}">
+            ${referral.status === 'approved' ? '✅ Approved' : '⏳ Pending'}
+          </span>
+        </td>
+        <td style="font-weight: 600; color: var(--dark-brown);">KES ${earnings}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
 }
 
-updateDashboard();
+function copyReferralLink() {
+  const linkText = document.getElementById('userReferralLink').textContent;
+  navigator.clipboard.writeText(linkText).then(() => {
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    btn.style.background = '#28a745';
+    
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+    }, 2000);
+  }).catch(err => {
+    const textArea = document.createElement('textarea');
+    textArea.value = linkText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    alert('Link copied to clipboard!');
+  });
+}
+
+function requestWithdrawal() {
+  const totalEarnings = parseInt(document.getElementById('totalEarnings').textContent.replace(/,/g, ''));
+  
+  if (totalEarnings < 500) {
+    alert('Minimum withdrawal amount is KES 500. Keep referring to reach the minimum!');
+    return;
+  }
+
+  const withdrawalRequests = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
+  
+  const newRequest = {
+    id: 'WD-' + Date.now(),
+    userId: currentUser.email,
+    userName: currentUser.fullName,
+    userPhone: currentUser.phone,
+    amount: totalEarnings,
+    status: 'pending',
+    requestedAt: new Date().toISOString(),
+    processedAt: null
+  };
+
+  withdrawalRequests.push(newRequest);
+  localStorage.setItem('withdrawal_requests', JSON.stringify(withdrawalRequests));
+
+  alert('Withdrawal request for KES ' + totalEarnings.toLocaleString() + ' has been submitted! We will process it within 24-48 hours and send the money to your phone number: ' + currentUser.phone);
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('current_user_email');
+    window.location.href = 'index.html';
+  }
+}
+
+loadDashboard();
+setInterval(loadDashboard, 30000);
 </script>
 
 </body>
