@@ -979,20 +979,35 @@
         document.getElementById('mentorshipForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
+            // Get all form data
             const formData = {
                 name: this.querySelector('input[type="text"]').value,
                 email: this.querySelector('input[type="email"]').value,
                 phone: this.querySelector('input[type="tel"]').value,
-                program: 'Mentorship Program',
+                experience: this.querySelector('select').value,
+                goals: this.querySelector('textarea').value,
+                markets: Array.from(this.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.nextElementSibling.textContent),
+                timeCommitment: this.querySelectorAll('select')[1].value,
+                program: 'Elite Mentorship Program',
                 amount: 50000
             };
             
-            // Store form data for payment page
-            localStorage.setItem('mentorshipApplication', JSON.stringify(formData));
+            // Validate required fields
+            if (!formData.name || !formData.email || !formData.phone) {
+                alert('Please fill in all required fields');
+                return;
+            }
             
-            // Redirect to payment instructions
-            window.location.href = 'payment-instructions.html?program=mentorship';
+            // Store form data
+            localStorage.setItem('mentorshipApplication', JSON.stringify(formData));
+            localStorage.setItem('selectedProgram', 'mentorship');
+            localStorage.setItem('programAmount', 50000);
+            
+            // Show confirmation and redirect
+            alert('✅ Application Received!\n\nPlease check your email for verification and payment instructions.');
+            
+            // Redirect to payment or confirmation page
+            window.location.href = 'payment-instructions.html';
         });
 
         // Header scroll effect
