@@ -4,7 +4,690 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Mentorship Program - Crown Trade Academy</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --nude-light: #F9F6F2;
+            --nude-medium: #E8DFD6;
+            --nude-dark: #D4C8BC;
+            --nude-accent: #C4B5A3;
+            --gold: #C8A97E;
+            --gold-dark: #B89463;
+            --charcoal: #3A3A3A;
+            --text-light: #7A7A7A;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--nude-light);
+            color: var(--charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Header */
+        .premium-header {
+            background-color: rgba(249, 246, 242, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 200, 188, 0.3);
+            transition: var(--transition);
+        }
+
+        .premium-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Mentorship Hero */
+        .mentorship-hero {
+            background: linear-gradient(135deg, rgba(249, 246, 242, 0.9) 0%, rgba(232, 223, 214, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mentorship-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(249, 246, 242, 0.7), rgba(232, 223, 214, 0.5));
+            z-index: 1;
+        }
+
+        .mentorship-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mentorship-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--charcoal);
+        }
+
+        .mentorship-hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--nude-light);
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid var(--gold);
+            transition: var(--transition);
+        }
+
+        /* Program Benefits */
+        .benefits-section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--charcoal);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .benefit-card {
+            background: var(--nude-light);
+            border-radius: 0;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid var(--nude-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            height: 80px;
+            width: 80px;
+            line-height: 80px;
+            border: 1px solid var(--nude-medium);
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover .benefit-icon {
+            background-color: var(--gold);
+            color: var(--nude-light);
+            border-color: var(--gold);
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 1.2rem;
+            color: var(--charcoal);
+            font-size: 1.5rem;
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Application Form */
+        .application-section {
+            padding: 5rem 0;
+        }
+
+        .premium-card {
+            background: var(--nude-light);
+            border-radius: 0;
+            padding: 4rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid var(--nude-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .premium-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--charcoal);
+            font-size: 2.2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--nude-medium);
+            background: var(--nude-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            color: var(--charcoal);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            accent-color: var(--gold);
+        }
+
+        .payment-notice {
+            background: var(--nude-medium);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--gold);
+        }
+
+        .payment-notice h4 {
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .payment-notice p {
+            color: var(--text-light);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            accent-color: var(--gold);
+            margin-top: 0.2rem;
+        }
+
+        .terms-checkbox span {
+            color: var(--charcoal);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .btn-premium {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--nude-light);
+            padding: 1.2rem 2.5rem;
+            border-radius: 0;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border: 1px solid var(--gold);
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+
+        .btn-premium:hover {
+            background: transparent;
+            color: var(--gold);
+        }
+
+        /* Program Structure */
+        .structure-section {
+            padding: 5rem 0;
+        }
+
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .structure-card {
+            background: var(--nude-light);
+            border-radius: 0;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid var(--nude-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .structure-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .structure-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .structure-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            height: 70px;
+            width: 70px;
+            line-height: 70px;
+            border: 1px solid var(--nude-medium);
+            transition: var(--transition);
+        }
+
+        .structure-card:hover .structure-icon {
+            background-color: var(--gold);
+            color: var(--nude-light);
+            border-color: var(--gold);
+        }
+
+        .structure-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            font-size: 1.3rem;
+        }
+
+        .structure-card p {
+            color: var(--text-light);
+        }
+
+        /* Success Stories */
+        .stories-section {
+            padding: 5rem 0;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .story-card {
+            background: var(--nude-light);
+            border-radius: 0;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid var(--nude-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .story-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .story-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+        }
+
+        .story-card p {
+            color: var(--text-light);
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-author {
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 0;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--nude-medium) 0%, var(--nude-dark) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+        }
+
+        .cta-card p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            padding: 4rem 2rem 2rem;
+            color: var(--nude-medium);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--nude-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: var(--nude-medium);
+            margin-bottom: 0.8rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 200, 188, 0.2);
+            color: var(--nude-dark);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .premium-nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                gap: 1.5rem;
+            }
+            
+            .mentorship-hero {
+                padding: 4rem 1.5rem;
+            }
+            
+            .mentorship-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mentorship-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .premium-card {
+                padding: 2rem;
+            }
+            
+            .benefits-grid,
+            .structure-grid,
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Premium Header -->
@@ -19,279 +702,329 @@
         </nav>
     </header>
 
-    <!-- Mentorship Hero -->
-    <section class="premium-container" style="padding: 4rem 0;">
-        <div class="premium-card">
-            <div style="text-align: center; padding: 3rem 0;">
-                <h1 style="font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--dark-brown), var(--muted-rose)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                    Elite Trading Mentorship
-                </h1>
-                <p style="font-size: 1.4rem; margin-bottom: 2rem; color: var(--muted-rose);">
-                    Transform Your Trading with 1-on-1 Expert Guidance
-                </p>
-                <div style="display: inline-block; background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose)); color: var(--dark-brown); padding: 1rem 2rem; border-radius: 10px; font-size: 1.5rem; font-weight: 700;">
-                    KES 50,000
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Mentorship Hero -->
+        <section class="mentorship-hero">
+            <div class="mentorship-hero-content">
+                <h1>Elite Trading Mentorship</h1>
+                <p>Transform Your Trading with 1-on-1 Expert Guidance</p>
+                <div class="price-tag">KES 50,000</div>
+            </div>
+        </section>
+
+        <!-- Program Benefits -->
+        <section class="benefits-section">
+            <div class="premium-container">
+                <div class="section-title">
+                    <h2>What You'll Master</h2>
+                </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Advanced Chart Analysis</h3>
+                        <p>Read market movements like a professional with advanced technical analysis techniques.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Proprietary Strategies</h3>
+                        <p>Access exclusive trading strategies developed through years of market experience.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Risk Management</h3>
+                        <p>Learn to protect your capital while maximizing profitable opportunities.</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>Live Trading Sessions</h3>
+                        <p>Real-time market analysis and live trading with your personal mentor.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Program Benefits -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--dark-brown);">
-                What You'll Master
-            </h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Advanced Chart Analysis</h3>
-                    <p style="color: var(--muted-rose);">Read market movements like a professional with advanced technical analysis techniques.</p>
-                </div>
+        <!-- Application Form -->
+        <section class="application-section">
+            <div class="premium-container">
+                <div class="premium-card">
+                    <h2 class="form-title">Apply for Elite Mentorship</h2>
+                    
+                    <form id="mentorshipForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" placeholder="Enter your full name" required>
+                            </div>
 
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Proprietary Strategies</h3>
-                    <p style="color: var(--muted-rose);">Access exclusive trading strategies developed through years of market experience.</p>
-                </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" placeholder="your@email.com" required>
+                            </div>
 
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Risk Management</h3>
-                    <p style="color: var(--muted-rose);">Learn to protect your capital while maximizing profitable opportunities.</p>
-                </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+254 XXX XXX XXX" required>
+                            </div>
 
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">💼</div>
-                    <h3 style="margin-bottom: 1rem; color: var(--dark-brown);">Live Trading Sessions</h3>
-                    <p style="color: var(--muted-rose);">Real-time market analysis and live trading with your personal mentor.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                            <div class="form-group">
+                                <label class="form-label">Current Trading Experience</label>
+                                <select class="form-control" required>
+                                    <option value="">Select experience level</option>
+                                    <option value="beginner">Beginner (0-6 months)</option>
+                                    <option value="intermediate">Intermediate (6 months - 2 years)</option>
+                                    <option value="advanced">Advanced (2+ years)</option>
+                                </select>
+                            </div>
+                        </div>
 
-    <!-- Application Form -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 2rem; color: var(--dark-brown);">Apply for Elite Mentorship</h2>
-            
-            <form id="mentorshipForm">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="Enter your full name" required>
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label">Primary Trading Goals</label>
+                            <textarea class="form-control" placeholder="What do you hope to achieve through this mentorship? (e.g., consistent profits, risk management, specific strategies)" rows="3" required></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" class="form-control" placeholder="your@email.com" required>
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label">Preferred Trading Markets</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="forex">
+                                    <label for="forex">Forex</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="stocks">
+                                    <label for="stocks">Stocks</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="crypto">
+                                    <label for="crypto">Cryptocurrency</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="commodities">
+                                    <label for="commodities">Commodities</label>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Phone Number</label>
-                        <input type="tel" class="form-control" placeholder="+254 XXX XXX XXX" required>
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label">Available Time Commitment (Hours/Week)</label>
+                            <select class="form-control" required>
+                                <option value="">Select time commitment</option>
+                                <option value="5-10">5-10 hours</option>
+                                <option value="10-20">10-20 hours</option>
+                                <option value="20+">20+ hours</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Current Trading Experience</label>
-                        <select class="form-control" required>
-                            <option value="">Select experience level</option>
-                            <option value="beginner">Beginner (0-6 months)</option>
-                            <option value="intermediate">Intermediate (6 months - 2 years)</option>
-                            <option value="advanced">Advanced (2+ years)</option>
-                        </select>
-                    </div>
-                </div>
+                        <div class="payment-notice">
+                            <h4>💰 Program Investment: KES 50,000</h4>
+                            <p>
+                                Kindly contact us through <strong>crowntradeacademy@gmail.com</strong> 
+                                BEFORE making payment for verification and official payment instructions.
+                            </p>
+                        </div>
 
-                <div class="form-group">
-                    <label class="form-label">Primary Trading Goals</label>
-                    <textarea class="form-control" placeholder="What do you hope to achieve through this mentorship? (e.g., consistent profits, risk management, specific strategies)" rows="3" required></textarea>
-                </div>
+                        <div class="terms-checkbox">
+                            <input type="checkbox" required>
+                            <span>
+                                I understand the program fee is KES 50,000 and all payments require 
+                                verification through crowntradeacademy@gmail.com. I commit to the 
+                                program duration and time requirements.
+                            </span>
+                        </div>
 
-                <div class="form-group">
-                    <label class="form-label">Preferred Trading Markets</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" style="accent-color: var(--dark-brown);">
-                            <span>Forex</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" style="accent-color: var(--dark-brown);">
-                            <span>Stocks</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" style="accent-color: var(--dark-brown);">
-                            <span>Cryptocurrency</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" style="accent-color: var(--dark-brown);">
-                            <span>Commodities</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Available Time Commitment (Hours/Week)</label>
-                    <select class="form-control" required>
-                        <option value="">Select time commitment</option>
-                        <option value="5-10">5-10 hours</option>
-                        <option value="10-20">10-20 hours</option>
-                        <option value="20+">20+ hours</option>
-                    </select>
-                </div>
-
-                <div class="payment-notice">
-                    <h4 style="margin-bottom: 0.5rem;">💰 Program Investment: KES 2,500</h4>
-                    <p style="margin: 0;">
-                        Kindly contact us through <strong>crowntradeacademy@gmail.com</strong> 
-                        BEFORE making payment for verification and official payment instructions.
-                    </p>
-                </div>
-
-                <div class="form-group">
-                    <label style="display: flex; align-items: flex-start; gap: 0.5rem;">
-                        <input type="checkbox" style="accent-color: var(--dark-brown); margin-top: 0.2rem;" required>
-                        <span style="color: var(--dark-brown); font-size: 0.9rem;">
-                            I understand the program fee is KES 2,500 and all payments require 
-                            verification through crowntradeacademy@gmail.com. I commit to the 
-                            program duration and time requirements.
-                        </span>
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-premium" style="width: 100%; margin-top: 1.5rem;">
-                    🚀 Apply for Mentorship Program
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Program Structure -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--dark-brown);">Program Structure</h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📅</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">12 Weeks</h4>
-                    <p style="color: var(--muted-rose);">Comprehensive program duration</p>
-                </div>
-
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">👨‍🏫</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">24 Sessions</h4>
-                    <p style="color: var(--muted-rose);">Twice weekly 1-on-1 sessions</p>
-                </div>
-
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">💬</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">24/7 Support</h4>
-                    <p style="color: var(--muted-rose);">Continuous mentor access</p>
-                </div>
-
-                <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📚</div>
-                    <h4 style="margin-bottom: 0.5rem; color: var(--dark-brown);">Resources</h4>
-                    <p style="color: var(--muted-rose);">Proprietary materials & tools</p>
+                        <button type="submit" class="btn-premium">
+                            <i class="fas fa-rocket"></i> Apply for Mentorship Program
+                        </button>
+                    </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Success Stories -->
-    <section class="premium-container">
-        <div class="premium-card">
-            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--dark-brown);">Trading Transformations</h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <div style="text-align: center; padding: 2rem; background: var(--off-white); border-radius: 12px;">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">💎</div>
-                    <p style="color: var(--muted-rose); font-style: italic;">
-                        "The mentorship completely transformed my approach to risk management. I went from inconsistent results to consistent profitability."
-                    </p>
-                    <div style="font-weight: 600; color: var(--dark-brown); margin-top: 1rem;">- David K.</div>
-                </div>
+        <!-- Program Structure -->
+        <section class="structure-section">
+            <div class="premium-container">
+                <div class="premium-card">
+                    <div class="section-title">
+                        <h2>Program Structure</h2>
+                    </div>
+                    
+                    <div class="structure-grid">
+                        <div class="structure-card">
+                            <div class="structure-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h4>12 Weeks</h4>
+                            <p>Comprehensive program duration</p>
+                        </div>
 
-                <div style="text-align: center; padding: 2rem; background: var(--off-white); border-radius: 12px;">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">🚀</div>
-                    <p style="color: var(--muted-rose); font-style: italic;">
-                        "The 1-on-1 sessions provided insights I couldn't get from any course or book. My trading account grew by 300% in 6 months."
-                    </p>
-                    <div style="font-weight: 600; color: var(--dark-brown); margin-top: 1rem;">- Sarah M.</div>
+                        <div class="structure-card">
+                            <div class="structure-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h4>24 Sessions</h4>
+                            <p>Twice weekly 1-on-1 sessions</p>
+                        </div>
+
+                        <div class="structure-card">
+                            <div class="structure-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4>24/7 Support</h4>
+                            <p>Continuous mentor access</p>
+                        </div>
+
+                        <div class="structure-card">
+                            <div class="structure-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h4>Resources</h4>
+                            <p>Proprietary materials & tools</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="premium-container">
-        <div class="premium-card" style="text-align: center; background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));">
-            <h2 style="margin-bottom: 1rem; color: var(--dark-brown);">Ready to Transform Your Trading?</h2>
-            <p style="margin-bottom: 2rem; color: var(--dark-brown); font-size: 1.2rem;">
-                Join elite traders who have achieved consistent profitability through our mentorship.
-            </p>
-   <div style="text-align: center;">
-    <a href="mentorship-form.html" class="btn-premium" 
-       style="text-decoration: none; padding: 1.2rem 2rem; font-size: 1.1rem; display: inline-block; text-align: center; line-height: 1.4; white-space: nowrap;">
-        🚀 Start Mentorship - KES 50K
-    </a>
-</div>
-            </a>
-        </div>
-    </section>
+        <!-- Success Stories -->
+        <section class="stories-section">
+            <div class="premium-container">
+                <div class="premium-card">
+                    <div class="section-title">
+                        <h2>Trading Transformations</h2>
+                    </div>
+                    
+                    <div class="stories-grid">
+                        <div class="story-card">
+                            <div class="story-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <p>
+                                "The mentorship completely transformed my approach to risk management. 
+                                I went from inconsistent results to consistent profitability."
+                            </p>
+                            <div class="story-author">- David K.</div>
+                        </div>
+
+                        <div class="story-card">
+                            <div class="story-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <p>
+                                "The 1-on-1 sessions provided insights I couldn't get from any course or book. 
+                                My trading account grew by 300% in 6 months."
+                            </p>
+                            <div class="story-author">- Sarah M.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="premium-container">
+                <div class="cta-card">
+                    <div class="cta-content">
+                        <h2>Ready to Transform Your Trading?</h2>
+                        <p>Join elite traders who have achieved consistent profitability through our mentorship.</p>
+                        <a href="mentorship-form.html" class="btn-premium">
+                            <i class="fas fa-rocket"></i> Start Mentorship - KES 50,000
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Premium Footer -->
-    <footer class="premium-footer">
+    <footer>
         <div class="footer-content">
-            <div>
+            <div class="footer-section">
                 <h3>Elite Mentorship</h3>
                 <p>1-on-1 Professional Training</p>
                 <p>Email: crowntradeacademy@gmail.com</p>
             </div>
-            <div>
+            <div class="footer-section">
                 <h3>Program Details</h3>
                 <p>12 Week Duration</p>
                 <p>24 Sessions</p>
-                <p>KES 2,500 Investment</p>
+                <p>KES 50,000 Investment</p>
             </div>
-            <div>
+            <div class="footer-section">
                 <h3>Support</h3>
                 <p>Verified Payments</p>
                 <p>Professional Mentors</p>
                 <p>Results-Focused</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
+        <div class="copyright">
             <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         // Form handling
-       document.getElementById('mentorshipForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = {
-        name: this.querySelector('input[type="text"]').value,
-        email: this.querySelector('input[type="email"]').value,
-        phone: this.querySelector('input[type="tel"]').value,
-        program: 'Mentorship Program',
-        amount: 50000
-    };
-    
-    // Store form data for payment page
-    localStorage.setItem('mentorshipApplication', JSON.stringify(formData));
-    
-    // Redirect to payment instructions
-    window.location.href = 'payment-instructions.html?program=mentorship';
-});
+        document.getElementById('mentorshipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: this.querySelector('input[type="text"]').value,
+                email: this.querySelector('input[type="email"]').value,
+                phone: this.querySelector('input[type="tel"]').value,
+                program: 'Mentorship Program',
+                amount: 50000
+            };
+            
+            // Store form data for payment page
+            localStorage.setItem('mentorshipApplication', JSON.stringify(formData));
+            
+            // Redirect to payment instructions
+            window.location.href = 'payment-instructions.html?program=mentorship';
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.premium-header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(249, 246, 242, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
+            } else {
+                header.style.backgroundColor = 'rgba(249, 246, 242, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Animation on scroll for cards
+        const cards = document.querySelectorAll('.benefit-card, .structure-card, .story-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
     </script>
 </body>
-
 </html>
-
-
-
