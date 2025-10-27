@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referral Dashboard - Crown Trade Academy</title>
+    <title>Client Dashboard - Crown Trade Academy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Add the same luxury styles as referral dashboard but customized for mentorship */
         :root {
             --nude-light: #F9F6F2;
             --nude-medium: #E8DFD6;
@@ -18,9 +19,6 @@
             --gold-dark: #B89463;
             --charcoal: #3A3A3A;
             --text-light: #7A7A7A;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
@@ -85,11 +83,7 @@
             transition: var(--transition);
         }
 
-        .logo:hover::after {
-            width: 100%;
-        }
-
-        /* Main Content */
+        /* Main Content - Add your mentorship-specific styles here */
         .main-content {
             padding-top: 100px;
             min-height: 100vh;
@@ -98,18 +92,14 @@
             padding: 100px 2rem 2rem;
         }
 
-        /* Welcome Card */
         .welcome-card {
-            background: linear-gradient(135deg, rgba(249, 246, 242, 0.9) 0%, rgba(232, 223, 214, 0.8) 100%), 
-                        url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 4rem 3rem;
+            background: linear-gradient(135deg, rgba(249, 246, 242, 0.9) 0%, rgba(232, 223, 214, 0.8) 100%);
+            padding: 3rem;
             border-radius: 0;
             margin-bottom: 2rem;
+            border: 1px solid var(--nude-medium);
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--nude-medium);
         }
 
         .welcome-card::before {
@@ -118,495 +108,11 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(249, 246, 242, 0.7), rgba(232, 223, 214, 0.5));
-            z-index: 1;
-        }
-
-        .welcome-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .welcome-card h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            color: var(--charcoal);
-        }
-
-        .welcome-card p {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            border: 1px solid var(--nude-medium);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-        }
-
-        .stat-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Digital Wallet Section */
-        .wallet-section {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 3rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wallet-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
             height: 4px;
             background: var(--gold);
         }
 
-        .wallet-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .wallet-title {
-            color: var(--charcoal);
-            font-size: 1.8rem;
-        }
-
-        .wallet-balance {
-            text-align: center;
-            padding: 2rem;
-            background: var(--nude-medium);
-            border-radius: 0;
-            margin-bottom: 2rem;
-        }
-
-        .balance-label {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .balance-amount {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--charcoal);
-        }
-
-        .wallet-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 0;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            color: var(--nude-light);
-            border: 1px solid var(--gold);
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: var(--gold);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--charcoal);
-            border: 1px solid var(--charcoal);
-        }
-
-        .btn-secondary:hover {
-            background: var(--charcoal);
-            color: var(--nude-light);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn:disabled:hover {
-            background: var(--gold);
-            color: var(--nude-light);
-        }
-
-        /* Referral Link Section */
-        .referral-section {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 3rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .referral-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-        }
-
-        .section-title {
-            margin-bottom: 1.5rem;
-            color: var(--charcoal);
-            font-size: 1.8rem;
-        }
-
-        .referral-link-container {
-            background: var(--nude-medium);
-            padding: 1.5rem;
-            border-radius: 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .referral-link-display {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .referral-link {
-            flex: 1;
-            padding: 1rem;
-            background: var(--nude-light);
-            border: 1px solid var(--nude-dark);
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: var(--charcoal);
-            word-break: break-all;
-        }
-
-        .btn-copy {
-            background: var(--charcoal);
-            color: var(--nude-light);
-            border: 1px solid var(--charcoal);
-            padding: 1rem 1.5rem;
-            white-space: nowrap;
-        }
-
-        .btn-copy:hover {
-            background: transparent;
-            color: var(--charcoal);
-        }
-
-        .social-share {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .share-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: var(--nude-medium);
-            color: var(--charcoal);
-            text-decoration: none;
-            border-radius: 0;
-            transition: var(--transition);
-            border: 1px solid var(--nude-dark);
-        }
-
-        .share-btn:hover {
-            background: var(--gold);
-            color: var(--nude-light);
-            border-color: var(--gold);
-        }
-
-        /* Referrals Table */
-        .referrals-table-section {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 3rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .referrals-table-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--nude-medium);
-        }
-
-        th {
-            color: var(--charcoal);
-            font-weight: 600;
-            font-size: 0.9rem;
-            background: var(--nude-medium);
-        }
-
-        td {
-            color: var(--text-light);
-            font-size: 0.85rem;
-        }
-
-        .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background-color: rgba(255, 193, 7, 0.2);
-            color: #856404;
-        }
-
-        .status-approved {
-            background-color: rgba(40, 167, 69, 0.2);
-            color: #155724;
-        }
-
-        .status-rejected {
-            background-color: rgba(220, 53, 69, 0.2);
-            color: #721c24;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: var(--nude-dark);
-        }
-
-        /* Withdrawal History */
-        .withdrawal-section {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 3rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .withdrawal-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--nude-light);
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            border: 1px solid var(--nude-medium);
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
-
-        .modal-title {
-            margin-bottom: 1.5rem;
-            color: var(--charcoal);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--charcoal);
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--nude-medium);
-            background: var(--nude-light);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-            color: var(--charcoal);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .premium-nav {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .main-content {
-                padding: 120px 1rem 1rem;
-            }
-            
-            .welcome-card {
-                padding: 2rem 1.5rem;
-            }
-            
-            .welcome-card h1 {
-                font-size: 2rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .referral-link-display {
-                flex-direction: column;
-            }
-            
-            .wallet-actions {
-                grid-template-columns: 1fr;
-            }
-            
-            .social-share {
-                justify-content: center;
-            }
-        }
+        /* Add more mentorship-specific styling as needed */
     </style>
 </head>
 <body>
@@ -615,214 +121,58 @@
         <nav class="premium-nav">
             <a href="index.html" class="logo">Crown Trade Academy</a>
             <div style="display: flex; gap: 1rem;">
-                <a href="index.html" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Back to Home</a>
-                <button class="btn btn-secondary" onclick="logout()" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Logout</button>
+                <span id="userWelcome" style="color: var(--charcoal); font-weight: 500;">Welcome!</span>
+                <button class="btn-logout" onclick="logout()" style="padding: 0.5rem 1rem; background: transparent; color: var(--charcoal); border: 1px solid var(--charcoal); cursor: pointer;">Logout</button>
             </div>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Welcome Section -->
         <section class="welcome-card">
-            <div class="welcome-content">
-                <h1>Welcome back, <span id="userName">[Loading...]</span>! 👑</h1>
-                <p>Your referral empire is growing. Track your earnings and expand your network.</p>
-            </div>
+            <h1>Welcome to Your Mentorship Dashboard</h1>
+            <p>Access your elite trading mentorship resources and track your progress</p>
         </section>
 
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <div class="stat-value">KES <span id="totalEarnings">0</span></div>
-                <div class="stat-label">Total Earnings</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-value" id="totalReferrals">0</div>
-                <div class="stat-label">Total Referrals</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="stat-value" id="approvedReferrals">0</div>
-                <div class="stat-label">Approved Referrals</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="stat-value" id="pendingReferrals">0</div>
-                <div class="stat-label">Pending Approval</div>
-            </div>
+        <!-- Add mentorship-specific content here -->
+        <div style="text-align: center; padding: 3rem;">
+            <h2>Mentorship Program Features Coming Soon</h2>
+            <p>Your personalized trading mentorship dashboard is being prepared.</p>
         </div>
-
-        <!-- Digital Wallet Section -->
-        <section class="wallet-section">
-            <div class="wallet-header">
-                <h2 class="wallet-title">Digital Wallet</h2>
-                <div class="wallet-info">
-                    <span class="balance-label">Available Balance</span>
-                    <div class="balance-amount">KES <span id="walletBalance">0</span></div>
-                </div>
-            </div>
-            
-            <div class="wallet-actions">
-                <button class="btn btn-primary" onclick="openWithdrawalModal()" id="withdrawBtn">
-                    <i class="fas fa-hand-holding-usd"></i> Request Withdrawal
-                </button>
-                <button class="btn btn-secondary" onclick="refreshWallet()">
-                    <i class="fas fa-sync-alt"></i> Refresh Balance
-                </button>
-            </div>
-            <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 1rem;">
-                <i class="fas fa-info-circle"></i> Minimum withdrawal: KES 500 • Processed within 24-48 hours
-            </p>
-        </section>
-
-        <!-- Referral Link Section -->
-        <section class="referral-section">
-            <h2 class="section-title">Your Referral Network</h2>
-            <p style="color: var(--text-light); margin-bottom: 1.5rem;">
-                Share your unique referral link and earn <strong>KES 300</strong> for every approved referral
-            </p>
-            
-            <div class="referral-link-container">
-                <div class="referral-link-display">
-                    <input type="text" class="referral-link" id="userReferralLink" readonly value="Loading...">
-                    <button class="btn btn-copy" onclick="copyReferralLink()">
-                        <i class="fas fa-copy"></i> Copy Link
-                    </button>
-                </div>
-                
-                <div class="social-share">
-                    <a href="#" class="share-btn" onclick="shareOnWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                    <a href="#" class="share-btn" onclick="shareOnTelegram()">
-                        <i class="fab fa-telegram"></i> Telegram
-                    </a>
-                    <a href="#" class="share-btn" onclick="shareOnFacebook()">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </a>
-                    <a href="#" class="share-btn" onclick="copyReferralMessage()">
-                        <i class="fas fa-sms"></i> Copy Message
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Referrals Table -->
-        <section class="referrals-table-section">
-            <h2 class="section-title">Your Referrals</h2>
-            <div class="table-container">
-                <table id="referralsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Date Joined</th>
-                            <th>Status</th>
-                            <th>Bonus</th>
-                        </tr>
-                    </thead>
-                    <tbody id="referralsTableBody">
-                        <!-- Referrals will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-            <div id="emptyReferralsState" class="empty-state" style="display: none;">
-                <div class="empty-state-icon">
-                    <i class="fas fa-users-slash"></i>
-                </div>
-                <h3 style="color: var(--charcoal); margin-bottom: 0.5rem;">No Referrals Yet</h3>
-                <p>Share your referral link to start earning bonuses!</p>
-            </div>
-        </section>
-
-        <!-- Withdrawal History -->
-        <section class="withdrawal-section">
-            <h2 class="section-title">Withdrawal History</h2>
-            <div class="table-container">
-                <table id="withdrawalTable">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Transaction ID</th>
-                        </tr>
-                    </thead>
-                    <tbody id="withdrawalTableBody">
-                        <!-- Withdrawal history will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-            <div id="emptyWithdrawalState" class="empty-state" style="display: none;">
-                <div class="empty-state-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <h3 style="color: var(--charcoal); margin-bottom: 0.5rem;">No Withdrawals Yet</h3>
-                <p>Your withdrawal history will appear here</p>
-            </div>
-        </section>
     </main>
 
-    <!-- Withdrawal Modal -->
-    <div id="withdrawalModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <h3 class="modal-title">Request Withdrawal</h3>
-            
-            <div class="form-group">
-                <label class="form-label">Available Balance</label>
-                <div style="padding: 1rem; background: var(--nude-medium); font-size: 1.2rem; font-weight: 600;">
-                    KES <span id="modalBalance">0</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Withdrawal Amount (KES)</label>
-                <input type="number" class="form-control" id="withdrawalAmount" 
-                       min="500" max="50000" placeholder="Enter amount">
-                <small style="color: var(--text-light);">Minimum: KES 500 • Maximum: KES 50,000</small>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Payment Method</label>
-                <select class="form-control" id="paymentMethod">
-                    <option value="mpesa">M-Pesa</option>
-                    <option value="bank">Bank Transfer</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="phoneNumberGroup">
-                <label class="form-label">M-Pesa Phone Number</label>
-                <input type="tel" class="form-control" id="phoneNumber" 
-                       placeholder="+254 XXX XXX XXX" value="+254">
-            </div>
-
-            <button class="btn btn-primary" style="width: 100%;" onclick="submitWithdrawal()">
-                <i class="fas fa-paper-plane"></i> Submit Withdrawal Request
-            </button>
-        </div>
-    </div>
-
     <script>
-        // Global variables
-        let currentUser = null;
-        const currentUserEmail = localStorage.getItem('current_user_email');
-
-        // Initialize dashboard
+        // Check if user is logged in and has mentorship access
         document.addEventListener('DOMContentLoaded', function() {
+            const currentUserEmail = localStorage.getItem('current_user_email');
+            const currentUserProgram = localStorage.getItem('current_user_program');
+            
             if (!currentUserEmail) {
-                window.location.h
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Verify user has mentorship access
+            if (currentUserProgram !== 'mentorship-only' && currentUserProgram !== 'combined') {
+                alert('Access denied. This dashboard is for mentorship program members only.');
+                window.location.href = 'referral-dashboard.html';
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === currentUserEmail);
+            
+            if (user) {
+                document.getElementById('userWelcome').textContent = `Welcome, ${user.fullName}!`;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('current_user_email');
+            localStorage.removeItem('current_user_id');
+            localStorage.removeItem('current_user_program');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
