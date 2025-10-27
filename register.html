@@ -150,7 +150,6 @@
             padding: 4rem 2rem;
             text-align: center;
             margin-bottom: 3rem;
-            border-radius: 0;
             position: relative;
             overflow: hidden;
         }
@@ -175,7 +174,7 @@
 
         .registration-hero h1 {
             font-size: 3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             font-weight: 600;
             letter-spacing: 1px;
         }
@@ -717,7 +716,14 @@
     </footer>
 
     <script>
-        // Package selection handler
+        // Generate referral code
+        function generateReferralCode(name) {
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+            const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+            return initials + random;
+        }
+
+        // ENHANCED PACKAGE SELECTION - FIXED DATA FLOW
         function selectPackage(packageType) {
             // Validate form first
             if (!validateForm()) {
@@ -733,22 +739,47 @@
 
             const packageInfo = packageData[packageType];
             
-            // Save user data temporarily
+            // 🚀 FIXED: Save COMPLETE user data with proper structure
             const userData = {
+                id: 'user_' + Date.now(),
                 fullName: document.getElementById('fullName').value,
                 email: document.getElementById('email').value,
                 phone: document.getElementById('phone').value,
                 password: document.getElementById('password').value,
-                package: packageType
+                package: packageType,
+                packageName: packageInfo.name,
+                amount: packageInfo.amount,
+                status: 'pending_payment',
+                registrationDate: new Date().toISOString(),
+                referralCode: generateReferralCode(document.getElementById('fullName').value)
             };
 
-            localStorage.setItem('tempUserData', JSON.stringify(userData));
+            console.log('🚀 Saving user data:', userData);
+
+            // 🚀 FIXED: Save to MULTIPLE locations for redundancy
+            localStorage.setItem('pendingUserData', JSON.stringify(userData));
             localStorage.setItem('selectedPackage', packageType);
             localStorage.setItem('packageAmount', packageInfo.amount);
             localStorage.setItem('packageName', packageInfo.name);
+            
+            // 🚀 NEW: Also save to pending approvals for admin
+            let pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            
+            // Remove any existing entry for this user
+            pendingApprovals = pendingApprovals.filter(item => item.email !== userData.email);
+            
+            // Add new entry
+            pendingApprovals.push({
+                ...userData,
+                paymentStatus: 'pending',
+                submittedAt: new Date().toISOString()
+            });
+            localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
+
+            console.log('✅ User data saved to multiple locations');
 
             // Confirm and redirect to payment
-            if (confirm(`Confirm Selection:\n\n${packageInfo.name}\nAmount: KES ${packageInfo.amount.toLocaleString()}\n\nProceed to payment?`)) {
+            if (confirm(`Confirm Selection:\n\n${packageInfo.name}\nAmount: KES ${packageInfo.amount.toLocaleString()}\n\nProceed to payment verification?`)) {
                 window.location.href = 'payment-verification.html';
             }
         }
@@ -797,7 +828,7 @@
                 completeRegistration();
             }
             
-            // ADD THIS:
+            // ADD THIS: Handle referral redirects
             const redirectToReferral = localStorage.getItem('redirectToReferral');
             if (redirectToReferral === 'true') {
                 setTimeout(() => {
