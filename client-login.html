@@ -51,7 +51,6 @@
             width: 100%;
             z-index: 1000;
             border-bottom: 1px solid rgba(212, 200, 188, 0.3);
-            transition: var(--transition);
         }
 
         .premium-nav {
@@ -84,69 +83,26 @@
             transition: var(--transition);
         }
 
-        .logo:hover::after {
-            width: 100%;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--gold);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--gold);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
         /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 2rem 4rem;
+            padding: 2rem;
+            margin-top: 80px;
         }
 
-        .premium-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .login-container {
+            max-width: 500px;
             width: 100%;
         }
 
-        /* Login Card */
         .login-card {
             background: var(--nude-light);
             border-radius: 0;
-            padding: 4rem;
-            max-width: 500px;
-            margin: 0 auto;
+            padding: 3rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: var(--transition);
             border: 1px solid var(--nude-medium);
             position: relative;
             overflow: hidden;
@@ -160,50 +116,36 @@
             width: 100%;
             height: 4px;
             background: var(--gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition);
-        }
-
-        .login-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .login-card:hover {
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
         }
 
         .login-title {
-            font-size: 2.8rem;
             text-align: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 2rem;
             color: var(--charcoal);
+            font-size: 2.2rem;
         }
 
         .login-subtitle {
             text-align: center;
             color: var(--text-light);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
-        /* Form Elements */
         .form-group {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
             color: var(--charcoal);
             font-weight: 500;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
+            font-size: 0.9rem;
         }
 
         .form-control {
             width: 100%;
-            padding: 1.2rem;
+            padding: 1rem;
             border: 1px solid var(--nude-medium);
             background: var(--nude-light);
             font-family: 'Montserrat', sans-serif;
@@ -218,163 +160,95 @@
             box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
         }
 
-        .btn-premium {
-            display: inline-block;
-            background: var(--gold);
-            color: var(--nude-light);
-            padding: 1.2rem 2.5rem;
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
             border-radius: 0;
             font-weight: 500;
-            text-decoration: none;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            border: 1px solid var(--gold);
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            width: 100%;
         }
 
-        .btn-premium:hover {
+        .btn-primary {
+            background: var(--gold);
+            color: var(--nude-light);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-primary:hover {
             background: transparent;
             color: var(--gold);
         }
 
-        .btn-secondary {
-            display: inline-block;
-            background: transparent;
-            color: var(--charcoal);
-            padding: 1rem 2rem;
-            border-radius: 0;
-            font-weight: 500;
+        .login-links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .login-links a {
+            color: var(--gold);
             text-decoration: none;
-            letter-spacing: 1px;
             transition: var(--transition);
-            border: 1px solid var(--charcoal);
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.95rem;
         }
 
-        .btn-secondary:hover {
-            background: var(--charcoal);
-            color: var(--nude-light);
+        .login-links a:hover {
+            text-decoration: underline;
         }
 
-        /* New Account Section */
-        .new-account {
+        .program-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
             background: var(--nude-medium);
-            border-radius: 0;
-            padding: 2.5rem;
-            margin: 2.5rem 0 0;
-            text-align: center;
-            border: 1px solid var(--nude-dark);
-        }
-
-        .new-account h3 {
-            margin-bottom: 1rem;
             color: var(--charcoal);
-            font-size: 1.4rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
         }
 
-        .new-account p {
+        .alert {
+            padding: 1rem;
+            border-radius: 0;
             margin-bottom: 1.5rem;
-            color: var(--text-light);
+            border: 1px solid transparent;
         }
 
-        /* Package Indicator */
-        .package-indicator {
-            background: var(--nude-medium);
-            padding: 1.5rem;
-            border-radius: 0;
-            margin: 1.5rem 0;
-            text-align: center;
-            display: none;
-            border-left: 4px solid var(--gold);
+        .alert-danger {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: rgba(220, 53, 69, 0.3);
+            color: #721c24;
         }
 
-        .package-indicator strong {
-            color: var(--charcoal);
+        .alert-success {
+            background: rgba(40, 167, 69, 0.1);
+            border-color: rgba(40, 167, 69, 0.3);
+            color: #155724;
         }
 
         /* Footer */
         footer {
             background: var(--charcoal);
-            padding: 4rem 2rem 2rem;
             color: var(--nude-medium);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            color: var(--nude-light);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-section p {
-            color: var(--nude-medium);
-            margin-bottom: 0.8rem;
-        }
-
-        .copyright {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(212, 200, 188, 0.2);
-            color: var(--nude-dark);
-            font-size: 0.9rem;
+            padding: 2rem;
+            margin-top: auto;
         }
 
-        /* Demo Accounts Notice */
-        .demo-notice {
-            background: var(--nude-medium);
-            padding: 1rem;
-            border-radius: 0;
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            border: 1px solid var(--nude-dark);
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
             .premium-nav {
                 flex-direction: column;
                 padding: 1rem;
             }
             
-            .nav-links {
-                margin-top: 1rem;
-                gap: 1.5rem;
-            }
-            
-            .login-card {
-                padding: 2.5rem;
-            }
-            
-            .login-title {
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
             .login-card {
                 padding: 2rem;
             }
             
             .main-content {
-                padding: 100px 1rem 2rem;
+                padding: 1rem;
+                margin-top: 100px;
             }
         }
     </style>
@@ -384,220 +258,134 @@
     <header class="premium-header">
         <nav class="premium-nav">
             <a href="index.html" class="logo">Crown Trade Academy</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="register.html">Create Account</a></li>
-            </ul>
+            <div>
+                <a href="index.html" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: transparent; color: var(--charcoal); border: 1px solid var(--charcoal); text-decoration: none;">Back to Home</a>
+            </div>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="premium-container">
+        <div class="login-container">
             <div class="login-card">
-                <h1 class="login-title">Welcome Back</h1>
-                <p class="login-subtitle">Access your exclusive trading dashboard</p>
-
-                <!-- Package Indicator -->
-                <div id="packageIndicator" class="package-indicator">
-                    <strong>Active Program:</strong> <span id="currentPackage">Loading...</span>
-                </div>
-
+                <h1 class="login-title">Client Login</h1>
+                <p class="login-subtitle">Access your Crown Trade Academy dashboard</p>
+                
+                <div id="loginAlert"></div>
+                
                 <form id="loginForm">
                     <div class="form-group">
                         <label class="form-label">Email Address</label>
-                        <input type="email" class="form-control" placeholder="your@email.com" required id="email">
+                        <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="Your password" required id="password">
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                     </div>
 
-                    <button type="submit" class="btn-premium">
-                        <i class="fas fa-sign-in-alt"></i> ACCESS DASHBOARD
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login to Dashboard
                     </button>
                 </form>
 
-                <div class="demo-notice">
-                    <strong>Demo Accounts Available:</strong><br>
-                    Mentorship: mentorship@crowntrade.com / demo123<br>
-                    Referral: referral@crowntrade.com / demo123
-                </div>
-
-                <div class="new-account">
-                    <h3>New to Crown Trade Academy?</h3>
-                    <p>Begin your journey to trading mastery today</p>
-                    <a href="register.html" class="btn-secondary">
-                        <i class="fas fa-user-plus"></i> CREATE ACCOUNT
-                    </a>
+                <div class="login-links">
+                    <p>Don't have an account? <a href="register.html">Register here</a></p>
+                    <p><a href="forgot-password.html">Forgot your password?</a></p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Premium Footer -->
+    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Crown Trade Academy</h3>
-                <p>Premium Trading Education</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
-            </div>
-            <div class="footer-section">
-                <h3>Support</h3>
-                <p>Login Assistance</p>
-                <p>Account Help</p>
-                <p>24/7 Client Support</p>
-            </div>
-            <div class="footer-section">
-                <h3>Security</h3>
-                <p>Encrypted Connection</p>
-                <p>Secure Client Data</p>
-                <p>Privacy Protected</p>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
-        </div>
+        <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
     </footer>
 
     <script>
-        // Check if user is already logged in and show their package
-        function checkExistingLogin() {
-            const isLoggedIn = localStorage.getItem('clientLoggedIn');
-            const clientEmail = localStorage.getItem('clientEmail');
-            const clientPackage = localStorage.getItem('clientPackage');
-            
-            if (isLoggedIn && clientEmail) {
-                document.getElementById('email').value = clientEmail;
-                showPackageInfo(clientPackage);
-            }
-        }
-
-        function showPackageInfo(packageType) {
-            const indicator = document.getElementById('packageIndicator');
-            const packageText = document.getElementById('currentPackage');
-            
-            if (packageType) {
-                let packageName = '';
-                if (packageType === 'mentorship-only') {
-                    packageName = '🎓 Elite Mentorship Program';
-                } else if (packageType === 'referral-only') {
-                    packageName = '💰 Referral Program';
-                } else if (packageType === 'combined') {
-                    packageName = '👑 Combined Package';
-                } else {
-                    packageName = packageType;
-                }
-                
-                packageText.textContent = packageName;
-                indicator.style.display = 'block';
-            }
-        }
-
-        // Enhanced login with package-based redirection
+        // Login form handler
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const alertDiv = document.getElementById('loginAlert');
             
-            if (!email || !password) {
-                alert('Please fill in all fields');
+            // Clear previous alerts
+            alertDiv.innerHTML = '';
+            alertDiv.className = 'alert';
+            
+            // Get all users
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+            
+            // Find user by email
+            const user = users.find(u => u.email === email);
+            const application = applications.find(app => app.email === email);
+            
+            if (!user) {
+                showAlert('No account found with this email. Please register first.', 'danger');
                 return;
             }
             
-            // Show loading
-            const btn = this.querySelector('button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ACCESSING DASHBOARD...';
-            btn.disabled = true;
+            // Check password (in real app, this would be hashed)
+            if (user.password !== password) {
+                showAlert('Invalid password. Please try again.', 'danger');
+                return;
+            }
             
+            // Check if user is approved
+            if (user.status !== 'approved') {
+                showAlert('Your account is pending approval. Please wait for admin approval or contact support.', 'danger');
+                return;
+            }
+            
+            // Login successful - determine user type and redirect accordingly
+            localStorage.setItem('current_user_email', email);
+            localStorage.setItem('current_user_id', user.id);
+            localStorage.setItem('current_user_program', user.package);
+            
+            showAlert('Login successful! Redirecting to your dashboard...', 'success');
+            
+            // Redirect based on user's program type
             setTimeout(() => {
-                // Check if this is a registered user
-                const storedEmail = localStorage.getItem('clientEmail');
-                const storedPackage = localStorage.getItem('clientPackage');
-                const storedName = localStorage.getItem('clientName');
-                
-                if (storedEmail === email) {
-                    // SUCCESS: Registered user found
-                    localStorage.setItem('clientLoggedIn', 'true');
-                    
-                    let packageName = '';
-                    if (storedPackage === 'mentorship-only') {
-                        packageName = 'Mentorship Program';
-                    } else if (storedPackage === 'referral-only') {
-                        packageName = 'Referral Program';
-                    } else {
-                        packageName = 'Your Program';
-                    }
-                    
-                    alert(`✅ Login successful!\nWelcome back to your ${packageName} dashboard, ${storedName || 'Client'}!`);
-                    window.location.href = 'client-dashboard.html';
-                    
-                } else {
-                    // Check demo accounts
-                    if (email === 'mentorship@crowntrade.com' && password === 'demo123') {
-                        localStorage.setItem('clientLoggedIn', 'true');
-                        localStorage.setItem('clientName', 'Mentorship Client');
-                        localStorage.setItem('clientEmail', 'mentorship@crowntrade.com');
-                        localStorage.setItem('clientPackage', 'mentorship-only');
-                        alert('✅ Demo login successful! Redirecting to MENTORSHIP dashboard.');
-                        window.location.href = 'client-dashboard.html';
-                        
-                    } else if (email === 'referral@crowntrade.com' && password === 'demo123') {
-                        localStorage.setItem('clientLoggedIn', 'true');
-                        localStorage.setItem('clientName', 'Referral Client');
-                        localStorage.setItem('clientEmail', 'referral@crowntrade.com');
-                        localStorage.setItem('clientPackage', 'referral-only');
-                        alert('✅ Demo login successful! Redirecting to REFERRAL dashboard.');
-                        window.location.href = 'client-dashboard.html';
-                        
-                    } else {
-                        // FAILED login
-                        alert('❌ Invalid email or password.\n\nTry these demo accounts:\n\n• Mentorship: mentorship@crowntrade.com / demo123\n• Referral: referral@crowntrade.com / demo123\n\nOr create a new account.');
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    }
-                }
+                redirectToDashboard(user.package);
             }, 1500);
+            
         });
-
-        // Auto-fill email and show package if user is remembered
+        
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('loginAlert');
+            alertDiv.innerHTML = message;
+            alertDiv.className = `alert alert-${type}`;
+        }
+        
+        function redirectToDashboard(programType) {
+            switch(programType) {
+                case 'mentorship-only':
+                case 'combined':
+                    window.location.href = 'client-dashboard.html';
+                    break;
+                case 'referral-only':
+                    window.location.href = 'referral-dashboard.html';
+                    break;
+                default:
+                    // Default to referral dashboard for backward compatibility
+                    window.location.href = 'referral-dashboard.html';
+            }
+        }
+        
+        // Check if user is already logged in
         document.addEventListener('DOMContentLoaded', function() {
-            checkExistingLogin();
-            
-            // Auto-login if credentials are remembered
-            const rememberedEmail = localStorage.getItem('clientEmail');
-            if (rememberedEmail && localStorage.getItem('clientLoggedIn') === 'true') {
-                document.getElementById('email').value = rememberedEmail;
-                showPackageInfo(localStorage.getItem('clientPackage'));
-            }
-        });
-
-        // Auto-detect package when email is entered
-        document.getElementById('email').addEventListener('blur', function() {
-            const email = this.value;
-            const storedEmail = localStorage.getItem('clientEmail');
-            
-            if (email === storedEmail) {
-                const storedPackage = localStorage.getItem('clientPackage');
-                showPackageInfo(storedPackage);
-            } else {
-                document.getElementById('packageIndicator').style.display = 'none';
-            }
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('.premium-header');
-            if (window.scrollY > 50) {
-                header.style.backgroundColor = 'rgba(249, 246, 242, 0.98)';
-                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
-            } else {
-                header.style.backgroundColor = 'rgba(249, 246, 242, 0.95)';
-                header.style.boxShadow = 'none';
+            const currentUserEmail = localStorage.getItem('current_user_email');
+            if (currentUserEmail) {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === currentUserEmail);
+                
+                if (user && user.status === 'approved') {
+                    // User is already logged in, redirect to appropriate dashboard
+                    redirectToDashboard(user.package);
+                }
             }
         });
     </script>
