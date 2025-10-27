@@ -424,6 +424,52 @@
             font-size: 1rem;
         }
 
+        /* Referral Network Section */
+        .referral-network {
+            background: var(--nude-light);
+            border-radius: 0;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--nude-medium);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .referral-network::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        .network-tree {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--nude-medium);
+            border-radius: 0;
+            min-height: 200px;
+        }
+
+        .tree-node {
+            display: inline-block;
+            padding: 0.8rem 1.2rem;
+            background: var(--nude-light);
+            border: 1px solid var(--gold);
+            margin: 0.5rem;
+            border-radius: 0;
+            font-size: 0.9rem;
+        }
+
+        .tree-node.referrer {
+            background: var(--gold);
+            color: var(--nude-light);
+            font-weight: 600;
+        }
+
         /* Modal */
         .modal {
             display: none;
@@ -502,6 +548,7 @@
             <a href="admin-dashboard.html" class="logo">Crown Trade Academy - Admin</a>
             <div class="admin-nav">
                 <a href="#" class="nav-link active" data-section="dashboard">Dashboard</a>
+                <a href="#" class="nav-link" data-section="referrals">Referral Network</a>
                 <a href="#" class="nav-link" data-section="members">Members</a>
                 <a href="#" class="nav-link" data-section="withdrawals">Withdrawals</a>
                 <a href="#" class="nav-link" data-section="settings">Settings</a>
@@ -551,10 +598,10 @@
 
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-network-wired"></i>
                     </div>
-                    <div class="stat-value" id="this-month">KES 0</div>
-                    <div class="stat-label">This Month Revenue</div>
+                    <div class="stat-value" id="referral-bonuses">KES 0</div>
+                    <div class="stat-label">Referral Bonuses Paid</div>
                 </div>
             </div>
 
@@ -584,7 +631,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Date</th>
+                                    <th>Referral Code</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -614,6 +661,32 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Referral Network Section -->
+        <section id="referrals-section" class="referral-network" style="display: none;">
+            <h2 class="dashboard-title">Referral Network</h2>
+            <p>Track referral relationships and automatically distribute bonuses</p>
+            
+            <div class="table-container" style="margin-top: 2rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Referrer</th>
+                            <th>Referred Member</th>
+                            <th>Referral Date</th>
+                            <th>Bonus Status</th>
+                            <th>Bonus Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="referralRelationships"></tbody>
+                </table>
+            </div>
+
+            <div class="network-tree" id="networkTree">
+                <h4>Referral Network Visualization</h4>
+                <p class="stat-label">Visual representation of referral relationships</p>
             </div>
         </section>
 
@@ -680,9 +753,10 @@
             initializeCharts();
             loadDashboardData();
             setupNavigation();
-            
-            // Load settings
             loadSettings();
+            
+            // Generate sample data for demonstration
+            generateSampleData();
         });
 
         // Navigation
@@ -700,12 +774,16 @@
                     const section = this.getAttribute('data-section');
                     document.getElementById('dashboard-section').style.display = 
                         section === 'dashboard' ? 'block' : 'none';
+                    document.getElementById('referrals-section').style.display = 
+                        section === 'referrals' ? 'block' : 'none';
                     document.getElementById('settings-section').style.display = 
                         section === 'settings' ? 'block' : 'none';
                     
                     // Refresh data if needed
                     if (section === 'dashboard') {
                         loadDashboardData();
+                    } else if (section === 'referrals') {
+                        loadReferralNetwork();
                     }
                 });
             });
@@ -765,16 +843,9 @@
 
         // Load dashboard data
         function loadDashboardData() {
-            // Load applications
             loadApplications();
-            
-            // Load withdrawals
             loadWithdrawals();
-            
-            // Calculate stats
             calculateStats();
-            
-            // Update charts
             updateCharts();
         }
 
@@ -792,7 +863,7 @@
                 tr.innerHTML = `
                     <td>${app.fullName}</td>
                     <td>${app.email}</td>
-                    <td>${new Date(app.applicationDate).toLocaleDateString()}</td>
+                    <td>${app.referralCodeUsed || 'None'}</td>
                     <td><span class="status-badge status-pending">Pending</span></td>
                     <td>
                         <button class="btn btn-view" onclick="viewProof(${index})">View Proof</button>
@@ -829,11 +900,69 @@
             });
         }
 
+        // Load referral network
+        function loadReferralNetwork() {
+            const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
+            const tbody = document.querySelector('#referralRelationships');
+            tbody.innerHTML = '';
+            
+            relationships.forEach(rel => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${rel.referrerName}</td>
+                    <td>${rel.referredName}</td>
+                    <td>${new Date(rel.referralDate).toLocaleDateString()}</td>
+                    <td><span class="status-badge ${rel.bonusPaid ? 'status-approved' : 'status-pending'}">${rel.bonusPaid ? 'Paid' : 'Pending'}</span></td>
+                    <td>KES ${rel.bonusAmount || 0}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            // Update network visualization
+            updateNetworkVisualization();
+        }
+
+        // Update network visualization
+        function updateNetworkVisualization() {
+            const networkTree = document.getElementById('networkTree');
+            const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            networkTree.innerHTML = '<h4>Referral Network Visualization</h4>';
+            
+            if (relationships.length === 0) {
+                networkTree.innerHTML += '<p class="stat-label">No referral relationships found</p>';
+                return;
+            }
+            
+            // Create a simple tree visualization
+            relationships.forEach(rel => {
+                const referrerNode = document.createElement('div');
+                referrerNode.className = 'tree-node referrer';
+                referrerNode.textContent = `${rel.referrerName} (Referrer)`;
+                networkTree.appendChild(referrerNode);
+                
+                const referredNode = document.createElement('div');
+                referredNode.className = 'tree-node';
+                referredNode.textContent = `${rel.referredName} (Referred)`;
+                referredNode.style.marginLeft = '2rem';
+                networkTree.appendChild(referredNode);
+                
+                const connector = document.createElement('div');
+                connector.style.height = '1px';
+                connector.style.borderLeft = '2px solid var(--gold)';
+                connector.style.marginLeft = '1rem';
+                connector.style.marginBottom = '0.5rem';
+                networkTree.appendChild(connector);
+            });
+        }
+
         // Calculate statistics
         function calculateStats() {
             const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
             const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
             const settings = JSON.parse(localStorage.getItem('admin_settings') || '{}');
+            const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
             
             // Calculate total revenue
             const referralPrice = settings.referralPrice || 500;
@@ -856,14 +985,16 @@
             // Calculate pending withdrawals
             const pendingWithdrawals = withdrawals.filter(w => w.status === 'pending').length;
             
-            // Calculate this month revenue (simplified)
-            const thisMonthRevenue = Math.round(totalRevenue * 0.3); // 30% of total for demo
+            // Calculate total referral bonuses paid
+            const totalBonuses = relationships
+                .filter(rel => rel.bonusPaid)
+                .reduce((sum, rel) => sum + (rel.bonusAmount || 0), 0);
             
             // Update UI
             document.getElementById('total-revenue').textContent = `KES ${totalRevenue.toLocaleString()}`;
             document.getElementById('total-members').textContent = approvedMembers;
             document.getElementById('pending-withdrawals').textContent = pendingWithdrawals;
-            document.getElementById('this-month').textContent = `KES ${thisMonthRevenue.toLocaleString()}`;
+            document.getElementById('referral-bonuses').textContent = `KES ${totalBonuses.toLocaleString()}`;
         }
 
         // Update charts with data
@@ -902,38 +1033,70 @@
             document.getElementById('proofModal').style.display = 'none';
         }
 
-        // Approve application
+        // ADVANCED REFERRAL TRACKING SYSTEM
+        // Approve application with automatic referral detection
         function approveApplication(index) {
             const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
             const app = applications[index];
             app.status = 'approved';
+            app.approvedDate = new Date().toISOString();
             applications[index] = app;
             localStorage.setItem('referral_applications', JSON.stringify(applications));
 
             // Update user status
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             const userIndex = users.findIndex(u => u.email === app.email);
+            
             if (userIndex !== -1) {
                 users[userIndex].status = 'approved';
                 users[userIndex].approvedAt = new Date().toISOString();
                 
-                // Check if user was referred
+                // AUTOMATIC REFERRAL BONUS SYSTEM
+                // Check if user was referred by someone
                 if (users[userIndex].referralCodeUsed) {
                     const referrerIndex = users.findIndex(u => u.referralCode === users[userIndex].referralCodeUsed);
+                    
                     if (referrerIndex !== -1) {
                         const settings = JSON.parse(localStorage.getItem('admin_settings') || '{}');
                         const referralBonus = settings.referralBonus || 300;
                         
-                        users[referrerIndex].balance += referralBonus;
-                        alert(`${users[referrerIndex].fullName} received KES ${referralBonus} as referral bonus!`);
+                        // Add bonus to referrer's account
+                        users[referrerIndex].balance = (users[referrerIndex].balance || 0) + referralBonus;
+                        
+                        // Create referral relationship record
+                        const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
+                        relationships.push({
+                            referrerId: users[referrerIndex].id,
+                            referrerName: users[referrerIndex].fullName,
+                            referrerEmail: users[referrerIndex].email,
+                            referredId: users[userIndex].id,
+                            referredName: users[userIndex].fullName,
+                            referredEmail: users[userIndex].email,
+                            referralDate: new Date().toISOString(),
+                            bonusAmount: referralBonus,
+                            bonusPaid: true,
+                            bonusPaidDate: new Date().toISOString()
+                        });
+                        
+                        localStorage.setItem('referral_relationships', JSON.stringify(relationships));
+                        
+                        // Show success message with details
+                        alert(`✅ Application approved!\n\n${users[referrerIndex].fullName} received KES ${referralBonus} referral bonus automatically!`);
                     }
+                } else {
+                    alert('✅ Application approved! (No referral bonus - user registered directly)');
                 }
+                
+                localStorage.setItem('users', JSON.stringify(users));
             }
-            localStorage.setItem('users', JSON.stringify(users));
             
             closeModal();
             loadDashboardData();
-            alert('Application approved successfully!');
+            
+            // Refresh referral network if it's visible
+            if (document.getElementById('referrals-section').style.display === 'block') {
+                loadReferralNetwork();
+            }
         }
 
         // Reject application
@@ -1016,24 +1179,44 @@
         // Generate sample data for demonstration
         function generateSampleData() {
             // Only generate if no data exists
+            if (!localStorage.getItem('users')) {
+                const sampleUsers = [
+                    {
+                        id: 'user_1',
+                        fullName: "John Referrer",
+                        email: "john@example.com",
+                        phone: "+254712345678",
+                        referralCode: "JOHN123",
+                        balance: 600,
+                        status: "approved",
+                        registrationDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+                    },
+                    {
+                        id: 'user_2', 
+                        fullName: "Jane Smith",
+                        email: "jane@example.com",
+                        phone: "+254723456789",
+                        referralCodeUsed: "JOHN123",
+                        referralCode: "JANE456",
+                        balance: 0,
+                        status: "pending",
+                        registrationDate: new Date().toISOString()
+                    }
+                ];
+                
+                localStorage.setItem('users', JSON.stringify(sampleUsers));
+            }
+            
             if (!localStorage.getItem('referral_applications')) {
                 const sampleApplications = [
                     {
-                        fullName: "John Doe",
-                        email: "john@example.com",
-                        phone: "+254712345678",
+                        fullName: "Jane Smith",
+                        email: "jane@example.com",
+                        phone: "+254723456789",
                         program: "referral",
+                        referralCodeUsed: "JOHN123",
                         status: "pending",
                         applicationDate: new Date().toISOString(),
-                        proofBase64: "https://via.placeholder.com/400x200/3a2d28/ffffff?text=Payment+Proof"
-                    },
-                    {
-                        fullName: "Jane Smith",
-                        email: "jane@example.com", 
-                        phone: "+254723456789",
-                        program: "mentorship",
-                        status: "approved",
-                        applicationDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
                         proofBase64: "https://via.placeholder.com/400x200/3a2d28/ffffff?text=Payment+Proof"
                     }
                 ];
@@ -1044,9 +1227,9 @@
             if (!localStorage.getItem('withdrawal_requests')) {
                 const sampleWithdrawals = [
                     {
-                        userName: "Mike Johnson",
-                        userEmail: "mike@example.com",
-                        amount: 1500,
+                        userName: "John Referrer",
+                        userEmail: "john@example.com",
+                        amount: 500,
                         status: "pending",
                         requestDate: new Date().toISOString()
                     }
@@ -1057,9 +1240,6 @@
             
             loadDashboardData();
         }
-
-        // Uncomment the line below to generate sample data on first load
-        // generateSampleData();
     </script>
 </body>
 </html>
