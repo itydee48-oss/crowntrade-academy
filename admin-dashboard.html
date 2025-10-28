@@ -4,540 +4,287 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Crown Trade Academy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --nude-light: #F9F6F2;
-            --nude-medium: #E8DFD6;
-            --nude-dark: #D4C8BC;
-            --nude-accent: #C4B5A3;
-            --gold: #C8A97E;
-            --gold-dark: #B89463;
-            --charcoal: #3A3A3A;
-            --text-light: #7A7A7A;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --dark-brown: #3A2D28;
+            --muted-rose: #A48374;
+            --warm-beige: #CBAD8D;
+            --light-taupe: #D1C7BD;
+            --off-white: #EBE3DB;
+            --cream-white: #F1EDE6;
+            --gold-accent: #D4AF37;
+            --success: #27AE60;
+            --warning: #E67E22;
+            --danger: #E74C3C;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--nude-light);
-            color: var(--charcoal);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
+            color: var(--dark-brown);
             line-height: 1.6;
-            overflow-x: hidden;
         }
-
-        h1, h2, h3, h4, h5 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        /* Header */
+        
         .premium-header {
-            background-color: rgba(249, 246, 242, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
+            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
+            color: var(--cream-white);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
+            position: sticky;
+            top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(212, 200, 188, 0.3);
-            transition: var(--transition);
+            border-bottom: 3px solid var(--gold-accent);
         }
-
+        
         .premium-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1.2rem 2rem;
+            padding: 0 2rem;
         }
-
+        
         .logo {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--charcoal);
+            color: var(--warm-beige);
             text-decoration: none;
-            letter-spacing: 1px;
-            position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background-color: var(--gold);
-            transition: var(--transition);
-        }
-
-        .admin-nav {
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
+            gap: 0.5rem;
         }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            position: relative;
-            transition: var(--transition);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background-color: var(--gold);
-            color: var(--nude-light);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding-top: 100px;
-            min-height: 100vh;
+        
+        .admin-container {
             max-width: 1400px;
-            margin: 0 auto;
-            padding: 100px 2rem 2rem;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
-
+        
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-
+        
         .dashboard-title {
             font-size: 2.5rem;
-            color: var(--charcoal);
+            color: var(--dark-brown);
+            font-weight: 700;
         }
-
-        /* Stats Grid */
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-
+        
         .stat-card {
-            background: var(--nude-light);
-            border-radius: 0;
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            border: 1px solid var(--nude-medium);
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.08);
             position: relative;
             overflow: hidden;
         }
-
+        
         .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             height: 4px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition);
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige));
         }
-
-        .stat-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
+        
         .stat-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--gold);
+            color: var(--gold-accent);
         }
-
+        
         .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--charcoal);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-brown);
             margin-bottom: 0.5rem;
         }
-
+        
         .stat-label {
-            color: var(--text-light);
+            color: var(--muted-rose);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-size: 0.9rem;
         }
-
-        /* Charts Section */
-        .charts-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 968px) {
-            .charts-section {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .chart-card {
-            background: var(--nude-light);
-            border-radius: 0;
+        
+        .luxury-card {
+            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
+            border: 1px solid var(--light-taupe);
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
+            margin: 1.5rem 0;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 25px rgba(58, 45, 40, 0.08);
         }
-
-        .chart-card::before {
+        
+        .luxury-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             height: 4px;
-            background: var(--gold);
+            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige));
         }
-
-        .chart-title {
-            margin-bottom: 1.5rem;
-            color: var(--charcoal);
-            font-size: 1.3rem;
-        }
-
-        /* Tables Section */
-        .tables-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 968px) {
-            .tables-section {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .table-card {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .table-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-        }
-
-        .table-header {
+        
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-
-        .table-title {
-            color: var(--charcoal);
-            font-size: 1.3rem;
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--dark-brown);
+            font-weight: 700;
         }
-
+        
+        .badge {
+            background: var(--gold-accent);
+            color: var(--dark-brown);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 1rem;
         }
-
-        th, td {
-            padding: 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid var(--nude-medium);
-        }
-
+        
         th {
-            color: var(--charcoal);
+            background: var(--off-white);
+            color: var(--dark-brown);
+            padding: 1rem;
+            text-align: left;
             font-weight: 600;
-            font-size: 0.9rem;
+            border-bottom: 2px solid var(--light-taupe);
         }
-
+        
         td {
-            color: var(--text-light);
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-taupe);
+            color: var(--muted-rose);
+        }
+        
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background: rgba(230, 126, 34, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .status-approved {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+        
+        .status-rejected {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
             font-size: 0.85rem;
         }
-
-        .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background-color: rgba(255, 193, 7, 0.2);
-            color: #856404;
-        }
-
-        .status-approved {
-            background-color: rgba(40, 167, 69, 0.2);
-            color: #155724;
-        }
-
-        .status-rejected {
-            background-color: rgba(220, 53, 69, 0.2);
-            color: #721c24;
-        }
-
-        .status-paid {
-            background-color: rgba(0, 123, 255, 0.2);
-            color: #004085;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 0;
-            font-weight: 500;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Montserrat', sans-serif;
-        }
-
+        
         .btn-approve {
             background: var(--success);
             color: white;
         }
-
+        
         .btn-reject {
             background: var(--danger);
             color: white;
         }
-
-        .btn-pay {
-            background: var(--gold);
-            color: white;
-        }
-
+        
         .btn-view {
-            background: var(--nude-medium);
-            color: var(--charcoal);
+            background: var(--gold-accent);
+            color: var(--dark-brown);
         }
-
+        
         .btn:hover {
-            opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-
-        /* Settings Section */
-        .settings-section {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .settings-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-        }
-
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .setting-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .setting-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--charcoal);
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .setting-input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--nude-medium);
-            background: var(--nude-light);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-            color: var(--charcoal);
-        }
-
-        .setting-input:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
-        }
-
-        .btn-save {
-            background: var(--gold);
-            color: var(--nude-light);
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--gold);
-            font-size: 1rem;
-        }
-
-        /* Referral Network Section */
-        .referral-network {
-            background: var(--nude-light);
-            border-radius: 0;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--nude-medium);
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .referral-network::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-        }
-
-        .network-tree {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: var(--nude-medium);
-            border-radius: 0;
-            min-height: 200px;
-        }
-
-        .tree-node {
-            display: inline-block;
-            padding: 0.8rem 1.2rem;
-            background: var(--nude-light);
-            border: 1px solid var(--gold);
-            margin: 0.5rem;
-            border-radius: 0;
-            font-size: 0.9rem;
-        }
-
-        .tree-node.referrer {
-            background: var(--gold);
-            color: var(--nude-light);
-            font-weight: 600;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--nude-light);
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            border: 1px solid var(--nude-medium);
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
+        
+        .refresh-btn {
+            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
+            color: var(--dark-brown);
             border: none;
-            font-size: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted-rose);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
         }
 
-        .modal-title {
-            margin-bottom: 1.5rem;
-            color: var(--charcoal);
-        }
-
-        .proof-image {
-            max-width: 100%;
-            max-height: 400px;
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .premium-nav {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .admin-nav {
-                margin-top: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .main-content {
-                padding: 120px 1rem 1rem;
-            }
+        .debug-info {
+            background: rgba(0,0,0,0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -545,701 +292,385 @@
     <!-- Premium Header -->
     <header class="premium-header">
         <nav class="premium-nav">
-            <a href="admin-dashboard.html" class="logo">Crown Trade Academy - Admin</a>
-            <div class="admin-nav">
-                <a href="#" class="nav-link active" data-section="dashboard">Dashboard</a>
-                <a href="#" class="nav-link" data-section="referrals">Referral Network</a>
-                <a href="#" class="nav-link" data-section="members">Members</a>
-                <a href="#" class="nav-link" data-section="withdrawals">Withdrawals</a>
-                <a href="#" class="nav-link" data-section="settings">Settings</a>
-                <a href="index.html" class="nav-link">Back to Site</a>
+            <a href="admin-dashboard.html" class="logo">
+                <span>👑</span>
+                Crown Trade Academy - Admin
+            </a>
+            <div>
+                <button class="refresh-btn" onclick="loadAllData()">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
             </div>
         </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <!-- Dashboard Section -->
-        <section id="dashboard-section" class="dashboard-section">
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Admin Dashboard</h1>
-                <div class="dashboard-actions">
-                    <button class="btn btn-save" onclick="refreshData()">
-                        <i class="fas fa-sync-alt"></i> Refresh Data
-                    </button>
-                </div>
+    <div class="admin-container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Admin Dashboard</h1>
+            <div>
+                <strong>Data Status:</strong> 
+                <span id="dataStatus" style="color: var(--success);">✅ Ready</span>
             </div>
+        </div>
 
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                    <div class="stat-value" id="total-revenue">KES 0</div>
-                    <div class="stat-label">Total Revenue</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-value" id="total-members">0</div>
-                    <div class="stat-label">Total Members</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-hand-holding-usd"></i>
-                    </div>
-                    <div class="stat-value" id="pending-withdrawals">0</div>
-                    <div class="stat-label">Pending Withdrawals</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <div class="stat-value" id="referral-bonuses">KES 0</div>
-                    <div class="stat-label">Referral Bonuses Paid</div>
-                </div>
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="totalRevenue">KES 0</div>
+                <div class="stat-label">Total Revenue</div>
             </div>
-
-            <!-- Charts Section -->
-            <div class="charts-section">
-                <div class="chart-card">
-                    <h3 class="chart-title">Revenue Overview</h3>
-                    <canvas id="revenueChart"></canvas>
-                </div>
-
-                <div class="chart-card">
-                    <h3 class="chart-title">Member Status</h3>
-                    <canvas id="membersChart"></canvas>
-                </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="totalMembers">0</div>
+                <div class="stat-label">Total Members</div>
             </div>
-
-            <!-- Tables Section -->
-            <div class="tables-section">
-                <div class="table-card">
-                    <div class="table-header">
-                        <h3 class="table-title">Pending Applications</h3>
-                        <span class="badge" id="pending-count">0</span>
-                    </div>
-                    <div class="table-container">
-                        <table id="applicationsTable">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Referral Code</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="table-card">
-                    <div class="table-header">
-                        <h3 class="table-title">Pending Withdrawals</h3>
-                        <span class="badge" id="withdrawal-count">0</span>
-                    </div>
-                    <div class="table-container">
-                        <table id="withdrawalsTable">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-value" id="pendingApplications">0</div>
+                <div class="stat-label">Pending Applications</div>
             </div>
-        </section>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="approvedMembers">0</div>
+                <div class="stat-label">Approved Members</div>
+            </div>
+        </div>
 
-        <!-- Referral Network Section -->
-        <section id="referrals-section" class="referral-network" style="display: none;">
-            <h2 class="dashboard-title">Referral Network</h2>
-            <p>Track referral relationships and automatically distribute bonuses</p>
+        <!-- Debug Information -->
+        <div class="luxury-card">
+            <div class="card-header">
+                <h2 class="card-title">🔧 Debug Information</h2>
+            </div>
+            <div class="debug-info">
+                <div><strong>Storage Keys Found:</strong> <span id="storageKeys">Loading...</span></div>
+                <div><strong>Applications Data:</strong> <span id="applicationsData">Loading...</span></div>
+                <div><strong>Users Data:</strong> <span id="usersData">Loading...</span></div>
+            </div>
+        </div>
+
+        <!-- Pending Applications -->
+        <div class="luxury-card">
+            <div class="card-header">
+                <h2 class="card-title">📋 Pending Applications</h2>
+                <span class="badge" id="pendingCount">0</span>
+            </div>
             
-            <div class="table-container" style="margin-top: 2rem;">
-                <table>
+            <div id="applicationsContainer">
+                <table id="applicationsTable">
                     <thead>
                         <tr>
-                            <th>Referrer</th>
-                            <th>Referred Member</th>
-                            <th>Referral Date</th>
-                            <th>Bonus Status</th>
-                            <th>Bonus Amount</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Program</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="referralRelationships"></tbody>
+                    <tbody id="applicationsTableBody">
+                        <!-- Applications will be loaded here -->
+                    </tbody>
                 </table>
             </div>
-
-            <div class="network-tree" id="networkTree">
-                <h4>Referral Network Visualization</h4>
-                <p class="stat-label">Visual representation of referral relationships</p>
+            
+            <div id="emptyApplications" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">📭</div>
+                <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">No Pending Applications</h3>
+                <p>When users submit payment, their applications will appear here.</p>
             </div>
-        </section>
+        </div>
 
-        <!-- Settings Section -->
-        <section id="settings-section" class="settings-section" style="display: none;">
-            <h2 class="dashboard-title">System Settings</h2>
-            <div class="settings-grid">
-                <div class="setting-group">
-                    <label class="setting-label">Mentorship Program Price (KES)</label>
-                    <input type="number" class="setting-input" id="mentorship-price" value="50000">
-                </div>
-
-                <div class="setting-group">
-                    <label class="setting-label">Referral Program Price (KES)</label>
-                    <input type="number" class="setting-input" id="referral-price" value="500">
-                </div>
-
-                <div class="setting-group">
-                    <label class="setting-label">Referral Bonus (KES)</label>
-                    <input type="number" class="setting-input" id="referral-bonus" value="300">
-                </div>
-
-                <div class="setting-group">
-                    <label class="setting-label">Minimum Withdrawal (KES)</label>
-                    <input type="number" class="setting-input" id="min-withdrawal" value="500">
-                </div>
-
-                <div class="setting-group">
-                    <label class="setting-label">Maximum Withdrawal (KES)</label>
-                    <input type="number" class="setting-input" id="max-withdrawal" value="50000">
-                </div>
-
-                <div class="setting-group">
-                    <label class="setting-label">Withdrawal Processing Fee (%)</label>
-                    <input type="number" class="setting-input" id="withdrawal-fee" value="2" step="0.1">
-                </div>
+        <!-- Approved Members -->
+        <div class="luxury-card">
+            <div class="card-header">
+                <h2 class="card-title">✅ Approved Members</h2>
+                <span class="badge" id="approvedCount">0</span>
             </div>
-            <button class="btn btn-save" onclick="saveSettings()">
-                <i class="fas fa-save"></i> Save Settings
-            </button>
-        </section>
-    </main>
-
-    <!-- Payment Proof Modal -->
-    <div id="proofModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <h3 class="modal-title">Payment Proof</h3>
-            <img id="proofImage" class="proof-image" src="" alt="Payment Proof">
-            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-                <button class="btn btn-approve" onclick="approveApplication(currentAppIndex)">Approve</button>
-                <button class="btn btn-reject" onclick="rejectApplication(currentAppIndex)">Reject</button>
+            
+            <div id="membersContainer">
+                <table id="membersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Program</th>
+                            <th>Join Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="membersTableBody">
+                        <!-- Members will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="emptyMembers" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">👥</div>
+                <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">No Approved Members</h3>
+                <p>Approved members will appear here.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Global variables
-        let currentAppIndex = -1;
-        let revenueChart, membersChart;
-
-        // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeCharts();
-            loadDashboardData();
-            setupNavigation();
-            loadSettings();
-            
-            // Generate sample data for demonstration
-            generateSampleData();
-        });
-
-        // Navigation
-        function setupNavigation() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Update active state
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show/hide sections
-                    const section = this.getAttribute('data-section');
-                    document.getElementById('dashboard-section').style.display = 
-                        section === 'dashboard' ? 'block' : 'none';
-                    document.getElementById('referrals-section').style.display = 
-                        section === 'referrals' ? 'block' : 'none';
-                    document.getElementById('settings-section').style.display = 
-                        section === 'settings' ? 'block' : 'none';
-                    
-                    // Refresh data if needed
-                    if (section === 'dashboard') {
-                        loadDashboardData();
-                    } else if (section === 'referrals') {
-                        loadReferralNetwork();
-                    }
-                });
-            });
-        }
-
-        // Initialize charts
-        function initializeCharts() {
-            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            revenueChart = new Chart(revenueCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [{
-                        label: 'Revenue (KES)',
-                        data: [0, 0, 0, 0, 0, 0],
-                        borderColor: '#C8A97E',
-                        backgroundColor: 'rgba(200, 169, 126, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    }
-                }
-            });
-
-            const membersCtx = document.getElementById('membersChart').getContext('2d');
-            membersChart = new Chart(membersCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Approved', 'Pending', 'Rejected'],
-                    datasets: [{
-                        data: [0, 0, 0],
-                        backgroundColor: [
-                            'rgba(40, 167, 69, 0.8)',
-                            'rgba(255, 193, 7, 0.8)',
-                            'rgba(220, 53, 69, 0.8)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        }
-                    }
-                }
-            });
-        }
-
-        // Load dashboard data
-        function loadDashboardData() {
+        // 🚀 FIXED ADMIN DASHBOARD - PROPER DATA INTEGRATION
+        function loadAllData() {
+            console.log('🔄 Loading all admin data...');
+            updateDebugInfo();
             loadApplications();
-            loadWithdrawals();
+            loadMembers();
             calculateStats();
-            updateCharts();
+        }
+
+        // Update debug information
+        function updateDebugInfo() {
+            const allKeys = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                allKeys.push(localStorage.key(i));
+            }
+            
+            document.getElementById('storageKeys').textContent = allKeys.join(', ');
+            
+            // Check applications data
+            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+            document.getElementById('applicationsData').textContent = `${applications.length} applications found`;
+            
+            // Check users data
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            document.getElementById('usersData').textContent = `${users.length} users found`;
+            
+            console.log('📊 Applications:', applications);
+            console.log('👥 Users:', users);
         }
 
         // Load applications
         function loadApplications() {
-            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-            const tbody = document.querySelector('#applicationsTable tbody');
+            // 🚀 CHECK MULTIPLE DATA SOURCES
+            let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+            const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            
+            // Combine all pending applications
+            const allPending = [...applications, ...pendingApprovals].filter(app => 
+                app.status === 'pending' || app.status === 'pending_approval'
+            );
+            
+            console.log('📋 All pending applications:', allPending);
+            
+            const tbody = document.getElementById('applicationsTableBody');
             tbody.innerHTML = '';
             
-            const pendingApplications = applications.filter(app => app.status === 'pending');
-            document.getElementById('pending-count').textContent = pendingApplications.length;
+            document.getElementById('pendingCount').textContent = allPending.length;
+            document.getElementById('pendingApplications').textContent = allPending.length;
             
-            pendingApplications.forEach((app, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${app.fullName}</td>
-                    <td>${app.email}</td>
-                    <td>${app.referralCodeUsed || 'None'}</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
-                    <td>
-                        <button class="btn btn-view" onclick="viewProof(${index})">View Proof</button>
-                        <button class="btn btn-approve" onclick="approveApplication(${index})">Approve</button>
-                        <button class="btn btn-reject" onclick="rejectApplication(${index})">Reject</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Load withdrawals
-        function loadWithdrawals() {
-            const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
-            const tbody = document.querySelector('#withdrawalsTable tbody');
-            tbody.innerHTML = '';
-            
-            const pendingWithdrawals = withdrawals.filter(w => w.status === 'pending');
-            document.getElementById('withdrawal-count').textContent = pendingWithdrawals.length;
-            
-            pendingWithdrawals.forEach((withdrawal, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${withdrawal.userName}</td>
-                    <td>KES ${withdrawal.amount}</td>
-                    <td>${new Date(withdrawal.requestDate).toLocaleDateString()}</td>
-                    <td><span class="status-badge status-pending">Pending</span></td>
-                    <td>
-                        <button class="btn btn-pay" onclick="processWithdrawal(${index}, 'paid')">Pay</button>
-                        <button class="btn btn-reject" onclick="processWithdrawal(${index}, 'rejected')">Reject</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Load referral network
-        function loadReferralNetwork() {
-            const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
-            const tbody = document.querySelector('#referralRelationships');
-            tbody.innerHTML = '';
-            
-            relationships.forEach(rel => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${rel.referrerName}</td>
-                    <td>${rel.referredName}</td>
-                    <td>${new Date(rel.referralDate).toLocaleDateString()}</td>
-                    <td><span class="status-badge ${rel.bonusPaid ? 'status-approved' : 'status-pending'}">${rel.bonusPaid ? 'Paid' : 'Pending'}</span></td>
-                    <td>KES ${rel.bonusAmount || 0}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-            
-            // Update network visualization
-            updateNetworkVisualization();
-        }
-
-        // Update network visualization
-        function updateNetworkVisualization() {
-            const networkTree = document.getElementById('networkTree');
-            const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            
-            networkTree.innerHTML = '<h4>Referral Network Visualization</h4>';
-            
-            if (relationships.length === 0) {
-                networkTree.innerHTML += '<p class="stat-label">No referral relationships found</p>';
-                return;
+            if (allPending.length === 0) {
+                document.getElementById('emptyApplications').style.display = 'block';
+                document.getElementById('applicationsContainer').style.display = 'none';
+            } else {
+                document.getElementById('emptyApplications').style.display = 'none';
+                document.getElementById('applicationsContainer').style.display = 'block';
+                
+                allPending.forEach((app, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight: 600; color: var(--dark-brown);">${app.fullName}</td>
+                        <td>${app.email}</td>
+                        <td>${app.phone}</td>
+                        <td>${app.program || app.package || 'N/A'}</td>
+                        <td style="font-weight: 700; color: var(--dark-brown);">KES ${(app.amount || 0).toLocaleString()}</td>
+                        <td>${new Date(app.applicationDate || app.submittedAt).toLocaleDateString()}</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                        <td>
+                            <button class="btn btn-approve" onclick="approveApplication('${app.email}')">
+                                <i class="fas fa-check"></i> Approve
+                            </button>
+                            <button class="btn btn-reject" onclick="rejectApplication('${app.email}')">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
             }
+        }
+
+        // Load members
+        function loadMembers() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const approvedMembers = users.filter(user => user.status === 'approved');
             
-            // Create a simple tree visualization
-            relationships.forEach(rel => {
-                const referrerNode = document.createElement('div');
-                referrerNode.className = 'tree-node referrer';
-                referrerNode.textContent = `${rel.referrerName} (Referrer)`;
-                networkTree.appendChild(referrerNode);
+            console.log('✅ Approved members:', approvedMembers);
+            
+            const tbody = document.getElementById('membersTableBody');
+            tbody.innerHTML = '';
+            
+            document.getElementById('approvedCount').textContent = approvedMembers.length;
+            document.getElementById('approvedMembers').textContent = approvedMembers.length;
+            
+            if (approvedMembers.length === 0) {
+                document.getElementById('emptyMembers').style.display = 'block';
+                document.getElementById('membersContainer').style.display = 'none';
+            } else {
+                document.getElementById('emptyMembers').style.display = 'none';
+                document.getElementById('membersContainer').style.display = 'block';
                 
-                const referredNode = document.createElement('div');
-                referredNode.className = 'tree-node';
-                referredNode.textContent = `${rel.referredName} (Referred)`;
-                referredNode.style.marginLeft = '2rem';
-                networkTree.appendChild(referredNode);
-                
-                const connector = document.createElement('div');
-                connector.style.height = '1px';
-                connector.style.borderLeft = '2px solid var(--gold)';
-                connector.style.marginLeft = '1rem';
-                connector.style.marginBottom = '0.5rem';
-                networkTree.appendChild(connector);
-            });
+                approvedMembers.forEach(member => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight: 600; color: var(--dark-brown);">${member.fullName}</td>
+                        <td>${member.email}</td>
+                        <td>${member.package || member.program || 'N/A'}</td>
+                        <td>${new Date(member.registrationDate || member.joinDate).toLocaleDateString()}</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
         }
 
         // Calculate statistics
         function calculateStats() {
             const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-            const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
-            const settings = JSON.parse(localStorage.getItem('admin_settings') || '{}');
-            const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
             
-            // Calculate total revenue
-            const referralPrice = settings.referralPrice || 500;
-            const mentorshipPrice = settings.mentorshipPrice || 50000;
-            
-            const approvedReferrals = applications.filter(app => 
-                app.status === 'approved' && app.program === 'referral'
-            ).length;
-            
-            const approvedMentorships = applications.filter(app => 
-                app.status === 'approved' && app.program === 'mentorship'
-            ).length;
-            
-            const totalRevenue = (approvedReferrals * referralPrice) + (approvedMentorships * mentorshipPrice);
+            // Calculate total revenue from approved applications
+            const approvedApps = applications.filter(app => app.status === 'approved');
+            const totalRevenue = approvedApps.reduce((sum, app) => sum + (app.amount || 0), 0);
             
             // Calculate total members
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const approvedMembers = users.filter(user => user.status === 'approved').length;
+            const totalMembers = users.filter(user => user.status === 'approved').length;
             
-            // Calculate pending withdrawals
-            const pendingWithdrawals = withdrawals.filter(w => w.status === 'pending').length;
-            
-            // Calculate total referral bonuses paid
-            const totalBonuses = relationships
-                .filter(rel => rel.bonusPaid)
-                .reduce((sum, rel) => sum + (rel.bonusAmount || 0), 0);
-            
-            // Update UI
-            document.getElementById('total-revenue').textContent = `KES ${totalRevenue.toLocaleString()}`;
-            document.getElementById('total-members').textContent = approvedMembers;
-            document.getElementById('pending-withdrawals').textContent = pendingWithdrawals;
-            document.getElementById('referral-bonuses').textContent = `KES ${totalBonuses.toLocaleString()}`;
+            document.getElementById('totalRevenue').textContent = `KES ${totalRevenue.toLocaleString()}`;
+            document.getElementById('totalMembers').textContent = totalMembers;
         }
 
-        // Update charts with data
-        function updateCharts() {
-            // Update revenue chart (using sample data)
-            const revenueData = [12500, 18900, 15800, 22600, 19400, 28500];
-            revenueChart.data.datasets[0].data = revenueData;
-            revenueChart.update();
+        // 🚀 APPROVE APPLICATION
+        function approveApplication(email) {
+            console.log('✅ Approving application for:', email);
             
-            // Update members chart
-            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-            const approvedCount = applications.filter(app => app.status === 'approved').length;
-            const pendingCount = applications.filter(app => app.status === 'pending').length;
-            const rejectedCount = applications.filter(app => app.status === 'rejected').length;
-            
-            membersChart.data.datasets[0].data = [approvedCount, pendingCount, rejectedCount];
-            membersChart.update();
-        }
-
-        // View payment proof
-        function viewProof(index) {
-            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-            const app = applications[index];
-            
-            if (app.proofBase64) {
-                document.getElementById('proofImage').src = app.proofBase64;
-                currentAppIndex = index;
-                document.getElementById('proofModal').style.display = 'flex';
-            } else {
-                alert('No payment proof uploaded');
-            }
-        }
-
-        // Close modal
-        function closeModal() {
-            document.getElementById('proofModal').style.display = 'none';
-        }
-
-        // ADVANCED REFERRAL TRACKING SYSTEM
-        // Approve application with automatic referral detection
-        function approveApplication(index) {
-            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-            const app = applications[index];
-            app.status = 'approved';
-            app.approvedDate = new Date().toISOString();
-            applications[index] = app;
+            // Update applications
+            let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+            applications = applications.map(app => {
+                if (app.email === email) {
+                    return { ...app, status: 'approved', approvedAt: new Date().toISOString() };
+                }
+                return app;
+            });
             localStorage.setItem('referral_applications', JSON.stringify(applications));
-
-            // Update user status
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userIndex = users.findIndex(u => u.email === app.email);
             
-            if (userIndex !== -1) {
-                users[userIndex].status = 'approved';
-                users[userIndex].approvedAt = new Date().toISOString();
+            // Update pending approvals
+            let pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+            pendingApprovals = pendingApprovals.filter(app => app.email !== email);
+            localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
+            
+            // Create/update user
+            const application = applications.find(app => app.email === email);
+            if (application) {
+                let users = JSON.parse(localStorage.getItem('users') || '[]');
+                const existingUser = users.find(user => user.email === email);
                 
-                // AUTOMATIC REFERRAL BONUS SYSTEM
-                // Check if user was referred by someone
-                if (users[userIndex].referralCodeUsed) {
-                    const referrerIndex = users.findIndex(u => u.referralCode === users[userIndex].referralCodeUsed);
-                    
-                    if (referrerIndex !== -1) {
-                        const settings = JSON.parse(localStorage.getItem('admin_settings') || '{}');
-                        const referralBonus = settings.referralBonus || 300;
-                        
-                        // Add bonus to referrer's account
-                        users[referrerIndex].balance = (users[referrerIndex].balance || 0) + referralBonus;
-                        
-                        // Create referral relationship record
-                        const relationships = JSON.parse(localStorage.getItem('referral_relationships') || '[]');
-                        relationships.push({
-                            referrerId: users[referrerIndex].id,
-                            referrerName: users[referrerIndex].fullName,
-                            referrerEmail: users[referrerIndex].email,
-                            referredId: users[userIndex].id,
-                            referredName: users[userIndex].fullName,
-                            referredEmail: users[userIndex].email,
-                            referralDate: new Date().toISOString(),
-                            bonusAmount: referralBonus,
-                            bonusPaid: true,
-                            bonusPaidDate: new Date().toISOString()
-                        });
-                        
-                        localStorage.setItem('referral_relationships', JSON.stringify(relationships));
-                        
-                        // Show success message with details
-                        alert(`✅ Application approved!\n\n${users[referrerIndex].fullName} received KES ${referralBonus} referral bonus automatically!`);
-                    }
+                if (existingUser) {
+                    // Update existing user
+                    users = users.map(user => 
+                        user.email === email 
+                            ? { ...user, status: 'approved', approvedAt: new Date().toISOString() }
+                            : user
+                    );
                 } else {
-                    alert('✅ Application approved! (No referral bonus - user registered directly)');
+                    // Create new user
+                    users.push({
+                        id: 'user_' + Date.now(),
+                        fullName: application.fullName,
+                        email: application.email,
+                        phone: application.phone,
+                        package: application.program || application.package,
+                        status: 'approved',
+                        registrationDate: new Date().toISOString(),
+                        approvedAt: new Date().toISOString(),
+                        referralCode: application.referralCode || generateReferralCode(application.fullName)
+                    });
                 }
                 
                 localStorage.setItem('users', JSON.stringify(users));
             }
             
-            closeModal();
-            loadDashboardData();
-            
-            // Refresh referral network if it's visible
-            if (document.getElementById('referrals-section').style.display === 'block') {
-                loadReferralNetwork();
+            alert(`✅ Application approved for ${email}`);
+            loadAllData();
+        }
+
+        // 🚀 REJECT APPLICATION
+        function rejectApplication(email) {
+            if (confirm(`Are you sure you want to reject ${email}?`)) {
+                console.log('❌ Rejecting application for:', email);
+                
+                // Update applications
+                let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+                applications = applications.map(app => {
+                    if (app.email === email) {
+                        return { ...app, status: 'rejected', rejectedAt: new Date().toISOString() };
+                    }
+                    return app;
+                });
+                localStorage.setItem('referral_applications', JSON.stringify(applications));
+                
+                // Remove from pending approvals
+                let pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
+                pendingApprovals = pendingApprovals.filter(app => app.email !== email);
+                localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
+                
+                alert(`❌ Application rejected for ${email}`);
+                loadAllData();
             }
         }
 
-        // Reject application
-        function rejectApplication(index) {
-            const applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
-            const app = applications[index];
-            app.status = 'rejected';
-            applications[index] = app;
-            localStorage.setItem('referral_applications', JSON.stringify(applications));
-
-            // Update user status
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userIndex = users.findIndex(u => u.email === app.email);
-            if (userIndex !== -1) {
-                users[userIndex].status = 'rejected';
-            }
-            localStorage.setItem('users', JSON.stringify(users));
-            
-            closeModal();
-            loadDashboardData();
-            alert('Application rejected.');
+        // Generate referral code
+        function generateReferralCode(name) {
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+            const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+            return initials + random;
         }
 
-        // Process withdrawal
-        function processWithdrawal(index, status) {
-            const withdrawals = JSON.parse(localStorage.getItem('withdrawal_requests') || '[]');
-            const withdrawal = withdrawals[index];
-            withdrawal.status = status;
-            withdrawal.processedDate = new Date().toISOString();
-            withdrawals[index] = withdrawal;
-            localStorage.setItem('withdrawal_requests', JSON.stringify(withdrawals));
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Admin Dashboard Initialized');
+            loadAllData();
             
-            // Update user balance if paid
-            if (status === 'paid') {
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-                const userIndex = users.findIndex(u => u.email === withdrawal.userEmail);
-                if (userIndex !== -1) {
-                    users[userIndex].balance -= withdrawal.amount;
-                    localStorage.setItem('users', JSON.stringify(users));
-                }
-            }
-            
-            loadDashboardData();
-            alert(`Withdrawal ${status} successfully!`);
-        }
+            // Auto-refresh every 10 seconds
+            setInterval(loadAllData, 10000);
+        });
 
-        // Load settings
-        function loadSettings() {
-            const settings = JSON.parse(localStorage.getItem('admin_settings') || '{}');
-            
-            document.getElementById('mentorship-price').value = settings.mentorshipPrice || 50000;
-            document.getElementById('referral-price').value = settings.referralPrice || 500;
-            document.getElementById('referral-bonus').value = settings.referralBonus || 300;
-            document.getElementById('min-withdrawal').value = settings.minWithdrawal || 500;
-            document.getElementById('max-withdrawal').value = settings.maxWithdrawal || 50000;
-            document.getElementById('withdrawal-fee').value = settings.withdrawalFee || 2;
-        }
-
-        // Save settings
-        function saveSettings() {
-            const settings = {
-                mentorshipPrice: parseInt(document.getElementById('mentorship-price').value),
-                referralPrice: parseInt(document.getElementById('referral-price').value),
-                referralBonus: parseInt(document.getElementById('referral-bonus').value),
-                minWithdrawal: parseInt(document.getElementById('min-withdrawal').value),
-                maxWithdrawal: parseInt(document.getElementById('max-withdrawal').value),
-                withdrawalFee: parseFloat(document.getElementById('withdrawal-fee').value)
+        // Add test data function for debugging
+        function addTestApplication() {
+            const testApp = {
+                fullName: "Test User",
+                email: "test@example.com",
+                phone: "+254712345678",
+                program: "referral-only",
+                status: "pending",
+                applicationDate: new Date().toISOString(),
+                amount: 500,
+                packageName: "Referral Program",
+                referralCode: "TEST123"
             };
             
-            localStorage.setItem('admin_settings', JSON.stringify(settings));
-            alert('Settings saved successfully!');
-        }
-
-        // Refresh data
-        function refreshData() {
-            loadDashboardData();
-            alert('Data refreshed!');
-        }
-
-        // Generate sample data for demonstration
-        function generateSampleData() {
-            // Only generate if no data exists
-            if (!localStorage.getItem('users')) {
-                const sampleUsers = [
-                    {
-                        id: 'user_1',
-                        fullName: "John Referrer",
-                        email: "john@example.com",
-                        phone: "+254712345678",
-                        referralCode: "JOHN123",
-                        balance: 600,
-                        status: "approved",
-                        registrationDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
-                    },
-                    {
-                        id: 'user_2', 
-                        fullName: "Jane Smith",
-                        email: "jane@example.com",
-                        phone: "+254723456789",
-                        referralCodeUsed: "JOHN123",
-                        referralCode: "JANE456",
-                        balance: 0,
-                        status: "pending",
-                        registrationDate: new Date().toISOString()
-                    }
-                ];
-                
-                localStorage.setItem('users', JSON.stringify(sampleUsers));
-            }
+            let applications = JSON.parse(localStorage.getItem('referral_applications') || '[]');
+            applications.push(testApp);
+            localStorage.setItem('referral_applications', JSON.stringify(applications));
             
-            if (!localStorage.getItem('referral_applications')) {
-                const sampleApplications = [
-                    {
-                        fullName: "Jane Smith",
-                        email: "jane@example.com",
-                        phone: "+254723456789",
-                        program: "referral",
-                        referralCodeUsed: "JOHN123",
-                        status: "pending",
-                        applicationDate: new Date().toISOString(),
-                        proofBase64: "https://via.placeholder.com/400x200/3a2d28/ffffff?text=Payment+Proof"
-                    }
-                ];
-                
-                localStorage.setItem('referral_applications', JSON.stringify(sampleApplications));
-            }
-            
-            if (!localStorage.getItem('withdrawal_requests')) {
-                const sampleWithdrawals = [
-                    {
-                        userName: "John Referrer",
-                        userEmail: "john@example.com",
-                        amount: 500,
-                        status: "pending",
-                        requestDate: new Date().toISOString()
-                    }
-                ];
-                
-                localStorage.setItem('withdrawal_requests', JSON.stringify(sampleWithdrawals));
-            }
-            
-            loadDashboardData();
+            alert('✅ Test application added!');
+            loadAllData();
         }
     </script>
+
+    <!-- Debug button (remove in production) -->
+    <div style="position: fixed; bottom: 20px; right: 20px;">
+        <button onclick="addTestApplication()" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+            🧪 Add Test App
+        </button>
+    </div>
 </body>
 </html>
