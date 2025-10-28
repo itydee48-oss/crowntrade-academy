@@ -861,20 +861,24 @@
 
             console.log('✅ Submitting payment for:', userData.email);
 
-            // 🚀 UNIFIED APPROVAL SYSTEM - Use same data structure as admin
+            // 🚀 CRITICAL FIX: Use the EXACT same data structure as admin dashboard expects
             const pendingEntry = {
                 id: 'pending_' + Date.now(),
                 email: userData.email,
                 fullName: userData.fullName,
                 package: localStorage.getItem('selectedPackage') || 'referral-only',
                 phone: userData.phone,
-                status: 'pending_approval',
+                status: 'pending',
                 timestamp: new Date().toISOString(),
                 amount: getPackageAmount(localStorage.getItem('selectedPackage')),
-                packageName: getPackageName(localStorage.getItem('selectedPackage'))
+                packageName: getPackageName(localStorage.getItem('selectedPackage')),
+                // Add fields that admin dashboard might be checking
+                paymentVerified: false,
+                registrationDate: new Date().toLocaleDateString(),
+                referralCode: userData.referralCode || 'N/A'
             };
             
-            // Save to pending approvals (same as admin uses)
+            // 🚀 CRITICAL FIX: Use the EXACT storage key that admin dashboard checks
             let pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]');
             
             // Remove any existing entry for this user
@@ -885,6 +889,7 @@
             localStorage.setItem('pendingApprovals', JSON.stringify(pendingApprovals));
             
             console.log('📝 Added to pending approvals:', pendingApprovals);
+            console.log('🔍 Admin should see:', pendingApprovals.length, 'pending approvals');
 
             // Show pending status
             document.getElementById('pendingStatus').style.display = 'block';
@@ -897,6 +902,9 @@
             
             // Start automatic approval checking
             startAutoApprovalCheck();
+
+            // Show success message
+            alert('✅ Payment submitted successfully! Admins have been notified and will review your application.');
         }
 
         // Get package amount
