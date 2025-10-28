@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Verification - Crown Trade Academy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --dark-brown: #3A2D28;
-            --muted-rose: #A48374;
-            --warm-beige: #CBAD8D;
-            --light-taupe: #D1C7BD;
-            --off-white: #EBE3DB;
-            --cream-white: #F1EDE6;
-            --gold-accent: #D4AF37;
+            --nude-light: #F9F6F2;
+            --nude-medium: #E8DFD6;
+            --nude-dark: #D4C8BC;
+            --nude-accent: #C4B5A3;
+            --gold: #C8A97E;
+            --gold-dark: #B89463;
+            --charcoal: #3A3A3A;
+            --text-light: #7A7A7A;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             --success: #27AE60;
             --warning: #E67E22;
             --danger: #E74C3C;
-            --info: #3498DB;
         }
         
         * {
@@ -27,290 +31,373 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--off-white) 0%, var(--cream-white) 100%);
-            color: var(--dark-brown);
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--nude-light);
+            color: var(--charcoal);
             line-height: 1.6;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
-        
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Header */
         .premium-header {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 1.2rem 0;
-            box-shadow: 0 4px 20px rgba(58, 45, 40, 0.1);
-            position: sticky;
-            top: 0;
+            background-color: rgba(249, 246, 242, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
             z-index: 1000;
-            border-bottom: 3px solid var(--gold-accent);
+            border-bottom: 1px solid rgba(212, 200, 188, 0.3);
+            transition: var(--transition);
         }
-        
+
         .premium-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1.2rem 2rem;
         }
-        
+
         .logo {
-            font-size: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--warm-beige);
+            color: var(--charcoal);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            letter-spacing: 1px;
+            position: relative;
         }
-        
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
-            align-items: center;
+            gap: 2.5rem;
         }
-        
+
         .nav-links a {
-            color: var(--cream-white);
             text-decoration: none;
+            color: var(--charcoal);
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: var(--transition);
         }
-        
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
         .nav-links a:hover {
-            color: var(--gold-accent);
+            color: var(--gold);
         }
-        
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .payment-verification {
+            padding: 12rem 2rem 6rem;
+            min-height: 100vh;
+        }
+
         .premium-container {
             max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        
+
+        /* Luxury Card */
         .luxury-card {
-            background: linear-gradient(135deg, var(--cream-white) 0%, #FFFFFF 100%);
-            border: 1px solid var(--light-taupe);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 1.5rem 0;
+            background: var(--nude-light);
+            border: 1px solid var(--nude-medium);
+            padding: 3rem;
+            margin: 2rem 0;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(58, 45, 40, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition);
         }
-        
+
         .luxury-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
+            width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--gold-accent), var(--warm-beige), var(--gold-accent));
+            background: var(--gold);
         }
-        
-        .luxury-btn {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #4A3A32 100%);
-            color: var(--cream-white);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
+
+        .luxury-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--nude-light);
+            padding: 1rem 2.5rem;
+            border-radius: 0;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            width: 100%;
+            margin-top: 1.5rem;
         }
-        
-        .luxury-btn:hover {
-            background: linear-gradient(135deg, #4A3A32 0%, var(--dark-brown) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(58, 45, 40, 0.3);
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--gold);
         }
-        
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #2ECC71);
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
         }
-        
-        .btn-success:hover {
-            background: linear-gradient(135deg, #2ECC71, var(--success));
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
-        
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--charcoal);
+            padding: 1rem 2.5rem;
+            border-radius: 0;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border: 1px solid var(--charcoal);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background: var(--charcoal);
+            color: var(--nude-light);
+        }
+
+        /* Form Styles */
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark-brown);
+            font-weight: 500;
+            color: var(--charcoal);
+            font-size: 0.9rem;
         }
-        
+
         .form-control {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--light-taupe);
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: var(--off-white);
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--nude-medium);
+            background: var(--nude-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
         }
-        
+
         .form-control:focus {
             outline: none;
-            border-color: var(--warm-beige);
-            box-shadow: 0 0 0 3px rgba(203, 173, 141, 0.1);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.1);
         }
-        
+
+        /* File Upload */
         .file-upload-area {
-            border: 2px dashed var(--muted-rose);
-            border-radius: 12px;
-            padding: 2rem;
+            border: 2px dashed var(--nude-accent);
+            border-radius: 0;
+            padding: 2.5rem;
             text-align: center;
-            background: var(--off-white);
+            background: var(--nude-light);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
-        
+
         .file-upload-area:hover {
-            border-color: var(--warm-beige);
-            background: var(--cream-white);
+            border-color: var(--gold);
+            background: var(--nude-medium);
         }
-        
+
         .file-upload-area.dragover {
-            border-color: var(--gold-accent);
-            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            background: rgba(200, 169, 126, 0.1);
         }
-        
+
         .upload-icon {
-            font-size: 3rem;
-            color: var(--muted-rose);
+            font-size: 2.5rem;
+            color: var(--gold);
             margin-bottom: 1rem;
         }
-        
-        .premium-footer {
-            background: linear-gradient(135deg, var(--dark-brown) 0%, #2A1F1A 100%);
-            color: var(--cream-white);
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
-            border-top: 3px solid var(--gold-accent);
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        /* 🚀 STATUS STYLES */
+
+        /* Status Tracker */
         .status-tracker {
             display: flex;
             justify-content: space-between;
-            margin: 2rem 0;
+            margin: 3rem 0;
             position: relative;
         }
-        
+
+        .status-tracker::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--nude-medium);
+            z-index: 1;
+        }
+
         .status-step {
             text-align: center;
             flex: 1;
             position: relative;
             z-index: 2;
         }
-        
+
         .status-step.active .step-icon {
-            background: linear-gradient(135deg, var(--gold-accent), #E5C158);
-            color: var(--dark-brown);
-            border: 3px solid var(--gold-accent);
+            background: var(--gold);
+            color: var(--nude-light);
+            border: 2px solid var(--gold);
         }
-        
+
         .status-step.completed .step-icon {
-            background: linear-gradient(135deg, var(--success), #2ECC71);
-            color: white;
+            background: var(--success);
+            color: var(--nude-light);
+            border: 2px solid var(--success);
         }
-        
+
         .step-icon {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: var(--light-taupe);
+            background: var(--nude-medium);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 0.5rem;
-            font-weight: bold;
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
         }
-        
+
         .step-label {
             font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--muted-rose);
+            font-weight: 500;
+            color: var(--text-light);
         }
-        
+
         .status-step.active .step-label {
-            color: var(--dark-brown);
+            color: var(--charcoal);
         }
-        
-        /* 🚀 APPROVAL STATUS */
+
+        /* Approval Status */
         .approval-status {
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 1rem 0;
+            padding: 2.5rem;
+            border-radius: 0;
+            margin: 2rem 0;
             text-align: center;
+            border: 1px solid var(--nude-medium);
+            background: var(--nude-light);
         }
-        
+
         .status-pending {
-            background: rgba(230, 126, 34, 0.1);
-            border: 2px solid rgba(230, 126, 34, 0.3);
-            color: var(--warning);
+            border-left: 4px solid var(--warning);
         }
-        
+
         .status-approved {
-            background: rgba(39, 174, 96, 0.1);
-            border: 2px solid rgba(39, 174, 96, 0.3);
-            color: var(--success);
+            border-left: 4px solid var(--success);
         }
-        
+
         .loading-spinner {
-            border: 3px solid var(--light-taupe);
-            border-top: 3px solid var(--gold-accent);
+            border: 3px solid var(--nude-medium);
+            border-top: 3px solid var(--gold);
             border-radius: 50%;
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         .upload-preview {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
-        
+
         .preview-item {
             position: relative;
-            border-radius: 8px;
+            border-radius: 0;
             overflow: hidden;
-            border: 2px solid var(--light-taupe);
+            border: 1px solid var(--nude-medium);
         }
-        
+
         .preview-item img {
             width: 100%;
             height: 120px;
             object-fit: cover;
         }
-        
+
         .remove-btn {
             position: absolute;
             top: 5px;
@@ -318,249 +405,325 @@
             background: var(--danger);
             color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 0;
             width: 25px;
             height: 25px;
             cursor: pointer;
             font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .countdown {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: var(--success);
             margin: 1rem 0;
+            font-family: 'Cormorant Garamond', serif;
         }
 
         .trust-badges {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin: 2rem 0;
+            gap: 1.5rem;
+            margin: 3rem 0;
         }
         
         .trust-badge {
             display: flex;
             align-items: center;
-            background: var(--off-white);
+            background: var(--nude-light);
             padding: 1rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
+            border-radius: 0;
+            font-weight: 500;
+            border: 1px solid var(--nude-medium);
         }
 
-        .homepage-btn {
-            background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige));
-            color: var(--dark-brown);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--nude-medium);
+            border-top: 1px solid rgba(212, 200, 188, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--nude-light);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .footer-links a {
             text-decoration: none;
-            display: inline-block;
-            margin-top: 1rem;
+            color: var(--nude-medium);
+            font-size: 0.9rem;
+            transition: var(--transition);
         }
 
-        .homepage-btn:hover {
-            background: linear-gradient(135deg, var(--warm-beige), var(--muted-rose));
-            transform: translateY(-2px);
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--nude-dark);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .premium-nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                gap: 1.5rem;
+            }
+            
+            .payment-verification {
+                padding: 10rem 1.5rem 4rem;
+            }
+            
+            .luxury-card {
+                padding: 2rem;
+            }
+            
+            .status-tracker {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .status-tracker::before {
+                display: none;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Premium Header -->
+    <!-- Header -->
     <header class="premium-header">
         <nav class="premium-nav">
-            <a href="index.html" class="logo">
-                <span>👑</span>
-                Crown Trade Academy
-            </a>
+            <a href="index.html" class="logo">Crown Trade Academy</a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
+                <li><a href="mentorship-form.html">Mentorship</a></li>
+                <li><a href="referral-register.html">Referral Program</a></li>
+                <li><a href="login.html">Client Login</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Status Tracker -->
-    <section class="premium-container">
-        <div class="status-tracker">
-            <div class="status-step completed">
-                <div class="step-icon">1</div>
-                <div class="step-label">Register</div>
+    <!-- Payment Verification Section -->
+    <section class="payment-verification">
+        <div class="premium-container">
+            <!-- Status Tracker -->
+            <div class="status-tracker">
+                <div class="status-step completed">
+                    <div class="step-icon">1</div>
+                    <div class="step-label">Register</div>
+                </div>
+                <div class="status-step active">
+                    <div class="step-icon">2</div>
+                    <div class="step-label">Payment</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">3</div>
+                    <div class="step-label">Approval</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">4</div>
+                    <div class="step-label">Dashboard</div>
+                </div>
             </div>
-            <div class="status-step active">
-                <div class="step-icon">2</div>
-                <div class="step-label">Payment</div>
-            </div>
-            <div class="status-step">
-                <div class="step-icon">3</div>
-                <div class="step-label">Approval</div>
-            </div>
-            <div class="status-step">
-                <div class="step-icon">4</div>
-                <div class="step-label">Dashboard</div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Payment Verification Hero -->
-    <section class="premium-container" style="padding: 1rem 0;">
-        <div class="luxury-card" style="background: linear-gradient(135deg, var(--muted-rose), var(--warm-beige)); color: var(--dark-brown);">
-            <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem; text-align: center;">Payment Verification</h1>
-            <p style="font-size: 1.1rem; font-weight: 600; text-align: center;">Upload your payment screenshot for approval</p>
-        </div>
-    </section>
-
-    <!-- Order Summary -->
-    <section class="premium-container">
-        <div class="luxury-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📦 Order Summary</h2>
-            <div id="orderSummary">
-                <!-- Dynamic content will be inserted here -->
+            <!-- Payment Header -->
+            <div class="luxury-card" style="text-align: center; background: linear-gradient(135deg, var(--nude-medium) 0%, var(--nude-dark) 100%);">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--charcoal);">Payment Verification</h1>
+                <p style="font-size: 1.2rem; font-weight: 500; color: var(--text-light);">Upload your payment screenshot for approval</p>
             </div>
-        </div>
-    </section>
 
-    <!-- Payment Instructions -->
-    <section class="premium-container">
-        <div class="luxury-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">💳 Payment Instructions</h2>
-            
-            <div style="background: var(--off-white); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                <h3 style="color: var(--dark-brown); margin-bottom: 1rem;">Send Payment to:</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div>
-                        <strong>M-Pesa Paybill:</strong>
-                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--dark-brown);">247247</div>
+            <!-- Order Summary -->
+            <div class="luxury-card">
+                <h2 style="margin-bottom: 1.5rem; color: var(--charcoal); position: relative;">
+                    <i class="fas fa-receipt" style="color: var(--gold); margin-right: 0.5rem;"></i>
+                    Order Summary
+                </h2>
+                <div id="orderSummary">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Payment Instructions -->
+            <div class="luxury-card">
+                <h2 style="margin-bottom: 1.5rem; color: var(--charcoal); position: relative;">
+                    <i class="fas fa-credit-card" style="color: var(--gold); margin-right: 0.5rem;"></i>
+                    Payment Instructions
+                </h2>
+                
+                <div style="background: var(--nude-medium); padding: 2rem; margin-bottom: 1.5rem; border-left: 3px solid var(--gold);">
+                    <h3 style="color: var(--charcoal); margin-bottom: 1.5rem; font-size: 1.3rem;">Send Payment to:</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div>
+                            <strong style="color: var(--charcoal);">M-Pesa Paybill:</strong>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--gold); font-family: 'Cormorant Garamond', serif;">247247</div>
+                        </div>
+                        <div>
+                            <strong style="color: var(--charcoal);">Account Number:</strong>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--gold); font-family: 'Cormorant Garamond', serif;" id="accountNumber">CTA2024</div>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Account Number:</strong>
-                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--dark-brown);" id="accountNumber">CTA2024</div>
+                    
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(200, 169, 126, 0.1); border: 1px solid var(--nude-accent);">
+                        <strong style="color: var(--charcoal); display: block; margin-bottom: 1rem;">
+                            <i class="fas fa-info-circle" style="color: var(--gold); margin-right: 0.5rem;"></i>
+                            Important Instructions:
+                        </strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text-light);">
+                            <li>Use your full name as reference</li>
+                            <li>Take screenshot of confirmation message</li>
+                            <li>Upload clear, readable screenshot</li>
+                            <li>Approval within 2-24 hours</li>
+                        </ul>
                     </div>
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="luxury-card">
+                <h2 style="margin-bottom: 1.5rem; color: var(--charcoal); position: relative;">
+                    <i class="fas fa-cloud-upload-alt" style="color: var(--gold); margin-right: 0.5rem;"></i>
+                    Upload Payment Proof
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Payment Screenshot</label>
+                    <div class="file-upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3 style="color: var(--charcoal); margin-bottom: 0.5rem;">Click to upload screenshot</h3>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">
+                            JPG, PNG, PDF (Max: 5MB)
+                        </p>
+                        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+                    </div>
+                    
+                    <div class="upload-preview" id="uploadPreview"></div>
                 </div>
                 
-                <div style="margin-top: 1rem; padding: 1rem; background: rgba(212, 175, 55, 0.1); border-radius: 8px;">
-                    <strong>📝 Important:</strong>
-                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                        <li>Use your full name as reference</li>
-                        <li>Take screenshot of confirmation message</li>
-                        <li>Upload clear, readable screenshot</li>
-                        <li>Approval within 2-24 hours</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Upload Section -->
-    <section class="premium-container">
-        <div class="luxury-card">
-            <h2 style="margin-bottom: 1.5rem; color: var(--dark-brown);">📤 Upload Payment Proof</h2>
-            
-            <div class="form-group">
-                <label class="form-label">Payment Screenshot</label>
-                <div class="file-upload-area" id="uploadArea">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <h3 style="color: var(--dark-brown); margin-bottom: 0.5rem;">Click to upload screenshot</h3>
-                    <p style="color: var(--muted-rose); font-size: 0.9rem;">
-                        JPG, PNG, PDF (Max: 5MB)
-                    </p>
-                    <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
-                </div>
-                
-                <div class="upload-preview" id="uploadPreview"></div>
-            </div>
-            
-            <button type="button" class="luxury-btn btn-success" style="width: 100%; padding: 15px;" onclick="submitPayment()" id="submitBtn">
-                <i class="fas fa-paper-plane"></i> Submit for Approval
-            </button>
-        </div>
-    </section>
-
-    <!-- 🚀 ENHANCED APPROVAL STATUS -->
-    <section class="premium-container">
-        <div class="approval-status status-pending" id="pendingStatus" style="display: none;">
-            <i class="fas fa-clock" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-            <h3>Application Submitted!</h3>
-            <p>Your referral program application has been received. We are reviewing your payment and will activate your account within 24 hours.</p>
-            <div class="loading-spinner"></div>
-            <p><strong>Status:</strong> <span id="statusMessage">Awaiting admin approval...</span></p>
-            
-            <div style="margin-top: 1rem;">
-                <button class="luxury-btn" onclick="forceCheckApproval()" id="checkStatusBtn">
-                    <i class="fas fa-sync-alt"></i> Check Approval Status
+                <button type="button" class="btn-primary" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Submit for Approval
                 </button>
             </div>
+
+            <!-- Approval Status -->
+            <div class="approval-status status-pending" id="pendingStatus" style="display: none;">
+                <i class="fas fa-clock" style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--warning);"></i>
+                <h3 style="margin-bottom: 1rem; color: var(--charcoal);">Application Submitted!</h3>
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">Your referral program application has been received. We are reviewing your payment and will activate your account within 24 hours.</p>
+                <div class="loading-spinner"></div>
+                <p style="color: var(--text-light);"><strong>Status:</strong> <span id="statusMessage">Awaiting admin approval...</span></p>
+                
+                <div style="margin-top: 2rem;">
+                    <button class="btn-secondary" onclick="forceCheckApproval()" id="checkStatusBtn">
+                        <i class="fas fa-sync-alt"></i> Check Approval Status
+                    </button>
+                </div>
+                
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <a href="index.html" class="btn-secondary">
+                        <i class="fas fa-home"></i> Return to Homepage
+                    </a>
+                </div>
+            </div>
             
-            <div style="margin-top: 1rem; text-align: center;">
-                <a href="index.html" class="homepage-btn">
-                    <i class="fas fa-home"></i> Return to Homepage
-                </a>
+            <div class="approval-status status-approved" id="approvedStatus" style="display: none;">
+                <i class="fas fa-check-circle" style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--success);"></i>
+                <h3 style="margin-bottom: 1rem; color: var(--charcoal);">Approved! 🎉</h3>
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">Your account has been approved! Redirecting to your dashboard...</p>
+                <div class="countdown" id="countdown">5</div>
+                <div class="loading-spinner" style="border-top-color: var(--success);"></div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                    <i class="fas fa-info-circle" style="color: var(--success);"></i> If redirect doesn't work, 
+                    <a href="client-dashboard.html" style="color: var(--success); text-decoration: underline;">click here</a>
+                </p>
             </div>
-        </div>
-        
-        <div class="approval-status status-approved" id="approvedStatus" style="display: none;">
-            <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-            <h3>Approved! 🎉</h3>
-            <p>Your account has been approved! Redirecting to your dashboard...</p>
-            <div class="countdown" id="countdown">5</div>
-            <div class="loading-spinner" style="border-top-color: var(--success);"></div>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--success);">
-                <i class="fas fa-info-circle"></i> If redirect doesn't work, 
-                <a href="client-dashboard.html" style="color: var(--success); text-decoration: underline;">click here</a>
-            </p>
-        </div>
-    </section>
 
-    <!-- Trust Section -->
-    <section class="premium-container">
-        <div class="trust-badges">
-            <div class="trust-badge">
-                <div style="font-size: 1.2rem; margin-right: 0.5rem;">🔒</div>
-                Secure Payment
-            </div>
-            <div class="trust-badge">
-                <div style="font-size: 1.2rem; margin-right: 0.5rem;">⚡</div>
-                Fast Approval
-            </div>
-            <div class="trust-badge">
-                <div style="font-size: 1.2rem; margin-right: 0.5rem;">📞</div>
-                24/7 Support
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div style="font-size: 1.5rem; margin-right: 0.8rem; color: var(--gold);">🔒</div>
+                    Secure Payment
+                </div>
+                <div class="trust-badge">
+                    <div style="font-size: 1.5rem; margin-right: 0.8rem; color: var(--gold);">⚡</div>
+                    Fast Approval
+                </div>
+                <div class="trust-badge">
+                    <div style="font-size: 1.5rem; margin-right: 0.8rem; color: var(--gold);">📞</div>
+                    24/7 Support
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Premium Footer -->
-    <footer class="premium-footer">
+    <!-- Footer -->
+    <footer>
         <div class="footer-content">
             <div>
-                <h3>Need Help?</h3>
-                <p>Contact our support team</p>
-                <p>Email: crowntradeacademy@gmail.com</p>
-                <p>Phone: +254 7XX XXX XXX</p>
+                <div class="footer-logo">Crown Trade Academy</div>
+                <p style="color: var(--nude-medium); margin-bottom: 1rem;">Elite trading mentorship for serious investors</p>
             </div>
             <div>
-                <h3>Quick Links</h3>
-                <p><a href="index.html" style="color: var(--warm-beige); text-decoration: none;">Home</a></p>
-                <p><a href="register.html" style="color: var(--warm-beige); text-decoration: none;">Register</a></p>
-                <p><a href="login.html" style="color: var(--warm-beige); text-decoration: none;">Login</a></p>
+                <h4 style="color: var(--nude-light); margin-bottom: 1rem;">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mentorship-form.html">Mentorship</a></li>
+                    <li><a href="referral-register.html">Referral Program</a></li>
+                    <li><a href="login.html">Client Login</a></li>
+                </ul>
             </div>
             <div>
-                <h3>Support</h3>
-                <p>Payment Issues</p>
-                <p>Account Verification</p>
-                <p>Technical Support</p>
+                <h4 style="color: var(--nude-light); margin-bottom: 1rem;">Support</h4>
+                <p style="color: var(--nude-medium); margin-bottom: 0.5rem;">Email: crowntradeacademy@gmail.com</p>
+                <p style="color: var(--nude-medium);">Phone: +254 7XX XXX XXX</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--muted-rose);">
-            <p>&copy; 2024 Crown Trade Academy. All rights reserved.</p>
-        </div>
+        <p class="copyright">&copy; 2024 Crown Trade Academy. All rights reserved.</p>
     </footer>
 
     <script>
@@ -574,6 +737,7 @@
             console.log('🚀 Payment page loaded');
             loadOrderSummary();
             setupFileUpload();
+            setupSubmitButton();
             checkIfAlreadyApproved();
         });
 
@@ -594,20 +758,20 @@
             const packageInfo = packages[packageType];
             
             document.getElementById('orderSummary').innerHTML = `
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                     <div>
-                        <strong>Program:</strong>
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark-brown);">${packageInfo.name}</div>
+                        <strong style="color: var(--charcoal);">Program:</strong>
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--gold); font-family: 'Cormorant Garamond', serif;">${packageInfo.name}</div>
                     </div>
                     <div>
-                        <strong>Amount:</strong>
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--dark-brown);">KES ${packageInfo.amount.toLocaleString()}</div>
+                        <strong style="color: var(--charcoal);">Amount:</strong>
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--gold); font-family: 'Cormorant Garamond', serif;">KES ${packageInfo.amount.toLocaleString()}</div>
                     </div>
                 </div>
-                <div style="background: var(--off-white); padding: 1rem; border-radius: 8px;">
-                    <strong>Customer:</strong> ${userData.fullName || 'N/A'}<br>
-                    <strong>Email:</strong> ${userData.email || 'N/A'}<br>
-                    <strong>Phone:</strong> ${userData.phone || 'N/A'}
+                <div style="background: var(--nude-medium); padding: 1.5rem; border-left: 3px solid var(--gold);">
+                    <strong style="color: var(--charcoal);">Customer:</strong> ${userData.fullName || 'N/A'}<br>
+                    <strong style="color: var(--charcoal);">Email:</strong> ${userData.email || 'N/A'}<br>
+                    <strong style="color: var(--charcoal);">Phone:</strong> ${userData.phone || 'N/A'}
                 </div>
             `;
             
@@ -623,12 +787,40 @@
             
             uploadArea.addEventListener('click', () => fileInput.click());
             fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect({ target: fileInput });
+            });
+        }
+
+        // Setup submit button
+        function setupSubmitButton() {
+            document.getElementById('submitBtn').addEventListener('click', submitPayment);
         }
 
         // Handle file selection
         function handleFileSelect(e) {
             const file = e.target.files[0];
             if (!file) return;
+            
+            // Check file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size too large. Please select a file smaller than 5MB.');
+                return;
+            }
             
             const preview = document.getElementById('uploadPreview');
             preview.innerHTML = '';
@@ -638,7 +830,7 @@
                 const previewItem = document.createElement('div');
                 previewItem.className = 'preview-item';
                 previewItem.innerHTML = `
-                    <img src="${e.target.result}" alt="Preview">
+                    <img src="${e.target.result}" alt="Payment Screenshot Preview">
                     <button type="button" class="remove-btn" onclick="clearFile()">×</button>
                 `;
                 preview.appendChild(previewItem);
@@ -698,13 +890,13 @@
             document.getElementById('pendingStatus').style.display = 'block';
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
+            document.getElementById('submitBtn').style.background = 'var(--success)';
+            document.getElementById('submitBtn').style.borderColor = 'var(--success)';
             
             hasSubmitted = true;
             
             // Start automatic approval checking
             startAutoApprovalCheck();
-            
-            alert('✅ Payment submitted successfully! Admins have been notified.');
         }
 
         // Get package amount
@@ -761,6 +953,8 @@
                 document.getElementById('pendingStatus').style.display = 'block';
                 document.getElementById('submitBtn').disabled = true;
                 document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Submitted for Approval';
+                document.getElementById('submitBtn').style.background = 'var(--success)';
+                document.getElementById('submitBtn').style.borderColor = 'var(--success)';
                 hasSubmitted = true;
                 startAutoApprovalCheck();
             }
@@ -797,13 +991,14 @@
         // Force check approval (manual button)
         function forceCheckApproval() {
             document.getElementById('checkStatusBtn').innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Checking...';
+            document.getElementById('checkStatusBtn').disabled = true;
             
             setTimeout(() => {
                 if (checkApprovalStatus()) {
                     document.getElementById('checkStatusBtn').innerHTML = '<i class="fas fa-check"></i> Approved!';
                 } else {
                     document.getElementById('checkStatusBtn').innerHTML = '<i class="fas fa-sync-alt"></i> Check Again';
-                    alert('Still pending approval. Admins are reviewing your application.');
+                    document.getElementById('checkStatusBtn').disabled = false;
                 }
             }, 1000);
         }
